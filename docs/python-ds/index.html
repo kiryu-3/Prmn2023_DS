@@ -9,7 +9,7 @@
   <title>Python_DS</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements-tmp/codelab-elements.css">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
   <style>
     .success {
       color: #1e8e3e;
@@ -30,17 +30,18 @@
       <google-codelab-step label="導入" duration="0">
         <p>この資料では、データサイエンスに使うPythonライブラリの基本についてまとめています。</p>
 <p>そもそもデータサイエンスがよく分からない方は<a href="https://datawokagaku.com/datascience_best_job/" target="_blank">かめさん</a>や<a href="https://toukei-lab.com/data-scientist#Step4SQL" target="_blank">ウマたんさん</a>のブログが参考になります。</p>
-<p>「データサイエンス入門」で学習した内容より大分突っ込んだ内容になります。</p>
-<p>ノートブック内では映画のデータセットを使って分析を進めています。</p>
+<p>『データサイエンス入門』で学習した内容より大分突っ込んだ内容になります。</p>
+<p>ノートブック内ではタイタニックのデータセットを使って分析を進めています。</p>
 <p>巷にはデータサイエンスが学習できるサービスがありふれていますので、スタイルが合うようなら本資料を使っていただけると幸いです。</p>
 <h2 is-upgraded>＜参考サイト＞</h2>
 <p>本資料は、<a href="https://twitter.com/usdatascientist" target="_blank">かめさん</a>の<a href="https://datawokagaku.com/python_for_ds_summary/" target="_blank">ブログ講座</a>と<a href="https://datawokagaku.com/ds_for_python_video_lecture/" target="_blank">動画講座</a>を基に作られています。</p>
 <p>（かめさんにはブログへのリンクを貼るという条件で許可を得ています）</p>
 <p>かめさんのブログには他にも統計や機械学習のブログ講座、またそれらを勉強するための本や動画の紹介があります。</p>
 <h2 is-upgraded>＜開発環境の整備＞</h2>
-<p>「データサイエンス入門」と同様、Google Colabratoryでの実行を想定しています。  </p>
+<p>『データサイエンス入門』と同様、Google Colabratoryでの実行を想定しています。  </p>
 <p>（JupyterLabだとエラーが出る部分がいくつかあります）</p>
 <p>準備ができていない方は<a href="https://bit.ly/3R1BXOT" target="_blank">こちら</a>を参考に環境を整備してください。</p>
+<p><img style="width: 117.00px" src="img\\e0ea101b730a7a53.png"> をクリックするとGooglecolabに遷移できます。</p>
 <p class="image-container"><img style="width: 101.00px" src="img\\40468d7ce0513b9c.png"></p>
 <p>というボタンが表示されるので、毎回ノートブックをダウンロードしてください。</p>
 <p>資料の訂正や気になることがある方は、個人的に連絡していただけると嬉しいです。</p>
@@ -77,8 +78,8 @@
 <tr><td colspan="1" rowspan="1"><p>○ ndarrayの保存とロード</p>
 </td></tr>
 </table>
-<p>pdf版はこちらです。※旧版です</p>
-<p><a href="https://drive.google.com/file/d/1QBiXcVzk-KT1v9mSxyi5NSmSz-4LldaV/view?usp=sharing" target="_blank"><paper-button class="colored" raised>Download</paper-button></a></p>
+<p>pdf版はこちらです。</p>
+<p><a href="https://www.dropbox.com/s/j3mk1dg9mil8zdg/DS_Numpy.pdf?dl=0" target="_blank"><paper-button class="colored" raised>Download</paper-button></a></p>
 
 
       </google-codelab-step>
@@ -108,10 +109,10 @@
 <tr><td colspan="1" rowspan="1"><p>○ DataFrameをCSVで保存する</p>
 </td></tr>
 </table>
-<p>ノートブック内で用いるCSVファイルはこちらです。（Matplotlib編やSeaborn編でも共通です）</p>
-<p><a href="https://drive.google.com/file/d/1LMgnaOBYp2rsTNI5fBT_Z07lubDov7d6/view?usp=sharing" target="_blank"><paper-button class="colored" raised>Download</paper-button></a></p>
-<p>pdf版はこちらです。※旧版です</p>
-<p><a href="https://drive.google.com/file/d/1L6YZXxu07W0rRZU2ZYkjbV03mNHf1oqY/view?usp=sharing" target="_blank"><paper-button class="colored" raised>Download</paper-button></a></p>
+<p>ノートブック内で用いるCSVファイルはこちらです。</p>
+<p><a href="https://www.dropbox.com/s/r3br5ckfve0nao6/train.csv?dl=0" target="_blank"><paper-button class="colored" raised>Download</paper-button></a></p>
+<p>pdf版はこちらです。</p>
+<p><a href="https://www.dropbox.com/s/rkfajt175jhlmer/DS_Pandas.pdf?dl=0" target="_blank"><paper-button class="colored" raised>Download</paper-button></a></p>
 
 
       </google-codelab-step>
@@ -139,10 +140,7 @@
 <tr><td colspan="1" rowspan="1"><p>○ plotの保存</p>
 </td></tr>
 </table>
-<p>ノートブック内で用いるCSVファイルはこちらです。（Pandas編やSeaborn編でも共通です）</p>
-<p><a href="https://drive.google.com/file/d/1LMgnaOBYp2rsTNI5fBT_Z07lubDov7d6/view?usp=sharing" target="_blank"><paper-button class="colored" raised>Download</paper-button></a></p>
-<p>pdf版はこちらです。※旧版です</p>
-<p><a href="https://drive.google.com/file/d/1LKf2p4hd6CNlYX0dhDNeHFiPHM3Ukhpp/view?usp=sharing" target="_blank"><paper-button class="colored" raised>Download</paper-button></a></p>
+<p>pdf版はこちらです。</p>
 
 
       </google-codelab-step>
@@ -162,20 +160,18 @@
 <tr><td colspan="1" rowspan="1"><p>○ Seabornの装飾と付属情報</p>
 </td></tr>
 </table>
-<p>ノートブック内で用いるCSVファイルはこちらです。（Pandas編やMatplotlib編でも共通です）</p>
-<p><a href="https://drive.google.com/file/d/1LMgnaOBYp2rsTNI5fBT_Z07lubDov7d6/view?usp=sharing" target="_blank"><paper-button class="colored" raised>Download</paper-button></a></p>
-<p>pdf版はこちらです。※旧版です</p>
-<p><a href="https://drive.google.com/file/d/1LVNUJLzXzK41Td35T5cyWGUOD6Kxr-OW/view?usp=sharing" target="_blank"><paper-button class="colored" raised>Download</paper-button></a></p>
+<p>pdf版はこちらです。</p>
+<p><a href="https://www.dropbox.com/s/39l8b8oe95v0oaq/DS_Seaborn.pdf?dl=0" target="_blank"><paper-button class="colored" raised>Download</paper-button></a></p>
 
 
       </google-codelab-step>
     
   </google-codelab>
 
-  <script src="https://storage.googleapis.com/codelab-elements-tmp/native-shim.js"></script>
-  <script src="https://storage.googleapis.com/codelab-elements-tmp/custom-elements.min.js"></script>
-  <script src="https://storage.googleapis.com/codelab-elements-tmp/prettify.js"></script>
-  <script src="https://storage.googleapis.com/codelab-elements-tmp/codelab-elements.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
   <script src="//support.google.com/inapp/api.js"></script>
 
 </body>
