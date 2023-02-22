@@ -1,6 +1,6 @@
 # Prmn2023_DS
 
-2023/2/11現在、公開できるすべての資料です。
+2023/2/22現在、公開できるすべての資料です。
 
 - [Python（基本文法）](https://kiryu-3.github.io/Prmn2023_DS/python-basic/index.html#0)　　　　　※とりあえず完成版です 
 - [Python（データサイエンス）](https://kiryu-3.github.io/Prmn2023_DS/python-ds/index.html#0)　※完成版です
