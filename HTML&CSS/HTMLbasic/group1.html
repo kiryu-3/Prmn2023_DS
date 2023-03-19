@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ブロック要素でグループ分けをしよう</title>
+    <meta name="description" content="グループ分け 1">
+</head>
+
+<body>
+    <!-- headerタグ ページ上部のヘッダー部分を作る
+    　　 ロゴ画像やページタイトル、ナビメニューが含まれる -->
+    <header>
+        <!-- mainタグ ページの核となるコンテンツ全体  -->   
+        <main>
+            <h2>記事タイトル</h2>
+            <p>最新のスマートフォン情報！</p>
+        </main>
+        <!-- articleタグ そこだけ見ても独立したページとして成り立つ部分--> 
+        <article>
+            <h2>記事タイトル</h2>
+            <p>最新のスマートフォン情報！</p>
+        </article>
+        <!-- sectionタグ 意味のあるグループをまとめるためのタグ
+        　　 ひとかたまりに1つのテーマがある-->
+        <section>
+            <h2>その他のおすすめ記事</h2>
+            <p>CHATGPTはサッカー選手の情報が不正確？</p>
+            <p>CHATGPTは英語翻訳には弱い？</p>
+        </section>
+        <!-- asideタグ 本文ではない補足情報 --> 
+        <aside>
+            <h3>補足情報</h3>
+            <p>kiryu-3です</p>
+        </aside>
+        <!-- footerタグ ページ下部のフッター部分 --> 
+        <footer>
+            <ul>
+                <li><a href="#">Facebook</li>
+                <li><a href="#">Twiiter</li>
+            </ul>
+            <p>Copylight 2023 kiryu-3</p>
+        </footer>
+    </header>
+</body>
+
+</html>

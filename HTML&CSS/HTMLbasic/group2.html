@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- divタグ 複数のタグをグループ化  
+    　　 とにかくひとまとめにしたいが、どれが適切か分からない場合--> 
+    <!-- class属性やid属性 タグに付加する識別情報
+    　　 id属性 一つの属性値は同じHTML内で一つのタグにだけ設定
+         class属性 同じ属性値を複数のタグに設定できる --> 
+    <!-- class属性とid属性の書き方
+        ・空白を入れない
+        ・英数字とハイフン「-」、アンダースコア「_」で記述
+        ・一文字目は必ず英字
+    -->
+    <div class="group-1">
+        <h3>見出し1</h3>
+        <p>説明文1です。</p>
+        <!-- spanタグ 文章の一部を囲い、これらの個所に下線を引いたり、  
+        　　 色を変えたりするのに利用する -->
+        <p>説明文2です。<span class="text-blue">説明文3</span>です。</p>
+    </div>
+    
+    <br>
+    <div class="group-2">
+        <h3>見出し2</h3>
+        <p id="line-1">説明文Aです。</p>
+        <p>説明文Bです。<span class="text-red">説明文C</span>です。</p>
+    </div>
+    <br>
+    <!-- class属性は一つのタグに複数の属性値を設定することもできる --> 
+    <div class="group-1 group-A">
+        <h3>見出し3</h3>
+        <p>説明文xです。</p>
+        <p>説明文yです。<span class="text-blue">説明文z</span>です。</p>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+.width1{
+    /*「border-width」プロパティ
+    　 線の太さを指定
+    　 〇数値：「px」「rem」「%」等の単位をつける
+    　 〇キーワード：「thin（細い線）」「medium（普通）」「thick（太い線）」
+    */
+    border-width: thick;
+
+    /*「border-style」プロパティ
+    　 線の装飾方法を指定
+    　 〇None：線を非表示
+    　 〇solid：1本の実線
+     　〇double：2本の実線
+       〇dashed：破線
+       〇dotted：点線
+       〇groove：立体的な谷型の線
+       〇ridge：立体的な山型の線
+       〇inset：囲まれた部分が凹んで見える立体的な線
+       〇outset：囲まれた部分が浮き上がって見える立体的な線
+    */
+    border-style: solid;
+}
+.width2 {
+    border-width: 1px 4px 8px 12px;
+    border-style: solid;
+}
+
+.style1 {
+    border-width: 4px;
+    border-style: solid;
+}
+
+.style2 {
+    border-width: 4px;
+    border-style: double;
+}
+
+.style3 {
+    border-width: 4px;
+    border-style: dashed;
+}
+
+.style4 {
+    border-width: 4px;
+    border-style: dotted;
+}
+
+.style5 {
+    border-width: 8px;
+    border-style: groove;
+}
+
+.style6 {
+    border-width: 8px;
+    border-style: ridge;
+}
+
+.style7 {
+    border-width: 8px;
+    border-style: inset;
+}
+
+.style8 {
+    border-width: 8px;
+    border-style: outset;
+}
+
+.color1 {
+    border-style: solid;
+    border-color: tomato;
+}
+
+.color2 {
+    border-style: solid;
+    border-color: tan #0bd tomato #000;
+}

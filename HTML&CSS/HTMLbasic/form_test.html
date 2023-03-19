@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>より使いやすいフォームにしよう</title>
+    <meta name="description" content="フォームのラベルを作るlabelタグ">
+</head>
+
+<body>
+    <form action="example.php" method="post" name="contact-form">
+        <h2>フォーム1</h2>
+        <!-- labelタグ フォームのパーツとラベルが関連付けされる -->
+        <!-- for属性 ラベルテキストの部分 -->
+        <label for="username">ユーザー名</label>
+        <!-- id属性 関連付けたいフォームのパーツに着ける -->
+        <input type="text" name="username" id="username">
+        <br>
+        <label for="email">メールアドレス</label> 
+        <input type="email" name="email" id="email">
+        <br>
+        <label for="inquiry">メッセージ本文</label>
+        <textarea name="inquiry" id="inquiry" cols="40" rows="4"></textarea>
+        <br>
+        <br>
+        <input type="submit" value="送信">
+    </form>
+
+    <!-- enctype="multipart/form/data" 
+    　　 テキストデータ以外のファイルを送信できるようになる -->
+    <form action="example.php" method="post" name="contact-form" enctype="multipart/form/data">
+        <h2>フォーム2</h2>
+        <label for="password">パスワード</label>
+        <!-- id属性 関連付けたいフォームのパーツに着ける -->
+        <input type="password" name="password" id="password">
+        <br>
+        <br>
+        <input type="file">
+        <br>
+        <label for="checkbox">メルマガ配信を希望しますか？</label>
+        <input type="checkbox" name="checkbox" id="checkbox"></input>
+        <br>
+        <br>
+        <label for="radio_man">男性</label>
+        <input type="radio" name="sex" id="radio_man" value="man">
+        <label for="radio_woman">女性</label>
+        <input type="radio" name="sex" id="radio_woman" value="woman">
+        <br>
+        <br>
+        <p>スキルレベルは？</p>
+        <select name="skill_level">
+            <option value="skill_c">初級者</option>
+            <option value="skill_b">中級者</option>
+            <option value="skill_a">上級者</option>
+        </select>
+        <br>
+        <br>
+        <input type="submit" value="送信">
+    </form>
+</body>
+
+</html>

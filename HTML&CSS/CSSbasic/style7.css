@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+body {
+    /* 画像が読み込まれなかった時のことを考え、
+    　 背景画像と同時に同じような色合いの背景色も指定する */
+    background-color: #f5f2e5;
+
+    /* 「url」に続いて丸カッコ内に画像のパスを記述する */
+    background-image: url(images/bg.png);
+
+    /* デフォルトでは背景画像を縦と横に繰り返し表示し、画面いっぱいに画像を敷き詰める
+    　 どの方向に敷き詰めるかを「background-repeat」プロパティで設定する */
+    /*
+    　〇repeat：縦・横ともに繰り返して表示
+    　〇repeat-x：横方向に繰り返して表示
+    　〇repeat-y：縦方向に繰り返して表示
+    　〇no-repeat：繰り返さない
+    */
+    background-repeat: repeat-x;
+}

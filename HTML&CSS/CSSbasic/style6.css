@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+/* BIZ UDPGothicをフォントに指定*/
+.font_change {
+    font-family: 'BIZ UDPGothic', sans-serif;
+}
+
+
+/* 文字に色を付ける「colorプロパティ」*/
+
+/* カラーコードによる指定
+   「#（ハッシュ）」で始まる3桁もしくは6桁のカラーコードを指定
+   参考：http://www.netyasun.com/home/color.html
+*/
+.color_change h1 {
+    color: #0bd;
+}
+
+/* 色の名前による指定
+   「red」「blue」などの決められた色の名前を指定
+*/
+.color_change h2 {
+    color: navy;
+}
+
+/* RGB値による指定
+   「rgb」から書き始め、赤・緑・青の値を「,（カンマ）」で区切って指定
+   「rgba」と書き始めると、透明度（0～1）を指定することもできる
+*/
+.color_change p {
+    color: rgba(10, 130, 165, .5);
+}
+
+/* 背景に色を付ける「background-colorプロパティ」*/
+/* 指定方法はcolorプロパティと同じ*/
+.color_change h1 {
+    background-color: #faa;
+}
+
+/* bodyタグについて指定するとページ全体の背景に色を付けることができる*/
+body {
+    background-color: #fee;
+}

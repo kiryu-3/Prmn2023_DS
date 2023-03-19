@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form3</title>
+</head>
+<body>
+    <form action="https://www.google.co.jp" method="post">
+        <h2>申し込みフォーム</h2>
+        <!-- labelタグ フォームのパーツとラベルが関連付けされる -->
+        <!-- for属性 ラベルテキストの部分 -->
+        <label for="seminar">希望するセミナー（必須）</label>
+        <!-- id属性 関連付けたいフォームのパーツに着ける -->
+        <select name="seminar" id="seminar">
+            <option value="seminar_1">日程1</option>
+            <option value="seminar_2">日程2</option>
+            <option value="seminar_3">日程3</option>
+        </select>
+        <br>
+        <label for="username">お名前（必須）</label>
+        <input type="text" name="username" id="username">
+        <br>
+        <label for="email">メールアドレス（必須）</label>
+        <input type="email" name="email" id="email">
+        <br>
+        <label for="inquiry">備考</label>
+        <textarea name="inquiry" id="inquiry" cols="40" rows="4"></textarea>
+        <br>
+        <br>
+        <input type="submit" value="送信する">
+    </form>
+    <br>
+    <br>
+    <!-- enctype="multipart/form/data" 
+    　　 テキストデータ以外のファイルを送信できるようになる -->
+    <form action="example.php" method="post" name="contact-form" enctype="multipart/form/data">
+        <input type="file">
+    </form>   
+</body>
+</html>

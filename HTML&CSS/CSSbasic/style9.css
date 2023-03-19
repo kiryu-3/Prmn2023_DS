@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+body {
+    background-image: url(images/bg.png),url(images/bg.png);
+    background-repeat: no-repeat;
+
+    /*「background-position」プロパティ
+    　 背景画像を表示する開始位置を指定
+    　 〇数値：「px」「rem」「%」等の単位をつける
+    　 〇キーワード
+    　　・縦方向：left（左）,right（右）,center（中央）
+    　　・横方向：top（上）,right（右）,bottom（下）
+    */
+    background-position: top center, 30px 80px;
+}
+
+.width-height {
+    background: #0bd;
+    width: 500px;  /* 幅を指定 */
+    height: 300px;  /* 高さを指定 */
+}
+
+.margin-change {
+    background: #0bd;
+
+    /*「margin」プロパティ
+    　 要素の周りに余白を加える
+    　 〇数値：「px」「rem」「%」等の単位をつける
+    　 〇auto：関連するプロパティの値によって自動設定
+    　　・margin-top（上）
+        ・margin-bottom（下）
+    　　・margin-right（右）
+        ・margin-left（左）
+    */
+    margin-top: 30px;
+    margin-left: 100px;
+    /* このようにも書ける（上右下左の順）
+    margin: 30px 0 0 100px
+    */
+}
+
+.padding-change {
+    background: #0bd;
+
+    /*「padding」プロパティ
+    　 要素の内側に余白を加える
+    　 〇数値：「px」「rem」「%」等の単位をつける
+    　 〇auto：関連するプロパティの値によって自動設定
+    　　・padding-top（上）
+        ・padding-bottom（下）
+    　　・padding-right（右）
+        ・padding-left（左）
+    */
+    padding: 40px;
+  }
+

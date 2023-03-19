@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>フォームを作ろう</title>
+    <meta name="description" content="フォーム欄を作るformタグ">
+</head>
+
+<body>
+    <!-- action データの送信先ページを指定 -->
+    <!-- method データの転送方法を指定（getかpost(データ送信)が多い） -->
+    <!-- name フォームの名前を指定 -->
+    <form action="example.php" method="post" name="contact-form">
+        <!-- type属性 用途を指定 -->
+        <!-- 
+        name フォームの名前を指定
+        text 1行のテキスト（初期値）
+        search 検索するときのテキスト
+        email メールアドレス
+        tel 電話番号
+        url WebサイトのURL
+        -->
+        名前: <input type="text">
+        <br>
+        <!-- placeholder属性 入力欄であらかじめ指定する -->
+        名前: <input type="text" placeholder="名字 名前">
+    </form>
+
+    <form action="example.php" method="post" name="contact-form">
+        <!-- submit フォームに入力した内容を送信するパーツ -->
+        <!-- name ボタンの名前 -->
+        <!-- value ボタンに表示するテキスト -->
+        <input type="submit" value="送信する">
+        <br>
+        <input type="image" src="images/button.png" alt="送信する">
+    </form>
+
+    <form action="example.php" method="post" name="contact-form">
+        <!-- textareaタグ 複数行にわたるテキストの入力 -->
+        <!-- placeholder属性 デフォルトテキストが消える -->
+        <textarea name="message" placeholder="メッセージを入力"></textarea>
+   </form>
+</body>
+
+</html>

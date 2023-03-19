@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+/*「list-style-type」プロパティ
+    線の装飾方法を指定
+    〇None：リストマーカーを非表示
+    〇disc：黒丸（デフォルト）
+    〇circle：白丸
+    〇square：黒四角
+    〇decimal：数字（デフォルト）
+    〇decimal-leading-zero：0を付けた数字
+    〇lower-roman：小文字のローマ数字
+    〇upper-roman：大文字のローマ数字
+    〇cjk-ideographic：漢数字
+    〇hiragana：ひらがな
+    〇katakana：カタカナ
+    〇lower-alpha, lower-ratin：小文字のアルファベット
+    〇upper-alpha, upper-ratin：大文字のアルファベット
+*/
+/*「list-style-image」プロパティ
+    リストマーカーを項目内のどの位置に表示させるかを指定
+    余白の指定時や整列時に、リストマーカーを含めるかどうかで指定位置が変わる
+    〇outside：ボックスの外側に表示
+    〇inside：ボックスの内側に表示
+*/
+ul {
+  list-style-type: square;
+  list-style-position: outside;
+}
+
+ol {
+  list-style-type: hiragana;
+  list-style-position: inside;
+}
+
+.star {
+    list-style-image: url(images/star.png);
+}

@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+
+div {
+    background-image: url(images/bg-airplane.jpg);
+    background-repeat: no-repeat;
+
+    /*「background-size」プロパティ
+    　 背景画像のサイズを指定する
+    　 〇数値：「px」「rem」「%」等の単位をつける
+    　 〇キーワード：「cover」「contain」で指定
+    */
+    /* 「cover」
+    画像の縦横比を保持したまま、表示領域を埋めつくすように背景画像を表示する 
+    表示領域より画像が大きい場合は画像が切れる
+    */
+    background-size: cover;
+    height: 100vh;
+}
+p {
+    text-align: center;
+    padding-top: 30px;
+}
