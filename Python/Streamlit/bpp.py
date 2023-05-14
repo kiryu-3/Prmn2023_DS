@@ -9,10 +9,29 @@ import json
 from folium import plugins
 from folium.plugins import Draw, TimestampedGeoJson
 
-# GeoJSONファイルのアップロード
-uploaded_geojsonfile = st.file_uploader("GeoJSONファイルをアップロード", type=["geojson"])
-# CSVファイルのアップロード
-uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
+
+
+with st.sidebar:
+  # GeoJSONファイルのアップロード
+  uploaded_geojsonfile = st.file_uploader("GeoJSONファイルをアップロード", type=["geojson"])
+  # CSVファイルのアップロード
+  uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
+
+  valuew = st.slider(
+    label="Width: from 800 to 1000",
+    min_value=800, 
+    max_value=1000,
+    key="width_slider"
+  )
+  st.session_state['width'] = valuew
+
+  valueh = st.slider(
+    label="Height: from 600 to 1000",
+    min_value=600, 
+    max_value=1000,
+    key="height_slider"
+  )
+  st.session_state['height'] = valueh
 
 
 if 'map' not in st.session_state: # 初期化
@@ -23,9 +42,21 @@ if 'map' not in st.session_state: # 初期化
     draw_options = {'polyline': True, 'rectangle': True, 'circle': False, 'marker': False, 'circlemarker': False}
     draw = folium.plugins.Draw(export=True, filename='data.geojson', position='topleft', draw_options=draw_options)
     draw.add_to(m)
+
+    # 地図をフルスクリーンに切り替えボタン設置
+    plugins.Fullscreen(
+      position="topright",  # bottomleft 
+      title="拡大する",      
+      title_cancel="元に戻す",
+      force_separate_button=True,
+    ).add_to(m)
     st.session_state['map'] = m
+    width = st.session_state['width']
+    height = st.session_state['height']
 else:
     m = st.session_state['map']
+    width = st.session_state['width']
+    height = st.session_state['height']
 
 # GeoJSONファイルがアップロードされた場合
 if uploaded_geojsonfile is not None:
@@ -68,9 +99,13 @@ if uploaded_csvfile is not None:
     }
 
     # レイヤーを削除
+    layers_to_remove = []
     for layer in m._children.values():
-      if isinstance(layer, TimestampedGeoJson):
-        del m._children[layer.get_name()]
+        if isinstance(layer, TimestampedGeoJson):
+            layers_to_remove.append(layer.get_name())
+
+    for layer_name in layers_to_remove:
+        del m._children[layer_name]
 
     timestamped_geojson = TimestampedGeoJson(
         geojson,
@@ -84,4 +119,4 @@ if uploaded_csvfile is not None:
     timestamped_geojson.add_to(m)
 
 # Streamlitでマップを表示
-folium_static(m)
+folium_static(m, width=width, height=height)
