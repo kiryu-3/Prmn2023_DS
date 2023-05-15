@@ -53,21 +53,14 @@ if 'map' not in st.session_state: # 初期化
     st.session_state['map'] = m
     width = st.session_state['width']
     height = st.session_state['height']
-else:
-    m = st.session_state['map']
-    width = st.session_state['width']
-    height = st.session_state['height']
 
 # GeoJSONファイルがアップロードされた場合
 if uploaded_geojsonfile is not None:
-    m = st.session_state['map']
     # GeoJSONデータの読み込み
     geojson_data = json.load(uploaded_geojsonfile)
 
     # GeoJSONデータを表示
     folium.GeoJson(geojson_data).add_to(m)
-    
-    st.session_state['map'] = m
 
 if uploaded_csvfile is not None:
     file_data = uploaded_csvfile.read()
@@ -124,11 +117,8 @@ if uploaded_csvfile is not None:
     # TimestampedGeoJsonをマップに追加
     timestamped_geojson.add_to(m)
     
-    st.session_state['map'] = m
-    
 # ボタンがクリックされたときのイベント処理
 def remove_geojson_data():
-    m = st.session_state['map']
     # GeoJSONデータを削除
     layers_to_remove = []
     for layer in m._children.values():
@@ -137,9 +127,10 @@ def remove_geojson_data():
 
     for layer in layers_to_remove:
         del m._children[layer.get_name()]
+        
+    # マップの再描画
+    folium_static(m, width=width, height=height)
 
-    # セッションのmapオブジェクトを更新
-    st.session_state['map'] = m
     
 # ボタンを表示し、クリックイベントを処理
 if st.button("GeoJSONデータの削除"):
@@ -147,4 +138,4 @@ if st.button("GeoJSONデータの削除"):
     # セッションのmapオブジェクトを更新
     
 # Streamlitでマップを表示
-folium_static(st.session_state['map'], width=width, height=height)
+folium_static(m, width=width, height=height)
