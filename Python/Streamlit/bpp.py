@@ -42,7 +42,7 @@ if 'map' not in st.session_state: # 初期化
     draw_options = {'polyline': True, 'rectangle': True, 'circle': False, 'marker': False, 'circlemarker': False}
     draw = folium.plugins.Draw(export=True, filename='data.geojson', position='topleft', draw_options=draw_options)
     draw.add_to(m)
-
+    
     # 地図をフルスクリーンに切り替えボタン設置
     plugins.Fullscreen(
       position="topright",  # bottomleft 
@@ -50,13 +50,8 @@ if 'map' not in st.session_state: # 初期化
       title_cancel="元に戻す",
       force_separate_button=True,
     ).add_to(m)
+    
     st.session_state['map'] = m
-    width = st.session_state['width']
-    height = st.session_state['height']
-else:
-    m = st.session_state['map']
-    width = st.session_state['width']
-    height = st.session_state['height']
 
 # GeoJSONファイルがアップロードされた場合
 if uploaded_geojsonfile is not None:
@@ -64,7 +59,7 @@ if uploaded_geojsonfile is not None:
     geojson_data = json.load(uploaded_geojsonfile)
 
     # GeoJSONデータを表示
-    folium.GeoJson(geojson_data).add_to(m)
+    folium.GeoJson(geojson_data).add_to(st.session_state['map'])
 
 if uploaded_csvfile is not None:
     file_data = uploaded_csvfile.read()
@@ -100,12 +95,12 @@ if uploaded_csvfile is not None:
 
     # レイヤーを削除
     layers_to_remove = []
-    for layer in m._children.values():
+    for layer in st.session_state['map']._children.values():
         if isinstance(layer, TimestampedGeoJson):
             layers_to_remove.append(layer.get_name())
 
     for layer_name in layers_to_remove:
-        del m._children[layer_name]
+        del st.session_state['map']._children[layer_name]
        
     
 
@@ -118,20 +113,20 @@ if uploaded_csvfile is not None:
     )
 
     # TimestampedGeoJsonをマップに追加
-    timestamped_geojson.add_to(m)
+    timestamped_geojson.add_to(st.session_state['map'])
     
 # ボタンを表示し、クリックイベントを処理
 if st.button("GeoJSONデータの削除"):
     # GeoJSONデータを削除
     layers_to_remove = []
-    for layer in m._children.values():
+    for layer in st.session_state['map']._children.values():
         if isinstance(layer, folium.GeoJson):
             layers_to_remove.append(layer)
 
     for layer in layers_to_remove:
-        del m._children[layer.get_name()]
+        del st.session_state['map']._children[layer.get_name()]
         
     uploaded_geojsonfile = None
     
 # Streamlitでマップを表示
-folium_static(m, width=width, height=height)
+folium_static(st.session_state['map'], width=width, height=height)
