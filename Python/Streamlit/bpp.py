@@ -131,12 +131,14 @@ def remove_geojson_data():
     for layer in layers_to_remove:
         del m._children[layer.get_name()]
         
+    # アップロードしたGeoJSONファイルを削除
+    uploaded_geojsonfile = None
+        
 
     
 # ボタンを表示し、クリックイベントを処理
 if st.button("GeoJSONデータの削除"):
     remove_geojson_data()
-    # セッションのmapオブジェクトを更新
     
 # Streamlitでマップを表示
 folium_static(m, width=width, height=height)
