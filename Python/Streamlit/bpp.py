@@ -53,6 +53,10 @@ if 'map' not in st.session_state: # 初期化
     st.session_state['map'] = m
     width = st.session_state['width']
     height = st.session_state['height']
+else:
+    m = st.session_state['map']
+    width = st.session_state['width']
+    height = st.session_state['height']
 
 # GeoJSONファイルがアップロードされた場合
 if uploaded_geojsonfile is not None:
