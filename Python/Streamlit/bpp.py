@@ -53,6 +53,9 @@ if 'map' not in st.session_state: # 初期化
     
     st.session_state['map'] = m
 
+if 'geojson_added' not in st.session_state:
+    st.session_state['geojson_added'] = False
+    
 # GeoJSONファイルがアップロードされた場合
 if uploaded_geojsonfile is not None and not st.session_state['geojson_added']:
     # GeoJSONデータの読み込み
@@ -114,10 +117,8 @@ if uploaded_csvfile is not None:
 
     # TimestampedGeoJsonをマップに追加
     timestamped_geojson.add_to(st.session_state['map'])
-    st.session_state['geojson_added'] = True
     
-if 'geojson_added' not in st.session_state:
-    st.session_state['geojson_added'] = False
+
     
 # ボタンを表示し、クリックイベントを処理
 if st.button("GeoJSONデータの削除"):
@@ -130,7 +131,7 @@ if st.button("GeoJSONデータの削除"):
     for layer in layers_to_remove:
         del st.session_state['map']._children[layer.get_name()]
         
-    st.session_state['geojson_added'] = False
+    st.session_state['geojson_added'] = True
     
 # Streamlitでマップを表示
 folium_static(st.session_state['map'], width=st.session_state['width'], height=st.session_state['height'])
