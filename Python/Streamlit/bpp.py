@@ -60,6 +60,7 @@ else:
 
 # GeoJSONファイルがアップロードされた場合
 if uploaded_geojsonfile is not None:
+    m = st.session_state['map']
     # GeoJSONデータの読み込み
     geojson_data = json.load(uploaded_geojsonfile)
 
@@ -68,6 +69,7 @@ if uploaded_geojsonfile is not None:
 
 if uploaded_csvfile is not None:
     file_data = uploaded_csvfile.read()
+    m = st.session_state['map']
 
     # バイナリデータからPandas DataFrameを作成
     df = pd.read_csv(io.BytesIO(file_data))
@@ -122,6 +124,7 @@ if uploaded_csvfile is not None:
     
 # ボタンがクリックされたときのイベント処理
 def remove_geojson_data():
+    m = st.session_state['map']
     # GeoJSONデータを削除
     layers_to_remove = []
     for layer in m._children.values():
@@ -136,10 +139,8 @@ def remove_geojson_data():
     
 # ボタンを表示し、クリックイベントを処理
 if st.button("GeoJSONデータの削除"):
-    m = st.session_state['map']
     remove_geojson_data()
     # セッションのmapオブジェクトを更新
-    st.session_state['map'] = m
     
 # Streamlitでマップを表示
-folium_static(m, width=width, height=height)
+folium_static(st.session_state['map'], width=width, height=height)
