@@ -66,6 +66,8 @@ if uploaded_geojsonfile is not None:
 
     # GeoJSONデータを表示
     folium.GeoJson(geojson_data).add_to(m)
+    
+    st.session_state['map'] = m
 
 if uploaded_csvfile is not None:
     file_data = uploaded_csvfile.read()
@@ -121,6 +123,8 @@ if uploaded_csvfile is not None:
 
     # TimestampedGeoJsonをマップに追加
     timestamped_geojson.add_to(m)
+    
+    st.session_state['map'] = m
     
 # ボタンがクリックされたときのイベント処理
 def remove_geojson_data():
