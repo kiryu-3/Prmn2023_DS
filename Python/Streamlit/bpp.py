@@ -124,13 +124,12 @@ if uploaded_csvfile is not None:
 def remove_geojson_data():
     # GeoJSONデータを削除
     layers_to_remove = []
-    for layer in m._children.values():
+    for layer in st.session_state['map']._children.values():
         if isinstance(layer, folium.GeoJson):
             layers_to_remove.append(layer)
 
     for layer in layers_to_remove:
-        del m._children[layer.get_name()] 
-    st.session_state['map'] = m
+        del st.session_state['map']._children[layer.get_name()] 
     
 # ボタンを表示し、クリックイベントを処理
 if st.button("GeoJSONデータの削除"):
