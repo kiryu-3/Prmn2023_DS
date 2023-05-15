@@ -129,4 +129,4 @@ if st.button("GeoJSONデータの削除"):
     uploaded_geojsonfile = None
     
 # Streamlitでマップを表示
-folium_static(st.session_state['map'], width=width, height=height)
+folium_static(st.session_state['map'], width=st.session_state['width'], height=st.session_state['height'])
