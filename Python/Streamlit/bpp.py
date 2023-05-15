@@ -131,8 +131,6 @@ def remove_geojson_data():
     for layer in layers_to_remove:
         del m._children[layer.get_name()]
         
-    # マップの再描画
-    folium_static(m, width=width, height=height)
 
     
 # ボタンを表示し、クリックイベントを処理
