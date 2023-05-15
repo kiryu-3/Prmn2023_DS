@@ -136,6 +136,7 @@ if st.button("GeoJSONデータの削除"):
 # ボタンを表示し、クリックイベントを処理
 if st.button("GeoJSONデータの復活"):
     st.session_state['geojson_added'] = False
+    st.experimental_rerun()
     
 # Streamlitでマップを表示
 folium_static(st.session_state['map'], width=st.session_state['width'], height=st.session_state['height'])
