@@ -128,15 +128,15 @@ if st.button('古いデータを削除'):
 if st.session_state['clear_data']:
     # レイヤーを削除
     layers_to_remove = []
-    for layer in m._children.values():
+    for layer_name, layer in m._children.items():
         if isinstance(layer, folium.GeoJson):
-            layers_to_remove.append(layer)
+            layers_to_remove.append(layer_name)
 
-    for layer in layers_to_remove:
-        m.remove_layer(layer)
+    for layer_name in layers_to_remove:
+        m.remove_layer(m._children[layer_name])
 
     # ボタンの状態をリセット
     st.session_state['clear_data'] = False
-
+    
 # Streamlitでマップを表示
 folium_static(m, width=width, height=height)
