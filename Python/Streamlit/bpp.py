@@ -118,23 +118,6 @@ if uploaded_csvfile is not None:
     # TimestampedGeoJsonをマップに追加
     timestamped_geojson.add_to(m)
     
-if 'clear_data' not in st.session_state:
-    st.session_state['clear_data'] = False
-
-if st.button('古いデータを削除'):
-    st.session_state['clear_data'] = True
-
-# 古いデータを削除するボタンが押された場合
-if st.session_state['clear_data']:
-    # レイヤーを削除
-    # GeoJSONデータを削除
-    layers_to_remove = []
-    for layer in m._children.values():
-    if isinstance(layer, folium.GeoJson):
-        layers_to_remove.append(layer)
-
-    for layer in layers_to_remove:
-        m.remove_layer(layer)
     
 # Streamlitでマップを表示
 folium_static(m, width=width, height=height)
