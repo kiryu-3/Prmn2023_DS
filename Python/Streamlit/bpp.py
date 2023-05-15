@@ -121,7 +121,7 @@ if uploaded_csvfile is not None:
     timestamped_geojson.add_to(m)
     
 # ボタンがクリックされたときのイベント処理
-def remove_geojson_data():
+def remove_geojson_data(m):
     # GeoJSONデータを削除
     layers_to_remove = []
     for layer in m._children.values():
@@ -133,12 +133,14 @@ def remove_geojson_data():
         
     # アップロードしたGeoJSONファイルを削除
     uploaded_geojsonfile = None
+    
+    return m
         
 
     
 # ボタンを表示し、クリックイベントを処理
 if st.button("GeoJSONデータの削除"):
-    remove_geojson_data()
+    m = remove_geojson_data(m)
     
 # Streamlitでマップを表示
 folium_static(m, width=width, height=height)
