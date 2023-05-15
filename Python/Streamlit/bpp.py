@@ -106,6 +106,8 @@ if uploaded_csvfile is not None:
 
     for layer_name in layers_to_remove:
         del m._children[layer_name]
+       
+    
 
     timestamped_geojson = TimestampedGeoJson(
         geojson,
@@ -128,6 +130,7 @@ def remove_geojson_data():
 
     for layer in layers_to_remove:
         del m._children[layer.get_name()] 
+    st.session_state['map'] = m
     
 # ボタンを表示し、クリックイベントを処理
 if st.button("GeoJSONデータの削除"):
