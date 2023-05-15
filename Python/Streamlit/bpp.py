@@ -64,7 +64,6 @@ if uploaded_geojsonfile is not None:
 
 if uploaded_csvfile is not None:
     file_data = uploaded_csvfile.read()
-    m = st.session_state['map']
 
     # バイナリデータからPandas DataFrameを作成
     df = pd.read_csv(io.BytesIO(file_data))
