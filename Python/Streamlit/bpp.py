@@ -118,6 +118,19 @@ if uploaded_csvfile is not None:
     # TimestampedGeoJsonをマップに追加
     timestamped_geojson.add_to(m)
     
+# ボタンがクリックされたときのイベント処理
+def remove_geojson_data():
+    layers_to_remove = []
+    for layer in m._children.values():
+        if isinstance(layer, folium.GeoJson):
+            layers_to_remove.append(layer)
+
+    for layer in layers_to_remove:
+        m.remove_layer(layer)    
+    
+# ボタンを表示し、クリックイベントを処理
+if st.button("GeoJSONデータの削除"):
+    remove_geojson_data()
     
 # Streamlitでマップを表示
 folium_static(m, width=width, height=height)
