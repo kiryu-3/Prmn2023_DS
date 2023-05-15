@@ -138,6 +138,8 @@ def remove_geojson_data():
 if st.button("GeoJSONデータの削除"):
     m = st.session_state['map']
     remove_geojson_data()
+    # セッションのmapオブジェクトを更新
+    st.session_state['map'] = m
     
 # Streamlitでマップを表示
 folium_static(m, width=width, height=height)
