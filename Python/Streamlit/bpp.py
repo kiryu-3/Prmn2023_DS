@@ -120,14 +120,6 @@ if uploaded_csvfile is not None:
     # TimestampedGeoJsonをマップに追加
     timestamped_geojson.add_to(m)
     
-# ボタンがクリックされたときのイベント処理
-def remove_geojson_data(m):
-    
-        
-    
-        
-
-    
 # ボタンを表示し、クリックイベントを処理
 if st.button("GeoJSONデータの削除"):
     # GeoJSONデータを削除
