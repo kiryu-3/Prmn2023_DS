@@ -118,7 +118,9 @@ if uploaded_csvfile is not None:
     # TimestampedGeoJsonをマップに追加
     timestamped_geojson.add_to(st.session_state['map'])
     
-
+# ボタンを表示し、クリックイベントを処理
+if st.button("描画情報の削除"):
+    draw.delete()
     
 # ボタンを表示し、クリックイベントを処理
 if st.button("GeoJSONデータの削除"):
