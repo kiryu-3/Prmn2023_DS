@@ -121,6 +121,19 @@ if uploaded_csvfile is not None:
  # ボタンを表示し、クリックイベントを処理
 if st.button("描画図形の削除"):
     m = folium.Map(location=[34.797345395117546, 137.5804696201213], zoom_start=13)
+    # Leaflet.jsのDrawプラグインを追加
+    draw_options = {'polyline': True, 'rectangle': True, 'circle': False, 'marker': False, 'circlemarker': False}
+    draw = folium.plugins.Draw(export=True, filename='data.geojson', position='topleft', draw_options=draw_options)
+    draw.add_to(m)
+    
+    # 地図をフルスクリーンに切り替えボタン設置
+    plugins.Fullscreen(
+      position="topright",  # bottomleft 
+      title="拡大する",      
+      title_cancel="元に戻す",
+      force_separate_button=True,
+    ).add_to(m)
+    
     st.session_state['map'] = m
     
 # ボタンを表示し、クリックイベントを処理
