@@ -117,7 +117,11 @@ if uploaded_csvfile is not None:
 
     # TimestampedGeoJsonをマップに追加
     timestamped_geojson.add_to(st.session_state['map'])
-   
+
+ # ボタンを表示し、クリックイベントを処理
+if st.button("描画図形の削除"):
+    m = folium.Map(location=[34.797345395117546, 137.5804696201213], zoom_start=13)
+    st.session_state['map'] = m
     
 # ボタンを表示し、クリックイベントを処理
 if st.button("GeoJSONデータの削除"):
