@@ -35,5 +35,5 @@ with left:
         st_data = st_folium(m, width=725)
 
 with right:
-    type(st_data)
+    st.write(type(st_data))
 
