@@ -11,28 +11,13 @@ from folium.plugins import Draw, TimestampedGeoJson
 
 import streamlit as st
 
-# Streamlitの内部で使用されるメニューバーの要素を非表示にする
-hide_menu_items = """
+hide_menu_style = """
     <style>
-    .menu-container .decoration-container {
-        visibility: hidden !important;
-        pointer-events: none !important;
-    }
+    #MainMenu {visibility: hidden;}
     </style>
 """
 
-# CSSを適用してGitHubのマークを非表示にする
-hide_github_mark = """
-    <style>
-    .decoration-github-corner {
-        display: none !important;
-    }
-    </style>
-"""
-
-# 非表示のCSSを適用する
-st.markdown(hide_menu_items + hide_github_mark, unsafe_allow_html=True)
-
+st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 
 
