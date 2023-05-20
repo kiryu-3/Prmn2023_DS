@@ -35,6 +35,6 @@ with left:
         st_data = st_folium(m, width=725)
 
 with right:
-    st_data._delta_queue.get_jsonable_value()
+    st_data
     st.write(type(st_data))
 
