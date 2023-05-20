@@ -35,8 +35,7 @@ with left:
         st_data = st_folium(m, width=725)
 
 with right:
-    # st_data
-    # st.write(st_data.get("center"))
+    st.subtitle("地図の全データ")
     data = dict(st_data)
+    st.subtitle("地図の全描画データ")
     st.write(data["all_drawings"])
-
