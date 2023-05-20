@@ -44,9 +44,11 @@ with right:
     st.write([data[i] for i in data["all_drawings"] if i == 0])
     if "all_drawings" in data:
         if data["all_drawings"][0] is not None:
-            st_data["all_drawings"][0]["properties"] = "0"
+            data["all_drawings"][0]["properties"] = "0"
             st.subheader("抜粋データ")
             st.write(data["all_drawings"][0])
+            # GeoJSONデータをマップに追加する
+            folium.GeoJson(data).add_to(m)
          
     st.subheader("最後に描画した円の半径データ")
     st.write(data["last_circle_radius"])
