@@ -10,11 +10,13 @@ from folium import plugins
 from folium.plugins import Draw, TimestampedGeoJson
 
 css = """
-  <style>
-  #MainMenu {visibility: hidden;}
-  </style>
-  """
+<style>
+#MainMenu { visibility: hidden; }
+.css-1tr6a3r { display: none !important; }
+</style>
+"""
 st.markdown(css, unsafe_allow_html=True)
+
 
 with st.sidebar:
   # GeoJSONファイルのアップロード
