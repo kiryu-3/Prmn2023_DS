@@ -34,6 +34,6 @@ with left:
         st_data = st_folium(m, width=725)
 
 with right:
-    st_data["all_drawings"]
+    dict(st_data)["all_drawings"]
     st_data
 
