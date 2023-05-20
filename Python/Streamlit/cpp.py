@@ -35,4 +35,5 @@ with left:
 
 with right:
     st_data["all_drawings"]
+    st_data
 
