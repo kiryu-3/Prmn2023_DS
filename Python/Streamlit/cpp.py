@@ -27,7 +27,7 @@ with left:
             [39.949610, -75.150282], popup="Liberty Bell", tooltip="Liberty Bell"
         ).add_to(m)
         # Leaflet.jsのDrawプラグインを追加
-        draw_options = {'polyline': True, 'rectangle': True, 'circle': False, 'marker': False, 'circlemarker': False}
+        draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': True, 'circlemarker': True}
         draw = folium.plugins.Draw(export=True, filename='data.geojson', position='topleft', draw_options=draw_options)
         draw.add_to(m)
 
@@ -40,3 +40,7 @@ with right:
     st.write(data)
     st.subheader("地図の全描画データ")
     st.write(data["all_drawings"])
+    st.subheader("最後に描画した円の半径データ")
+    st.write(data["last_circle_radius"])
+    st.subheader("最後に描画した円の全データ")
+    st.write(data["last_circle_polygon"])
