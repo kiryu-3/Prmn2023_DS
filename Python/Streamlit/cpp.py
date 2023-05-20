@@ -38,5 +38,5 @@ with right:
     st_data
     st.write(st_data.get("center"))
     data = dict(st_data.get("center"))
-    st.write(data)
+    st.write(type(data))
 
