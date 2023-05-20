@@ -1,4 +1,5 @@
 import streamlit as st
+import json
 
 st.set_page_config(
     page_title="streamlit-folium documentation",
@@ -34,5 +35,5 @@ with left:
         st_data = st_folium(m, width=725)
 
 with right:
-    dict(st_data)
+    json.loads(st_data)
 
