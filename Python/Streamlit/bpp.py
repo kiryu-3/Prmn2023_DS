@@ -10,11 +10,10 @@ from folium import plugins
 from folium.plugins import Draw, TimestampedGeoJson
 
 css = """
-<style>
-#MainMenu {visibility: hidden;}
-.github-corner {display: none;}
-</style>
-"""
+  <style>
+  #MainMenu {visibility: hidden;}
+  </style>
+  """
 st.markdown(css, unsafe_allow_html=True)
 
 
