@@ -41,9 +41,10 @@ with right:
     st.subheader("地図の全描画データ")
     st.write(data["all_drawings"])
     if "all_drawings" in st_data:
-        if 0 in st_data["all_drawings"][0]:
+        if st_data["all_drawings"][0] is not None and 0 in st_data["all_drawings"][0]:
             st_data["all_drawings"][0][0]["properties"] = "0"
-            st_data["all_drawings"][0]
+             st.subheader("抜粋データ")
+            st.write(st_data["all_drawings"][0])
          
     st.subheader("最後に描画した円の半径データ")
     st.write(data["last_circle_radius"])
