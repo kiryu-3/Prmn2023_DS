@@ -35,5 +35,4 @@ with left:
 
 with right:
     dict(st_data)
-    st_data
 
