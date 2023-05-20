@@ -35,8 +35,8 @@ with left:
         st_data = st_folium(m, width=725)
 
 with right:
-    st_data
-    st.write(st_data.get("center"))
+    # st_data
+    # st.write(st_data.get("center"))
     data = dict(st_data)
-    st.write(data["bounds"])
+    st.write(data["all_drawings"])
 
