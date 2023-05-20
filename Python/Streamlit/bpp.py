@@ -12,10 +12,12 @@ from folium.plugins import Draw, TimestampedGeoJson
 css = """
 <style>
 #MainMenu {visibility: hidden;}
-.github-corner {display: none;}
+.css-17eq0hr-StyledIcon {display: none;}
+.css-1j7kvk6-StyledOcticonLink {display: none;}
 </style>
 """
 st.markdown(css, unsafe_allow_html=True)
+
 
 
 with st.sidebar:
