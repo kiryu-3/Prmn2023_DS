@@ -34,6 +34,5 @@ with left:
         st_data = st_folium(m, width=725)
 
 with right:
-    test = st_data["all_drawings"]
-    test
+    st_data["all_drawings"]
 
