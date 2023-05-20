@@ -40,7 +40,7 @@ with right:
     st.write(data)
     st.subheader("地図の全描画データ")
     st.write(data["all_drawings"])
-    st.write([item for item in data if item.get("0") is not None])
+    st.write([data[i] for i in data if i == 0])
     if "all_drawings" in data:
         if data["all_drawings"] is not None and 0 in data["all_drawings"][0]:
             data["all_drawings"][0][0]["properties"] = "0"
