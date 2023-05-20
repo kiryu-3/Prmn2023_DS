@@ -11,9 +11,6 @@ left, right = st.columns(2)
 
 
 with left:
-    """
-    If we take a look at the example from the Home page, it might seem trivial. We define a single point with a marker and pop-up and display it:
-    """
     with st.echo():
 
         import folium
