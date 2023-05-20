@@ -27,7 +27,7 @@ with left:
             [39.949610, -75.150282], popup="Liberty Bell", tooltip="Liberty Bell"
         ).add_to(m)
         # Leaflet.jsのDrawプラグインを追加
-        draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': True, 'circlemarker': True}
+        draw_options = {'polyline': True, 'rectangle': True, 'circle': False, 'marker': False, 'circlemarker': False}
         draw = folium.plugins.Draw(export=True, filename='data.geojson', position='topleft', draw_options=draw_options)
         draw.add_to(m)
 
