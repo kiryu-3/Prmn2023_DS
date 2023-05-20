@@ -41,7 +41,7 @@ with right:
     st.subheader("地図の全描画データ")
     st.write(data["all_drawings"])
     if "all_drawings" in data:
-        if data["all_drawings"][0] is not None and 0 in data["all_drawings"][0]:
+        if data["all_drawings"] is not None and 0 in data["all_drawings"][0]:
             data["all_drawings"][0][0]["properties"] = "0"
             st.subheader("抜粋データ")
             st.write(data["all_drawings"][0])
