@@ -35,5 +35,5 @@ with left:
         st_data = st_folium(m, width=725)
 
 with right:
-    json.loads(st_data)
+    type(st_data)
 
