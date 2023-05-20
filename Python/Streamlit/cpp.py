@@ -35,5 +35,6 @@ with left:
         st_data = st_folium(m, width=725)
 
 with right:
+    m._repr_html_()
     st.write(type(st_data))
 
