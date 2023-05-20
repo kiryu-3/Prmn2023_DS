@@ -36,5 +36,5 @@ with left:
 
 with right:
     st_data
-    st.write(st_data.get("last_clicked"))
+    st.write(st_data.get("center"))
 
