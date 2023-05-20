@@ -36,5 +36,6 @@ with left:
 
 with right:
     st_data
-    st.write(type(st_data))
+    st.write(st_data.data.get("last_clicked")
+)
 
