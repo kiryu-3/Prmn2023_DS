@@ -1,5 +1,10 @@
 import streamlit as st
 import json
+import folium
+
+from streamlit_folium import st_folium
+from folium import plugins
+from folium.plugins import Draw, TimestampedGeoJson
 
 st.set_page_config(
     page_title="streamlit-folium documentation",
@@ -19,29 +24,88 @@ with st.sidebar:
   # CSVファイルのアップロード
   uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
 
+if 'map' not in st.session_state: # 初期化
+    # 初めての表示時は空のマップを表示
+    m = folium.Map(location=[42.793553, 141.6958724], zoom_start=13)
+
+    # Leaflet.jsのDrawプラグインを追加
+    draw_options = {'polyline': True, 'rectangle': True, 'circle': False, 'marker': False, 'circlemarker': False}
+    draw = folium.plugins.Draw(export=True, filename='data.geojson', position='topleft', draw_options=draw_options)
+    draw.add_to(m)
+    
+    # 地図をフルスクリーンに切り替えボタン設置
+    plugins.Fullscreen(
+      position="topright",  # bottomleft 
+      title="拡大する",      
+      title_cancel="元に戻す",
+      force_separate_button=True,
+    ).add_to(m)
+    
+    st.session_state['map'] = m
+
+    
+if uploaded_csvfile is not None:
+    file_data = uploaded_csvfile.read()
+
+    # バイナリデータからPandas DataFrameを作成
+    df = pd.read_csv(io.BytesIO(file_data))
+
+    features = []
+    for i, row in df.iterrows():
+        feature = {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [row.iloc[3], row.iloc[2]]
+            },
+            "properties": {
+                "icon": "circle",
+                "iconstyle": {
+                    "color": "#4169e1",
+                    "fillColor": "#01bfff",
+                    "weight": 10,
+                    "radius": 3
+                },
+                "time": row.iloc[1]
+            }
+        }
+        features.append(feature)
+
+    geojson = {
+        "type": "LineString",
+        "features": features
+    }
+
+    # レイヤーを削除
+    layers_to_remove = []
+    for layer in st.session_state['map']._children.values():
+        if isinstance(layer, TimestampedGeoJson):
+            layers_to_remove.append(layer.get_name())
+
+    for layer_name in layers_to_remove:
+        del st.session_state['map']._children[layer_name]
+       
+    
+
+    timestamped_geojson = TimestampedGeoJson(
+        geojson,
+        period="PT1M",
+        duration="PT1S",
+        auto_play=False,
+        loop=False
+    )
+
+    # TimestampedGeoJsonをマップに追加
+    timestamped_geojson.add_to(st.session_state['map'])
+
+    
 left, right = st.columns(2)
 
 
 with left:
-    import folium
-    import streamlit as st
-
-    from streamlit_folium import st_folium
-    from folium import plugins
-    from folium.plugins import Draw, TimestampedGeoJson
-
-    # center on Liberty Bell, add marker
-    m = folium.Map(location=[42.793553, 141.6958724], zoom_start=16)
-    folium.Marker(
-        [39.949610, -75.150282], popup="Liberty Bell", tooltip="Liberty Bell"
-    ).add_to(m)
-    # Leaflet.jsのDrawプラグインを追加
-    draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': True, 'circlemarker': True}
-    draw = folium.plugins.Draw(export=True, filename='data.geojson', position='topleft', draw_options=draw_options)
-    draw.add_to(m)
 
     # call to render Folium map in Streamlit
-    st_data = st_folium(m, width=725)     
+    st_data = st_folium(st.session_state['map'], width=725)     
 
 with right:
     data = dict(st_data)
