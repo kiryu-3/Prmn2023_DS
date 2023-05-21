@@ -99,7 +99,7 @@ left, right = st.columns(2)
 
 with left:
     with st.echo():
-        st_data = folium_static(st.session_state['map'], width=725)
+        st_data = folium_static(m, width=725)
 
 with right:
     data = st_data._repr_html_()
