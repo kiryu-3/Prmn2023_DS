@@ -130,8 +130,7 @@ with right:
                 data["all_drawings"][idx]["properties"] = str(idx)
                 st.session_state['draw_data'].append(data["all_drawings"][idx])
                 tooltip_html = '<div style="font-size: 16px;">gateid:{}</div>'.format(all_drawings[idx]["properties"])
-                folium.GeoJson(all_drawings[idx], tooltip=tooltip_html).add_to(st.session_state['map'])
-                st.experimental_rerun()
+                folium.GeoJson(data["all_drawings"][idx], tooltip=tooltip_html).add_to(st.session_state['map'])
 
     
 
