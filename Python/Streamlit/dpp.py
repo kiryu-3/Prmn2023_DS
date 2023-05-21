@@ -2,6 +2,7 @@ import streamlit as st
 import json
 import folium
 import pandas as pd
+import copy
 
 from streamlit_folium import st_folium
 from folium import plugins
@@ -112,7 +113,7 @@ with left:
     st_data = st_folium(st.session_state['map'], width=725)     
 
 with right:
-    data = dict(st_data.copy())
+    data = copy.deepcopy(dict(st_data))
     st.subheader("地図の全データ")
     st.write(st_data)
     st.subheader("地図の全描画データ")
