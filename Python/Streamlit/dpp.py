@@ -93,6 +93,7 @@ if uploaded_csvfile is not None:
         for layer in st.session_state['map']._children.values():
             if isinstance(layer, TimestampedGeoJson):
                 layers_to_remove.append(layer.get_name())
+        st.write(layers_to_remove)
         for layer_name in layers_to_remove:
             del st.session_state['map']._children[layer_name]
 
