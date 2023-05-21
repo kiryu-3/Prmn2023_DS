@@ -111,7 +111,7 @@ if uploaded_csvfile is not None:
      folium.GeoJson(line_geojson, name='線の表示/非表示', style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(m)
      """
     
-     geojson = {"type": "FeatureCollection", "features": features}
+    geojson = {"type": "FeatureCollection", "features": features}
 
     # レイヤーを削除
     if 'map' in st.session_state:
