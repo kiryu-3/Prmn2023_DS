@@ -113,7 +113,7 @@ with left:
     st_data = st_folium(st.session_state['map'], width=725)     
 
 with right:
-    data = dict(st_data)
+    data = dict(st_data.copy())
     st.subheader("地図の全データ")
     st.write(data)
     st.subheader("地図の全描画データ")
