@@ -134,4 +134,5 @@ try:
 except Exception as e:
     pass
 
+st.subheader("地図の全描画データ")
 st.write(st.session_state['draw_data'])     
