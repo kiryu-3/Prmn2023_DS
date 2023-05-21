@@ -126,7 +126,7 @@ with right:
         if st_data["all_drawings"][0] is not None:
             
             # GeoJSONデータをマップに追加する
-            for idx in range(len(all_drawings)):
+            for idx in range(len(data["all_drawings"])):
                 data["all_drawings"][idx]["properties"] = str(idx)
                 st.session_state['draw_data'].append(data["all_drawings"][idx])
                 tooltip_html = '<div style="font-size: 16px;">gateid:{}</div>'.format(all_drawings[idx]["properties"])
