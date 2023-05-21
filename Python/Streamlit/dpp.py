@@ -110,7 +110,8 @@ if uploaded_csvfile is not None:
     
     st.session_state['df'] = df
 
-
+left, right = st.columns(2)
+    
 with left:
 
     # call to render Folium map in Streamlit
