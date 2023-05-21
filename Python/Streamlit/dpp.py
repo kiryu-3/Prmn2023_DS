@@ -90,13 +90,13 @@ if uploaded_csvfile is not None:
     if 'map' in st.session_state and 'timestamped_geo_json_div_3' in st.session_state['map']._children:
 #         del st.session_state['map']._children['timestamped_geo_json_div_3']
 
-    layers_to_remove = []
-    for layer in st.session_state['map']._children.values():
-        if isinstance(layer, TimestampedGeoJson):
-            layers_to_remove.append(layer.get_name())
-    st.write(layers_to_remove)
-    for layer_name in layers_to_remove:
-        del st.session_state['map']._children[layer_name]
+        layers_to_remove = []
+        for layer in st.session_state['map']._children.values():
+            if isinstance(layer, TimestampedGeoJson):
+                layers_to_remove.append(layer.get_name())
+        st.write(layers_to_remove)
+        for layer_name in layers_to_remove:
+            del st.session_state['map']._children[layer_name]
        
     
 
