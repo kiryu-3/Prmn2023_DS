@@ -97,6 +97,8 @@ if uploaded_csvfile is not None:
 
     # TimestampedGeoJsonをマップに追加
     timestamped_geojson.add_to(st.session_state['map'])
+    
+    st.write(df)
 
     
 left, right = st.columns(2)
