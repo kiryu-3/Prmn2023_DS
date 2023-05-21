@@ -27,6 +27,7 @@ if 'df' not in st.session_state: # 初期化
     st.session_state['df'] = df
     
 with st.sidebar:
+  st.experimental_rerun()
   # CSVファイルのアップロード
   uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
   st.write(st.session_state['df'])
