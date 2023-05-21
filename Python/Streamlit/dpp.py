@@ -25,6 +25,11 @@ st.markdown(hide_menu_style, unsafe_allow_html=True)
 with st.sidebar:
   # CSVファイルのアップロード
   uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
+  st.write(st.session_state['df'])
+
+if 'df' not in st.session_state: # 初期化
+    df = pd.DataFrame()
+    st.session_state['df'] = df
 
 if 'map' not in st.session_state: # 初期化
     # 初めての表示時は空のマップを表示
@@ -45,7 +50,7 @@ if 'map' not in st.session_state: # 初期化
     
     st.session_state['map'] = m
     
-    st.write(st.session_state['df'])
+   
 
     
 if uploaded_csvfile is not None:
