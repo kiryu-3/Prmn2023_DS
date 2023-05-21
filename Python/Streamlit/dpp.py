@@ -123,11 +123,11 @@ with right:
         if data["all_drawings"][0] is not None:
             
             # GeoJSONデータをマップに追加する
-            all_drawings = data["all_drawings"].copy()
-            for idx in range(len(all_drawings)):
-                all_drawings[idx]["properties"] = str(idx)
-                tooltip_html = '<div style="font-size: 16px;">gateid:{}</div>'.format(all_drawings[idx]["properties"])
-                folium.GeoJson(all_drawings[idx], tooltip=tooltip_html).add_to(st.session_state['map'])
+#             all_drawings = data["all_drawings"].copy()
+#             for idx in range(len(all_drawings)):
+#                 all_drawings[idx]["properties"] = str(idx)
+#                 tooltip_html = '<div style="font-size: 16px;">gateid:{}</div>'.format(all_drawings[idx]["properties"])
+#                 folium.GeoJson(all_drawings[idx], tooltip=tooltip_html).add_to(st.session_state['map'])
 
     
                              
