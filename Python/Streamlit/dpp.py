@@ -120,7 +120,7 @@ with right:
     st.write(data)
     st.subheader("地図の全描画データ")
     st.write(data["all_drawings"])
-    st.write(st.session_state['draw_data'])
+    
     
     try:
         if st_data["all_drawings"][0] is not None:
@@ -137,7 +137,7 @@ with right:
     except Exception as e:
         pass
             
-         
+    st.write(st.session_state['draw_data'])     
     st.subheader("最後に描画した円の半径データ")
     st.write(data["last_circle_radius"])
     st.subheader("最後に描画した円の全データ")
