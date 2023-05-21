@@ -60,8 +60,8 @@ if uploaded_csvfile is not None:
     
     list2 = list()
 
-    for i, row in self.df.iterrows():
-        if row.iloc[0] not in self.list2:
+    for i, row in df.iterrows():
+        if row.iloc[0] not in list2:
             self.list2.append(row.iloc[0])
 
     features = []
