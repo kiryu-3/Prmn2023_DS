@@ -113,5 +113,14 @@ if uploaded_csvfile is not None:
     # TimestampedGeoJsonをマップに追加
     timestamped_geojson.add_to(st.session_state['map'])
     
-# Streamlitでマップを表示
-folium_static(st.session_state['map'], width=st.session_state['width'], height=st.session_state['height'])
+left, right = st.columns(2)
+
+
+with left:
+    with st.echo():    
+        # Streamlitでマップを表示
+        st_data = folium_static(st.session_state['map'], width=st.session_state['width'], height=st.session_state['height'])
+    with right:
+        data = dict(st_data)
+        st.subheader("地図の全データ")
+        st.write(data)
