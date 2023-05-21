@@ -39,16 +39,9 @@ if 'map' not in st.session_state: # 初期化
 
     # Leaflet.jsのDrawプラグインを追加
     draw_options = {'polyline': True, 'rectangle': True, 'circle': False, 'marker': False, 'circlemarker': False}
-    draw = folium.plugins.Draw(export=True, filename='data.geojson', position='topleft', draw_options=draw_options)
+    draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
     draw.add_to(m)
     
-    # 地図をフルスクリーンに切り替えボタン設置
-    plugins.Fullscreen(
-      position="topright",  # bottomleft 
-      title="拡大する",      
-      title_cancel="元に戻す",
-      force_separate_button=True,
-    ).add_to(m)
     
     
     st.session_state['map'] = m
@@ -131,8 +124,9 @@ with right:
             data["all_drawings"][0]["properties"] = "0"
             st.subheader("抜粋データ")
             st.write(data["all_drawings"][0])
+            st.write(len(data["all_drawings"]))
     except Exception as e:
-        st.subheader("抜粋データ")
+        pass
             
          
     st.subheader("最後に描画した円の半径データ")
