@@ -129,7 +129,7 @@ with right:
             draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
             draw.add_to(m)
             
-            for idx in range(len(data["all_drawings"]):
+            for idx in range(len(data["all_drawings"])):
                     data["all_drawings"][idx]["properties"] = str(idx)
                     tooltip_html = '<div style="font-size: 16px;">gateid:{}</div>'.format(data["all_drawings"][idx]["properties"])
                     # GeoJSONデータをマップに追加する
