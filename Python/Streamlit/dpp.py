@@ -107,38 +107,31 @@ if uploaded_csvfile is not None:
     # DataFrameをサイドバーに表示
     st.session_state['df'] = df
 
-left, right = st.columns(2)
-    
-with left:
 
-    # call to render Folium map in Streamlit
-    st_data = st_folium(st.session_state['map'], width=725)     
+# call to render Folium map in Streamlit
+st_data = st_folium(st.session_state['map'], width=725)     
 
-with right:
-    data = copy.deepcopy(dict(st_data))
-    st.subheader("地図の全データ")
-    st.write(data)
-    st.subheader("地図の全描画データ")
-    st.write(data["all_drawings"])
-    
-    
-    try:
-        if st_data["all_drawings"][0] is not None:
-            
-            # GeoJSONデータをマップに追加する
-            for idx in range(len(data["all_drawings"])):
-                data["all_drawings"][idx]["properties"] = str(idx)
-                st.session_state['draw_data'].append(data["all_drawings"][idx])
-                tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx+1)
-                folium.GeoJson(data["all_drawings"][idx], tooltip=tooltip_html).add_to(st.session_state['map'])
 
-    
+data = copy.deepcopy(dict(st_data))
+# st.subheader("地図の全データ")
+# st.write(data)
+# st.subheader("地図の全描画データ")
+# st.write(data["all_drawings"])
 
-    except Exception as e:
-        pass
-            
-    st.write(st.session_state['draw_data'])     
-    st.subheader("最後に描画した円の半径データ")
-    st.write(data["last_circle_radius"])
-    st.subheader("最後に描画した円の全データ")
-    st.write(data["last_circle_polygon"])
+
+try:
+    if st_data["all_drawings"][0] is not None:
+
+        # GeoJSONデータをマップに追加する
+        for idx in range(len(data["all_drawings"])):
+            data["all_drawings"][idx]["properties"] = str(idx)
+            st.session_state['draw_data'].append(data["all_drawings"][idx])
+            tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(data["all_drawings"][idx])+1)
+            folium.GeoJson(data["all_drawings"][idx], tooltip=tooltip_html).add_to(st.session_state['map'])
+
+
+
+except Exception as e:
+    pass
+
+st.write(st.session_state['draw_data'])     
