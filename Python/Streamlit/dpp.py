@@ -49,6 +49,7 @@ if 'map' not in st.session_state: # 初期化
       force_separate_button=True,
     ).add_to(m)
     
+    
     st.session_state['map'] = m
     
    
@@ -87,17 +88,13 @@ if uploaded_csvfile is not None:
     }
 
     # レイヤーを削除
-    if 'map' in st.session_state and 'timestamped_geo_json_div_3' in st.session_state['map']._children:
-#         del st.session_state['map']._children['timestamped_geo_json_div_3']
-
+    if 'map' in st.session_state:
         layers_to_remove = []
         for layer in st.session_state['map']._children.values():
             if isinstance(layer, TimestampedGeoJson):
                 layers_to_remove.append(layer.get_name())
         for layer_name in layers_to_remove:
             del st.session_state['map']._children[layer_name]
-       
-    
 
     timestamped_geojson = TimestampedGeoJson(
         geojson,
