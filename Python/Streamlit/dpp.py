@@ -15,6 +15,9 @@ hide_menu_style = """
 
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
+with st.sidebar:
+  # CSVファイルのアップロード
+  uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
 
 left, right = st.columns(2)
 
