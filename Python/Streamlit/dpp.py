@@ -87,6 +87,7 @@ if uploaded_csvfile is not None:
     }
 
     # レイヤーを削除
+    del st.session_state['map']._children['timestamped_geo_json_div_3']
 #     layers_to_remove = []
 #     for layer in st.session_state['map']._children.values():
 #         if isinstance(layer, TimestampedGeoJson):
