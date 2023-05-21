@@ -62,7 +62,7 @@ if uploaded_csvfile is not None:
 
     for i, row in df.iterrows():
         if row.iloc[0] not in list2:
-            self.list2.append(row.iloc[0])
+            list2.append(row.iloc[0])
 
     features = []
     for i, row in df.iterrows():
