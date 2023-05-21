@@ -17,12 +17,6 @@ hide_menu_style = """
 
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
-st.set_page_config(
-    page_title="streamlit-folium documentation",
-    page_icon=":world_map:️",
-    layout="wide",
-)
-
 with st.sidebar:
   # CSVファイルのアップロード
   uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
