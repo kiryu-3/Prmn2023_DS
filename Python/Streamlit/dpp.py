@@ -127,11 +127,11 @@ with right:
     st.write(data["all_drawings"])
     
 #     st.write([data[i] for i in data["all_drawings"] if i == 0])
-#     if "all_drawings" in data:
-#         if data["all_drawings"][0] is not None:
-#             data["all_drawings"][0]["properties"] = "0"
-#             st.subheader("抜粋データ")
-#             st.write(data["all_drawings"][0])
+    if "all_drawings" in data:
+        if data["all_drawings"][0] is not None:
+            data["all_drawings"][0]["properties"] = "0"
+            st.subheader("抜粋データ")
+            st.write(data["all_drawings"][0])
             
          
     st.subheader("最後に描画した円の半径データ")
