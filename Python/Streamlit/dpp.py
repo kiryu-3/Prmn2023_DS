@@ -118,4 +118,4 @@ if uploaded_csvfile is not None:
 # Streamlitでマップを表示
 folium_static(st.session_state['map'], width=st.session_state['width'], height=st.session_state['height'])
 st_data = folium_static(st.session_state['map'], width=725)
-st_data
+st.write(dict(st_data))
