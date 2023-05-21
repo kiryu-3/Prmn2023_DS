@@ -44,6 +44,8 @@ if 'map' not in st.session_state: # 初期化
     ).add_to(m)
     
     st.session_state['map'] = m
+    
+    st.write(st.session_state['df'])
 
     
 if uploaded_csvfile is not None:
@@ -100,7 +102,7 @@ if uploaded_csvfile is not None:
     # TimestampedGeoJsonをマップに追加
     timestamped_geojson.add_to(st.session_state['map'])
     
-    st.write(df)
+    st.session_state['df'] = df
 
     
 left, right = st.columns(2)
