@@ -56,6 +56,12 @@ if uploaded_csvfile is not None:
 
     # バイナリデータからPandas DataFrameを作成
     df = pd.read_csv(io.BytesIO(file_data))
+    
+    list2 = list()
+
+    for i, row in self.df.iterrows():
+        if row.iloc[0] not in self.list2:
+            self.list2.append(row.iloc[0])
 
     features = []
     for i, row in df.iterrows():
@@ -77,11 +83,35 @@ if uploaded_csvfile is not None:
             }
         }
         features.append(feature)
+    
+    """ ライン軌跡用　現在はコメント
+    line_features = []
+        for itr in self.list2:
+            list3 = list()
+            for i, row in self.df.iterrows():
+                if itr == row[0]:
+                    list3.append(row)
+            df2 = pd.DataFrame(list3)
+            for i in range(len(df2) - 1):
+                line_feature = {
+                    'type': 'Feature',
+                    'geometry': {
+                        'type': 'LineString',
+                        'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
+                                        [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
+                    },
+                    'properties': {
+                        'time': df2.iloc[i, 1]
+                    }
+                }
+                line_features.append(line_feature)
+            line_geojson = {'type': 'FeatureCollection', 'features': line_features}
 
-    geojson = {
-        "type": "LineString",
-        "features": features
-    }
+     # 線のジオJSONを追加
+     folium.GeoJson(line_geojson, name='線の表示/非表示', style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(m)
+     """
+    
+     geojson = {"type": "FeatureCollection", "features": features}
 
     # レイヤーを削除
     if 'map' in st.session_state:
