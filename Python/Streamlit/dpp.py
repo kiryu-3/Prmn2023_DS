@@ -118,6 +118,7 @@ left, right = st.columns(2)
 
 with left:
     with st.echo():    
+        
         # Streamlitでマップを表示
 #         st_data = folium_static(st.session_state['map'], width=st.session_state['width'], height=st.session_state['height'])
         st_data = folium_static(st.session_state['map'], width=725)
