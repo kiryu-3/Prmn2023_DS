@@ -26,7 +26,7 @@ with st.sidebar:
 
 if 'map' not in st.session_state: # 初期化
     # 初めての表示時は空のマップを表示
-    m = folium.Map(location=[42.793553, 141.6958724], zoom_start=13)
+    m = folium.Map(location=[42.793553, 141.6958724], zoom_start=16)
 
     # Leaflet.jsのDrawプラグインを追加
     draw_options = {'polyline': True, 'rectangle': True, 'circle': False, 'marker': False, 'circlemarker': False}
