@@ -22,11 +22,6 @@ hide_menu_style = """
 
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
-with st.sidebar:
-  # CSVファイルのアップロード
-  uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
-  st.write(st.session_state['df'])
-
 if 'df' not in st.session_state: # 初期化
     df = pd.DataFrame()
     st.session_state['df'] = df
@@ -109,6 +104,10 @@ if uploaded_csvfile is not None:
     
     st.session_state['df'] = df
 
+with st.sidebar:
+  # CSVファイルのアップロード
+  uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
+  st.write(st.session_state['df'])
     
 left, right = st.columns(2)
 
