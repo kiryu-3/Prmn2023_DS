@@ -6,6 +6,7 @@ import folium
 import streamlit as st
 import json
 from folium import plugins
+from streamlit_folium import folium_static
 from folium.plugins import Draw, TimestampedGeoJson
 
 hide_menu_style = """
