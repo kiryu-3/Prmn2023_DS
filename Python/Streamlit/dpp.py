@@ -45,6 +45,7 @@ if 'map' not in st.session_state: # 初期化
     
     
     st.session_state['map'] = m
+    st.session_state['draw_data'] = list()
     
    
 
@@ -115,26 +116,22 @@ with left:
 with right:
     data = copy.deepcopy(dict(st_data))
     st.subheader("地図の全データ")
-    st.write(st_data)
+    st.write(data)
     st.subheader("地図の全描画データ")
     st.write(data["all_drawings"])
+    st.write(st.session_state['draw_data'])
     
     try:
-        if data["all_drawings"][0] is not None:
+        if st_data["all_drawings"][0] is not None:
             
             # GeoJSONデータをマップに追加する
-#             all_drawings = data["all_drawings"].copy()
-#             for idx in range(len(all_drawings)):
-#                 all_drawings[idx]["properties"] = str(idx)
-#                 tooltip_html = '<div style="font-size: 16px;">gateid:{}</div>'.format(all_drawings[idx]["properties"])
-#                 folium.GeoJson(all_drawings[idx], tooltip=tooltip_html).add_to(st.session_state['map'])
+            for idx in range(len(all_drawings)):
+                data["all_drawings"][idx]["properties"] = str(idx)
+                st.session_state['draw_data'].append(data["all_drawings"][idx])
+                tooltip_html = '<div style="font-size: 16px;">gateid:{}</div>'.format(all_drawings[idx]["properties"])
+                folium.GeoJson(all_drawings[idx], tooltip=tooltip_html).add_to(st.session_state['map'])
 
     
-                             
-            for idx, drawing in enumerate(data["all_drawings"]):
-                drawing["properties"] = str(idx)
-                tooltip_html = '<div style="font-size: 16px;">gateid:{}</div>'.format(drawing["properties"])
-                folium.GeoJson(drawing, tooltip=tooltip_html).add_to(st.session_state['map'])
 
     except Exception as e:
         pass
