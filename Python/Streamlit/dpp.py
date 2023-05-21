@@ -131,10 +131,10 @@ with right:
 
     
                              
-        for idx, drawing in enumerate(data["all_drawings"]):
-            drawing["properties"] = str(idx)
-            tooltip_html = '<div style="font-size: 16px;">gateid:{}</div>'.format(drawing["properties"])
-            folium.GeoJson(drawing, tooltip=tooltip_html).add_to(st.session_state['map'])
+            for idx, drawing in enumerate(data["all_drawings"]):
+                drawing["properties"] = str(idx)
+                tooltip_html = '<div style="font-size: 16px;">gateid:{}</div>'.format(drawing["properties"])
+                folium.GeoJson(drawing, tooltip=tooltip_html).add_to(st.session_state['map'])
 
     except Exception as e:
         pass
