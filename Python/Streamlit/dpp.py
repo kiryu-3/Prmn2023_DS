@@ -45,9 +45,10 @@ if 'map' not in st.session_state: # 初期化
     
     
     st.session_state['map'] = m
-    st.session_state['draw_data'] = list()
     
-   
+    
+if 'draw_data' not in st.session_state: # 初期化
+    st.session_state['draw_data'] = list()
 
     
 if uploaded_csvfile is not None:
