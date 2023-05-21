@@ -66,7 +66,7 @@ if uploaded_csvfile is not None:
 
     features = []
     for i, row in df.iterrows():
-        indexNum = self.list2.index(row.iloc[0])
+        indexNum = list2.index(row.iloc[0])
         feature = {
             "type": "Feature",
             "geometry": {
