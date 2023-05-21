@@ -3,13 +3,10 @@ import sys
 import pandas as pd
 import folium
 
-from streamlit_folium import folium_static
 import streamlit as st
 import json
 from folium import plugins
 from folium.plugins import Draw, TimestampedGeoJson
-
-import streamlit as st
 
 hide_menu_style = """
     <style>
@@ -70,52 +67,3 @@ if uploaded_csvfile is not None:
     features = []
     for i, row in df.iterrows():
         feature = {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [row.iloc[3], row.iloc[2]]
-            },
-            "properties": {
-                "icon": "circle",
-                "iconstyle": {
-                    "color": "#4169e1",
-                    "fillColor": "#01bfff",
-                    "weight": 10,
-                    "radius": 3
-                },
-                "time": row.iloc[1]
-            }
-        }
-        features.append(feature)
-
-    geojson = {
-        "type": "LineString",
-        "features": features
-    }
-
-    # レイヤーを削除
-    layers_to_remove = []
-    for layer in st.session_state['map']._children.values():
-        if isinstance(layer, TimestampedGeoJson):
-            layers_to_remove.append(layer.get_name())
-
-    for layer_name in layers_to_remove:
-        del st.session_state['map']._children[layer_name]
-       
-    
-
-    timestamped_geojson = TimestampedGeoJson(
-        geojson,
-        period="PT1M",
-        duration="PT1S",
-        auto_play=False,
-        loop=False
-    )
-
-    # TimestampedGeoJsonをマップに追加
-    timestamped_geojson.add_to(st.session_state['map'])
-    
-# Streamlitでマップを表示
-folium_static(st.session_state['map'], width=st.session_state['width'], height=st.session_state['height'])
-st_data = folium_static(st.session_state['map'], width=725)
-st.write(dict(st_data))
