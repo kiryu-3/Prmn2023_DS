@@ -20,22 +20,6 @@ st.markdown(hide_menu_style, unsafe_allow_html=True)
 with st.sidebar:
   # CSVファイルのアップロード
   uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
-
-  valuew = st.slider(
-    label="Width: from 800 to 1000",
-    min_value=800, 
-    max_value=1000,
-    key="width_slider"
-  )
-  st.session_state['width'] = valuew
-
-  valueh = st.slider(
-    label="Height: from 600 to 1000",
-    min_value=600, 
-    max_value=1000,
-    key="height_slider"
-  )
-  st.session_state['height'] = valueh
   
 if 'map' not in st.session_state: # 初期化
   # 初めての表示時は空のマップを表示
@@ -119,7 +103,7 @@ left, right = st.columns(2)
 with left:
     with st.echo():    
         
-        # st_data = folium_static(st.session_state['map'], width=st.session_state['width'], height=st.session_state['height'])
+        # st_data = folium_static(st.session_state['map'])
         st_data = folium_static(st.session_state['map'], width=725)
     with right:
         data = dict(st_data)
