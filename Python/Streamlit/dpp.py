@@ -121,21 +121,13 @@ with right:
     
     try:
         if data["all_drawings"][0] is not None:
-            # マップの再作成
-            m = folium.Map(location=[42.793553, 141.6958724], zoom_start=16)
-
-            # Leaflet.jsのDrawプラグインを追加
-            draw_options = {'polyline': True, 'rectangle': True, 'circle': False, 'marker': False, 'circlemarker': False}
-            draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
-            draw.add_to(m)
             
             for idx in range(len(data["all_drawings"])):
                     data["all_drawings"][idx]["properties"] = str(idx)
                     tooltip_html = '<div style="font-size: 16px;">gateid:{}</div>'.format(data["all_drawings"][idx]["properties"])
                     # GeoJSONデータをマップに追加する
-                    folium.GeoJson(data["all_drawings"][idx], tooltip=tooltip_html).add_to(m)
+                    folium.GeoJson(data["all_drawings"][idx], tooltip=tooltip_html).add_to(st.session_state['map'])
     
-            st.session_state['map'] = m
                              
             data["all_drawings"][0]["properties"] = "0"
             st.subheader("抜粋データ")
