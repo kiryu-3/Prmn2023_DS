@@ -25,6 +25,12 @@ st.markdown(hide_menu_style, unsafe_allow_html=True)
 if 'df' not in st.session_state: # 初期化
     df = pd.DataFrame()
     st.session_state['df'] = df
+    
+with st.sidebar:
+  # CSVファイルのアップロード
+  uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
+  st.write(st.session_state['df'])
+
 
 if 'map' not in st.session_state: # 初期化
     # 初めての表示時は空のマップを表示
@@ -103,13 +109,6 @@ if uploaded_csvfile is not None:
     timestamped_geojson.add_to(st.session_state['map'])
     
     st.session_state['df'] = df
-
-with st.sidebar:
-  # CSVファイルのアップロード
-  uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
-  st.write(st.session_state['df'])
-    
-left, right = st.columns(2)
 
 
 with left:
