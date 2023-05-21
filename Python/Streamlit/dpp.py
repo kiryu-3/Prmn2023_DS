@@ -85,32 +85,32 @@ if uploaded_csvfile is not None:
         }
         features.append(feature)
     
-    """ ライン軌跡用　現在はコメント
-    line_features = []
-        for itr in self.list2:
-            list3 = list()
-            for i, row in self.df.iterrows():
-                if itr == row[0]:
-                    list3.append(row)
-            df2 = pd.DataFrame(list3)
-            for i in range(len(df2) - 1):
-                line_feature = {
-                    'type': 'Feature',
-                    'geometry': {
-                        'type': 'LineString',
-                        'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
-                                        [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
-                    },
-                    'properties': {
-                        'time': df2.iloc[i, 1]
-                    }
-                }
-                line_features.append(line_feature)
-            line_geojson = {'type': 'FeatureCollection', 'features': line_features}
+#     ライン軌跡用　現在はコメント
+#     line_features = []
+#         for itr in self.list2:
+#             list3 = list()
+#             for i, row in self.df.iterrows():
+#                 if itr == row[0]:
+#                     list3.append(row)
+#             df2 = pd.DataFrame(list3)
+#             for i in range(len(df2) - 1):
+#                 line_feature = {
+#                     'type': 'Feature',
+#                     'geometry': {
+#                         'type': 'LineString',
+#                         'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
+#                                         [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
+#                     },
+#                     'properties': {
+#                         'time': df2.iloc[i, 1]
+#                     }
+#                 }
+#                 line_features.append(line_feature)
+#             line_geojson = {'type': 'FeatureCollection', 'features': line_features}
 
-     # 線のジオJSONを追加
-     folium.GeoJson(line_geojson, name='線の表示/非表示', style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(m)
-     """
+#      # 線のジオJSONを追加
+#      folium.GeoJson(line_geojson, name='線の表示/非表示', style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(m)
+     
     
     geojson = {"type": "FeatureCollection", "features": features}
 
