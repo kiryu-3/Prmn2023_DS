@@ -115,7 +115,7 @@ with left:
 with right:
     data = dict(st_data.copy())
     st.subheader("地図の全データ")
-    st.write(data)
+    st.write(st_data)
     st.subheader("地図の全描画データ")
     st.write(data["all_drawings"])
     
