@@ -52,8 +52,15 @@ if 'map' not in st.session_state: # 初期化
     
     
 if 'draw_data' not in st.session_state: # 初期化
-    st.session_state['draw_data'] = list()
+    st.session_state['draw_data'] = list()   
+    
+# GeoJSONファイルがアップロードされた場合
+if uploaded_geojsonfile is not None:
+    # GeoJSONデータの読み込み
+    geojson_data = json.load(uploaded_geojsonfile)
 
+    # GeoJSONデータを表示
+    folium.GeoJson(geojson_data).add_to(st.session_state['map'])
     
 if uploaded_csvfile is not None:
     file_data = uploaded_csvfile.read()
