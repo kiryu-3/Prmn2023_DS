@@ -43,7 +43,7 @@ if 'map' not in st.session_state: # 初期化
 
     # Leaflet.jsのDrawプラグインを追加
     draw_options = {'polyline': True, 'rectangle': True, 'circle': False, 'marker': False, 'circlemarker': False}
-    draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
+    draw = folium.plugins.Draw(export=True, position='topleft', draw_options=draw_options)
     draw.add_to(m)
     
     
