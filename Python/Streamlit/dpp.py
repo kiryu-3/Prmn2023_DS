@@ -46,7 +46,15 @@ if 'map' not in st.session_state: # 初期化
     draw = folium.plugins.Draw(export=True, position='topleft', draw_options=draw_options)
     draw.add_to(m)
     
+    # Get the HTML representation of the map
+    map_html = m.get_root().render()
+
+    # Modify the HTML representation to customize the export button
+    map_html = map_html.replace('Export', 'Custom Export')
+    map_html = map_html.replace('background-color:white;', 'background-color:lightblue;')
     
+    # Display the customized map in Streamlit
+    st.components.v1.html(map_html, height=500)
     
     st.session_state['map'] = m
     
