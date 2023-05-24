@@ -172,7 +172,7 @@ if st.sidebar.button("Delete"):
     if delete_shape_id:
         try:
             delete_shape_id = int(delete_shape_id)
-            if delete_shape_id <= len(st.session_state['draw_data']):
+            if delete_shape_id > 0 and delete_shape_id <= len(st.session_state['draw_data']):
                 # 削除対象の図形を特定
                 delete_shape = st.session_state['draw_data'][delete_shape_id-1]
 
@@ -185,6 +185,9 @@ if st.sidebar.button("Delete"):
                 st.session_state['draw_data'].remove(delete_shape)
 
                 st.sidebar.success("図形を削除しました")
+            else:
+                st.sidebar.error("指定されたIDの図形は存在しません")
         except:
-            st.sidebar.error("指定されたIDの図形は存在しません")
+            st.sidebar.error("自然数値を入力してください")
+
 
