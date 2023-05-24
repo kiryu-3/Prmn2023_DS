@@ -137,9 +137,7 @@ if uploaded_csvfile is not None:
 
 # call to render Folium map in Streamlit
 st_data = st_folium(st.session_state['map'], width=725)  
-st.subheader("地図の全描画データ")
-st.write(data["all_drawings"])
-st.write(st.session_state['draw_data'])     
+  
 
 
 data = copy.deepcopy(dict(st_data))
@@ -162,6 +160,9 @@ try:
 except Exception as e:
     pass
 
+st.subheader("地図の全描画データ")
+st.write(data["all_drawings"])
+st.write(st.session_state['draw_data'])   
 
 # 削除する図形のIDを入力するテキストボックスを表示
 delete_shape_id = st.sidebar.text_input("削除する図形のIDを入力してください")
