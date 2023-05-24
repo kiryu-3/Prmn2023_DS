@@ -1,3 +1,25 @@
+import streamlit as st
+import folium
+
+# Foliumマップを作成
+m = folium.Map(location=[141.552515, 42.9896012], zoom_start=13)
+
+# 図形を作成
+polygon = folium.Polygon(locations=[(141.563163, 42.9787932), (141.552515, 42.9896012), (141.562971, 42.9857792)])
+
+# ポップアップを作成
+popup_text = "This is a polygon"
+popup = folium.Popup(popup_text, max_width=250)
+
+# ポップアップを図形に追加
+polygon.add_child(popup)
+
+# 図形をマップに追加
+m.add_child(polygon)
+
+# StreamlitでFoliumマップを表示
+st.write(m._repr_html_(), unsafe_allow_html=True)
+
 # import io
 # import streamlit as st
 # import json
@@ -208,25 +230,3 @@
 #                 st.session_state['draw_data'].pop(int(number-1))
 #                 st_data["all_drawings"]
 #                 break
-
-import streamlit as st
-import folium
-
-# Foliumマップを作成
-m = folium.Map(location=[141.552515, 42.9896012], zoom_start=13)
-
-# 図形を作成
-polygon = folium.Polygon(locations=[(141.563163, 42.9787932), (141.552515, 42.9896012), (141.562971, 42.9857792)])
-
-# ポップアップを作成
-popup_text = "This is a polygon"
-popup = folium.Popup(popup_text, max_width=250)
-
-# ポップアップを図形に追加
-polygon.add_child(popup)
-
-# 図形をマップに追加
-m.add_child(polygon)
-
-# StreamlitでFoliumマップを表示
-st.write(m._repr_html_(), unsafe_allow_html=True)
