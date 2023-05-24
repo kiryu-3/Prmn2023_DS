@@ -181,7 +181,7 @@ try:
             data["all_drawings"][idx]["properties"] = str(idx)
             st.session_state['draw_data'].append(data["all_drawings"][idx])
             tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(data["all_drawings"][idx])+1)
-            folium.GeoJson(data["all_drawings"][idx], tooltip=tooltip_html).add_to(st.session_state['map'])
+            folium.GeoJson(data["all_drawings"][idx], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
 
 
 
@@ -195,7 +195,7 @@ if len(st.session_state['draw_data']) >= 1:
     number = st.number_input(
         label=f"0から{len(st.session_state['draw_data'])}で1刻みの値を選択してください",
         min_value = 0.0,
-        max_value = 1.0,
+        max_value = len(st.session_state['draw_data']),
         value = 1.0,
         step=0.1,
         format="%0.2f"  # 小数点2桁表示
