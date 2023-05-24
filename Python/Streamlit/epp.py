@@ -199,6 +199,13 @@ if len(st.session_state['draw_data']) >= 1:
         max_value = float(len(st.session_state['draw_data'])),
         value = 1.0,
         step=1.0,
-        format="%0.2f"  # 小数点2桁表示
+        format="%0.2f",  # 小数点2桁表示
+        on_click=delete_data
     )
     st.write(f'選択された値: {number}')
+    def delete_data():
+        for data in st.session_state['draw_data']:
+            if float(data["properties"]) == number:
+                st.session_state['draw_data'].pop(int(number))
+                break
+
