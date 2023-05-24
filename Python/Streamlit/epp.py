@@ -29,13 +29,12 @@ if 'df' not in st.session_state: # 初期化
     
     
 with st.sidebar:
-  # GeoJSONファイルのアップロード
-  uploaded_geojsonfile = st.file_uploader("GeoJSONファイルをアップロード", type=["geojson"])
+    # GeoJSONファイルのアップロード
+    uploaded_geojsonfile = st.file_uploader("GeoJSONファイルをアップロード", type=["geojson"])
 
-
-  # CSVファイルのアップロード
-  uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
-  st.write(st.session_state['df'])
+    # CSVファイルのアップロード
+    uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
+    st.write(st.session_state['df'])
 
 
 if 'map' not in st.session_state: # 初期化
@@ -108,34 +107,7 @@ if uploaded_csvfile is not None:
             }
         }
         features.append(feature)
-    
-#     ライン軌跡用　現在はコメント
-#     line_features = []
-#         for itr in self.list2:
-#             list3 = list()
-#             for i, row in self.df.iterrows():
-#                 if itr == row[0]:
-#                     list3.append(row)
-#             df2 = pd.DataFrame(list3)
-#             for i in range(len(df2) - 1):
-#                 line_feature = {
-#                     'type': 'Feature',
-#                     'geometry': {
-#                         'type': 'LineString',
-#                         'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
-#                                         [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
-#                     },
-#                     'properties': {
-#                         'time': df2.iloc[i, 1]
-#                     }
-#                 }
-#                 line_features.append(line_feature)
-#             line_geojson = {'type': 'FeatureCollection', 'features': line_features}
 
-#      # 線のジオJSONを追加
-#      folium.GeoJson(line_geojson, name='線の表示/非表示', style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(m)
-     
-    
     geojson = {"type": "FeatureCollection", "features": features}
 
     # レイヤーを削除
@@ -184,28 +156,32 @@ try:
             tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(data["all_drawings"][idx])+1)
             folium.GeoJson(data["all_drawings"][idx], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
 
-
-
 except Exception as e:
     pass
 
-st.subheader("地図の全描画データ")
-st.write(data["all_drawings"])
-st.write(st.session_state['draw_data'])     
-        
 
-if len(st.session_state['draw_data']) >= 1:
-    number = st.number_input(
-        label=f"0から{len(st.session_state['draw_data'])}で1刻みの値を選択してください",
-        min_value = 0.0,
-        max_value = float(len(st.session_state['draw_data'])),
-        value = 0.0,
-        step=1.0,
-        format="%0.2f",  # 小数点2桁表示
-    )
-    st.write(f'選択された値: {number}')
-    for data in st.session_state['draw_data']:
-            if float(data["properties"]) == number:
-                st.session_state['draw_data'].pop(int(number-1))
-                st_data["all_drawings"]
-                break
+# 削除する図形のIDを入力するテキストボックスを表示
+delete_shape_id = st.sidebar.text_input("削除する図形のIDを入力してください")
+
+# Deleteボタンがクリックされた場合
+if st.sidebar.button("Delete"):
+    if delete_shape_id:
+        delete_shape_id = int(delete_shape_id)
+        if delete_shape_id <= len(st.session_state['draw_data']):
+            # 削除対象の図形を特定
+            delete_shape = st.session_state['draw_data'][delete_shape_id-1]
+            
+            # 図形をマップから削除
+            for key, value in st.session_state['map']._children.items():
+                if isinstance(value, folium.features.GeoJson) and value.geojson == delete_shape:
+                    del st.session_state['map']._children[key]
+            
+            # draw_dataから図形を削除
+            st.session_state['draw_data'].remove(delete_shape)
+        
+            st.sidebar.success("図形を削除しました")
+        else:
+            st.sidebar.error("指定されたIDの図形は存在しません")
+
+# マップを更新して変更を反映させる
+st_folium(st.session_state['map'], width=725)
