@@ -213,10 +213,10 @@ import streamlit as st
 import folium
 
 # Foliumマップを作成
-m = folium.Map(location=[latitude, longitude], zoom_start=13)
+m = folium.Map(location=[141.552515, 42.9896012], zoom_start=13)
 
 # 図形を作成
-polygon = folium.Polygon(locations=[(lat1, lon1), (lat2, lon2), (lat3, lon3)])
+polygon = folium.Polygon(locations=[(141.563163, 42.9787932), (141.552515, 42.9896012), (141.562971, 42.9857792)])
 
 # ポップアップを作成
 popup_text = "This is a polygon"
