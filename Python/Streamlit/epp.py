@@ -192,6 +192,12 @@ except Exception as e:
 st.subheader("地図の全描画データ")
 st.write(st.session_state['draw_data'])     
 
+def delete_data():
+        for data in st.session_state['draw_data']:
+            if float(data["properties"]) == number:
+                st.session_state['draw_data'].pop(int(number))
+                break
+
 if len(st.session_state['draw_data']) >= 1:
     number = st.number_input(
         label=f"0から{len(st.session_state['draw_data'])}で1刻みの値を選択してください",
@@ -203,9 +209,5 @@ if len(st.session_state['draw_data']) >= 1:
         on_click=delete_data
     )
     st.write(f'選択された値: {number}')
-    def delete_data():
-        for data in st.session_state['draw_data']:
-            if float(data["properties"]) == number:
-                st.session_state['draw_data'].pop(int(number))
-                break
+    
 
