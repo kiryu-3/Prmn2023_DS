@@ -77,7 +77,7 @@ if uploaded_csvfile is not None:
 
     # バイナリデータからPandas DataFrameを作成
     df = pd.read_csv(io.BytesIO(file_data))
-    df.sort_values(by=[self.df.columns[1]], inplace=True)
+    df.sort_values(by=[df.columns[1]], inplace=True)
     
     list2 = list()
 
