@@ -4,21 +4,25 @@ import folium
 # Foliumマップを作成
 m = folium.Map(location=[141.552515, 42.9896012], zoom_start=13)
 
-# 図形を作成
-polygon = folium.Polygon(locations=[(141.563163, 42.9787932), (141.552515, 42.9896012), (141.562971, 42.9857792)])
+# streamlit_foliumを使用してマップを表示
+st_data = st_folium(m, width=725)
 
-# ポップアップを作成
-popup_text = "This is a polygon"
-popup = folium.Popup(popup_text, max_width=250)
+# 図形を描画する際にpopupを追加
+feature_group = folium.FeatureGroup(name='My Shapes')
+shape = folium.vector_layers.CircleMarker(
+    location=[shape_latitude, shape_longitude],
+    radius=10,
+    color='red',
+    fill=True,
+    fill_color='red'
+)
+popup_content = 'This is a shape!'
+shape.add_child(folium.Popup(popup_content))
+feature_group.add_child(shape)
+m.add_child(feature_group)
 
-# ポップアップを図形に追加
-polygon.add_child(popup)
-
-# 図形をマップに追加
-m.add_child(polygon)
-
-# StreamlitでFoliumマップを表示
-st.write(m._repr_html_(), unsafe_allow_html=True)
+# マップを更新
+st_data._update_map(m)
 
 # import io
 # import streamlit as st
