@@ -191,12 +191,7 @@ except Exception as e:
 
 st.subheader("地図の全描画データ")
 st.write(st.session_state['draw_data'])     
-
-def delete_data():
-        for data in st.session_state['draw_data']:
-            if float(data["properties"]) == number:
-                st.session_state['draw_data'].pop(int(number))
-                break
+        
 
 if len(st.session_state['draw_data']) >= 1:
     number = st.number_input(
@@ -208,5 +203,8 @@ if len(st.session_state['draw_data']) >= 1:
         format="%0.2f",  # 小数点2桁表示
     )
     st.write(f'選択された値: {number}')
-    
+    for data in st.session_state['draw_data']:
+            if float(data["properties"]) == number:
+                st.session_state['draw_data'].pop(int(number))
+                break
 
