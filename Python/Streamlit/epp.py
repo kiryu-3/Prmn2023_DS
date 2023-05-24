@@ -173,7 +173,7 @@ if st.sidebar.button("Delete"):
             
             # 図形をマップから削除
             for key, value in st.session_state['map']._children.items():
-                if isinstance(value, folium.features.GeoJson) and value.geojson == delete_shape:
+                if isinstance(value, folium.features.GeoJson) and value.data == delete_shape:
                     del st.session_state['map']._children[key]
             
             # draw_dataから図形を削除
