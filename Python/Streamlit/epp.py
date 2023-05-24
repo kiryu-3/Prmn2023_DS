@@ -179,7 +179,7 @@ try:
 
         # GeoJSONデータをマップに追加する
         for idx in range(len(data["all_drawings"])):
-            data["all_drawings"][idx]["properties"] = str(idx)
+            data["all_drawings"][idx]["properties"] = str(idx+1)
             st.session_state['draw_data'].append(data["all_drawings"][idx])
             tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(data["all_drawings"][idx])+1)
             folium.GeoJson(data["all_drawings"][idx], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
@@ -196,15 +196,15 @@ st.write(st.session_state['draw_data'])
 if len(st.session_state['draw_data']) >= 1:
     number = st.number_input(
         label=f"0から{len(st.session_state['draw_data'])}で1刻みの値を選択してください",
-        min_value = 1.0,
+        min_value = 0.0,
         max_value = float(len(st.session_state['draw_data'])),
-        value = 1.0,
+        value = 0.0,
         step=1.0,
         format="%0.2f",  # 小数点2桁表示
     )
     st.write(f'選択された値: {number}')
     for data in st.session_state['draw_data']:
             if float(data["properties"]) == number:
-                st.session_state['draw_data'].pop(int(number))
+                st.session_state['draw_data'].pop(int(number-1))
                 break
 
