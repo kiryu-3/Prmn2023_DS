@@ -183,5 +183,3 @@ if st.sidebar.button("Delete"):
         else:
             st.sidebar.error("指定されたIDの図形は存在しません")
 
-# マップを更新して変更を反映させる
-st_folium(st.session_state['map'], width=725)
