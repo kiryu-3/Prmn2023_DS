@@ -180,6 +180,7 @@ try:
         for idx in range(len(data["all_drawings"])):
             data["all_drawings"][idx]["properties"] = str(idx)
             st.session_state['draw_data'].append(data["all_drawings"][idx])
+            st.experimental_rerun()
             tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(data["all_drawings"][idx])+1)
             folium.GeoJson(data["all_drawings"][idx], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
 
