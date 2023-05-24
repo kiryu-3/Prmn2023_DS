@@ -1,37 +1,27 @@
 import streamlit as st
 import pandas as pd
 
-# サンプルのDataFrameを作成します
-data = {
-    'Name': ['John', 'Emily', 'Michael'],
-    'Age': [25, 30, 35],
-    'City': ['New York', 'London', 'Paris']
-}
+# サンプルのDataFrameを作成
+data = {'Name': ['John', 'Emily', 'Sam', 'Alice'],
+        'Age': [25, 30, 35, 40]}
 df = pd.DataFrame(data)
 
-# DataFrameを表示します
-st.write(df)
+# DataFrameを表示
+selected_index = st.table(df)
 
-# ユーザーが行をクリックしたときに実行される関数
-def process_row(row):
-    # 選択された行のデータを表示します
-    st.write("選択された行のデータ:")
-    st.write(row)
+# 選択された行のインデックスを取得
+if selected_index is not None:
+    selected_row = df.loc[selected_index]
+    st.write("Selected Row:")
+    st.write(selected_row)
 
-    # 選択された行に対して処理を施す例（ここでは年齢を2倍にします）
-    processed_age = row['Age'] * 2
-    st.write("処理後の年齢:", processed_age)
+    # 選択された行に対して処理を施す関数
+    def process_selected_row(row):
+        # ここで行に対する処理を行う
+        # 例えば、行の特定の列の値を取得するなど
+        name = row['Name']
+        age = row['Age']
+        st.write(f"Name: {name}, Age: {age}")
 
-# 行のクリックイベントを処理するコールバック関数
-def on_click(row):
-    process_row(row)
-
-# DataFrameの各行に対してクリックイベントを設定します
-for index, row in df.iterrows():
-    # クリックイベントを設定するために一意のキーを作成します
-    key = f"row-{index}"
-    # 行を表示します
-    st.write(row, key=key)
-    # クリックイベントを設定します
-    st.button(label="処理する", key=key, on_click=on_click, args=(row,))
-
+    # 選択された行に対して処理を施す
+    process_selected_row(selected_row)
