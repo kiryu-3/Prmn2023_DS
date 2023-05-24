@@ -136,7 +136,10 @@ if uploaded_csvfile is not None:
 
 
 # call to render Folium map in Streamlit
-st_data = st_folium(st.session_state['map'], width=725)     
+st_data = st_folium(st.session_state['map'], width=725)  
+st.subheader("地図の全描画データ")
+st.write(data["all_drawings"])
+st.write(st.session_state['draw_data'])     
 
 
 data = copy.deepcopy(dict(st_data))
