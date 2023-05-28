@@ -167,6 +167,9 @@ with st.sidebar:
             st.session_state["kiseki"] = True
 
         elif not kiseki:
+            st.experimental_rerun()
+            
+            
             st.session_state["kiseki"] = False
 
             
