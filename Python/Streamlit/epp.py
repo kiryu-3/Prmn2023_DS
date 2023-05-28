@@ -85,7 +85,8 @@ if uploaded_csvfile is not None:
     # バイナリデータからPandas DataFrameを作成
     df = pd.read_csv(io.BytesIO(file_data))
     data = df["newid"].unique()
-    output_df = pd.DataFrame([data])
+    unique_values = df["newid"].unique()
+    df_new = pd.DataFrame(unique_values, columns=["newid"])
     # df.sort_values(by=[df.columns[1]], inplace=True)
     
     list2 = list()
@@ -142,7 +143,7 @@ if uploaded_csvfile is not None:
     timestamped_geojson.add_to(st.session_state['map'])
     
     # DataFrameをサイドバーに表示
-    st.session_state['df'] = output_df
+    st.session_state['df'] = df_new
 
 
 # call to render Folium map in Streamlit
