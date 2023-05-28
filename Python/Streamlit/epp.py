@@ -73,6 +73,8 @@ with st.sidebar:
 #     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 #     )
 
+    kiseki = st.checkbox(label='軌跡の表示', key='kiseki')
+
 
     # GeoJSONファイルがアップロードされた場合
     if uploaded_geojsonfile is not None:
@@ -135,7 +137,7 @@ with st.sidebar:
             }
             features.append(feature)
             
-        if st.checkbox(label='軌跡の表示') and not st.session_state.get("kiseki", False):
+        if kiseki and not st.session_state.get("kiseki", False):
             line_features = []
             for itr in list2:
                 list3 = []
@@ -164,7 +166,7 @@ with st.sidebar:
 
             st.session_state["kiseki"] = True
 
-        elif not st.checkbox(label='軌跡の表示'):
+        elif not kiseki:
             st.session_state["kiseki"] = False
 
             
