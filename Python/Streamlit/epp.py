@@ -145,6 +145,10 @@ if uploaded_csvfile is not None:
     
     # DataFrameをサイドバーに表示
     st.session_state['df'] = df_new
+    
+    selected_values = st.multiselect("選択してください", df["newid"].unique())
+
+    st.write("選択された値:", selected_values)
 
 
 # call to render Folium map in Streamlit
