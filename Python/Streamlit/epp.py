@@ -59,8 +59,6 @@ if 'kiseki' not in st.session_state: # 初期化
     st.session_state['kiseki'] = False
     
 with st.sidebar:
-    # GeoJSONファイルのアップロード
-    uploaded_geojsonfile = st.file_uploader("GeoJSONファイルをアップロード", type=["geojson"])
 
     # CSVファイルのアップロード
     uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
@@ -74,15 +72,6 @@ with st.sidebar:
 #     )
 
     kiseki = st.checkbox(label='軌跡の表示', key='kiseki2')
-
-
-    # GeoJSONファイルがアップロードされた場合
-    if uploaded_geojsonfile is not None:
-        # GeoJSONデータの読み込み
-        geojson_data = json.load(uploaded_geojsonfile)
-
-        # GeoJSONデータを表示
-        folium.GeoJson(geojson_data).add_to(st.session_state['map'])
         
     if uploaded_csvfile is not None:
         file_data = uploaded_csvfile.read()
