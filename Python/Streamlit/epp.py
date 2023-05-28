@@ -141,7 +141,7 @@ with st.sidebar:
             line_features = []
             for itr in list2:
                 list3 = []
-                for i, row in df.iterrows():
+                for i, row in sorted_df.iterrows():
                     if itr == row[0]:
                         list3.append(row)
                 df2 = pd.DataFrame(list3)
