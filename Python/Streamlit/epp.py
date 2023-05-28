@@ -89,6 +89,13 @@ with st.sidebar:
         unique_values = df["newid"].unique()
         df_new = pd.DataFrame(unique_values, columns=["newid"])
         df_new.index = range(1, len(df_new) + 1)
+        if len(df_new) != 0:
+            selected_values = st.multiselect("選択してください", df["newid"].unique())
+
+            st.write("選択された値:", selected_values)
+            
+            df = df[df["newid"].isin(selected_values)]
+            
         # df.sort_values(by=[df.columns[1]], inplace=True)
         
         list2 = list()
@@ -147,9 +154,6 @@ with st.sidebar:
         # DataFrameをサイドバーに表示
         st.session_state['df'] = df_new
         
-        selected_values = st.multiselect("選択してください", df["newid"].unique())
-
-        st.write("選択された値:", selected_values)
     
     # 削除する図形のIDを入力するテキストボックスを表示
     if len(st.session_state['draw_data']) != 0:
