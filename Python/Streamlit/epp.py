@@ -135,7 +135,7 @@ with st.sidebar:
             }
             features.append(feature)
             
-        if st.checkbox(label='軌跡の表示', key='kiseki') and not st.session_state.get("kiseki", False):
+        if st.checkbox(label='軌跡の表示') and not st.session_state.get("kiseki", False):
             line_features = []
             for itr in list2:
                 list3 = []
@@ -164,7 +164,7 @@ with st.sidebar:
 
             st.session_state["kiseki"] = True
 
-        elif not st.checkbox(label='軌跡の表示', key='kiseki'):
+        elif not st.checkbox(label='軌跡の表示'):
             st.session_state["kiseki"] = False
 
             
