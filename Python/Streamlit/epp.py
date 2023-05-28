@@ -102,6 +102,7 @@ with st.sidebar:
                 sorted_df = df
             else:
                 sorted_df = df[df.iloc[:, 0].isin(selected_values)]
+                st.session_state['kiseki'] = False
         else:
             sorted_df = df
             
