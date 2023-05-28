@@ -104,7 +104,6 @@ with st.sidebar:
         # df.sort_values(by=[df.columns[1]], inplace=True)
         
         list2 = list()
-        list2.append("kara")
 
         for i, row in df.iterrows():
             if row.iloc[0] not in list2:
