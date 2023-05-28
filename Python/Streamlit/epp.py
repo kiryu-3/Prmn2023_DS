@@ -95,7 +95,6 @@ with st.sidebar:
             sorted_df = df
             
         # df.sort_values(by=[df.columns[1]], inplace=True)
-        st.write(sorted_df)
         
         list2 = list()
 
