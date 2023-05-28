@@ -94,7 +94,10 @@ with st.sidebar:
 
             st.write("選択された値:", selected_values)
             
-            sorted_df = df[df.iloc[:, 0].isin(selected_values)]
+            if len(selected_values) == 0:
+                sorted_df = df
+            else:
+                sorted_df = df[df.iloc[:, 0].isin(selected_values)]
         else:
             sorted_df = df
             
