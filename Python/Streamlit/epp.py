@@ -178,8 +178,6 @@ with st.sidebar:
                 except:
                     st.sidebar.error("自然数値を入力してください")
 
-                    df.to_excel(buf := BytesIO(), index=False)
-
 
 # call to render Folium map in Streamlit
 st_data = st_folium(st.session_state['map'], width=725)  
