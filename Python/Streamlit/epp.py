@@ -86,11 +86,11 @@ with st.sidebar:
         # バイナリデータからPandas DataFrameを作成
         df = pd.read_csv(io.BytesIO(file_data))
 
-        unique_values = df.columns[0].unique()
+        unique_values = df.iloc[:, 0].unique()
         df_new = pd.DataFrame(unique_values, columns=["newid"])
         df_new.index = range(1, len(df_new) + 1)
         if len(df_new) != 0:
-            selected_values = st.multiselect("選択してください", df.columns[0].unique())
+            selected_values = st.multiselect("選択してください", df.iloc[:, 0].unique())
 
             st.write("選択された値:", selected_values)
             
