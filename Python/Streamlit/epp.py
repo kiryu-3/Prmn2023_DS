@@ -87,6 +87,7 @@ with st.sidebar:
             
             if len(selected_values) == 0:
                 sorted_df = df
+                st.session_state["kiseki"] = False
             else:
                 sorted_df = df[df.iloc[:, 0].isin(selected_values)]
                 st.session_state['kiseki'] = False
