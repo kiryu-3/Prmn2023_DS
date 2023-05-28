@@ -54,7 +54,9 @@ if 'draw_data' not in st.session_state: # 初期化
 if 'df' not in st.session_state: # 初期化
     df = pd.DataFrame()
     st.session_state['df'] = df
-    
+
+if 'kiseki' not in st.session_state: # 初期化
+    st.session_state['kiseki'] = False
     
 with st.sidebar:
     # GeoJSONファイルのアップロード
@@ -133,7 +135,7 @@ with st.sidebar:
             }
             features.append(feature)
             
-        if st.checkbox(label='軌跡の表示', key='kiseki'):
+        if st.checkbox(label='軌跡の表示', key='kiseki') and ~(st.session_state["kiseki"]):
             line_features = []
             for itr in list2:
                 list3 = []
@@ -160,7 +162,12 @@ with st.sidebar:
             # 線のジオJSONを追加
             folium.GeoJson(line_geojson, name='線の表示/非表示', style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
 
-        
+            st.session_state["kiseki"] = True
+            
+        elif ~(st.checkbox(label='軌跡の表示', key='kiseki')):
+            st.session_state["kiseki"] = False
+            
+            
         geojson = {"type": "FeatureCollection", "features": features}
 
         # レイヤーを削除
