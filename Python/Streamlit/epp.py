@@ -34,7 +34,16 @@ with st.sidebar:
 
     # CSVファイルのアップロード
     uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
+    data = uploaded_csvfile["newid"].unique()
+    st.session_state['df'] = pd.DataFrame([data])
     st.write(st.session_state['df'])
+    
+    st.download_button(
+    "Download",
+    buf.getvalue(),
+    "sample.xlsx",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+)
 
 
 if 'map' not in st.session_state: # 初期化
@@ -190,5 +199,8 @@ if st.sidebar.button("Delete"):
                 st.sidebar.error("指定されたIDの図形は存在しません")
         except:
             st.sidebar.error("自然数値を入力してください")
+
+            df.to_excel(buf := BytesIO(), index=False)
+            
 
 
