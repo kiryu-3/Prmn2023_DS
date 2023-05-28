@@ -135,7 +135,7 @@ with st.sidebar:
             }
             features.append(feature)
             
-        if st.checkbox(label='軌跡の表示', key='kiseki') and ~(st.session_state["kiseki"]):
+        if st.checkbox(label='軌跡の表示', key='kiseki') and not st.session_state.get("kiseki", False):
             line_features = []
             for itr in list2:
                 list3 = []
@@ -163,9 +163,10 @@ with st.sidebar:
             folium.GeoJson(line_geojson, name='線の表示/非表示', style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
 
             st.session_state["kiseki"] = True
-            
-        elif ~(st.checkbox(label='軌跡の表示', key='kiseki')):
+
+        elif not st.checkbox(label='軌跡の表示', key='kiseki'):
             st.session_state["kiseki"] = False
+
             
             
         geojson = {"type": "FeatureCollection", "features": features}
