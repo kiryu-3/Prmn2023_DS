@@ -87,6 +87,7 @@ if uploaded_csvfile is not None:
     data = df["newid"].unique()
     unique_values = df["newid"].unique()
     df_new = pd.DataFrame(unique_values, columns=["newid"])
+    df_new.index = range(1, len(df_new) + 1)
     # df.sort_values(by=[df.columns[1]], inplace=True)
     
     list2 = list()
