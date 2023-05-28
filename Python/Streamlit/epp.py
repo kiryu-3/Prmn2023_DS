@@ -167,7 +167,13 @@ with st.sidebar:
             st.session_state["kiseki"] = True
 
         elif not kiseki:
-            # st.experimental_rerun()
+            # 線のジオJSONを削除する
+            line_layers_to_remove = []
+            for key, value in st.session_state['map']._children.items():
+                if isinstance(value, folium.features.GeoJson) and value.options.get('name') == '線の表示/非表示':
+                    line_layers_to_remove.append(key)
+            for key in line_layers_to_remove:
+                del st.session_state['map']._children[key]
             
             
             st.session_state["kiseki"] = False
