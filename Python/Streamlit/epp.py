@@ -23,27 +23,6 @@ hide_menu_style = """
 
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
-if 'df' not in st.session_state: # 初期化
-    df = pd.DataFrame()
-    st.session_state['df'] = df
-    
-    
-with st.sidebar:
-    # GeoJSONファイルのアップロード
-    uploaded_geojsonfile = st.file_uploader("GeoJSONファイルをアップロード", type=["geojson"])
-
-    # CSVファイルのアップロード
-    uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
-    st.write(st.session_state['df'])
-    
-#     st.download_button(
-#     "Download",
-#     buf.getvalue(),
-#     "sample.xlsx",
-#     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-#     )
-
-
 if 'map' not in st.session_state: # 初期化
     # 初めての表示時は空のマップを表示
     m = folium.Map(location=[42.793553, 141.6958724], zoom_start=16)
@@ -68,87 +47,137 @@ if 'map' not in st.session_state: # 初期化
     st.session_state['map'] = m
     
     
+    
 if 'draw_data' not in st.session_state: # 初期化
-    st.session_state['draw_data'] = list()   
+    st.session_state['draw_data'] = list()  
+
+if 'df' not in st.session_state: # 初期化
+    df = pd.DataFrame()
+    st.session_state['df'] = df
     
-# GeoJSONファイルがアップロードされた場合
-if uploaded_geojsonfile is not None:
-    # GeoJSONデータの読み込み
-    geojson_data = json.load(uploaded_geojsonfile)
-
-    # GeoJSONデータを表示
-    folium.GeoJson(geojson_data).add_to(st.session_state['map'])
     
-if uploaded_csvfile is not None:
-    file_data = uploaded_csvfile.read()
+with st.sidebar:
+    # GeoJSONファイルのアップロード
+    uploaded_geojsonfile = st.file_uploader("GeoJSONファイルをアップロード", type=["geojson"])
 
-    # バイナリデータからPandas DataFrameを作成
-    df = pd.read_csv(io.BytesIO(file_data))
-    data = df["newid"].unique()
-    unique_values = df["newid"].unique()
-    df_new = pd.DataFrame(unique_values, columns=["newid"])
-    df_new.index = range(1, len(df_new) + 1)
-    # df.sort_values(by=[df.columns[1]], inplace=True)
+    # CSVファイルのアップロード
+    uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
+    st.write(st.session_state['df'])
     
-    list2 = list()
+#     st.download_button(
+#     "Download",
+#     buf.getvalue(),
+#     "sample.xlsx",
+#     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+#     )
 
-    for i, row in df.iterrows():
-        if row.iloc[0] not in list2:
-            list2.append(row.iloc[0])
 
-    features = []
-    for i, row in df.iterrows():
-        indexNum = list2.index(row.iloc[0])
-        feature = {
-            "type": "Feature",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [row.iloc[3], row.iloc[2]]
-            },
-            "properties": {
-                "icon": "circle",
-                "iconstyle": {
-                    "color": "#4169e1",
-                    "fillColor": "#01bfff",
-                    "weight": 10,
-                    "radius": 3
+    # GeoJSONファイルがアップロードされた場合
+    if uploaded_geojsonfile is not None:
+        # GeoJSONデータの読み込み
+        geojson_data = json.load(uploaded_geojsonfile)
+
+        # GeoJSONデータを表示
+        folium.GeoJson(geojson_data).add_to(st.session_state['map'])
+        
+    if uploaded_csvfile is not None:
+        file_data = uploaded_csvfile.read()
+
+        # バイナリデータからPandas DataFrameを作成
+        df = pd.read_csv(io.BytesIO(file_data))
+        data = df["newid"].unique()
+        unique_values = df["newid"].unique()
+        df_new = pd.DataFrame(unique_values, columns=["newid"])
+        df_new.index = range(1, len(df_new) + 1)
+        # df.sort_values(by=[df.columns[1]], inplace=True)
+        
+        list2 = list()
+
+        for i, row in df.iterrows():
+            if row.iloc[0] not in list2:
+                list2.append(row.iloc[0])
+
+        features = []
+        for i, row in df.iterrows():
+            indexNum = list2.index(row.iloc[0])
+            feature = {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [row.iloc[3], row.iloc[2]]
                 },
-                "time": row.iloc[1],
-                "popup": f"{indexNum+1} - {row.iloc[0]}",
-                "ID": row.iloc[0]
+                "properties": {
+                    "icon": "circle",
+                    "iconstyle": {
+                        "color": "#4169e1",
+                        "fillColor": "#01bfff",
+                        "weight": 10,
+                        "radius": 3
+                    },
+                    "time": row.iloc[1],
+                    "popup": f"{indexNum+1} - {row.iloc[0]}",
+                    "ID": row.iloc[0]
+                }
             }
-        }
-        features.append(feature)
+            features.append(feature)
 
-    geojson = {"type": "FeatureCollection", "features": features}
+        geojson = {"type": "FeatureCollection", "features": features}
 
-    # レイヤーを削除
-    if 'map' in st.session_state:
-        layers_to_remove = []
-        for key, value in st.session_state['map']._children.items():
-            if isinstance(value, TimestampedGeoJson):
-                layers_to_remove.append(key)
-        for key in layers_to_remove:
-            del st.session_state['map']._children[key]
+        # レイヤーを削除
+        if 'map' in st.session_state:
+            layers_to_remove = []
+            for key, value in st.session_state['map']._children.items():
+                if isinstance(value, TimestampedGeoJson):
+                    layers_to_remove.append(key)
+            for key in layers_to_remove:
+                del st.session_state['map']._children[key]
 
 
-    timestamped_geojson = TimestampedGeoJson(
-        geojson,
-        period="PT1M",
-        duration="PT1S",
-        auto_play=False,
-        loop=False
-    )
+        timestamped_geojson = TimestampedGeoJson(
+            geojson,
+            period="PT1M",
+            duration="PT1S",
+            auto_play=False,
+            loop=False
+        )
 
-    # TimestampedGeoJsonをマップに追加
-    timestamped_geojson.add_to(st.session_state['map'])
+        # TimestampedGeoJsonをマップに追加
+        timestamped_geojson.add_to(st.session_state['map'])
+        
+        # DataFrameをサイドバーに表示
+        st.session_state['df'] = df_new
+        
+        selected_values = st.multiselect("選択してください", df["newid"].unique())
+
+        st.write("選択された値:", selected_values)
     
-    # DataFrameをサイドバーに表示
-    st.session_state['df'] = df_new
-    
-    selected_values = st.sidebar.multiselect("選択してください", df["newid"].unique())
+    # 削除する図形のIDを入力するテキストボックスを表示
+    delete_shape_id = st.text_input("削除する図形のIDを入力してください")
 
-    st.sidebar.write("選択された値:", selected_values)
+    # Deleteボタンがクリックされた場合
+    if st.button("Delete"):
+        if delete_shape_id:
+            try:
+                delete_shape_id = int(delete_shape_id)
+                if delete_shape_id > 0 and delete_shape_id <= len(st.session_state['draw_data']):
+                    # 削除対象の図形を特定
+                    delete_shape = st.session_state['draw_data'][delete_shape_id-1]
+
+                    # 図形をマップから削除
+                    for key, value in st.session_state['map']._children.items():
+                        if isinstance(value, folium.features.GeoJson) and value.data == delete_shape:
+                            del st.session_state['map']._children[key]
+
+                    # draw_dataから図形を削除
+                    st.session_state['draw_data'].remove(delete_shape)
+
+                    st.sidebar.success("図形を削除しました")
+                else:
+                    st.sidebar.error("指定されたIDの図形は存在しません")
+            except:
+                st.sidebar.error("自然数値を入力してください")
+
+                df.to_excel(buf := BytesIO(), index=False)
 
 
 # call to render Folium map in Streamlit
@@ -180,33 +209,7 @@ st.subheader("地図の全描画データ")
 st.write(data["all_drawings"])
 st.write(st.session_state['draw_data'])   
 
-# 削除する図形のIDを入力するテキストボックスを表示
-delete_shape_id = st.sidebar.text_input("削除する図形のIDを入力してください")
 
-# Deleteボタンがクリックされた場合
-if st.sidebar.button("Delete"):
-    if delete_shape_id:
-        try:
-            delete_shape_id = int(delete_shape_id)
-            if delete_shape_id > 0 and delete_shape_id <= len(st.session_state['draw_data']):
-                # 削除対象の図形を特定
-                delete_shape = st.session_state['draw_data'][delete_shape_id-1]
-
-                # 図形をマップから削除
-                for key, value in st.session_state['map']._children.items():
-                    if isinstance(value, folium.features.GeoJson) and value.data == delete_shape:
-                        del st.session_state['map']._children[key]
-
-                # draw_dataから図形を削除
-                st.session_state['draw_data'].remove(delete_shape)
-
-                st.sidebar.success("図形を削除しました")
-            else:
-                st.sidebar.error("指定されたIDの図形は存在しません")
-        except:
-            st.sidebar.error("自然数値を入力してください")
-
-            df.to_excel(buf := BytesIO(), index=False)
             
 
 
