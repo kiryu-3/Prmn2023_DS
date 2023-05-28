@@ -73,7 +73,7 @@ with st.sidebar:
 #     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 #     )
 
-    kiseki = st.checkbox(label='軌跡の表示', key='kiseki')
+    kiseki = st.checkbox(label='軌跡の表示', key='kiseki2')
 
 
     # GeoJSONファイルがアップロードされた場合
