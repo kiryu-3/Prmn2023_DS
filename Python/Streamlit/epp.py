@@ -85,27 +85,30 @@ with st.sidebar:
 
         # バイナリデータからPandas DataFrameを作成
         df = pd.read_csv(io.BytesIO(file_data))
-        data = df["newid"].unique()
-        unique_values = df["newid"].unique()
+
+        unique_values = df.columns[0].unique()
         df_new = pd.DataFrame(unique_values, columns=["newid"])
         df_new.index = range(1, len(df_new) + 1)
         if len(df_new) != 0:
-            selected_values = st.multiselect("選択してください", df["newid"].unique())
+            selected_values = st.multiselect("選択してください", df.columns[0].unique())
 
             st.write("選択された値:", selected_values)
             
-            df = df[df["newid"].isin(selected_values)]
+            sorted_df = df[df.columns[0].isin(selected_values)]
+        else:
+            sorted_df = df
             
         # df.sort_values(by=[df.columns[1]], inplace=True)
         
         list2 = list()
+        list2.append("kara")
 
         for i, row in df.iterrows():
             if row.iloc[0] not in list2:
                 list2.append(row.iloc[0])
 
         features = []
-        for i, row in df.iterrows():
+        for i, row in sorted_df.iterrows():
             indexNum = list2.index(row.iloc[0])
             feature = {
                 "type": "Feature",
