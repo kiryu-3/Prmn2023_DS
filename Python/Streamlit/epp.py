@@ -95,8 +95,6 @@ with st.sidebar:
         df_new.index = range(1, len(df_new) + 1)
         if len(df_new) != 0:
             selected_values = st.multiselect("選択してください", df.iloc[:, 0].unique())
-
-            st.write("選択された値:", selected_values)
             
             if len(selected_values) == 0:
                 sorted_df = df
