@@ -154,10 +154,12 @@ with st.sidebar:
                     }
                 }
                 line_features.append(line_feature)
+
         line_geojson = {'type': 'FeatureCollection', 'features': line_features}
 
         # 線のジオJSONを追加
         folium.GeoJson(line_geojson, name='線の表示/非表示', style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+
         
         geojson = {"type": "FeatureCollection", "features": features}
 
