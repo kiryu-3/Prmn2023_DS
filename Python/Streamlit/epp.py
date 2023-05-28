@@ -34,16 +34,14 @@ with st.sidebar:
 
     # CSVファイルのアップロード
     uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
-    data = uploaded_csvfile["newid"].unique()
-    st.session_state['df'] = pd.DataFrame([data])
     st.write(st.session_state['df'])
     
-    st.download_button(
-    "Download",
-    buf.getvalue(),
-    "sample.xlsx",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-)
+#     st.download_button(
+#     "Download",
+#     buf.getvalue(),
+#     "sample.xlsx",
+#     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+#     )
 
 
 if 'map' not in st.session_state: # 初期化
@@ -86,7 +84,9 @@ if uploaded_csvfile is not None:
 
     # バイナリデータからPandas DataFrameを作成
     df = pd.read_csv(io.BytesIO(file_data))
-    df.sort_values(by=[df.columns[1]], inplace=True)
+    data = df["new_id"].unique()
+    df = pd.DataFrame([data])
+    # df.sort_values(by=[df.columns[1]], inplace=True)
     
     list2 = list()
 
