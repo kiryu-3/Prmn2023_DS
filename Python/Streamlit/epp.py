@@ -84,7 +84,7 @@ if uploaded_csvfile is not None:
 
     # バイナリデータからPandas DataFrameを作成
     df = pd.read_csv(io.BytesIO(file_data))
-    data = df["new_id"].unique()
+    data = df["newid"].unique()
     df = pd.DataFrame([data])
     # df.sort_values(by=[df.columns[1]], inplace=True)
     
