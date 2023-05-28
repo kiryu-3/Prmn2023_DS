@@ -137,7 +137,7 @@ with st.sidebar:
             }
             features.append(feature)
             
-        if kiseki and not st.session_state.get("kiseki", False):
+        if kiseki and not st.session_state["kiseki"]:
             line_features = []
             for itr in list2:
                 list3 = []
