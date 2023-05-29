@@ -28,7 +28,10 @@ if 'map' not in st.session_state: # 初期化
     st.session_state['map_area'] = st.empty() 
     cols = st.columns(2)
     st.session_state['layer_delete'] = cols[0].empty() 
-    st.session_state['kiseki_delete'] = cols[1].empty() 
+    st.session_state['kiseki_delete'] = cols[1].empty()
+    map_area = st.session_state['map_area']
+    layer_delete = st.session_state['layer_delete']
+    kiseki_delete = st.session_state['kiseki_delete'] 
     
     # 初めての表示時は空のマップを表示
     m = folium.Map(location=[42.793553, 141.6958724], zoom_start=16)
@@ -66,9 +69,7 @@ if 'kiseki' not in st.session_state: # 初期化
     
 
  
-map_area = st.session_state['map_area']
-layer_delete = st.session_state['layer_delete']
-kiseki_delete = st.session_state['kiseki_delete']  
+ 
     
 with st.sidebar:
 
