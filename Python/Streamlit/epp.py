@@ -263,7 +263,7 @@ if len(st.session_state['draw_data']) != 0:
                     # draw_dataから図形を削除
                     st.session_state['draw_data'].remove(delete_shape)
                     st.success("図形を削除しました")
-                    # st.experimental_rerun()
+                    raise st.experimental_rerun()
                 else:
                     st.error("指定されたIDの図形は存在しません")
             except:
