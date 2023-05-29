@@ -184,6 +184,10 @@ with st.sidebar:
         # DataFrameをサイドバーに表示
         st.session_state['df'] = df_new
         
+    else:
+        df = pd.DataFrame()
+        st.session_state['df'] = df
+        
     
     # 削除する図形のIDを入力するテキストボックスを表示
 #     if len(st.session_state['draw_data']) != 0:
