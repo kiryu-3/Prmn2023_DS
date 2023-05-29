@@ -66,9 +66,9 @@ if 'kiseki' not in st.session_state: # 初期化
     
 
  
-map_area = session_state['map_area']
-graph_button = session_state['graph_button']
-delete_button = session_state['delete_button']  
+map_area = st.session_state['map_area']
+graph_button = st.session_state['graph_button']
+delete_button = st.session_state['delete_button']  
     
 with st.sidebar:
 
