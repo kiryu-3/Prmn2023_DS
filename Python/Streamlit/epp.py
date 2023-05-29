@@ -249,8 +249,9 @@ st.write(st.session_state['draw_data'])
 if len(st.session_state['draw_data']) != 0:
     delete_shape_id = st.text_input("削除する図形のIDを入力してください")
     # Deleteボタンがクリックされた場合
-    if st.button("Delete"):
-        if delete_shape_id:
+    if delete_shape_id:
+    
+        if st.button("Delete"):
             try:
                 delete_shape_id = int(delete_shape_id)
                 if delete_shape_id > 0 and delete_shape_id <= len(st.session_state['draw_data']):
