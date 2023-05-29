@@ -24,6 +24,12 @@ hide_menu_style = """
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 if 'map' not in st.session_state: # 初期化
+    
+    map_area = st.empty() 
+    cols = st.columns(2)
+    graph_button = cols[0].empty() 
+    delete_button = cols[1].empty() 
+    
     # 初めての表示時は空のマップを表示
     m = folium.Map(location=[42.793553, 141.6958724], zoom_start=16)
 
@@ -58,10 +64,7 @@ if 'df' not in st.session_state: # 初期化
 if 'kiseki' not in st.session_state: # 初期化
     st.session_state['kiseki'] = False
     
-map_area = st.empty() 
-cols = st.columns(2)
-graph_button = cols[0].empty() 
-delete_button = cols[1].empty() 
+
  
    
     
