@@ -118,12 +118,12 @@ with st.sidebar:
             
         if kiseki and not st.session_state["kiseki"]:
             # 線のジオJSONを削除する
-#             line_layers_to_remove = []
-#             for key, value in st.session_state['map']._children.items():
-#                 if isinstance(value, folium.features.GeoJson):
-#                     line_layers_to_remove.append(key)
-#             for key in line_layers_to_remove:
-#                 del st.session_state['map']._children[key]
+            line_layers_to_remove = []
+            for key, value in st.session_state['map']._children.items():
+                if isinstance(value, folium.features.GeoJson):
+                    line_layers_to_remove.append(key)
+            for key in line_layers_to_remove:
+                del st.session_state['map']._children[key]
                 
             line_features = []
             for itr in list2:
@@ -183,6 +183,10 @@ with st.sidebar:
         
         # DataFrameをサイドバーに表示
         st.session_state['df'] = df_new
+        
+        for data in st.session_state['draw_data']:
+            tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(data)+1)
+            folium.GeoJson(data, popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
         
     else:
         df = pd.DataFrame()
