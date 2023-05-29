@@ -263,6 +263,7 @@ if len(st.session_state['draw_data']) != 0:
                         if isinstance(value, folium.features.GeoJson) and value.data == delete_shape:
                             del st.session_state['map']._children[key]
                     # draw_dataから図形を削除
+                    st.write(st.session_state['draw_data'])
                     st.session_state['draw_data'].remove(delete_shape)
                     st.write(st.session_state['draw_data'])
                     st.button("Do")
