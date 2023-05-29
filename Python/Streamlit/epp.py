@@ -65,7 +65,7 @@ with st.sidebar:
         
     if uploaded_csvfile is not None:
         
-        kiseki = st.checkbox(label='軌跡の表示', key='kiseki2')
+        
         
         file_data = uploaded_csvfile.read()
         # バイナリデータからPandas DataFrameを作成
@@ -86,6 +86,7 @@ with st.sidebar:
             sorted_df = df
             
         # df.sort_values(by=[df.columns[1]], inplace=True)
+        kiseki = st.checkbox(label='軌跡の表示', key='kiseki2')
         
         list2 = list()
         for i, row in df.iterrows():
