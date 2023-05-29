@@ -71,9 +71,11 @@ with st.sidebar:
 #     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 #     )
 
-    kiseki = st.checkbox(label='軌跡の表示', key='kiseki2')
+    
         
     if uploaded_csvfile is not None:
+        
+        
         file_data = uploaded_csvfile.read()
 
         # バイナリデータからPandas DataFrameを作成
@@ -125,6 +127,8 @@ with st.sidebar:
                 }
             }
             features.append(feature)
+        
+        kiseki = st.checkbox(label='軌跡の表示', key='kiseki2')
             
         if kiseki and not st.session_state["kiseki"]:
             # 線のジオJSONを削除する
