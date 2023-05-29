@@ -207,6 +207,7 @@ with st.sidebar:
                         st.sidebar.error("指定されたIDの図形は存在しません")
                 except:
                     st.sidebar.error("自然数値を入力してください")
+                    
 # call to render Folium map in Streamlit
 st_data = st_folium(st.session_state['map'], width=725)  
   
