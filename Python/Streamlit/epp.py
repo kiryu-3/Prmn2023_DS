@@ -263,6 +263,7 @@ if len(st.session_state['draw_data']) != 0:
                             del st.session_state['map']._children[key]
                     # draw_dataから図形を削除
                     st.session_state['draw_data'].remove(delete_shape)
+                    st.button("Do")
                 else:
                     st.error("指定されたIDの図形は存在しません")
             except:
