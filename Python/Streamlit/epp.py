@@ -58,6 +58,13 @@ if 'df' not in st.session_state: # 初期化
 if 'kiseki' not in st.session_state: # 初期化
     st.session_state['kiseki'] = False
     
+map_area = st.empty() 
+cols = st.columns(2)
+graph_button = cols[0].empty() 
+delete_button = cols[1].empty() 
+ 
+   
+    
 with st.sidebar:
 
     # CSVファイルのアップロード
@@ -128,7 +135,7 @@ with st.sidebar:
             }
             features.append(feature)
         
-        kiseki = st.checkbox(label='軌跡の表示', key='kiseki2')
+        kiseki = cols[1].checkbox(label='軌跡の表示', key='kiseki2')
             
         if kiseki and not st.session_state["kiseki"]:
             # 線のジオJSONを削除する
@@ -210,10 +217,10 @@ with st.sidebar:
     
     # 削除する図形のIDを入力するテキストボックスを表示
     if len(st.session_state['draw_data']) != 0:
-        delete_shape_id = st.text_input("削除する図形のIDを入力してください")
+        delete_shape_id = cols[0].text_input("削除する図形のIDを入力してください")
 
         # Deleteボタンがクリックされた場合
-        if st.button("Delete"):
+        if cols[0].button("Delete"):
             if delete_shape_id:
                 try:
                     delete_shape_id = int(delete_shape_id)
@@ -237,7 +244,8 @@ with st.sidebar:
 
 
 # call to render Folium map in Streamlit
-st_data = st_folium(st.session_state['map'], width=725)  
+with map_area:
+    st_data = st_folium(st.session_state['map'], width=725)  
   
 
 
