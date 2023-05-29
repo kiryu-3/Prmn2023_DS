@@ -226,7 +226,7 @@ with st.sidebar:
             delete_shape_id = st.text_input("削除する図形のIDを入力してください")
 
             # Deleteボタンがクリックされた場合
-            if cols[0].button("Delete"):
+            if st.button("Delete"):
                 if delete_shape_id:
                     try:
                         delete_shape_id = int(delete_shape_id)
