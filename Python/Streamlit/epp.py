@@ -61,9 +61,12 @@ with st.sidebar:
 #     "sample.xlsx",
 #     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 #     )
-    kiseki = st.checkbox(label='軌跡の表示', key='kiseki2')
+    
         
     if uploaded_csvfile is not None:
+        
+        kiseki = st.checkbox(label='軌跡の表示', key='kiseki2')
+        
         file_data = uploaded_csvfile.read()
         # バイナリデータからPandas DataFrameを作成
         df = pd.read_csv(io.BytesIO(file_data))
