@@ -226,14 +226,15 @@ try:
         for idx in range(len(data["all_drawings"])):
             data["all_drawings"][idx]["properties"] = str(idx+1)
             st.session_state['draw_data'].append(data["all_drawings"][idx])
-            
+        
+        
+        for data in st.session_state['draw_data']:
+            tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(data)+1)
+            folium.GeoJson(data, popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
             
 except Exception as e:
     pass
 
-for data in st.session_state['draw_data']:
-    tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(data)+1)
-    folium.GeoJson(data, popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
 
 st.subheader("地図の全描画データ")
 # st.write(data["all_drawings"])
