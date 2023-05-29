@@ -255,25 +255,25 @@ with map_area:
   
 
 
-data = copy.deepcopy(dict(st_data))
-# st.subheader("地図の全データ")
-# st.write(data)
-# st.subheader("地図の全描画データ")
-# st.write(data["all_drawings"])
+    data = copy.deepcopy(dict(st_data))
+    # st.subheader("地図の全データ")
+    # st.write(data)
+    # st.subheader("地図の全描画データ")
+    # st.write(data["all_drawings"])
 
 
-try:
-    if st_data["all_drawings"][0] is not None:
+    try:
+        if st_data["all_drawings"][0] is not None:
 
-        # GeoJSONデータをマップに追加する
-        for idx in range(len(data["all_drawings"])):
-            data["all_drawings"][idx]["properties"] = str(idx+1)
-            st.session_state['draw_data'].append(data["all_drawings"][idx])
-            tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(data["all_drawings"][idx])+1)
-            folium.GeoJson(data["all_drawings"][idx], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
+            # GeoJSONデータをマップに追加する
+            for idx in range(len(data["all_drawings"])):
+                data["all_drawings"][idx]["properties"] = str(idx+1)
+                st.session_state['draw_data'].append(data["all_drawings"][idx])
+                tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(data["all_drawings"][idx])+1)
+                folium.GeoJson(data["all_drawings"][idx], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
 
-except Exception as e:
-    pass
+    except Exception as e:
+        pass
 
 # st.subheader("地図の全描画データ")
 # st.write(data["all_drawings"])
