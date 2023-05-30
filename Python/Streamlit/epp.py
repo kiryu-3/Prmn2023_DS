@@ -252,7 +252,7 @@ if len(st.session_state['draw_data']) != 0:
     if delete_shape_id:
     
         if st.button("Delete"):
-            delete_shape_id = int(delete_shape_id)
+                delete_shape_id = int(delete_shape_id)
                 if delete_shape_id > 0 and delete_shape_id < len(st.session_state['draw_data']) + 1:
                     # 削除対象の図形を特定
                     delete_shape = st.session_state['draw_data'][delete_shape_id-1]
