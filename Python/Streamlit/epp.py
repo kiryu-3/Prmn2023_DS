@@ -59,13 +59,13 @@ with st.sidebar:
     
     excel_df = st.session_state['df']
     
-    excel_df.to_excel(buf := BytesIO(), index=False)
-    st.download_button(
-    "Download",
-    buf.getvalue(),
-    "sample.xlsx",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    )
+#     excel_df.to_excel(buf := BytesIO(), index=False)
+#     st.download_button(
+#     "Download",
+#     buf.getvalue(),
+#     "sample.xlsx",
+#     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+#     )
     
         
     if uploaded_csvfile is not None:
