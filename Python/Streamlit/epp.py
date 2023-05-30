@@ -55,12 +55,15 @@ with st.sidebar:
     uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
     st.write(st.session_state['df'])
     
-#     st.download_button(
-#     "Download",
-#     buf.getvalue(),
-#     "sample.xlsx",
-#     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-#     )
+    excel_df = st.session_state['df']
+    
+    excel_df.to_excel(buf := BytesIO(), index=False)
+    st.download_button(
+    "Download",
+    buf.getvalue(),
+    "sample.xlsx",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    )
     
         
     if uploaded_csvfile is not None:
