@@ -70,6 +70,7 @@ with st.sidebar:
         file_data = uploaded_csvfile.read()
         # バイナリデータからPandas DataFrameを作成
         df = pd.read_csv(io.BytesIO(file_data))
+        df.sort_values(by=[self.df.columns[1]], inplace=True)
         unique_values = df.iloc[:, 0].unique()
         df_new = pd.DataFrame(unique_values, columns=["newid"])
         df_new.index = range(1, len(df_new) + 1)
