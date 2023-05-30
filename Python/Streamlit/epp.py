@@ -1,4 +1,6 @@
 import io
+from io import BytesIO
+
 import streamlit as st
 import json
 import folium
