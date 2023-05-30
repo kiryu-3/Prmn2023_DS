@@ -71,6 +71,7 @@ with st.sidebar:
         # バイナリデータからPandas DataFrameを作成
         df = pd.read_csv(io.BytesIO(file_data))
         df.sort_values(by=[df.columns[1]], inplace=True)
+        st.write(df)
         unique_values = df.iloc[:, 0].unique()
         df_new = pd.DataFrame(unique_values, columns=["newid"])
         df_new.index = range(1, len(df_new) + 1)
