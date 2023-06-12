@@ -55,7 +55,7 @@ if 'kiseki' not in st.session_state: # 初期化
     
 with st.sidebar:
     # タブ
-    tab1, tab2, tab3 = st.tabs(["data1", "data2", "data3"])
+    tab1, tab2, tab3 = st.tabs(["Layers", "Data", "Plus"])
     with tab1:
         # CSVファイルのアップロード
         uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
