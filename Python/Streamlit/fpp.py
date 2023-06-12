@@ -258,7 +258,7 @@ if len(st.session_state['draw_data']) != 0:
            
             else:
                 st.error("指定されたIDの図形は存在しません")
-        except:
+    except:
             st.error("自然数値を入力してください")
         
 
