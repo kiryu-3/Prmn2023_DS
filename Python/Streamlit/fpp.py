@@ -238,28 +238,29 @@ except Exception as e:
 if len(st.session_state['draw_data']) != 0:
     delete_shape_id = st.text_input("削除する図形のIDを入力してください")
     
-    try:
-            delete_shape_id = int(delete_shape_id)
-            if delete_shape_id > 0 and delete_shape_id <= len(st.session_state['draw_data']):
-                st.success('図形を削除することができます')
-                # 削除対象の図形を特定
-                delete_shape = st.session_state['draw_data'][delete_shape_id-1]
-                # 図形をマップから削除するためのキーを記録
-                keys_to_remove = []
-                for key, value in st.session_state['map']._children.items():
-                    if isinstance(value, folium.features.GeoJson) and value.data == delete_shape:
-                        keys_to_remove.append(key)
-                # マップから図形を削除
-                for key in keys_to_remove:
-                    del st.session_state['map']._children[key]
-                # draw_dataから図形を削除
-                st.session_state['draw_data'].remove(delete_shape)
-                st.button("Delete")
-           
-            else:
-                st.error("指定されたIDの図形は存在しません")
-    except:
-            st.error("自然数値を入力してください")
+    if delete_shape_id:
+        try:
+                delete_shape_id = int(delete_shape_id)
+                if delete_shape_id > 0 and delete_shape_id <= len(st.session_state['draw_data']):
+                    st.success('図形を削除することができます')
+                    # 削除対象の図形を特定
+                    delete_shape = st.session_state['draw_data'][delete_shape_id-1]
+                    # 図形をマップから削除するためのキーを記録
+                    keys_to_remove = []
+                    for key, value in st.session_state['map']._children.items():
+                        if isinstance(value, folium.features.GeoJson) and value.data == delete_shape:
+                            keys_to_remove.append(key)
+                    # マップから図形を削除
+                    for key in keys_to_remove:
+                        del st.session_state['map']._children[key]
+                    # draw_dataから図形を削除
+                    st.session_state['draw_data'].remove(delete_shape)
+                    st.button("Delete")
+
+                else:
+                    st.error("指定されたIDの図形は存在しません")
+        except:
+                st.error("自然数値を入力してください")
         
 
 # # 削除する図形のIDを入力するテキストボックスを表示
