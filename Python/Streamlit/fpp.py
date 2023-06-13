@@ -244,7 +244,7 @@ if len(st.session_state['draw_data']) != 0:
     for delete_shape_id in delete_shape_ids:
     
         # Deleteボタンがクリックされた場合
-        if delete_shape_id　!= "":
+        if delete_shape_id != "":
             st.write("Deleteボタンをダブルクリックしてください")
             st.button("Delete")
             try:
