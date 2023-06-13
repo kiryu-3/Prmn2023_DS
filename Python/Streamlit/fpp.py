@@ -288,6 +288,7 @@ if len(st.session_state['draw_data']) != 0:
                     del st.session_state['map']._children[key]
                 # draw_dataから図形を削除
                 st.session_state['draw_data'].remove(delete_shape)
+                delete_check = False
                 st.button("Delete")
            
             else:
