@@ -237,8 +237,9 @@ except Exception as e:
 # 削除する図形のIDを入力するテキストボックスを表示
 if len(st.session_state['draw_data']) != 0:
     delete_shape_id = st.text_input("削除する図形のIDを入力してください")
+    check_area = st.empty()
     # selected_datas = st.multiselect("選択してください", [value for value in range(1, len(st.session_state['draw_data']) + 1)])
-    delete_yesno = st.radio(label='本当に削除しますか？',
+    delete_yesno = check_area.radio(label='本当に削除しますか？',
                  options=('Yes', 'No'),
                  index=1,
                  horizontal=True,
