@@ -238,7 +238,7 @@ except Exception as e:
 if len(st.session_state['draw_data']) != 0:
     # delete_shape_id = st.text_input("削除する図形のIDを入力してください")
     multi_area = st.empty()
-    delete_shape_id = multi_area.selectbox("選択してください", [""]
+    delete_shape_id = multi_area.selectbox("削除したい図形のIDを選択してください", [""]
                                             + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)])
     
     # Deleteボタンがクリックされた場合
