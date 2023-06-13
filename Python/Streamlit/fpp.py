@@ -59,6 +59,7 @@ with st.sidebar:
     with tab1:
         # CSVファイルのアップロード
         uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
+        st.write(uploaded_csvfile)
     with tab2:    
         st.write(st.session_state['df'])
         
