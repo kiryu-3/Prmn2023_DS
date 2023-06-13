@@ -26,7 +26,7 @@ if 'map' not in st.session_state: # 初期化
     m = folium.Map(location=[42.793553, 141.6958724], zoom_start=16)
     # Leaflet.jsのDrawプラグインを追加
     draw_options = {'polyline': True, 'rectangle': True, 'circle': False, 'marker': False, 'circlemarker': False}
-    draw = folium.plugins.Draw(export=True, position='topleft', draw_options=draw_options)
+    draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
     draw.add_to(m)
     
     # Custom CSS style for the export button
@@ -236,7 +236,7 @@ except Exception as e:
 
 # 削除する図形のIDを入力するテキストボックスを表示
 if len(st.session_state['draw_data']) != 0:
-    selected_datas = st.multiselect("選択してください", [value for value in range(1, len(st.session_state['draw_data']) + 1)])
+    selected_data = st.selectbox("選択してください", [value for value in range(1, len(st.session_state['draw_data']) + 1)])
     delete_shape_id = st.text_input("削除する図形のIDを入力してください")
     
     if delete_shape_id:
