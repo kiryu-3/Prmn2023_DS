@@ -237,34 +237,34 @@ except Exception as e:
 # 削除する図形のIDを入力するテキストボックスを表示
 if len(st.session_state['draw_data']) != 0:
     delete_shape_id = st.text_input("削除する図形のIDを入力してください")
-    check_area = st.empty()
-    # selected_datas = st.multiselect("選択してください", [value for value in range(1, len(st.session_state['draw_data']) + 1)])
-    delete_yesno = check_area.radio(label='本当に削除しますか？',
-                 options=('Yes', 'No'),
-                 index=1,
-                 horizontal=True,
-    )
-    
-    # Deleteボタンがクリックされた場合
-    if delete_shape_id and delete_yesno == "Yes":
-        try:
-            delete_shape_id = int(delete_shape_id)
-            if delete_shape_id > 0 and delete_shape_id <= len(st.session_state['draw_data']):
-                # 削除対象の図形を特定
-                delete_shape = st.session_state['draw_data'][delete_shape_id - 1]
-                # 図形をマップから削除するためのキーを記録
-                keys_to_remove = []
-                for key, value in st.session_state['map']._children.items():
-                    if isinstance(value, folium.features.GeoJson) and value.data == delete_shape:
-                        keys_to_remove.append(key)
-                # マップから図形を削除
-                for key in keys_to_remove:
-                    del st.session_state['map']._children[key]
-                # draw_dataから図形を削除
-                st.session_state['draw_data'].remove(delete_shape)
-                st.button("Delete")
+    multi_area = st.empty()
+    delete_shape_ids = multi_area.selectbox("選択してください", [""]
+                                            + [value for value in range(1, len(st.session_state['draw_data']) + 1)])
 
-            else:
-                st.error("指定されたIDの図形は存在しません")
-        except:
-            st.error("自然数値を入力してください")
+    for delete_shape_id in delete_shape_ids:
+    
+        # Deleteボタンがクリックされた場合
+        if delete_shape_id　!= "":
+            st.write("Deleteボタンをダブルクリックしてください")
+            st.button("Delete")
+            try:
+                delete_shape_id = int(delete_shape_id)
+                if delete_shape_id > 0 and delete_shape_id <= len(st.session_state['draw_data']):
+                    # 削除対象の図形を特定
+                    delete_shape = st.session_state['draw_data'][delete_shape_id - 1]
+                    # 図形をマップから削除するためのキーを記録
+                    keys_to_remove = []
+                    for key, value in st.session_state['map']._children.items():
+                        if isinstance(value, folium.features.GeoJson) and value.data == delete_shape:
+                            keys_to_remove.append(key)
+                    # マップから図形を削除
+                    for key in keys_to_remove:
+                        del st.session_state['map']._children[key]
+                    # draw_dataから図形を削除
+                    st.session_state['draw_data'].remove(delete_shape)
+                    st.button("Delete")
+
+                else:
+                    st.error("指定されたIDの図形は存在しません")
+            except:
+                st.error("自然数値を入力してください")
