@@ -236,7 +236,7 @@ except Exception as e:
 
 # 削除する図形のIDを入力するテキストボックスを表示
 if len(st.session_state['draw_data']) != 0:
-    selected_datas = st.multiselect("選択してください", [value for value in range(1, len(st.session_state['draw_data']))])
+    selected_datas = st.multiselect("選択してください", [value for value in range(1, len(st.session_state['draw_data']) + 1)])
     delete_shape_id = st.text_input("削除する図形のIDを入力してください")
     
     if delete_shape_id:
