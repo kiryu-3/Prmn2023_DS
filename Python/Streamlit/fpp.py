@@ -218,7 +218,7 @@ try:
     if st_data["all_drawings"][0] is not None:
         # GeoJSONデータをマップに追加する
         for idx in range(len(data["all_drawings"])):
-            data["all_drawings"][idx]["properties"] = str(idx+1)
+            # data["all_drawings"][idx]["properties"] = str(idx+1)
             st.session_state['draw_data'].append(data["all_drawings"][idx])
         
         
