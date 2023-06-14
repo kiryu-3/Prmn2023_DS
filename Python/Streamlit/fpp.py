@@ -240,7 +240,7 @@ except Exception as e:
 
 
 # st.subheader("地図の全描画データ")
-# st.write(data["all_drawings"])
+st.write(data["all_drawings"])
 st.write(st.session_state['draw_data'])
 
 # 削除する図形のIDを入力するテキストボックスを表示
