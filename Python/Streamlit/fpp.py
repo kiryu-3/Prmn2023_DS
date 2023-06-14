@@ -234,7 +234,7 @@ except Exception as e:
 # st.write(data["all_drawings"])
 # st.write(data["all_drawings"])
 # st.write(st.session_state['draw_data'])  
-st.write(st_data)  
+st.write(data)  
 
 # 削除する図形のIDを入力するテキストボックスを表示
 if len(st.session_state['draw_data']) != 0:
