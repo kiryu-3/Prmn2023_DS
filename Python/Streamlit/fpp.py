@@ -237,7 +237,7 @@ try:
             folium.GeoJson(sdata, popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
             
 except Exception as e:
-    st.write("error")
+    st.write(e)
     pass
 
 
