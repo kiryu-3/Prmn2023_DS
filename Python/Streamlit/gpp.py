@@ -68,7 +68,7 @@ with st.sidebar:
 
         # 使用例
         uploaded_files = multi_file_uploader("複数のファイルを選択してください", "file_uploader")
-        st.write(uploaded_csvfiles)
+        st.write(uploaded_files)
         
         
         
