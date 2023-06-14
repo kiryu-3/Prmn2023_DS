@@ -215,7 +215,7 @@ data = copy.deepcopy(dict(st_data))
 # st.subheader("地図の全描画データ")
 # st.write(data["all_drawings"])
 try:
-    if data["all_drawings"] is None or len(data["all_drawings"]) == 0:
+    if data["all_drawings"] is not None and isinstance(data["all_drawings"], list) and len(data["all_drawings"]) > 0:
         # GeoJSONデータをマップに追加する
         if data["last_circle_polygon"] is not None:
                 data["all_drawings"][0]["geometry"]["type"] = "Polygon"
