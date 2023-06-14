@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 def multi_file_uploader(label, key):
     uploaded_files = st.file_uploader(label, key=key, accept_multiple_files=True, type=["csv"])
