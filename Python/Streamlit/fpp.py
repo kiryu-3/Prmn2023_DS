@@ -210,10 +210,10 @@ with st.sidebar:
 st_data = st_folium(st.session_state['map'], width=725)  
   
 data = copy.deepcopy(dict(st_data))
-st.subheader("地図の全データ")
-st.write(data)
+# st.subheader("地図の全データ")
+# st.write(data)
 # st.subheader("地図の全描画データ")
-st.write(data["all_drawings"])
+# st.write(data["all_drawings"])
 try:
     if st_data["all_drawings"][0] is not None:
         # GeoJSONデータをマップに追加する
@@ -233,7 +233,7 @@ except Exception as e:
 # st.subheader("地図の全描画データ")
 # st.write(data["all_drawings"])
 # st.write(data["all_drawings"])
-# st.write(st.session_state['draw_data'])  
+st.write(st.session_state['draw_data'])  
 
 # 削除する図形のIDを入力するテキストボックスを表示
 if len(st.session_state['draw_data']) != 0:
