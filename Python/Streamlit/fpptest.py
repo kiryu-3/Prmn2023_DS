@@ -28,5 +28,4 @@ if uploaded_files:
         "Download",
         buf.getvalue(),
         "sample.csv",
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         )
