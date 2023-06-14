@@ -267,7 +267,7 @@ if len(st.session_state['draw_data']) != 0:
                 del st.session_state['map']._children[key]
             # draw_dataから図形を削除
             st.session_state['draw_data'].remove(delete_shape)
-            st.write("削除しました")
+            tab3.write("削除しました")
             for sdata in st.session_state['draw_data']:
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
                 folium.GeoJson(sdata, popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
