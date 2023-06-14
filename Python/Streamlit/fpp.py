@@ -210,8 +210,8 @@ with st.sidebar:
 st_data = st_folium(st.session_state['map'], width=725)  
   
 data = copy.deepcopy(dict(st_data))
-# st.subheader("地図の全データ")
-# st.write(data)
+st.subheader("地図の全データ")
+st.write(data)
 # st.subheader("地図の全描画データ")
 # st.write(data["all_drawings"])
 try:
@@ -231,7 +231,7 @@ except Exception as e:
 
 
 # st.subheader("地図の全描画データ")
-st.write(data["all_drawings"])
+# st.write(data["all_drawings"])
 # st.write(data["all_drawings"])
 # st.write(st.session_state['draw_data'])  
 
