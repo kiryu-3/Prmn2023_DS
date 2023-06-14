@@ -74,12 +74,12 @@ with st.sidebar:
         
         
     with tab2:    
-        for uploaded_csvfile in uploaded_csvfiles:
+        for uploaded_csvfile in st.session_state['df']:
             st.write(uploaded_csvfile)
         
         
     with tab3:
-            for uploaded_csvfile in st.session_state['df']:
+            for uploaded_csvfile in uploaded_csvfiles:
                 excel_df = st.session_state['df']
 
             #     excel_df.to_excel(buf := BytesIO(), index=False)
