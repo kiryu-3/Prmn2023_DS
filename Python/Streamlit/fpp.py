@@ -217,7 +217,7 @@ data = copy.deepcopy(dict(st_data))
 try:
     if data["all_drawings"] is not None:
         # GeoJSONデータをマップに追加する
-        if len(data["last_circle_polygon"]) != 0:
+        if data["last_circle_polygon"] is not None:
                 st.write("yes")
                 data["all_drawings"][0]["geometry"]["type"] = "Polygon"
                 data["all_drawings"][0]["geometry"]["coordinates"] = data["last_circle_polygon"]["coordinates"]
