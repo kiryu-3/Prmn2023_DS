@@ -218,12 +218,10 @@ try:
     if data["all_drawings"] is not None:
         # GeoJSONデータをマップに追加する
         if data["last_circle_polygon"] is not None:
-                st.write("yes")
                 data["all_drawings"][0]["geometry"]["type"] = "Polygon"
                 data["all_drawings"][0]["geometry"]["coordinates"] = data["last_circle_polygon"]["coordinates"]
-        st.write("ye2s")
+                
         st.session_state['draw_data'].append(data["all_drawings"])
-        st.write(st.session_state['draw_data'])
 #         for idx in range(len(data["all_drawings"])):
 #             # data["all_drawings"][idx]["properties"] = str(idx+1)
 #             if data["last_circle_polygon"] is not None:
@@ -244,8 +242,6 @@ except Exception as e:
 # st.subheader("地図の全描画データ")
 # st.write(data["all_drawings"])
 st.write(data["all_drawings"])
-st.write(st.session_state['draw_data'])  
-st.write(data)  
 
 # 削除する図形のIDを入力するテキストボックスを表示
 if len(st.session_state['draw_data']) != 0:
