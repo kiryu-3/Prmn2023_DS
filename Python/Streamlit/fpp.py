@@ -234,7 +234,7 @@ try:
         
         for sdata in st.session_state['draw_data']:
             tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-            folium.GeoJson(sdata, popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
+            folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
             
 except Exception as e:
     st.write(e)
