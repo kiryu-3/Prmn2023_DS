@@ -219,7 +219,9 @@ try:
         # GeoJSONデータをマップに追加する
         if data["last_circle_polygon"] is not None:
                 st.write("yes")
+                st.write(data["all_drawings"]["geometry"]["type"])
                 data["all_drawings"]["geometry"]["type"] = "Polygon"
+                st.write(data["all_drawings"]["geometry"]["type"])
                 data["all_drawings"]["geometry"]["coordinates"] = data["last_circle_polygon"]["coordinates"]
                 st.session_state['draw_data'].append(data["all_drawings"])
 #         for idx in range(len(data["all_drawings"])):
