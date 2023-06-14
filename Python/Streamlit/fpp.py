@@ -220,7 +220,7 @@ try:
         if data["last_circle_polygon"] is not None:
                 data["all_drawings"]["geometry"]["type"] = "Polygon"
                 data["all_drawings"]["geometry"]["coordinates"] = data["last_circle_polygon"]["coordinates"]
-        st.session_state['draw_data'].append(data["all_drawings"])
+                st.session_state['draw_data'].append(data["all_drawings"])
 #         for idx in range(len(data["all_drawings"])):
 #             # data["all_drawings"][idx]["properties"] = str(idx+1)
 #             if data["last_circle_polygon"] is not None:
