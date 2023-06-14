@@ -229,9 +229,9 @@ try:
 #             st.session_state['draw_data'].append(data["all_drawings"][idx])
         
         
-        for data in st.session_state['draw_data']:
-            tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(data)+1)
-            folium.GeoJson(data, popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
+        for sdata in st.session_state['draw_data']:
+            tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+            folium.GeoJson(sdata, popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
             
 except Exception as e:
     pass
