@@ -25,7 +25,7 @@ if 'map' not in st.session_state: # 初期化
     # 初めての表示時は空のマップを表示
     m = folium.Map(location=[42.793553, 141.6958724], zoom_start=16)
     # Leaflet.jsのDrawプラグインを追加
-    draw_options = {'polyline': True, 'rectangle': True, 'circle': False, 'marker': False, 'circlemarker': False}
+    draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
     draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
     draw.add_to(m)
     
@@ -233,7 +233,7 @@ except Exception as e:
 # st.subheader("地図の全描画データ")
 # st.write(data["all_drawings"])
 # st.write(data["all_drawings"])
-# st.write(st.session_state['draw_data'])  
+st.write(st.session_state['draw_data'])  
 
 # 削除する図形のIDを入力するテキストボックスを表示
 if len(st.session_state['draw_data']) != 0:
