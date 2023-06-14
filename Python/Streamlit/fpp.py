@@ -205,6 +205,11 @@ with st.sidebar:
             else:
                 df = pd.DataFrame()
                 st.session_state['df'] = df
+                # レイヤーの削除
+                for layer in st.session_state['map'].layers:
+                    if isinstance(layer, TimestampedGeoJson):
+                        layer.remove_from(st.session_state['map'])
+
                     
 # call to render Folium map in Streamlit
 st_data = st_folium(st.session_state['map'], width=725)  
