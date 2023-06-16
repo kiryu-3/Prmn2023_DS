@@ -264,7 +264,7 @@ try:
         if data["last_circle_polygon"] is not None:
                 data["all_drawings"][0]["geometry"]["type"] = "Polygon"
                 data["all_drawings"][0]["geometry"]["coordinates"] = data["last_circle_polygon"]["coordinates"]
-                data["all_drawings"][0]["properties"] = data["center"]
+                data["all_drawings"][0]["properties"]["center"] = data["center"]
                 
         st.session_state['draw_data'].append(data["all_drawings"])
 #         for idx in range(len(data["all_drawings"])):
