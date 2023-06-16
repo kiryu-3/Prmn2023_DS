@@ -266,8 +266,8 @@ try:
                 data["all_drawings"][0]["geometry"]["coordinates"] = data["last_circle_polygon"]["coordinates"]
                 center_list = data["last_active_drawing"]["geometry"]["coordinates"]
                 center_dict = dict()
-                center_dict["lat"] = center_list["center"][0]
-                center_dict["lng"] = center_list["center"][1]
+                center_dict["lat"] = center_list[0]
+                center_dict["lng"] = center_list[1]
                 data["all_drawings"][0]["properties"]["center"] = center_dict
                 
         st.session_state['draw_data'].append(data["all_drawings"])
