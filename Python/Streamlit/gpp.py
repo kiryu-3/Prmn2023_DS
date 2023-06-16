@@ -255,7 +255,7 @@ st_data = st_folium(st.session_state['map'], width=725)
   
 data = copy.deepcopy(dict(st_data))
 # st.subheader("地図の全データ")
-st.write(data)
+# st.write(data)
 # st.subheader("地図の全描画データ")
 # st.write(data["all_drawings"])
 try:
@@ -284,9 +284,9 @@ except Exception as e:
     pass
 
 
-# st.subheader("地図の全描画データ")
+st.subheader("地図の全描画データ")
 # st.write(data["all_drawings"])
-# st.write(st.session_state['draw_data'])
+st.write(st.session_state['draw_data'])
 
 # 削除する図形のIDを入力するテキストボックスを表示
 if len(st.session_state['draw_data']) != 0:
