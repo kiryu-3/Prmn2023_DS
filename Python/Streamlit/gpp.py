@@ -59,16 +59,16 @@ with st.sidebar:
     tab1, tab2, tab3 = st.tabs(["Layers", "Data", "Plus"])
     with tab1:
         # CSVファイルのアップロード
-#         uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
-#         st.write(uploaded_csvfile)
+        uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
+        st.write(uploaded_csvfile)
 
-        def multi_file_uploader(label, key):
-            uploaded_files = st.file_uploader(label, key=key, accept_multiple_files=True)
-            return uploaded_files
+        # def multi_file_uploader(label, key):
+        #     uploaded_files = st.file_uploader(label, key=key, accept_multiple_files=True)
+        #     return uploaded_files
 
-        # 使用例
-        uploaded_csvfiles = multi_file_uploader("複数のファイルを選択してください", "file_uploader")
-        st.write(uploaded_csvfiles)
+        # # 使用例
+        # uploaded_csvfiles = multi_file_uploader("複数のファイルを選択してください", "file_uploader")
+        # st.write(uploaded_csvfiles)
         
         
         
@@ -79,7 +79,7 @@ with st.sidebar:
         
         
     with tab3:
-            for uploaded_csvfile in uploaded_csvfiles:
+            # for uploaded_csvfile in uploaded_csvfiles:
                 excel_df = st.session_state['df']
 
             #     excel_df.to_excel(buf := BytesIO(), index=False)
@@ -91,7 +91,8 @@ with st.sidebar:
             #     )
 
 
-                if uploaded_csvfiles is not None and len(uploaded_csvfiles) > 0:
+                # if uploaded_csvfiles is not None and len(uploaded_csvfiles) > 0:
+                uploaded_csvfile is not None:
 
 
 
