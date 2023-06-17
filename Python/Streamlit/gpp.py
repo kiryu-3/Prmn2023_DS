@@ -74,8 +74,7 @@ with st.sidebar:
         
         
     with tab2:    
-        for uploaded_csvfile in st.session_state['df']:
-            st.write(uploaded_csvfile)
+         st.write(st.session_state['df'])
         
         
     with tab3:
