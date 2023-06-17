@@ -92,7 +92,7 @@ with st.sidebar:
 
 
                 # if uploaded_csvfiles is not None and len(uploaded_csvfiles) > 0:
-                uploaded_csvfile is not None:
+                if uploaded_csvfile is not None:
 
 
 
