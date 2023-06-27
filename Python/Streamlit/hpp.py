@@ -54,10 +54,14 @@ if 'kiseki' not in st.session_state: # 初期化
     st.session_state['kiseki'] = False
 if 'kiseki_data' not in st.session_state: # 初期化
     st.session_state['kiseki_data'] = dict() 
+if 'gate_data' not in st.session_state: # 初期化
+    st.session_state['gate_data'] = list()     
+if "line_geojson" not in st.session_state: # 初期化
+    st.session_state['line_geojson'] = None
     
 with st.sidebar:
     # タブ
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["Layers", "Data_info","Gate_info", "Test", "Plus"])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(["Layers", "Data_info", "Gate_info", "Kiseki_info", "Plus"])
     tab3.write("hello")
     with tab1:
         # CSVファイルのアップロード
@@ -79,7 +83,7 @@ with st.sidebar:
          st.write(st.session_state['df'])
         
         
-    with tab4:
+    with tab5:
             # for uploaded_csvfile in uploaded_csvfiles:
             excel_df = st.session_state['df']
 
@@ -147,6 +151,39 @@ with st.sidebar:
                         }
                     }
                     features.append(feature)
+                line_features = []
+                for itr in list2:
+                    st.session_state['kiseki_data'][f'{itr}'] = list()
+                for itr in list2:
+                    list3 = []
+                    for i, row in sorted_df.iterrows():
+                        if itr == row[0]:
+                            list3.append(row)
+                    df2 = pd.DataFrame(list3)
+                    for i in range(len(df2) - 1):
+                        line_feature = {
+                            'type': 'Feature',
+                            'geometry': {
+                                'type': 'LineString',
+                                'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
+                                                [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
+                            },
+                            'properties': {
+                                'time': df2.iloc[i, 1]
+                            }
+                        }
+                        line_features.append(line_feature)
+                        st.session_state['kiseki_data'][f'{itr}'].append([[df2.iloc[i, 3], df2.iloc[i, 2]],
+                                                [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]])
+                tab4.write(st.session_state['kiseki_data'])
+                # tab5.write(df2)
+                # tab3.write(list2)
+                # tab3.write(line_features)
+                line_geojson = {'type': 'FeatureCollection', 'features': line_features}
+                st.session_state["line_geojson"] = line_geojson
+                # 線のジオJSONを追加
+                # folium.GeoJson(line_geojson, name='線の表示/非表示', style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+                # st.session_state["kiseki"] = True
 
                 if kiseki and not st.session_state["kiseki"]:
                     # 線のジオJSONを削除する
@@ -157,37 +194,37 @@ with st.sidebar:
                     for key in line_layers_to_remove:
                         del st.session_state['map']._children[key]
 
-                    line_features = []
-                    for itr in list2:
-                        st.session_state['kiseki_data'][f'{itr}'] = list()
-                    for itr in list2:
-                        list3 = []
-                        for i, row in sorted_df.iterrows():
-                            if itr == row[0]:
-                                list3.append(row)
-                        df2 = pd.DataFrame(list3)
-                        for i in range(len(df2) - 1):
-                            line_feature = {
-                                'type': 'Feature',
-                                'geometry': {
-                                    'type': 'LineString',
-                                    'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
-                                                    [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
-                                },
-                                'properties': {
-                                    'time': df2.iloc[i, 1]
-                                }
-                            }
-                            line_features.append(line_feature)
-                            st.session_state['kiseki_data'][f'{itr}'].append([[df2.iloc[i, 3], df2.iloc[i, 2]],
-                                                    [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]])
-                    tab3.write(st.session_state['kiseki_data'])
-                    # tab5.write(df2)
-                    # tab3.write(list2)
-                    # tab3.write(line_features)
-                    line_geojson = {'type': 'FeatureCollection', 'features': line_features}
+                    # line_features = []
+                    # for itr in list2:
+                    #     st.session_state['kiseki_data'][f'{itr}'] = list()
+                    # for itr in list2:
+                    #     list3 = []
+                    #     for i, row in sorted_df.iterrows():
+                    #         if itr == row[0]:
+                    #             list3.append(row)
+                    #     df2 = pd.DataFrame(list3)
+                    #     for i in range(len(df2) - 1):
+                    #         line_feature = {
+                    #             'type': 'Feature',
+                    #             'geometry': {
+                    #                 'type': 'LineString',
+                    #                 'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
+                    #                                 [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
+                    #             },
+                    #             'properties': {
+                    #                 'time': df2.iloc[i, 1]
+                    #             }
+                    #         }
+                    #         line_features.append(line_feature)
+                    #         st.session_state['kiseki_data'][f'{itr}'].append([[df2.iloc[i, 3], df2.iloc[i, 2]],
+                    #                                 [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]])
+                    # tab2.write(st.session_state['kiseki_data'])
+                    # # tab5.write(df2)
+                    # # tab3.write(list2)
+                    # # tab3.write(line_features)
+                    # line_geojson = {'type': 'FeatureCollection', 'features': line_features}
                     # 線のジオJSONを追加
-                    folium.GeoJson(line_geojson, name='線の表示/非表示', style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+                    folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示', style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
                     st.session_state["kiseki"] = True
                 elif not kiseki:
                     # 線のジオJSONを削除する
@@ -197,8 +234,7 @@ with st.sidebar:
                             line_layers_to_remove.append(key)
                     for key in line_layers_to_remove:
                         del st.session_state['map']._children[key]
-
-
+                        
                     st.session_state["kiseki"] = False
 
 
@@ -291,6 +327,7 @@ try:
             tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
             folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
             
+            
 except Exception as e:
     st.write(e)
     pass
@@ -303,7 +340,7 @@ st.write(st.session_state['draw_data'])
 # 削除する図形のIDを入力するテキストボックスを表示
 if len(st.session_state['draw_data']) != 0:
     # delete_shape_id = st.text_input("削除する図形のIDを入力してください")
-    multi_area = tab4.empty()
+    multi_area = tab5.empty()
     delete_shape_id = multi_area.selectbox("削除したい図形のIDを選択してください", [""]
                                             + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)])
     
@@ -328,4 +365,19 @@ if len(st.session_state['draw_data']) != 0:
             for sdata in st.session_state['draw_data']:
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
                 folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
-                
+
+    for sdata in st.session_state['draw_data']:
+        st.session_state['gate_data'].append(sdata["geometry"]["coordinates"])
+        
+    zukei_id = tab3.selectbox("表示したい図形のIDを選択してください", [""]
+                                            + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)])
+    if zukei_id != "":
+        # 表示対象の図形を特定
+        delete_shape = st.session_state['gate_data'][zukei_id - 1]
+        if len(delete_shape) == 2:
+            tab3.write(f"ゲート{zukei_id}(ライン))
+        else:
+            tab3.write(f"ゲート{zukei_id}(ポリゴン))
+        tab3.write(delete_shape)
+else:
+    st.session_state['gate_data'] = list()
