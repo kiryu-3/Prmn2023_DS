@@ -175,6 +175,8 @@ with st.sidebar:
                         st.session_state['kiseki_data'][f'{itr}'].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],
                                                        [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]],
                                                  '日時': df2.iloc[i, 1]})
+                        # st.session_state['kiseki_data'][f'{itr}'].append([[df2.iloc[i, 3], df2.iloc[i, 2]],
+                                                       [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]])
 
                 tab4.write(st.session_state['kiseki_data'])
                 # tab5.write(df2)
@@ -326,7 +328,8 @@ try:
         
         for sdata in st.session_state['draw_data']:
             tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-            folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
+            folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
+            # folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
             
             
 except Exception as e:
@@ -365,7 +368,8 @@ if len(st.session_state['draw_data']) != 0:
             tab3.write("削除しました")
             for sdata in st.session_state['draw_data']:
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-                folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
+                folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
+                # folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
 
     for sdata in st.session_state['draw_data']:
         st.session_state['gate_data'].append(sdata[0]["geometry"]["coordinates"])
