@@ -374,9 +374,12 @@ def are_lines_intersecting(line1, line2):
         else:
             return False
 
-# 削除する図形のIDを入力するテキストボックスを表示
+# 削除する図形のIDを入力するテキストボックスを表示len(st.session_state['draw_data'])-1)
 if len(st.session_state['draw_data']) != 0:
-    tuuka_list = [0 for _ in range(len(st.session_state['draw_data'])-1)]
+    tuuka_list = list()
+    for _ in range(len(st.session_state['draw_data'])-1):
+        tuuka_list.append(0)
+    # tuuka_list = [0 for _ in range(len(st.session_state['draw_data'])-1)]
    
     if len(st.session_state['df']) != 0:      
         found_intersection = False
