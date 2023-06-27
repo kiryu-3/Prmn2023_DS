@@ -159,6 +159,7 @@ with st.sidebar:
 
                     line_features = []
                     for itr in list2:
+                        st.session_state['kiseki_data'][f'{itr}'] = list()
                         list3 = []
                         for i, row in sorted_df.iterrows():
                             if itr == row[0]:
@@ -177,12 +178,12 @@ with st.sidebar:
                                 }
                             }
                             line_features.append(line_feature)
-                            st.session_state['kiseki_data'].append([[df2.iloc[i, 3], df2.iloc[i, 2]],
+                            st.session_state['kiseki_data'][f'{itr}'].append([[df2.iloc[i, 3], df2.iloc[i, 2]],
                                                     [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]])
-                    # tab3.write(st.session_state['kiseki_data'])
+                    tab3.write(st.session_state['kiseki_data'])
                     # tab5.write(df2)
-                    tab3.write(list2)
-                    tab3.write(line_features)
+                    # tab3.write(list2)
+                    # tab3.write(line_features)
                     line_geojson = {'type': 'FeatureCollection', 'features': line_features}
                     # 線のジオJSONを追加
                     folium.GeoJson(line_geojson, name='線の表示/非表示', style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
