@@ -372,6 +372,7 @@ if len(st.session_state['draw_data']) != 0:
     zukei_id = zukei_area.selectbox("表示したい図形のIDを選択してください", [""]
                                             + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)])
     if zukei_id != "":
+        zukei_id = int(zukei_id)
         # 表示対象の図形を特定
         delete_shape = st.session_state['gate_data'][zukei_id - 1]
         if len(delete_shape) == 2:
