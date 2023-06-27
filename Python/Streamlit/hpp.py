@@ -161,7 +161,6 @@ with st.sidebar:
                     for itr in list2:
                         st.session_state['kiseki_data'][f'{itr}'] = list()
                     for itr in list2:
-                        st.session_state['kiseki_data'].append(
                         list3 = []
                         for i, row in sorted_df.iterrows():
                             if itr == row[0]:
