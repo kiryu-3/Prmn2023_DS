@@ -379,8 +379,10 @@ def are_lines_intersecting(line1, line2):
 # 削除する図形のIDを入力するテキストボックスを表示len(st.session_state['draw_data'])-1)
 if len(st.session_state['draw_data']) != 0:
     tab4.write(len(st.session_state['draw_data']))
-    for sdata in st.session_state['draw_data']:
-        st.session_state['gate_data'].append(sdata[0]["geometry"]["coordinates"])
+    
+    # 最初の要素のみを取得してst.session_state['gate_data']に追加
+    sdata = st.session_state['draw_data'][0]
+    st.session_state['gate_data'].append(sdata[0]["geometry"]["coordinates"])
     
     for _ in range(len(st.session_state['gate_data'])):
         st.session_state['tuuka_list'].append("0")
