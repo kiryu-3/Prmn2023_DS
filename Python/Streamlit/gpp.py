@@ -48,9 +48,8 @@ if 'map' not in st.session_state: # 初期化
 if 'draw_data' not in st.session_state: # 初期化
     st.session_state['draw_data'] = list()  
 if 'df' not in st.session_state: # 初期化
-    df_list = list()
-    df_list.append(pd.DataFrame())
-    st.session_state['df'] = df_list
+    df = pd.DataFrame()
+    st.session_state['df'] = df
 if 'kiseki' not in st.session_state: # 初期化
     st.session_state['kiseki'] = False
     
