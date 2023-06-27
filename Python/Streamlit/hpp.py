@@ -228,6 +228,7 @@ with st.sidebar:
                     # 線のジオJSONを追加
                     folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示', style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
                     st.session_state["kiseki"] = True
+                    
                 elif not kiseki:
                     # 線のジオJSONを削除する
                     line_layers_to_remove = []
@@ -292,9 +293,9 @@ with st.sidebar:
                 st.session_state['map'] = m
                 st.session_state['kiseki_data'] = dict()  
                 
-                for sdata in st.session_state['draw_data']:
-                    tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-                    folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
+                # for sdata in st.session_state['draw_data']:
+                #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+                #     folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
                     
 # call to render Folium map in Streamlit
 st_data = st_folium(st.session_state['map'], width=725)  
@@ -325,9 +326,9 @@ try:
 #             st.session_state['draw_data'].append(data["all_drawings"][idx])
         
         
-        for sdata in st.session_state['draw_data']:
-            tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-            folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
+        # for sdata in st.session_state['draw_data']:
+        #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+        #     folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
             # folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
             
             
@@ -340,8 +341,61 @@ st.subheader("地図の全描画データ")
 # st.write(data["all_drawings"])
 st.write(st.session_state['draw_data'])
 
+
+def are_lines_intersecting(line1, line2):
+    x1, y1 = line1[0]
+    x2, y2 = line1[1]
+    x3, y3 = line2[0]
+    x4, y4 = line2[1]
+
+    # 線分の方程式を計算
+    a1 = y2 - y1
+    b1 = x1 - x2
+    c1 = a1 * x1 + b1 * y1
+
+    a2 = y4 - y3
+    b2 = x3 - x4
+    c2 = a2 * x3 + b2 * y3
+
+    # 交差判定
+    determinant = a1 * b2 - a2 * b1
+
+    if determinant == 0:
+        # 2つの線分が平行である場合
+        return False
+    else:
+        intersect_x = (b2 * c1 - b1 * c2) / determinant
+        intersect_y = (a1 * c2 - a2 * c1) / determinant
+
+        # 交差点が線分の範囲内にあるかどうかをチェック
+        if min(x1, x2) <= intersect_x <= max(x1, x2) and min(x3, x4) <= intersect_x <= max(x3, x4) and \
+                min(y1, y2) <= intersect_y <= max(y1, y2) and min(y3, y4) <= intersect_y <= max(y3, y4):
+            return True
+        else:
+            return False
+
 # 削除する図形のIDを入力するテキストボックスを表示
 if len(st.session_state['draw_data']) != 0:
+    if len(st.session_state['df']) != 0:      
+        found_intersection = False
+        tuuka_list = [0 for _ in range(len(st.session_state['gate_data'][0])-1)]
+            
+    
+        # IDでループ
+        for key, values in st.session_state['kiseki_data'].items():
+            for value in values:
+                    line1 = [(value["座標"][0][0], value["座標"][0][1]),
+                             (value["座標"][1][0], value["座標"][1][1])]
+                    # ゲートでループ
+                    for idx in range(len(st.session_state['gate_data'][0])-1):
+                        line2 = [(st.session_state['gate_data'][0][idx][0], st.session_state['gate_data'][0][idx][1]),
+                                 (st.session_state['gate_data'][0][idx+1][0], st.session_state['gate_data'][0][idx+1][1])]
+                        if are_lines_intersecting(line1, line2):
+                            tuuka_list[idx] += 1
+                            found_intersection = True
+                            break  # 内側のループを終了
+
+    
     # delete_shape_id = st.text_input("削除する図形のIDを入力してください")
     multi_area = tab5.empty()
     delete_shape_id = multi_area.selectbox("削除したい図形のIDを選択してください", [""]
@@ -365,10 +419,15 @@ if len(st.session_state['draw_data']) != 0:
             # draw_dataから図形を削除
             st.session_state['draw_data'].remove(delete_shape)
             tab3.write("削除しました")
-            for sdata in st.session_state['draw_data']:
-                tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-                folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
-                # folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
+            
+    for idx, sdata in enumerata(st.session_state['draw_data']):
+        tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+        folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
+        if len(st.session_state['df']) != 0:
+            popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+            folium.GeoJson(sdata[0],popup=folium.Popup(popup_html)).add_to(tuuka_list[idx])
+        # folium.GeoJson(sdata[0], popup=folium.Popup(popup_html)).add_to(tuuka_list[idx])
+        # folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
 
     for sdata in st.session_state['draw_data']:
         st.session_state['gate_data'].append(sdata[0]["geometry"]["coordinates"])
