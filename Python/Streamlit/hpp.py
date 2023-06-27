@@ -181,7 +181,7 @@ with st.sidebar:
                                                     [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]])
                     # tab3.write(st.session_state['kiseki_data'])
                     # tab5.write(df2)
-                    tab3.write("hello")
+                    tab3.write(list2)
                     tab3.write(line_features)
                     line_geojson = {'type': 'FeatureCollection', 'features': line_features}
                     # 線のジオJSONを追加
