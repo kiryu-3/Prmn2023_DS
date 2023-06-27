@@ -384,7 +384,7 @@ if len(st.session_state['draw_data']) != 0:
     for _ in range(len(st.session_state['gate_data'])):
         st.session_state['tuuka_list'].append("0")
     tab4.write(len(st.session_state['draw_data'])-1)
-    tab4.write(st.session_state['gate_data'])
+    tab4.write(len(st.session_state['gate_data']))
     tab4.write(st.session_state['tuuka_list'])
     # tuuka_list = [0 for _ in range(len(st.session_state['draw_data'])-1)]
    
