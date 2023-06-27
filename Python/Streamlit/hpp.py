@@ -377,7 +377,7 @@ def are_lines_intersecting(line1, line2):
 # 削除する図形のIDを入力するテキストボックスを表示
 if len(st.session_state['draw_data']) != 0:
     tuuka_list = [0 for _ in range(len(st.session_state['gate_data'])-1)]
-    tab3.write(tuuka_list)
+   
     if len(st.session_state['df']) != 0:      
         found_intersection = False
         # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'])-1)]
@@ -403,6 +403,7 @@ if len(st.session_state['draw_data']) != 0:
     multi_area = tab5.empty()
     delete_shape_id = multi_area.selectbox("削除したい図形のIDを選択してください", [""]
                                             + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)])
+    tab4.write(tuuka_list)
     
     # Deleteボタンがクリックされた場合
     if delete_shape_id != "":
