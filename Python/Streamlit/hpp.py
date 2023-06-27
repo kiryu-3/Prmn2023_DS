@@ -62,7 +62,6 @@ if "line_geojson" not in st.session_state: # 初期化
 with st.sidebar:
     # タブ
     tab1, tab2, tab3, tab4, tab5 = st.tabs(["Layers", "Data_info", "Gate_info", "Kiseki_info", "Plus"])
-    tab3.write("hello")
     with tab1:
         # CSVファイルのアップロード
         uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
