@@ -375,9 +375,9 @@ if len(st.session_state['draw_data']) != 0:
         # 表示対象の図形を特定
         delete_shape = st.session_state['gate_data'][zukei_id - 1]
         if len(delete_shape) == 2:
-            tab3.write(f"ゲート{zukei_id}(ライン))
+            tab3.write(f"ゲート{zukei_id}(ライン)")
         else:
-            tab3.write(f"ゲート{zukei_id}(ポリゴン))
+            tab3.write(f"ゲート{zukei_id}(ポリゴン)")
         tab3.write(delete_shape)
 else:
     st.session_state['gate_data'] = list()
