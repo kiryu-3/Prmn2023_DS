@@ -378,6 +378,9 @@ def are_lines_intersecting(line1, line2):
 
 # 削除する図形のIDを入力するテキストボックスを表示len(st.session_state['draw_data'])-1)
 if len(st.session_state['draw_data']) != 0:
+    for sdata in st.session_state['draw_data']:
+        st.session_state['gate_data'].append(sdata[0]["geometry"]["coordinates"])
+    
     for _ in range(len(st.session_state['gate_data'])-1):
         st.session_state['tuuka_list'].append("0")
     tab4.write(len(st.session_state['draw_data'])-1)
@@ -444,8 +447,7 @@ if len(st.session_state['draw_data']) != 0:
         # folium.GeoJson(sdata[0], popup=folium.Popup(popup_html)).add_to(tuuka_list[idx])
         # folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
 
-    for sdata in st.session_state['draw_data']:
-        st.session_state['gate_data'].append(sdata[0]["geometry"]["coordinates"])
+    
 
     zukei_area = tab3.empty()
     zukei_id = zukei_area.selectbox("表示したい図形のIDを選択してください", [""]
