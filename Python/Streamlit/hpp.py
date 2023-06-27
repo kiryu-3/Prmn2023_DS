@@ -52,6 +52,8 @@ if 'df' not in st.session_state: # 初期化
     st.session_state['df'] = df
 if 'kiseki' not in st.session_state: # 初期化
     st.session_state['kiseki'] = False
+if 'kiseki_data' not in st.session_state: # 初期化
+    st.session_state['kiseki_data'] = list() 
     
 with st.sidebar:
     # タブ
@@ -174,7 +176,9 @@ with st.sidebar:
                                 }
                             }
                             line_features.append(line_feature)
-                    tab3.write(line_features)
+                            st.session_state['kiseki_data'].append([[df2.iloc[i, 3], df2.iloc[i, 2]],
+                                                    [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]])
+                    tab3.write(st.session_state['kiseki_data'])
                     line_geojson = {'type': 'FeatureCollection', 'features': line_features}
                     # 線のジオJSONを追加
                     folium.GeoJson(line_geojson, name='線の表示/非表示', style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
@@ -242,6 +246,7 @@ with st.sidebar:
                     """, unsafe_allow_html=True)
 
                 st.session_state['map'] = m
+                st.session_state['kiseki_data'] = list() 
                 
                 for sdata in st.session_state['draw_data']:
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
