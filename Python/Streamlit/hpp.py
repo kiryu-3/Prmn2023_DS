@@ -58,6 +58,8 @@ if 'gate_data' not in st.session_state: # 初期化
     st.session_state['gate_data'] = list()     
 if "line_geojson" not in st.session_state: # 初期化
     st.session_state['line_geojson'] = None
+if "tuuka_list" not in st.session_state: # 初期化
+    st.session_state['tuuka_list'] = list()
     
 with st.sidebar:
     # タブ
@@ -376,10 +378,9 @@ def are_lines_intersecting(line1, line2):
 
 # 削除する図形のIDを入力するテキストボックスを表示len(st.session_state['draw_data'])-1)
 if len(st.session_state['draw_data']) != 0:
-    tuuka_list = list()
     for _ in range(len(st.session_state['gate_data'])-1):
-        tuuka_list.append(0)
-    tab4.write(st.session_state['draw_data'])
+        st.session_state['tuuka_list'].append(0)
+    tab4.write(st.session_state['tuuka_list'])
     # tuuka_list = [0 for _ in range(len(st.session_state['draw_data'])-1)]
    
     if len(st.session_state['df']) != 0:      
