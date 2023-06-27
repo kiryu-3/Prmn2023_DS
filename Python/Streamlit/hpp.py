@@ -53,7 +53,7 @@ if 'df' not in st.session_state: # 初期化
 if 'kiseki' not in st.session_state: # 初期化
     st.session_state['kiseki'] = False
 if 'kiseki_data' not in st.session_state: # 初期化
-    st.session_state['kiseki_data'] = list() 
+    st.session_state['kiseki_data'] = dict() 
     
 with st.sidebar:
     # タブ
@@ -160,6 +160,8 @@ with st.sidebar:
                     line_features = []
                     for itr in list2:
                         st.session_state['kiseki_data'][f'{itr}'] = list()
+                    for itr in list2:
+                        st.session_state['kiseki_data'].append(
                         list3 = []
                         for i, row in sorted_df.iterrows():
                             if itr == row[0]:
@@ -251,7 +253,7 @@ with st.sidebar:
                     """, unsafe_allow_html=True)
 
                 st.session_state['map'] = m
-                st.session_state['kiseki_data'] = list() 
+                st.session_state['kiseki_data'] = dict()  
                 
                 for sdata in st.session_state['draw_data']:
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
