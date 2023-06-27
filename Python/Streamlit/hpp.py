@@ -368,8 +368,9 @@ if len(st.session_state['draw_data']) != 0:
 
     for sdata in st.session_state['draw_data']:
         st.session_state['gate_data'].append(sdata["geometry"]["coordinates"])
-        
-    zukei_id = tab3.selectbox("表示したい図形のIDを選択してください", [""]
+
+    zukei_area = tab3.empty()
+    zukei_id = zukei_area.selectbox("表示したい図形のIDを選択してください", [""]
                                             + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)])
     if zukei_id != "":
         # 表示対象の図形を特定
