@@ -211,25 +211,23 @@ with st.sidebar:
                 timestamped_geojson.add_to(st.session_state['map'])
 
                 # DataFrameをサイドバーに表示
-                st.session_state['df'].append(df_new)
+                st.session_state['df'] = df_new
 
                 for sdata in st.session_state['draw_data']:
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
                     folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
 
             else:
-                df_list = list()
-                df_list.append(pd.DataFrame())
-                st.session_state['df'] = df_list
-                
+                df = pd.DataFrame()
+                st.session_state['df'] = df
                 # 初めての表示時は空のマップを表示
                 m = folium.Map(location=[42.793553, 141.6958724], zoom_start=16)
                 # Leaflet.jsのDrawプラグインを追加
                 draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
                 draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
                 draw.add_to(m)
-
-
+                
+    
                 # Custom CSS style for the export button
                 st.markdown("""
                     <style>
@@ -243,11 +241,10 @@ with st.sidebar:
                     """, unsafe_allow_html=True)
 
                 st.session_state['map'] = m
-
+                
                 for sdata in st.session_state['draw_data']:
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
                     folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
-
                     
 # call to render Folium map in Streamlit
 st_data = st_folium(st.session_state['map'], width=725)  
