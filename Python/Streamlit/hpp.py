@@ -175,8 +175,7 @@ with st.sidebar:
                         st.session_state['kiseki_data'][f'{itr}'].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],
                                                        [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]],
                                                  '日時': df2.iloc[i, 1]})
-                        # st.session_state['kiseki_data'][f'{itr}'].append([[df2.iloc[i, 3], df2.iloc[i, 2]],
-                                                       [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]])
+                        # st.session_state['kiseki_data'][f'{itr}'].append([[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]])
 
                 tab4.write(st.session_state['kiseki_data'])
                 # tab5.write(df2)
