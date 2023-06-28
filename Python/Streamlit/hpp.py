@@ -419,7 +419,7 @@ if len(st.session_state['draw_data']) != 0:
     multi_area = tab5.empty()
     delete_shape_id = multi_area.selectbox("削除したい図形のIDを選択してください", [""]
                                             + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)])
-    tab4.write(st.session_state['tuuka_list'])
+    # tab4.write(st.session_state['tuuka_list'])
     
     # Deleteボタンがクリックされた場合
     if delete_shape_id != "":
