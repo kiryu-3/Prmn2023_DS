@@ -390,7 +390,7 @@ if len(st.session_state['draw_data']) != 0:
     # 最初の要素のみを取得してst.session_state['gate_data']に追加
     gate_append_list = list()
     for idx, sdata in enumerate(st.session_state['draw_data']):
-        gate_append_list.append(sdata)
+        gate_append_list.append(sdata["geometry"])
         # gate_append_list.append(sdata["geometry"]["coordinates"])
     st.session_state['gate_data'] = gate_append_list 
     # tab4.write(len(st.session_state['gate_data']))
