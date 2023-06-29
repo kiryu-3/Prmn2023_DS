@@ -26,53 +26,7 @@ st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 
 
-# 削除する図形のIDを入力するテキストボックスを表示len(st.session_state['draw_data'])-1)
-if len(st.session_state['draw_data']) != 0:
-    # tab4.write(len(st.session_state['draw_data']['coordinates']))
-    # tab1.write(len(st.session_state['draw_data']))
-    # for idx, sdata in enumerate(st.session_state['draw_data']):
-    #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-    #     folium.GeoJson(sdata).add_to(st.session_state['map'])
-    
-    # 最初の要素のみを取得してst.session_state['gate_data']に追加
-    gate_append_list = list()
-    for idx, sdata in enumerate(st.session_state['draw_data']):
-        gate_append_list.append(sdata[0]["geometry"]["coordinates"])
-        # gate_append_list.append(sdata["geometry"]["coordinates"])
-    st.session_state['gate_data'] = gate_append_list 
-    # tab4.write(len(st.session_state['gate_data']))
-    tab3.write(st.session_state['gate_data'])
-    # tab3.write(st.session_state['gate_data'][0])
-    # tab4.write(len(sdata[0]["geometry"]["coordinates"]))
 
-    append_list = list()
-    for _ in range(len(st.session_state['gate_data'])):
-        append_list.append("0")
-    st.session_state['tuuka_list'] = append_list
-    # tab4.write(len(st.session_state['draw_data'])-1)
-    # tab4.write(len(st.session_state['gate_data']))
-    tab3.write(st.session_state['tuuka_list'])
-    # tuuka_list = [0 for _ in range(len(st.session_state['draw_data'])-1)]
-   
-    if len(st.session_state['df']) != 0:      
-    #     found_intersection = False
-    #     # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'])-1)]
-    #     # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'][0])-1)]
-            
-    
-        # IDでループ
-        for key, values in st.session_state['kiseki_data'].items():
-            for value in values:
-                    line1 = [(value["座標"][0][0], value["座標"][0][1]),
-                             (value["座標"][1][0], value["座標"][1][1])]
-                    # ゲートでループ
-                    for idx in range(len(st.session_state['gate_data'])-1):
-                        line2 = [(st.session_state['gate_data'][idx][0], st.session_state['gate_data'][idx][1]),
-                                 (st.session_state['gate_data'][idx+1][0], st.session_state['gate_data'][idx+1][1])]
-                        if are_lines_intersecting(line1, line2):
-                            st.session_state['tuuka_list'][idx] += 1
-                            found_intersection = True
-                            break  # 内側のループを終了
 
 if 'map' not in st.session_state: # 初期化
     # 初めての表示時は空のマップを表示
@@ -167,6 +121,8 @@ def kousa():
                             st.session_state['tuuka_list'][idx] += 1
                             found_intersection = True
                             break  # 内側のループを終了
+
+
 
 with st.sidebar:
     # タブ
