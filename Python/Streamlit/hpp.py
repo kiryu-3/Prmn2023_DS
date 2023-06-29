@@ -114,13 +114,14 @@ def kousa():
                     line1 = [(value["座標"][0][0], value["座標"][0][1]),
                              (value["座標"][1][0], value["座標"][1][1])]
                     # ゲートでループ
-                    for idx in range(len(st.session_state['gate_data'])-1):
-                        line2 = [(st.session_state['gate_data'][idx][0], st.session_state['gate_data'][idx][1]),
-                                 (st.session_state['gate_data'][idx+1][0], st.session_state['gate_data'][idx+1][1])]
-                        if are_lines_intersecting(line1, line2):
-                            st.session_state['tuuka_list'][idx] += 1
-                            found_intersection = True
-                            break  # 内側のループを終了
+                    for idx1 in range(len(st.session_state['gate_data'])):
+                        for idx2 in range(len(st.session_state['gate_data'][idx1][0]-1):
+                            line2 = [(st.session_state['gate_data'][idx1][0][idx2][0], st.session_state['gate_data'][idx1][0][idx2][1]),
+                                     (st.session_state['gate_data'][idx][0][idx2+1][0], st.session_state['gate_data'][idx][0][idx2+1][1])]
+                            if are_lines_intersecting(line1, line2):
+                                st.session_state['tuuka_list'][idx] += 1
+                                found_intersection = True
+                                break  # 内側のループを終了
 
 
 
