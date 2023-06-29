@@ -484,5 +484,5 @@ else:
     st.session_state['gate_data'] = list()
 
 st.subheader("地図の全描画データ")
-# st.write(data["all_drawings"])
+st.write(data["all_drawings"])
 st.write(st.session_state['draw_data'])
