@@ -311,9 +311,9 @@ with st.sidebar:
 st_data = st_folium(st.session_state['map'], width=725)  
   
 data = copy.deepcopy(dict(st_data))
-st.subheader("地図の全描画データ")
-st.write(data["all_drawings"])
-st.write(st.session_state['draw_data'])
+# st.subheader("地図の全描画データ")
+# st.write(data["all_drawings"])
+# st.write(st.session_state['draw_data'])
 try:
     if data["all_drawings"] is not None and isinstance(data["all_drawings"], list) and len(data["all_drawings"]) > 0:
         # GeoJSONデータをマップに追加する
@@ -495,6 +495,6 @@ if len(st.session_state['draw_data']) != 0:
 else:
     st.session_state['gate_data'] = list()
 
-# st.subheader("地図の全描画データ")
-# st.write(data["all_drawings"])
-# st.write(st.session_state['draw_data'])
+st.subheader("地図の全描画データ")
+st.write(data["all_drawings"])
+st.write(st.session_state['draw_data'])
