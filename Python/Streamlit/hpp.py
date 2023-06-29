@@ -443,7 +443,7 @@ with st.sidebar:
                     
 # call to render Folium map in Streamlit
 st_data = st_folium(st.session_state['map'], width=725)  
-  
+
 data = copy.deepcopy(dict(st_data))
 # st.subheader("地図の全描画データ")
 # st.write(data["all_drawings"])
