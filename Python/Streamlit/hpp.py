@@ -275,7 +275,7 @@ with st.sidebar:
                 if len(st.session_state['draw_data']) != 0:
                     for idx, sdata in enumerate(st.session_state['draw_data']):
                         tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-                        folium.GeoJson(sdata).add_to(st.session_state['map'])
+                        folium.GeoJson(sdata[0]).add_to(st.session_state['map'])
                     
             else:
                 df = pd.DataFrame()
@@ -411,8 +411,8 @@ if len(st.session_state['draw_data']) != 0:
     # 最初の要素のみを取得してst.session_state['gate_data']に追加
     gate_append_list = list()
     for idx, sdata in enumerate(st.session_state['draw_data']):
-        # gate_append_list.append(sdata[0]["geometry"]["coordinates"])
-        gate_append_list.append(sdata["geometry"]["coordinates"])
+        gate_append_list.append(sdata[0]["geometry"]["coordinates"])
+        # gate_append_list.append(sdata["geometry"]["coordinates"])
     st.session_state['gate_data'] = gate_append_list 
     # tab4.write(len(st.session_state['gate_data']))
     tab3.write(st.session_state['gate_data'])
