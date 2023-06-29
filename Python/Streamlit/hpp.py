@@ -272,7 +272,7 @@ with st.sidebar:
                 # for sdata in st.session_state['draw_data']:
                 #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
                 #     folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
-                if(len(st.session_state['draw_data']) != 0):
+                if len(st.session_state['draw_data'] != 0):
                     for idx, sdata in enumerate(st.session_state['draw_data']):
                         tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
                         folium.GeoJson(sdata).add_to(st.session_state['map'])
@@ -310,7 +310,7 @@ with st.sidebar:
                 #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
                 #     # folium.GeoJson(sdata).add_to(st.session_state['map'])
                 #     folium.GeoJson(sdata,tooltip=tooltip_html).add_to(st.session_state['map'])
-                if(len(st.session_state['draw_data']) != 0):
+                if len(st.session_state['draw_data'] != 0):
                     for idx, sdata in enumerate(st.session_state['draw_data']):
                         tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
                         folium.GeoJson(sdata).add_to(st.session_state['map'])
