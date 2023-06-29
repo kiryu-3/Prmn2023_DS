@@ -615,3 +615,4 @@ else:
 st.subheader("地図の全描画データ")
 st.write(data["all_drawings"])
 st.write(st.session_state['draw_data'])
+tab4.write(st.session_state['kiseki_data'])
