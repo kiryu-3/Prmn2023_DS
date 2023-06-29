@@ -115,8 +115,8 @@ def kousa():
                              (value["座標"][1][0], value["座標"][1][1])]
                     # ゲートでループ
                     for idx in range(len(st.session_state['gate_data'])-1):
-                        line2 = [(st.session_state['gate_data'][0][idx][0], st.session_state['gate_data'][0][idx][1]),
-                                 (st.session_state['gate_data'][0][idx+1][0], st.session_state['gate_data'][0][idx+1][1])]
+                        line2 = [(st.session_state['gate_data'][idx][0], st.session_state['gate_data'][idx][1]),
+                                 (st.session_state['gate_data'][idx+1][0], st.session_state['gate_data'][idx+1][1])]
                         if are_lines_intersecting(line1, line2):
                             st.session_state['tuuka_list'][idx] += 1
                             found_intersection = True
@@ -242,7 +242,7 @@ with st.sidebar:
                                                  '日時': df2.iloc[i, 1]})
                         # st.session_state['kiseki_data'][f'{itr}'].append([[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]])
 
-                # tab4.write(st.session_state['kiseki_data'])
+                tab4.write(st.session_state['kiseki_data'])
                 # tab5.write(df2)
                 # tab3.write(list2)
                 # tab4.write(line_features)
