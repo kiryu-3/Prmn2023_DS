@@ -272,12 +272,21 @@ with st.sidebar:
                 # for sdata in st.session_state['draw_data']:
                 #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
                 #     folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
-                if len(st.session_state['draw_data']) != 0:
-                    for idx, sdata in enumerate(st.session_state['draw_data']):
-                        tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-                        # folium.GeoJson(sdata[0]).add_to(st.session_state['map'])
+                # if len(st.session_state['draw_data']) != 0:
+                #     for idx, sdata in enumerate(st.session_state['draw_data']):
+                #         tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+                #         # folium.GeoJson(sdata[0]).add_to(st.session_state['map'])
+                #         folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
+                for idx, sdata in enumerate(st.session_state['draw_data']):
+                    tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+                    # folium.GeoJson(sdata[0]).add_to(st.session_state['map'])
+                    # folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
+                    if len(st.session_state['df']) != 0 and len(st.session_state['tuuka_list']) != 0:
+                        popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+                        folium.GeoJson(sdata[0],tooltip=tooltip_html,popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+                    else:
                         folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
-                    
+        
             else:
                 df = pd.DataFrame()
                 st.session_state['df'] = df
@@ -311,10 +320,19 @@ with st.sidebar:
                 #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
                 #     # folium.GeoJson(sdata).add_to(st.session_state['map'])
                 #     folium.GeoJson(sdata,tooltip=tooltip_html).add_to(st.session_state['map'])
-                if len(st.session_state['draw_data']) != 0:
-                    for idx, sdata in enumerate(st.session_state['draw_data']):
-                        tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-                        # folium.GeoJson(sdata[0]).add_to(st.session_state['map'])
+                # if len(st.session_state['draw_data']) != 0:
+                #     for idx, sdata in enumerate(st.session_state['draw_data']):
+                #         tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+                #         # folium.GeoJson(sdata[0]).add_to(st.session_state['map'])
+                #         folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
+                for idx, sdata in enumerate(st.session_state['draw_data']):
+                    tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+                    # folium.GeoJson(sdata[0]).add_to(st.session_state['map'])
+                    # folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
+                    if len(st.session_state['df']) != 0 and len(st.session_state['tuuka_list']) != 0:
+                        popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+                        folium.GeoJson(sdata[0],tooltip=tooltip_html,popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+                    else:
                         folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
                     
 # call to render Folium map in Streamlit
