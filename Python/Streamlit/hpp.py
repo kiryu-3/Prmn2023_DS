@@ -340,7 +340,7 @@ except Exception as e:
 
 
 st.subheader("地図の全描画データ")
-# st.write(data["all_drawings"])
+st.write(data["all_drawings"])
 st.write(st.session_state['draw_data'])
 # st.write(st.session_state['draw_data'][0])
 # st.write(st.session_state['draw_data'][0][0])
