@@ -393,10 +393,10 @@ if len(st.session_state['draw_data']) != 0:
     # tab3.write(st.session_state['gate_data'][0])
     # tab4.write(len(sdata[0]["geometry"]["coordinates"]))
 
-    st.session_state['tuuka_list'] = []
-    tab3.write(st.session_state['tuuka_list'])
+    append_list = list()
     for _ in range(len(st.session_state['gate_data'])):
-        st.session_state['tuuka_list'].append("0")
+        append_list.append("0")
+    st.session_state['tuuka_list'] = append_list
     # tab4.write(len(st.session_state['draw_data'])-1)
     # tab4.write(len(st.session_state['gate_data']))
     tab3.write(st.session_state['tuuka_list'])
@@ -415,10 +415,10 @@ if len(st.session_state['draw_data']) != 0:
                              (value["座標"][1][0], value["座標"][1][1])]
                     # ゲートでループ
                     for idx in range(len(st.session_state['gate_data'])-1):
-                        line2 = [(st.session_state['gate_data'][0][idx][0], st.session_state['gate_data'][0][idx][1]),
-                                 (st.session_state['gate_data'][0][idx+1][0], st.session_state['gate_data'][0][idx+1][1])]
+                        line2 = [(st.session_state['gate_data'][idx][0], st.session_state['gate_data'][idx][1]),
+                                 (st.session_state['gate_data'][idx+1][0], st.session_state['gate_data'][idx+1][1])]
                         if are_lines_intersecting(line1, line2):
-                            tuuka_list[idx] += 1
+                            st.session_state['tuuka_list'][idx] += 1
                             found_intersection = True
                             break  # 内側のループを終了
 
@@ -458,8 +458,8 @@ if len(st.session_state['draw_data']) != 0:
         if len(st.session_state['df']) != 0:
             popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['draw_data'].index(sdata)+1)
             folium.GeoJson(sdata[0],popup=folium.Popup(popup_html)).add_to(tuuka_list[idx])
-        folium.GeoJson(sdata[0], popup=folium.Popup(popup_html)).add_to(tuuka_list[idx])
-        folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
+        # folium.GeoJson(sdata[0], popup=folium.Popup(popup_html)).add_to(tuuka_list[idx])
+        # folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
 
     
 
