@@ -272,7 +272,10 @@ with st.sidebar:
                 # for sdata in st.session_state['draw_data']:
                 #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
                 #     folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
-
+                for idx, sdata in enumerate(st.session_state['draw_data']):
+                    tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+                    folium.GeoJson(sdata).add_to(st.session_state['map'])
+                    
             else:
                 df = pd.DataFrame()
                 st.session_state['df'] = df
@@ -306,6 +309,9 @@ with st.sidebar:
                 #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
                 #     # folium.GeoJson(sdata).add_to(st.session_state['map'])
                 #     folium.GeoJson(sdata,tooltip=tooltip_html).add_to(st.session_state['map'])
+                for idx, sdata in enumerate(st.session_state['draw_data']):
+                    tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+                    folium.GeoJson(sdata).add_to(st.session_state['map'])
                     
 # call to render Folium map in Streamlit
 st_data = st_folium(st.session_state['map'], width=725)  
@@ -326,7 +332,7 @@ try:
                 center_dict["lng"] = center_list[1]
                 data["all_drawings"][0]["properties"]["center"] = center_dict
 
-        st.session_state['draw_data'] = data["all_drawings"]
+        st.session_state['draw_data'].append(data["all_drawings"])
         # st.session_state['draw_data'].append(data["all_drawings"])
 #         for idx in range(len(data["all_drawings"])):
 #             # data["all_drawings"][idx]["properties"] = str(idx+1)
@@ -396,9 +402,9 @@ def are_lines_intersecting(line1, line2):
 if len(st.session_state['draw_data']) != 0:
     # tab4.write(len(st.session_state['draw_data']['coordinates']))
     # tab1.write(len(st.session_state['draw_data']))
-    for idx, sdata in enumerate(st.session_state['draw_data']):
-        tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-        folium.GeoJson(sdata).add_to(st.session_state['map'])
+    # for idx, sdata in enumerate(st.session_state['draw_data']):
+    #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+    #     folium.GeoJson(sdata).add_to(st.session_state['map'])
     
     # 最初の要素のみを取得してst.session_state['gate_data']に追加
     gate_append_list = list()
