@@ -379,6 +379,7 @@ def are_lines_intersecting(line1, line2):
 # 削除する図形のIDを入力するテキストボックスを表示len(st.session_state['draw_data'])-1)
 if len(st.session_state['draw_data']) != 0:
     tab4.write(len(st.session_state['draw_data']))
+    tab1.write(len(st.session_state['draw_data']))
     
     # 最初の要素のみを取得してst.session_state['gate_data']に追加
     sdata = st.session_state['draw_data'][0]
