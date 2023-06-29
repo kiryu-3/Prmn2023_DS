@@ -393,7 +393,7 @@ if len(st.session_state['draw_data']) != 0:
     sdata = st.session_state['draw_data'][0]
     st.session_state['gate_data'].append(sdata[0]["geometry"]["coordinates"])
     # tab4.write(len(st.session_state['gate_data']))
-    # tab4.write(st.session_state['gate_data'])
+    tab4.write(st.session_state['gate_data'])
     # tab4.write(len(sdata[0]["geometry"]["coordinates"]))
     
     for _ in range(len(st.session_state['gate_data'])):
