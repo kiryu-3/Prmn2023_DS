@@ -327,7 +327,7 @@ try:
                 center_dict["lng"] = center_list[1]
                 data["all_drawings"][0]["properties"]["center"] = center_dict
                 
-        st.session_state['draw_data'] = data["all_drawings"]
+        st.session_state['draw_data'].append(data["all_drawings"])
 #         for idx in range(len(data["all_drawings"])):
 #             # data["all_drawings"][idx]["properties"] = str(idx+1)
 #             if data["last_circle_polygon"] is not None:
