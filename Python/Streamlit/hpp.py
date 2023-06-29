@@ -343,6 +343,7 @@ st.subheader("地図の全描画データ")
 # st.write(data["all_drawings"])
 st.write(st.session_state['draw_data'])
 st.write(type(st.session_state['draw_data']))
+st.write(type(st.session_state['draw_data'][0]))
 
 
 def are_lines_intersecting(line1, line2):
