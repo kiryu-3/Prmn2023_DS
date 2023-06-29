@@ -24,58 +24,7 @@ st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 
 
-# def are_lines_intersecting(line1, line2):
-#     x1, y1 = line1[0]
-#     x2, y2 = line1[1]
-#     x3, y3 = line2[0]
-#     x4, y4 = line2[1]
 
-#     # 線分の方程式を計算
-#     a1 = y2 - y1
-#     b1 = x1 - x2
-#     c1 = a1 * x1 + b1 * y1
-
-#     a2 = y4 - y3
-#     b2 = x3 - x4
-#     c2 = a2 * x3 + b2 * y3
-
-#     # 交差判定
-#     determinant = a1 * b2 - a2 * b1
-
-#     if determinant == 0:
-#         # 2つの線分が平行である場合
-#         return False
-#     else:
-#         intersect_x = (b2 * c1 - b1 * c2) / determinant
-#         intersect_y = (a1 * c2 - a2 * c1) / determinant
-
-#         # 交差点が線分の範囲内にあるかどうかをチェック
-#         if min(x1, x2) <= intersect_x <= max(x1, x2) and min(x3, x4) <= intersect_x <= max(x3, x4) and \
-#                 min(y1, y2) <= intersect_y <= max(y1, y2) and min(y3, y4) <= intersect_y <= max(y3, y4):
-#             return True
-#         else:
-#             return False
-
-def kousa():
-    if len(st.session_state['df']) != 0:      
-        found_intersection = False
-        # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'])-1)]
-        # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'][0])-1)]
-            
-    
-        # IDでループ
-        for key, values in st.session_state['kiseki_data'].items():
-            for value in values:
-                    line1 = [(value["座標"][0][0], value["座標"][0][1]),
-                             (value["座標"][1][0], value["座標"][1][1])]
-                    # ゲートでループ
-                    for idx in range(len(st.session_state['gate_data'])-1):
-                        line2 = [(st.session_state['gate_data'][idx][0], st.session_state['gate_data'][idx][1]),
-                                 (st.session_state['gate_data'][idx+1][0], st.session_state['gate_data'][idx+1][1])]
-                        if are_lines_intersecting(line1, line2):
-                            st.session_state['tuuka_list'][idx] += 1
-                            found_intersection = True
-                            break  # 内側のループを終了
 
 # 削除する図形のIDを入力するテキストボックスを表示len(st.session_state['draw_data'])-1)
 if len(st.session_state['draw_data']) != 0:
@@ -164,7 +113,61 @@ if "line_geojson" not in st.session_state: # 初期化
     st.session_state['line_geojson'] = None
 if "tuuka_list" not in st.session_state: # 初期化
     st.session_state['tuuka_list'] = list()
+
+
+def are_lines_intersecting(line1, line2):
+    x1, y1 = line1[0]
+    x2, y2 = line1[1]
+    x3, y3 = line2[0]
+    x4, y4 = line2[1]
+
+    # 線分の方程式を計算
+    a1 = y2 - y1
+    b1 = x1 - x2
+    c1 = a1 * x1 + b1 * y1
+
+    a2 = y4 - y3
+    b2 = x3 - x4
+    c2 = a2 * x3 + b2 * y3
+
+    # 交差判定
+    determinant = a1 * b2 - a2 * b1
+
+    if determinant == 0:
+        # 2つの線分が平行である場合
+        return False
+    else:
+        intersect_x = (b2 * c1 - b1 * c2) / determinant
+        intersect_y = (a1 * c2 - a2 * c1) / determinant
+
+        # 交差点が線分の範囲内にあるかどうかをチェック
+        if min(x1, x2) <= intersect_x <= max(x1, x2) and min(x3, x4) <= intersect_x <= max(x3, x4) and \
+                min(y1, y2) <= intersect_y <= max(y1, y2) and min(y3, y4) <= intersect_y <= max(y3, y4):
+            return True
+        else:
+            return False
+
+def kousa():
+    if len(st.session_state['df']) != 0:      
+        found_intersection = False
+        # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'])-1)]
+        # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'][0])-1)]
+            
     
+        # IDでループ
+        for key, values in st.session_state['kiseki_data'].items():
+            for value in values:
+                    line1 = [(value["座標"][0][0], value["座標"][0][1]),
+                             (value["座標"][1][0], value["座標"][1][1])]
+                    # ゲートでループ
+                    for idx in range(len(st.session_state['gate_data'])-1):
+                        line2 = [(st.session_state['gate_data'][idx][0], st.session_state['gate_data'][idx][1]),
+                                 (st.session_state['gate_data'][idx+1][0], st.session_state['gate_data'][idx+1][1])]
+                        if are_lines_intersecting(line1, line2):
+                            st.session_state['tuuka_list'][idx] += 1
+                            found_intersection = True
+                            break  # 内側のループを終了
+
 with st.sidebar:
     # タブ
     tab1, tab2, tab3, tab4, tab5 = st.tabs(["Layers", "Data_info", "Gate_info", "Kiseki_info", "Plus"])
