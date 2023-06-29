@@ -387,7 +387,7 @@ if len(st.session_state['draw_data']) != 0:
     
     # 最初の要素のみを取得してst.session_state['gate_data']に追加
     sdata = st.session_state['draw_data'][0]
-    st.session_state['gate_data'].append(sdata[0]["geometry"]["coordinates"])
+    st.session_state['gate_data'].append(sdata["geometry"]["coordinates"])
     # tab4.write(len(st.session_state['gate_data']))
     tab3.write(st.session_state['gate_data'])
     # tab3.write(st.session_state['gate_data'][0])
