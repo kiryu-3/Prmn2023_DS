@@ -21,6 +21,110 @@ hide_menu_style = """
     </style>
 """
 st.markdown(hide_menu_style, unsafe_allow_html=True)
+
+
+
+# def are_lines_intersecting(line1, line2):
+#     x1, y1 = line1[0]
+#     x2, y2 = line1[1]
+#     x3, y3 = line2[0]
+#     x4, y4 = line2[1]
+
+#     # 線分の方程式を計算
+#     a1 = y2 - y1
+#     b1 = x1 - x2
+#     c1 = a1 * x1 + b1 * y1
+
+#     a2 = y4 - y3
+#     b2 = x3 - x4
+#     c2 = a2 * x3 + b2 * y3
+
+#     # 交差判定
+#     determinant = a1 * b2 - a2 * b1
+
+#     if determinant == 0:
+#         # 2つの線分が平行である場合
+#         return False
+#     else:
+#         intersect_x = (b2 * c1 - b1 * c2) / determinant
+#         intersect_y = (a1 * c2 - a2 * c1) / determinant
+
+#         # 交差点が線分の範囲内にあるかどうかをチェック
+#         if min(x1, x2) <= intersect_x <= max(x1, x2) and min(x3, x4) <= intersect_x <= max(x3, x4) and \
+#                 min(y1, y2) <= intersect_y <= max(y1, y2) and min(y3, y4) <= intersect_y <= max(y3, y4):
+#             return True
+#         else:
+#             return False
+
+def kousa():
+    if len(st.session_state['df']) != 0:      
+        found_intersection = False
+        # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'])-1)]
+        # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'][0])-1)]
+            
+    
+        # IDでループ
+        for key, values in st.session_state['kiseki_data'].items():
+            for value in values:
+                    line1 = [(value["座標"][0][0], value["座標"][0][1]),
+                             (value["座標"][1][0], value["座標"][1][1])]
+                    # ゲートでループ
+                    for idx in range(len(st.session_state['gate_data'])-1):
+                        line2 = [(st.session_state['gate_data'][idx][0], st.session_state['gate_data'][idx][1]),
+                                 (st.session_state['gate_data'][idx+1][0], st.session_state['gate_data'][idx+1][1])]
+                        if are_lines_intersecting(line1, line2):
+                            st.session_state['tuuka_list'][idx] += 1
+                            found_intersection = True
+                            break  # 内側のループを終了
+
+# 削除する図形のIDを入力するテキストボックスを表示len(st.session_state['draw_data'])-1)
+if len(st.session_state['draw_data']) != 0:
+    # tab4.write(len(st.session_state['draw_data']['coordinates']))
+    # tab1.write(len(st.session_state['draw_data']))
+    # for idx, sdata in enumerate(st.session_state['draw_data']):
+    #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+    #     folium.GeoJson(sdata).add_to(st.session_state['map'])
+    
+    # 最初の要素のみを取得してst.session_state['gate_data']に追加
+    gate_append_list = list()
+    for idx, sdata in enumerate(st.session_state['draw_data']):
+        gate_append_list.append(sdata[0]["geometry"]["coordinates"])
+        # gate_append_list.append(sdata["geometry"]["coordinates"])
+    st.session_state['gate_data'] = gate_append_list 
+    # tab4.write(len(st.session_state['gate_data']))
+    tab3.write(st.session_state['gate_data'])
+    # tab3.write(st.session_state['gate_data'][0])
+    # tab4.write(len(sdata[0]["geometry"]["coordinates"]))
+
+    append_list = list()
+    for _ in range(len(st.session_state['gate_data'])):
+        append_list.append("0")
+    st.session_state['tuuka_list'] = append_list
+    # tab4.write(len(st.session_state['draw_data'])-1)
+    # tab4.write(len(st.session_state['gate_data']))
+    tab3.write(st.session_state['tuuka_list'])
+    # tuuka_list = [0 for _ in range(len(st.session_state['draw_data'])-1)]
+   
+    if len(st.session_state['df']) != 0:      
+    #     found_intersection = False
+    #     # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'])-1)]
+    #     # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'][0])-1)]
+            
+    
+        # IDでループ
+        for key, values in st.session_state['kiseki_data'].items():
+            for value in values:
+                    line1 = [(value["座標"][0][0], value["座標"][0][1]),
+                             (value["座標"][1][0], value["座標"][1][1])]
+                    # ゲートでループ
+                    for idx in range(len(st.session_state['gate_data'])-1):
+                        line2 = [(st.session_state['gate_data'][idx][0], st.session_state['gate_data'][idx][1]),
+                                 (st.session_state['gate_data'][idx+1][0], st.session_state['gate_data'][idx+1][1])]
+                        if are_lines_intersecting(line1, line2):
+                            st.session_state['tuuka_list'][idx] += 1
+                            found_intersection = True
+                            break  # 内側のループを終了
+
 if 'map' not in st.session_state: # 初期化
     # 初めての表示時は空のマップを表示
     m = folium.Map(location=[42.793553, 141.6958724], zoom_start=16)
@@ -282,6 +386,7 @@ with st.sidebar:
                     # folium.GeoJson(sdata[0]).add_to(st.session_state['map'])
                     # folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
                     if len(st.session_state['df']) != 0 and len(st.session_state['tuuka_list']) != 0:
+                        kousa()
                         popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
                         folium.GeoJson(sdata[0],tooltip=tooltip_html,popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
                     else:
@@ -330,6 +435,7 @@ with st.sidebar:
                     # folium.GeoJson(sdata[0]).add_to(st.session_state['map'])
                     # folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
                     if len(st.session_state['df']) != 0 and len(st.session_state['tuuka_list']) != 0:
+                        kousa()
                         popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
                         folium.GeoJson(sdata[0],tooltip=tooltip_html,popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
                     else:
@@ -388,37 +494,58 @@ except Exception as e:
 # st.write(type(st.session_state['draw_data'][0]))
 # st.write(type(st.session_state['draw_data'][0][0]))
 
-def are_lines_intersecting(line1, line2):
-    x1, y1 = line1[0]
-    x2, y2 = line1[1]
-    x3, y3 = line2[0]
-    x4, y4 = line2[1]
+# def are_lines_intersecting(line1, line2):
+#     x1, y1 = line1[0]
+#     x2, y2 = line1[1]
+#     x3, y3 = line2[0]
+#     x4, y4 = line2[1]
 
-    # 線分の方程式を計算
-    a1 = y2 - y1
-    b1 = x1 - x2
-    c1 = a1 * x1 + b1 * y1
+#     # 線分の方程式を計算
+#     a1 = y2 - y1
+#     b1 = x1 - x2
+#     c1 = a1 * x1 + b1 * y1
 
-    a2 = y4 - y3
-    b2 = x3 - x4
-    c2 = a2 * x3 + b2 * y3
+#     a2 = y4 - y3
+#     b2 = x3 - x4
+#     c2 = a2 * x3 + b2 * y3
 
-    # 交差判定
-    determinant = a1 * b2 - a2 * b1
+#     # 交差判定
+#     determinant = a1 * b2 - a2 * b1
 
-    if determinant == 0:
-        # 2つの線分が平行である場合
-        return False
-    else:
-        intersect_x = (b2 * c1 - b1 * c2) / determinant
-        intersect_y = (a1 * c2 - a2 * c1) / determinant
+#     if determinant == 0:
+#         # 2つの線分が平行である場合
+#         return False
+#     else:
+#         intersect_x = (b2 * c1 - b1 * c2) / determinant
+#         intersect_y = (a1 * c2 - a2 * c1) / determinant
 
-        # 交差点が線分の範囲内にあるかどうかをチェック
-        if min(x1, x2) <= intersect_x <= max(x1, x2) and min(x3, x4) <= intersect_x <= max(x3, x4) and \
-                min(y1, y2) <= intersect_y <= max(y1, y2) and min(y3, y4) <= intersect_y <= max(y3, y4):
-            return True
-        else:
-            return False
+#         # 交差点が線分の範囲内にあるかどうかをチェック
+#         if min(x1, x2) <= intersect_x <= max(x1, x2) and min(x3, x4) <= intersect_x <= max(x3, x4) and \
+#                 min(y1, y2) <= intersect_y <= max(y1, y2) and min(y3, y4) <= intersect_y <= max(y3, y4):
+#             return True
+#         else:
+#             return False
+
+# def kousa():
+#     if len(st.session_state['df']) != 0:      
+#         found_intersection = False
+#         # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'])-1)]
+#         # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'][0])-1)]
+            
+    
+#         # IDでループ
+#         for key, values in st.session_state['kiseki_data'].items():
+#             for value in values:
+#                     line1 = [(value["座標"][0][0], value["座標"][0][1]),
+#                              (value["座標"][1][0], value["座標"][1][1])]
+#                     # ゲートでループ
+#                     for idx in range(len(st.session_state['gate_data'])-1):
+#                         line2 = [(st.session_state['gate_data'][idx][0], st.session_state['gate_data'][idx][1]),
+#                                  (st.session_state['gate_data'][idx+1][0], st.session_state['gate_data'][idx+1][1])]
+#                         if are_lines_intersecting(line1, line2):
+#                             st.session_state['tuuka_list'][idx] += 1
+#                             found_intersection = True
+#                             break  # 内側のループを終了
 
 # 削除する図形のIDを入力するテキストボックスを表示len(st.session_state['draw_data'])-1)
 if len(st.session_state['draw_data']) != 0:
@@ -448,25 +575,25 @@ if len(st.session_state['draw_data']) != 0:
     tab3.write(st.session_state['tuuka_list'])
     # tuuka_list = [0 for _ in range(len(st.session_state['draw_data'])-1)]
    
-    if len(st.session_state['df']) != 0:      
-        found_intersection = False
-        # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'])-1)]
-        # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'][0])-1)]
+    # if len(st.session_state['df']) != 0:      
+    #     found_intersection = False
+    #     # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'])-1)]
+    #     # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'][0])-1)]
             
     
-        # IDでループ
-        for key, values in st.session_state['kiseki_data'].items():
-            for value in values:
-                    line1 = [(value["座標"][0][0], value["座標"][0][1]),
-                             (value["座標"][1][0], value["座標"][1][1])]
-                    # ゲートでループ
-                    for idx in range(len(st.session_state['gate_data'])-1):
-                        line2 = [(st.session_state['gate_data'][idx][0], st.session_state['gate_data'][idx][1]),
-                                 (st.session_state['gate_data'][idx+1][0], st.session_state['gate_data'][idx+1][1])]
-                        if are_lines_intersecting(line1, line2):
-                            st.session_state['tuuka_list'][idx] += 1
-                            found_intersection = True
-                            break  # 内側のループを終了
+    #     # IDでループ
+    #     for key, values in st.session_state['kiseki_data'].items():
+    #         for value in values:
+    #                 line1 = [(value["座標"][0][0], value["座標"][0][1]),
+    #                          (value["座標"][1][0], value["座標"][1][1])]
+    #                 # ゲートでループ
+    #                 for idx in range(len(st.session_state['gate_data'])-1):
+    #                     line2 = [(st.session_state['gate_data'][idx][0], st.session_state['gate_data'][idx][1]),
+    #                              (st.session_state['gate_data'][idx+1][0], st.session_state['gate_data'][idx+1][1])]
+    #                     if are_lines_intersecting(line1, line2):
+    #                         st.session_state['tuuka_list'][idx] += 1
+    #                         found_intersection = True
+    #                         break  # 内側のループを終了
 
     
     # delete_shape_id = st.text_input("削除する図形のIDを入力してください")
