@@ -339,12 +339,10 @@ except Exception as e:
     pass
 
 
-st.subheader("地図の全描画データ")
-# st.write(data["all_drawings"])
-st.write(st.session_state['draw_data'])
-st.write(st.session_state['draw_data'][0])
-st.write(st.session_state['draw_data'][0]["geometry"])
-st.write(st.session_state['draw_data'][0]["geometry"]["coordinates"])
+# st.subheader("地図の全描画データ")
+# # st.write(data["all_drawings"])
+# st.write(st.session_state['draw_data'])
+
 # st.write(st.session_state['draw_data'][0][0])
 # st.write(type(st.session_state['draw_data']))
 # st.write(type(st.session_state['draw_data'][0]))
@@ -482,3 +480,7 @@ if len(st.session_state['draw_data']) != 0:
         tab3.write(delete_shape)
 else:
     st.session_state['gate_data'] = list()
+
+st.subheader("地図の全描画データ")
+# st.write(data["all_drawings"])
+st.write(st.session_state['draw_data'])
