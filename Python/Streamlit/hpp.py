@@ -265,9 +265,9 @@ with st.sidebar:
                 # DataFrameをサイドバーに表示
                 st.session_state['df'] = df_new
 
-                for sdata in st.session_state['draw_data']:
-                    tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-                    folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
+                # for sdata in st.session_state['draw_data']:
+                #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+                #     folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
 
             else:
                 df = pd.DataFrame()
@@ -295,9 +295,9 @@ with st.sidebar:
                 st.session_state['map'] = m
                 st.session_state['kiseki_data'] = dict()  
                 
-                for sdata in st.session_state['draw_data']:
-                    tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-                    folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
+                # for sdata in st.session_state['draw_data']:
+                #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+                #     folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
                     
 # call to render Folium map in Streamlit
 st_data = st_folium(st.session_state['map'], width=725)  
@@ -328,9 +328,9 @@ try:
 #             st.session_state['draw_data'].append(data["all_drawings"][idx])
         
         
-        for sdata in st.session_state['draw_data']:
-            tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-            folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
+        # for sdata in st.session_state['draw_data']:
+        #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+        #     folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
             # folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
             
             
