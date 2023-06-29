@@ -383,28 +383,20 @@ def are_lines_intersecting(line1, line2):
 # 削除する図形のIDを入力するテキストボックスを表示len(st.session_state['draw_data'])-1)
 if len(st.session_state['draw_data']) != 0:
     tab4.write(len(st.session_state['draw_data']))
-    for idx, sdata in enumerate(st.session_state['draw_data']):
-        tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-        if len(st.session_state['df']) != 0:
-            popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
-            folium.GeoJson(sdata[0],tooltip=tooltip_html,popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
-        else:
-            # tab4.write(len(st.session_state['draw_data']))
-            folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
     # tab1.write(len(st.session_state['draw_data']))
     
     # 最初の要素のみを取得してst.session_state['gate_data']に追加
     sdata = st.session_state['draw_data'][0]
     st.session_state['gate_data'].append(sdata[0]["geometry"]["coordinates"])
     # tab4.write(len(st.session_state['gate_data']))
-    tab4.write(st.session_state['gate_data'])
+    tab4.write(st.session_state['gate_data'][0])
     # tab4.write(len(sdata[0]["geometry"]["coordinates"]))
     
     for _ in range(len(st.session_state['gate_data'])):
         st.session_state['tuuka_list'].append("0")
     # tab4.write(len(st.session_state['draw_data'])-1)
     # tab4.write(len(st.session_state['gate_data']))
-    # tab4.write(st.session_state['tuuka_list'])
+    tab4.write(st.session_state['tuuka_list'])
     # tuuka_list = [0 for _ in range(len(st.session_state['draw_data'])-1)]
    
     if len(st.session_state['df']) != 0:      
@@ -453,18 +445,18 @@ if len(st.session_state['draw_data']) != 0:
             st.session_state['draw_data'].remove(delete_shape)
             tab3.write("削除しました")
             
-    # for idx, sdata in enumerate(st.session_state['draw_data']):
-    #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-    #     if len(st.session_state['df']) != 0:
-    #         popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
-    #         folium.GeoJson(sdata[0],tooltip=tooltip_html,popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
-    #     else:
-    #         folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
-        # if len(st.session_state['df']) != 0:
-        #     popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-        #     folium.GeoJson(sdata[0],popup=folium.Popup(popup_html)).add_to(tuuka_list[idx])
-        # folium.GeoJson(sdata[0], popup=folium.Popup(popup_html)).add_to(tuuka_list[idx])
-        # folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
+    for idx, sdata in enumerate(st.session_state['draw_data']):
+        tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+        if len(st.session_state['df']) != 0:
+            popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+            folium.GeoJson(sdata[0],tooltip=tooltip_html,popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+        else:
+            folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
+        if len(st.session_state['df']) != 0:
+            popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['draw_data'].index(sdata)+1)
+            folium.GeoJson(sdata[0],popup=folium.Popup(popup_html)).add_to(tuuka_list[idx])
+        folium.GeoJson(sdata[0], popup=folium.Popup(popup_html)).add_to(tuuka_list[idx])
+        folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
 
     
 
