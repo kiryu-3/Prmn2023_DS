@@ -390,9 +390,10 @@ if len(st.session_state['draw_data']) != 0:
     st.session_state['gate_data'].append(sdata[0]["geometry"]["coordinates"])
     # tab4.write(len(st.session_state['gate_data']))
     tab3.write(st.session_state['gate_data'])
-    tab3.write(st.session_state['gate_data'][0])
+    # tab3.write(st.session_state['gate_data'][0])
     # tab4.write(len(sdata[0]["geometry"]["coordinates"]))
-    
+
+    st.session_state['tuuka_list'] = list()
     for _ in range(len(st.session_state['gate_data'])):
         st.session_state['tuuka_list'].append("0")
     # tab4.write(len(st.session_state['draw_data'])-1)
