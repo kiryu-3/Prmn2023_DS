@@ -385,7 +385,7 @@ if len(st.session_state['draw_data']) != 0:
             popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
             folium.GeoJson(sdata[0],tooltip=tooltip_html,popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
         else:
-            tab4.write(len(st.session_state['draw_data']))
+            # tab4.write(len(st.session_state['draw_data']))
             folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
     # tab1.write(len(st.session_state['draw_data']))
     
