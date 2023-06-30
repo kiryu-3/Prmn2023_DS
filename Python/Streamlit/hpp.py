@@ -104,6 +104,7 @@ def are_lines_intersecting(line1, line2):
             return False
             
 def ingate(plot_point, gate_polygon):
+    plot_point = [float(plot_point)]
     point = Feature(geometry=Point(plot_point))
     polygon = Polygon(
         [gate_polygon]
