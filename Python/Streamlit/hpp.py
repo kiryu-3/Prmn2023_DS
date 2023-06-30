@@ -134,7 +134,7 @@ def kousa():
                             for item in st.session_state['gate_data'][idx1][0][:idx2+1]:
                                 data_list.append(item)
                                 
-                            if ingate(values[0]["座標"][0][0], data_list):
+                            if ingate(values[0]["座標"][0], data_list):
                                 found_intersection = True
                                 break  # 内側のループを終了
                                 
