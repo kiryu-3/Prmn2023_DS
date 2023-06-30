@@ -148,6 +148,12 @@ def kousa():
                         if found_intersection:
                             break  # 外側のループを終了
 
+                    if found_intersection:
+                            break  # 外側のループを終了
+
+                # if found_intersection:
+                            # break  # 外側のループを終了
+
 
 
 with st.sidebar:
