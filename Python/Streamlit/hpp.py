@@ -102,7 +102,16 @@ def are_lines_intersecting(line1, line2):
             return True
         else:
             return False
+            
+def ingate(plot_point, gate_polygon):
+    point = Feature(geometry=Point(plot_point))
+    polygon = Polygon(
+        [gate_polygon]
+    )
+    return boolean_point_in_polygon(point, polygon)
 
+
+    
 def kousa():
     if len(st.session_state['df']) != 0:      
         found_intersection = False
@@ -119,6 +128,14 @@ def kousa():
                     # ゲートでループ
                     for idx1 in range(len(st.session_state['gate_data'])):
                         for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):
+                            
+                            for item in st.session_state['gate_data'][idx1][0][:idx2+1]:
+                                data_list.append(item)
+                                
+                            if ingate(values[0]["座標"][0][0], data_list):
+                                found_intersection = True
+                                break  # 内側のループを終了
+                                
                             line2 = [(st.session_state['gate_data'][idx1][0][idx2][0], st.session_state['gate_data'][idx1][0][idx2][1]),
                                      (st.session_state['gate_data'][idx][0][idx2+1][0], st.session_state['gate_data'][idx][0][idx2+1][1])]
                             if are_lines_intersecting(line1, line2):
