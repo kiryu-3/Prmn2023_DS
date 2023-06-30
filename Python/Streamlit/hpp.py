@@ -158,7 +158,7 @@ def kousa():
 
 with st.sidebar:
     # タブ
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["Layers", "Data_info", "Gate_info", "Kiseki_info", "Plus"])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(["Uploader", "Data_info", "Gate_info", "Kiseki_info", "Plus"])
     with tab1:
         # CSVファイルのアップロード
         uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
