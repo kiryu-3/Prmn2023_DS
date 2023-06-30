@@ -1,5 +1,7 @@
 import io
 from io import BytesIO
+from turfpy.measurement import boolean_point_in_polygon
+from geojson import Point, Polygon, Feature
 
 import streamlit as st
 import json
@@ -110,6 +112,7 @@ def kousa():
     
         # IDでループ
         for key, values in st.session_state['kiseki_data'].items():
+            # values[0]["座標"][0][0]
             for value in values:
                     line1 = [(value["座標"][0][0], value["座標"][0][1]),
                              (value["座標"][1][0], value["座標"][1][1])]
@@ -122,6 +125,7 @@ def kousa():
                                 st.session_state['tuuka_list'][idx] += 1
                                 found_intersection = True
                                 break  # 内側のループを終了
+                                
                         if found_intersection:
                             break  # 外側のループを終了
 
