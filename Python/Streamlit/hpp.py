@@ -595,8 +595,8 @@ if len(st.session_state['draw_data']) != 0:
     
     # Deleteボタンがクリックされた場合
     if delete_shape_id != "":
-        tab3.info("Deleteボタンをダブルクリックしてください")
-        if tab3.button("Delete"):
+        tab5.info("Deleteボタンをダブルクリックしてください")
+        if tab5.button("Delete"):
             delete_shape_id = int(delete_shape_id)
             # 削除対象の図形を特定
             delete_shape = st.session_state['draw_data'][delete_shape_id - 1]
@@ -610,7 +610,7 @@ if len(st.session_state['draw_data']) != 0:
                 del st.session_state['map']._children[key]
             # draw_dataから図形を削除
             st.session_state['draw_data'].remove(delete_shape)
-            tab3.write("削除しました")
+            # tab5.write("削除しました")
             
     # for idx, sdata in enumerate(st.session_state['draw_data']):
     #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
