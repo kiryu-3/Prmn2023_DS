@@ -175,33 +175,17 @@ try:
             for _ in range(len(st.session_state['draw_data'])+1):
                 append_list.append(0)
             st.session_state['tuuka_list'] = append_list
-        # st.session_state['draw_data'].append(data["all_drawings"])
-#         for idx in range(len(data["all_drawings"])):
-#             # data["all_drawings"][idx]["properties"] = str(idx+1)
-#             if data["last_circle_polygon"] is not None:
-#                 data["all_drawings"]["geometry"]["type"] = "Polygon"
-#                 data["geometry"]["coordinates"] = data["last_circle_polygon"]["coordinates"]
-#             st.session_state['draw_data'].append(data["all_drawings"][idx])
-        
-        
-        # for sdata in st.session_state['draw_data']:
-        #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-        #     folium.GeoJson(sdata[0],tooltip=tooltip_html).add_to(st.session_state['map'])
-            # folium.GeoJson(sdata[0], popup=folium.Popup(tooltip_html)).add_to(st.session_state['map'])
-        # for idx, sdata in enumerate(st.session_state['draw_data']):
-        #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata)+1)
-        #     # folium.GeoJson(sdata).add_to(st.session_state['map'])
-        #     folium.GeoJson(sdata,tooltip=tooltip_html).add_to(st.session_state['map'])
+
             
             
-except Exception as e:
-    st.write(e)
-    pass
+# except Exception as e:
+    # st.write(e)
+    # pass
 
 st.subheader("地図の全描画データ")
 # st.write(data["all_drawings"])
 st.write(st.session_state['draw_data'])
-st.write(len(st.session_state['draw_data'])
+# st.write(len(st.session_state['draw_data'])
 
 with st.sidebar:
     # タブ
