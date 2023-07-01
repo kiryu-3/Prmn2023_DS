@@ -445,6 +445,7 @@ with st.sidebar:
                 for idx, sdata in enumerate(st.session_state['draw_data']):
                     gate_append_list.append(sdata[0]["geometry"]["coordinates"])
                 st.session_state['gate_data'] = gate_append_list 
+                st.write(st.session_state['gate_data'])
                 # st.write(st.session_state['gate_data'])
                 # zukei_area = tab3.empty()
                 zukei_id = st.selectbox("表示したい図形のIDを選択してください", [""]
