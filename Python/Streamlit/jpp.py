@@ -346,9 +346,9 @@ with st.sidebar:
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
                 if len(st.session_state['df']) != 0 and len(st.session_state['tuuka_list']) != 0:
                     kousa()
-                    # popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
-                    folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
-                    # folium.GeoJson(sdata[0], tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+                    popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+                    # folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
+                    folium.GeoJson(sdata[0], tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
                 else:
                     folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
 
