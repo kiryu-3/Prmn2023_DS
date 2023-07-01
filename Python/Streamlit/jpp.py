@@ -122,8 +122,8 @@ def kousa():
                     line1 = [(value["座標"][0][0], value["座標"][0][1]),
                              (value["座標"][1][0], value["座標"][1][1])]
                     # ゲートでループ
-                    for idx1 in range(len(st.session_state['gate_data'])+1):
-                        for idx2 in range(len(st.session_state['gate_data'][idx1][0])):
+                    for idx1 in range(len(st.session_state['gate_data'])):
+                        for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):
 
                             data_list = []
                             for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
