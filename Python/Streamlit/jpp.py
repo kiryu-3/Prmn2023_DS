@@ -134,7 +134,7 @@ def kousa():
                                 break  # 内側のループを終了
                                 
                             line2 = [(st.session_state['gate_data'][idx1][0][idx2][0], st.session_state['gate_data'][idx1][0][idx2][1]),
-                                     (st.session_state['gate_data'][idx][0][idx2+1][0], st.session_state['gate_data'][idx][0][idx2+1][1])]
+                                     (st.session_state['gate_data'][idx1][0][idx2+1][0], st.session_state['gate_data'][idx1][0][idx2+1][1])]
                             if are_lines_intersecting(line1, line2):
                                 st.session_state['tuuka_list'][idx] += 1
                                 found_intersection = True
