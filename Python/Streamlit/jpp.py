@@ -132,6 +132,7 @@ def kousa():
                    if st.session_state['gate_data'][idx1][0][0] == st.session_state['gate_data'][idx1][0][-1]:
                        if ingate(values[0]["座標"][0], data_list):
                            found_intersection = True
+                           st.session_state['tuuka_list'][idx1] += 1
                            continue  # このIDのループを終了
                 
                    # IDの軌跡ごとループ
