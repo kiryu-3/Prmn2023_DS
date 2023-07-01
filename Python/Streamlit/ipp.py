@@ -237,58 +237,58 @@ with st.sidebar:
                 if len(selected_values) == 0:
                     sorted_df = df
                     st.session_state["kiseki"] = False
-	        else:
-	            sorted_df = df[df.iloc[:, 0].isin(selected_values)]
-	            st.session_state['kiseki'] = False
-	    else:
-	    　　sorted_df = df
+                else:
+                    sorted_df = df[df.iloc[:, 0].isin(selected_values)]
+                    st.session_state['kiseki'] = False
+            else:
+                sorted_df = df
 		
-	    # df.sort_values(by=[df.columns[1]], inplace=True)
-	    kiseki = tab4.checkbox(label='軌跡の表示', key='kiseki2')
-	    list2 = list()
-	    for i, row in df.iterrows():
-	        if row.iloc[0] not in list2:
-	            list2.append(row.iloc[0])
-	    features = []
-	    for i, row in sorted_df.iterrows():
-	        indexNum = list2.index(row.iloc[0])
-	        feature = {
-	            "type": "Feature",
-	            "geometry": {
-	                "type": "Point",
-	                "coordinates": [row.iloc[3], row.iloc[2]]
-	            },
-	            "properties": {
-	                "icon": "circle",
-	                "iconstyle": {
-	                    "color": "#4169e1",
-	                    "fillColor": "#01bfff",
-	                    "weight": 10,
-	                    "radius": 3
-	                },
-	                "time": row.iloc[1],
-	                "popup": f"{indexNum+1} - {row.iloc[0]}",
-	                "ID": row.iloc[0]
-	            }
-	        }
-	        features.append(feature)
+            # df.sort_values(by=[df.columns[1]], inplace=True)
+            kiseki = tab4.checkbox(label='軌跡の表示', key='kiseki2')
+            list2 = list()
+            for i, row in df.iterrows():
+                if row.iloc[0] not in list2:
+                    list2.append(row.iloc[0])
+            features = []
+            for i, row in sorted_df.iterrows():
+                indexNum = list2.index(row.iloc[0])
+                feature = {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [row.iloc[3], row.iloc[2]]
+                    },
+                    "properties": {
+                        "icon": "circle",
+                        "iconstyle": {
+                            "color": "#4169e1",
+                            "fillColor": "#01bfff",
+                            "weight": 10,
+                            "radius": 3
+                        },
+                        "time": row.iloc[1],
+                        "popup": f"{indexNum+1} - {row.iloc[0]}",
+                        "ID": row.iloc[0]
+                    }
+                }
+                features.append(feature)
 		    
-	    line_features = []
-	    for itr in list2:
-	        st.session_state['kiseki_data'][f'{itr}'] = list()
-	    for itr in list2:
-	        list3 = []
-	        for i, row in sorted_df.iterrows():
-	            if itr == row[0]:
-	                list3.append(row)
-	        df2 = pd.DataFrame(list3)
-	        for i in range(len(df2) - 1):
-	            line_feature = {
-	                'type': 'Feature',
-	                'geometry': {
-	                    'type': 'LineString',
-	                    'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
-	                                    [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
+            line_features = []
+            for itr in list2:
+                st.session_state['kiseki_data'][f'{itr}'] = list()
+            for itr in list2:
+                list3 = []
+                for i, row in sorted_df.iterrows():
+                    if itr == row[0]:
+                        list3.append(row)
+                df2 = pd.DataFrame(list3)
+                for i in range(len(df2) - 1):
+                line_feature = {
+                         'type': 'Feature',
+                        'geometry': {
+                            'type': 'LineString',
+                            'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
+                                            [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
 	                },
 	                'properties': {
 	                    'time': df2.iloc[i, 1]
