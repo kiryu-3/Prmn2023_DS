@@ -127,10 +127,10 @@ def kousa():
                    data_list = []
                    for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
                        data_list.append(item)
-                   
+
                    # ポリゴンゲートのときは初期座標をチェック
                    if st.session_state['gate_data'][idx1][0][0] == st.session_state['gate_data'][idx1][0][-1]:
-                       if ingate(value[0]["座標"][0], data_list):
+                       if ingate(values[0]["座標"][0], data_list):
                            found_intersection = True
                            continue  # このIDのループを終了
                 
