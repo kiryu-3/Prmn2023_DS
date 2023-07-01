@@ -325,7 +325,7 @@ with st.sidebar:
             tab4.write(st.session_state['kiseki_data'])
             st.write(len(st.session_state['gate_data']))
             st.write(len(st.session_state['gate_data'][0][0])-1)
-            st.write(st.session_state['kiseki_data'])
+            st.write(len(st.session_state['kiseki_data']))
             line_geojson = {'type': 'FeatureCollection', 'features': line_features}
             st.session_state["line_geojson"] = line_geojson
         
