@@ -283,7 +283,7 @@ with st.sidebar:
                         list3.append(row)
                 df2 = pd.DataFrame(list3)
                 for i in range(len(df2) - 1):
-                line_feature = {
+                    line_feature = {
                          'type': 'Feature',
                         'geometry': {
                             'type': 'LineString',
