@@ -266,7 +266,7 @@ with st.sidebar:
             
             line_features = []
             for itr in list2:
-                st.session_state['kiseki_data'][f'{itr}'] = list()
+                st.session_state['kiseki_data'][itr] = list()
             for itr in list2:
                 list3 = []
                 for i, row in sorted_df.iterrows():
