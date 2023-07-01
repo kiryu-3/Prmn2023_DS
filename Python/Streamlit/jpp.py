@@ -439,7 +439,7 @@ with st.sidebar:
             if len(st.session_state['draw_data']) == 0: 
                 st.session_state['gate_data'] = list()
             else:
-                st.session_state['gate_data'] = list()
+                # st.session_state['gate_data'] = list()
                 # 最初の要素のみを取得してst.session_state['gate_data']に追加
                 gate_append_list = list()
                 for idx, sdata in enumerate(st.session_state['draw_data']):
