@@ -455,7 +455,7 @@ with st.sidebar:
         try:
             if len(st.session_state['draw_data']) == 0: 
                 st.session_state['gate_data'] = list()
-                st.write(len(st.session_state['kiseki_data']["20230403156"]))
+                # st.write(len(st.session_state['kiseki_data']["20230403156"]))
             else:
                 # st.session_state['gate_data'] = list()
                 # 最初の要素のみを取得してst.session_state['gate_data']に追加
@@ -481,7 +481,7 @@ with st.sidebar:
             st.write(st.session_state['tuuka_list'])
             # st.write(len(st.session_state['gate_data']))
             # st.write(len(st.session_state['gate_data'][0][0])-1)
-            st.write(len(st.session_state['kiseki_data']["20230403156"]))
+            # st.write(len(st.session_state['kiseki_data']["20230403156"]))
             
             delete_shape_id = st.selectbox("削除したい図形のIDを選択してください",
                                    [""] + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)])
