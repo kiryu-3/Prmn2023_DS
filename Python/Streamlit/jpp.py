@@ -126,7 +126,7 @@ def kousa():
                    data_list.append(item)
     
                 # 初期座標を取得
-                first_value = next(iter(st.session_state['kiseki_data'].values()))
+                first_value = next(iter(st.session_state['kiseki_data'].values())
 
                 # ポリゴンゲートのときは初期座標をチェック
                 if st.session_state['gate_data'][idx1][0][0] == st.session_state['gate_data'][idx1][0][-1]:
