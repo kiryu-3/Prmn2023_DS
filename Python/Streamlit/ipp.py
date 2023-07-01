@@ -222,21 +222,21 @@ with st.sidebar:
 	# excel_df = st.session_state['df']
 
         if st.session_state['csv'] is not None:
-	    file_data = st.session_state['csv'].read()
+            file_data = st.session_state['csv'].read()
 	    # バイナリデータからPandas DataFrameを作成
-	    df = pd.read_csv(io.BytesIO(file_data))
-	    df.sort_values(by=[df.columns[1]], inplace=True)
-	    # st.write(df)
-	    unique_values = df.iloc[:, 0].unique()
-	    df_new = pd.DataFrame(unique_values, columns=["newid"])
-	    df_new.index = range(1, len(df_new) + 1)
-	    st.session_state['df'] = df_new
-	    st.write(st.session_state['df'])
-	    if len(df_new) != 0:
-	        selected_values = st.multiselect("選択してください", df.iloc[:, 0].unique())
-	        if len(selected_values) == 0:
-	            sorted_df = df
-	            st.session_state["kiseki"] = False
+            df = pd.read_csv(io.BytesIO(file_data))
+            df.sort_values(by=[df.columns[1]], inplace=True)
+            # st.write(df)
+            unique_values = df.iloc[:, 0].unique()
+            df_new = pd.DataFrame(unique_values, columns=["newid"])
+            df_new.index = range(1, len(df_new) + 1)
+            st.session_state['df'] = df_new
+            st.write(st.session_state['df'])
+            if len(df_new) != 0:
+                selected_values = st.multiselect("選択してください", df.iloc[:, 0].unique())
+                if len(selected_values) == 0:
+                    sorted_df = df
+                    st.session_state["kiseki"] = False
 	        else:
 	            sorted_df = df[df.iloc[:, 0].isin(selected_values)]
 	            st.session_state['kiseki'] = False
