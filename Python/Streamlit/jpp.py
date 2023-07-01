@@ -461,7 +461,7 @@ with st.sidebar:
         except:
             pass
 
-    with tab5:
+    # with tab5:
             # excel_df = st.session_state['df']
 
             # if uploaded_csvfile is not None:
