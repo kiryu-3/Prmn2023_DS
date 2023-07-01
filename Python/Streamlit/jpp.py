@@ -116,7 +116,7 @@ def kousa():
             
     
         # IDでループ
-        for key, values in st.session_state['kiseki_data'].items():
+        for values in st.session_state['kiseki_data']:
             #values[0]["座標"][0][0]
             for value in values:
                     line1 = [(value["座標"][0][0], value["座標"][0][1]),
