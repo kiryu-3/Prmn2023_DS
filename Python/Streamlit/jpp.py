@@ -57,7 +57,7 @@ if 'df' not in st.session_state: # 初期化
 if 'kiseki' not in st.session_state: # 初期化
     st.session_state['kiseki'] = False
 if 'kiseki_data' not in st.session_state: # 初期化
-    st.session_state['kiseki_data'] = list() 
+    st.session_state['kiseki_data'] = dict() 
 if 'gate_data' not in st.session_state: # 初期化
     st.session_state['gate_data'] = list()     
 if "line_geojson" not in st.session_state: # 初期化
@@ -110,45 +110,37 @@ def ingate(plot_point, gate_polygon):
     
 def kousa():
     if len(st.session_state['df']) != 0:      
-        found_intersection = False
-        # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'])-1)]
-        # tuuka_list = [0 for _ in range(len(st.session_state['gate_data'][0])-1)]
-            
+        found_intersection = False           
     
         # IDでループ
-        for value in st.session_state['kiseki_data']:
-            #values[0]["座標"][0][0]
-            for value in values:
-                line1 = [(value["座標"][0][0], value["座標"][0][1]),
-                         (value["座標"][1][0], value["座標"][1][1])]
-                # ゲートでループ
-                for idx1 in range(len(st.session_state['gate_data'])):
-                    for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):
-    
-                        data_list = []
-                        for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
-                            data_list.append(item)
-                            
-                        if ingate(values[0]["座標"][0], data_list):
-                            found_intersection = True
-                            break  # 内側のループを終了
-                            
-                        line2 = [(st.session_state['gate_data'][idx1][0][idx2][0], st.session_state['gate_data'][idx1][0][idx2][1]),
-                                 (st.session_state['gate_data'][idx1][0][idx2+1][0], st.session_state['gate_data'][idx1][0][idx2+1][1])]
-                        if are_lines_intersecting(line1, line2):
-                            st.session_state['tuuka_list'][idx1] += 1
-                            found_intersection = True
-                            break  # 内側のループを終了
-                            
-                    if found_intersection:
-                        break  # 外側のループを終了
-    
-                if found_intersection:
-                        break  # 外側のループを終了
-    
-            # if found_intersection:
-                        # break  # 外側のループを終了
+        for key, value in st.session_state['kiseki_data'].items():
 
+            line1 = [(value["座標"][0][0], value["座標"][0][1]),
+                     (value["座標"][1][0], value["座標"][1][1])]
+            
+            # ゲートでループ
+            for idx1 in range(len(st.session_state['gate_data'])):
+               # 初期座標がゲート内にあるかどうかチェック
+               data_list = []
+               for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
+                   data_list.append(item)
+    
+                # 初期座標を取得
+                first_value = next(iter(st.session_state['kiseki_data'].values()))
+
+                # ポリゴンゲートのときは初期座標をチェック
+                if st.session_state['gate_data'][idx1][0][0] == st.session_state['gate_data'][idx1][0][-1]:
+                    if ingate(first_value["座標"][0], data_list):
+                        found_intersection = True
+                        continue  # このゲートのループを終了
+
+                # 線分それぞれをチェック
+                for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):   
+                    line2 = [(st.session_state['gate_data'][idx1][0][idx2][0], st.session_state['gate_data'][idx1][0][idx2][1]),
+                             (st.session_state['gate_data'][idx1][0][idx2+1][0], st.session_state['gate_data'][idx1][0][idx2+1][1])]
+                    if are_lines_intersecting(line1, line2):
+                        st.session_state['tuuka_list'][idx1] += 1
+                        break  # このゲートのループを終了
 
 # call to render Folium map in Streamlit
 st_data = st_folium(st.session_state['map'], width=725)  
@@ -445,11 +437,6 @@ with st.sidebar:
                     gate_append_list.append(sdata[0]["geometry"]["coordinates"])
                 st.session_state['gate_data'] = gate_append_list 
                 st.write(st.session_state['gate_data'])
-                if len(st.session_state['gate_data']) != 0:
-                    st.write(st.session_state['gate_data'][0][0][0][0])
-                    st.write(st.session_state['gate_data'][0][0][0][1])
-                    st.write(st.session_state['gate_data'][0][0][1][0])
-                    st.write(st.session_state['gate_data'][0][0][1][1])
                 # st.write(st.session_state['gate_data'])
                 # zukei_area = tab3.empty()
                 zukei_id = st.selectbox("表示したい図形のIDを選択してください", [""]
@@ -458,7 +445,7 @@ with st.sidebar:
                     zukei_id = int(zukei_id)
                     # 表示対象の図形を特定
                     delete_shape = st.session_state['gate_data'][zukei_id - 1]
-                    if len(delete_shape) == 2:
+                    if delete_shape[0][0] == delete_shape[0][-1]:
                         st.write(f"ゲート{zukei_id}(ライン)")
                     else:
                         st.write(f"ゲート{zukei_id}(ポリゴン)")
