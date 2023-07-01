@@ -450,8 +450,8 @@ with st.sidebar:
                 if len(st.session_state['gate_data']) != 0:
                     st.write(st.session_state['gate_data'][0][0][0][0])
                     st.write(st.session_state['gate_data'][0][0][0][1])
-                    st.write(st.session_state['gate_data'][0][1][0][0])
-                    st.write(st.session_state['gate_data'][0][1][0][1])
+                    st.write(st.session_state['gate_data'][0][0][1][0])
+                    st.write(st.session_state['gate_data'][0][0][1][1])
                 # st.write(st.session_state['gate_data'])
                 # zukei_area = tab3.empty()
                 zukei_id = st.selectbox("表示したい図形のIDを選択してください", [""]
