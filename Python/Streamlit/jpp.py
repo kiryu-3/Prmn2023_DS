@@ -223,7 +223,7 @@ with st.sidebar:
 
         if st.session_state['csv'] is not None:
             file_data = st.session_state['csv'].read()
-        # バイナリデータからPandas DataFrameを作成
+            # バイナリデータからPandas DataFrameを作成
             df = pd.read_csv(io.BytesIO(file_data))
             df.sort_values(by=[df.columns[1]], inplace=True)
             # st.write(df)
@@ -362,42 +362,41 @@ with st.sidebar:
                     st.session_state['map'])
             else:
                 folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
-    else:
-        df = pd.DataFrame()
-        st.session_state['df'] = df
+        else:
+            df = pd.DataFrame()
+            st.session_state['df'] = df
         
-        # 初めての表示時は空のマップを表示
-        m = folium.Map(location=[42.793553, 141.6958724], zoom_start=16)
+            # 初めての表示時は空のマップを表示
+            m = folium.Map(location=[42.793553, 141.6958724], zoom_start=16)
         
-        # Leaflet.jsのDrawプラグインを追加
-        draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
-        draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
-        draw.add_to(m)
+            # Leaflet.jsのDrawプラグインを追加
+            draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
+            draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
+            draw.add_to(m)
         
-        # Custom CSS style for the export button
-        st.markdown("""
-            <style>
-            .leaflet-draw-actions {
-                background-color: #ffffff;
-                border: 1px solid #cccccc;
-                padding: 5px;
-                border-radius: 5px;
-            }
-            </style>
-            """, unsafe_allow_html=True)
+            # Custom CSS style for the export button
+            st.markdown("""
+                <style>
+                .leaflet-draw-actions {
+                    background-color: #ffffff;
+                    border: 1px solid #cccccc;
+                    padding: 5px;
+                    border-radius: 5px;
+                }
+                </style>
+                """, unsafe_allow_html=True)
         
-        st.session_state['map'] = m
-        st.session_state['kiseki_data'] = dict()
+            st.session_state['map'] = m
+            st.session_state['kiseki_data'] = dict()
         
-        for idx, sdata in enumerate(st.session_state['draw_data']):
-            tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
-            if len(st.session_state['df']) != 0 and len(st.session_state['tuuka_list']) != 0:
-                kousa()
-                popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
-                folium.GeoJson(sdata[0], tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(
-                    st.session_state['map'])
-            else:
-                folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
+            for idx, sdata in enumerate(st.session_state['draw_data']):
+                tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
+                if len(st.session_state['df']) != 0 and len(st.session_state['tuuka_list']) != 0:
+                    kousa()
+                    popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+                    folium.GeoJson(sdata[0], tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+                else:
+                    folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
             
     delete_shape_id = st.selectbox("削除したい図形のIDを選択してください",
                                    [""] + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)])
