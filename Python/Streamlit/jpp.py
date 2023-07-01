@@ -116,38 +116,38 @@ def kousa():
             
     
         # IDでループ
-        for values in st.session_state['kiseki_data']:
+        for value in st.session_state['kiseki_data']:
             #values[0]["座標"][0][0]
-            for value in values:
-                    line1 = [(value["座標"][0][0], value["座標"][0][1]),
-                             (value["座標"][1][0], value["座標"][1][1])]
-                    # ゲートでループ
-                    for idx1 in range(len(st.session_state['gate_data'])):
-                        for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):
+            # for value in values:
+            line1 = [(value["座標"][0][0], value["座標"][0][1]),
+                     (value["座標"][1][0], value["座標"][1][1])]
+            # ゲートでループ
+            for idx1 in range(len(st.session_state['gate_data'])):
+                for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):
 
-                            data_list = []
-                            for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
-                                data_list.append(item)
-                                
-                            if ingate(values[0]["座標"][0], data_list):
-                                found_intersection = True
-                                break  # 内側のループを終了
-                                
-                            line2 = [(st.session_state['gate_data'][idx1][0][idx2][0], st.session_state['gate_data'][idx1][0][idx2][1]),
-                                     (st.session_state['gate_data'][idx1][0][idx2+1][0], st.session_state['gate_data'][idx1][0][idx2+1][1])]
-                            if are_lines_intersecting(line1, line2):
-                                st.session_state['tuuka_list'][idx1] += 1
-                                found_intersection = True
-                                break  # 内側のループを終了
-                                
-                        if found_intersection:
-                            break  # 外側のループを終了
+                    data_list = []
+                    for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
+                        data_list.append(item)
+                        
+                    if ingate(values[0]["座標"][0], data_list):
+                        found_intersection = True
+                        break  # 内側のループを終了
+                        
+                    line2 = [(st.session_state['gate_data'][idx1][0][idx2][0], st.session_state['gate_data'][idx1][0][idx2][1]),
+                             (st.session_state['gate_data'][idx1][0][idx2+1][0], st.session_state['gate_data'][idx1][0][idx2+1][1])]
+                    if are_lines_intersecting(line1, line2):
+                        st.session_state['tuuka_list'][idx1] += 1
+                        found_intersection = True
+                        break  # 内側のループを終了
+                        
+                if found_intersection:
+                    break  # 外側のループを終了
 
-                    if found_intersection:
-                            break  # 外側のループを終了
+            if found_intersection:
+                    break  # 外側のループを終了
 
-                # if found_intersection:
-                            # break  # 外側のループを終了
+        # if found_intersection:
+                    # break  # 外側のループを終了
 
 
 # call to render Folium map in Streamlit
