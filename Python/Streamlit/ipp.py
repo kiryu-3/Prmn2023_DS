@@ -221,7 +221,7 @@ with st.sidebar:
         # st.write(st.session_state['df'])
 	# excel_df = st.session_state['df']
 
-	if st.session_state['csv'] is not None:
+        if st.session_state['csv'] is not None:
 	    file_data = st.session_state['csv'].read()
 	    # バイナリデータからPandas DataFrameを作成
 	    df = pd.read_csv(io.BytesIO(file_data))
