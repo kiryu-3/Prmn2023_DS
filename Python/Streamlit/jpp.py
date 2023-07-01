@@ -479,7 +479,7 @@ with st.sidebar:
     
     with tab4:
         try:
-            st.write(st.session_state['kiseki_data'])
+            # st.write(st.session_state['kiseki_data'])
         except:
             pass
 
