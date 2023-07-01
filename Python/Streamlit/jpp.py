@@ -298,70 +298,68 @@ with st.sidebar:
                 st.session_state['kiseki_data'][f'{itr}'].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],
                                                                          [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]],
                                                                   '日時': df2.iloc[i, 1]})
-        # tab4.write(st.session_state['kiseki_data'])
-        line_geojson = {'type': 'FeatureCollection', 'features': line_features}
-        st.session_state["line_geojson"] = line_geojson
+            # tab4.write(st.session_state['kiseki_data'])
+            line_geojson = {'type': 'FeatureCollection', 'features': line_features}
+            st.session_state["line_geojson"] = line_geojson
         
-        # 線のジオJSONを追加
-        if kiseki and not st.session_state["kiseki"]:
-            # 線のジオJSONを削除する
-            line_layers_to_remove = []
-            for key, value in st.session_state['map']._children.items():
-                if isinstance(value, folium.features.GeoJson):
-                    line_layers_to_remove.append(key)
-            for key in line_layers_to_remove:
-                del st.session_state['map']._children[key]
             # 線のジオJSONを追加
-            folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
+            if kiseki and not st.session_state["kiseki"]:
+                # 線のジオJSONを削除する
+                line_layers_to_remove = []
+                for key, value in st.session_state['map']._children.items():
+                    if isinstance(value, folium.features.GeoJson):
+                        line_layers_to_remove.append(key)
+                for key in line_layers_to_remove:
+                    del st.session_state['map']._children[key]
+                # 線のジオJSONを追加
+                folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
                            style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
-            st.session_state["kiseki"] = True
+                st.session_state["kiseki"] = True
             
-        elif not kiseki:
-            # 線のジオJSONを削除する
-            line_layers_to_remove = []
-            for key, value in st.session_state['map']._children.items():
-                if isinstance(value, folium.features.GeoJson):
-                    line_layers_to_remove.append(key)
-            for key in line_layers_to_remove:
-                del st.session_state['map']._children[key]
+            elif not kiseki:
+                # 線のジオJSONを削除する
+                line_layers_to_remove = []
+                for key, value in st.session_state['map']._children.items():
+                    if isinstance(value, folium.features.GeoJson):
+                        line_layers_to_remove.append(key)
+                for key in line_layers_to_remove:
+                    del st.session_state['map']._children[key]
             
-            st.session_state["kiseki"] = False
+                st.session_state["kiseki"] = False
             
-        geojson = {"type": "FeatureCollection", "features": features}
+            geojson = {"type": "FeatureCollection", "features": features}
         
-        # レイヤーを削除
-        if 'map' in st.session_state:
-            layers_to_remove = []
-            for key, value in st.session_state['map']._children.items():
-                if isinstance(value, TimestampedGeoJson):
-                    layers_to_remove.append(key)
-            for key in layers_to_remove:
-                del st.session_state['map']._children[key]
+            # レイヤーを削除
+            if 'map' in st.session_state:
+                layers_to_remove = []
+                for key, value in st.session_state['map']._children.items():
+                    if isinstance(value, TimestampedGeoJson):
+                        layers_to_remove.append(key)
+                for key in layers_to_remove:
+                    del st.session_state['map']._children[key]
             
-        timestamped_geojson = TimestampedGeoJson(
-            geojson,
-            period="PT1M",
-            duration="PT1S",
-            auto_play=False,
-            loop=False
-        )
+            timestamped_geojson = TimestampedGeoJson(
+                    geojson,
+                    period="PT1M",
+                    duration="PT1S",
+                    auto_play=False,
+                    loop=False
+                )
         
-        # TimestampedGeoJsonをマップに追加
-        timestamped_geojson.add_to(st.session_state['map'])
+            # TimestampedGeoJsonをマップに追加
+            timestamped_geojson.add_to(st.session_state['map'])
         
-        # DataFrameをサイドバーに表示
-        st.session_state['df'] = df_new
+            # DataFrameをサイドバーに表示
+            st.session_state['df'] = df_new
         
-        for idx, sdata in enumerate(st.session_state['draw_data']):
-            tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(
-                st.session_state['draw_data'].index(sdata) + 1)
-            if len(st.session_state['df']) != 0 and len(st.session_state['tuuka_list']) != 0:
-                kousa()
-                popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
-                folium.GeoJson(sdata[0], tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(
-                    st.session_state['map'])
-            else:
-                folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
+            for idx, sdata in enumerate(st.session_state['draw_data']):
+                tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
+                if len(st.session_state['df']) != 0 and len(st.session_state['tuuka_list']) != 0:
+                    kousa()
+                    popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+                    folium.GeoJson(sdata[0], tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+                else:
+                    folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
         else:
             df = pd.DataFrame()
             st.session_state['df'] = df
