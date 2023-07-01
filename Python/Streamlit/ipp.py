@@ -221,8 +221,8 @@ with st.sidebar:
     	# tab4.write(st.session_state['tuuka_list'])
 
         # Deleteボタンがクリックされた場合
-        if delete_shape_id != "":
-        	st.info("Deleteボタンをダブルクリックしてください")
+	if delete_shape_id != "":
+		st.info("Deleteボタンをダブルクリックしてください")
 		if st.button("Delete"):
 			delete_shape_id = int(delete_shape_id)
 			# 削除対象の図形を特定
@@ -231,7 +231,7 @@ with st.sidebar:
 			keys_to_remove = []
 			for key, value in st.session_state['map']._children.items():
 				if isinstance(value, folium.features.GeoJson) and value.data == delete_shape:
-			    		keys_to_remove.append(key)
+					keys_to_remove.append(key)
 		    	# マップから図形を削除
 		    	for key in keys_to_remove:
 				del st.session_state['map']._children[key]
