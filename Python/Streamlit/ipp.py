@@ -217,28 +217,27 @@ with st.sidebar:
         
     with tab2:    
          st.write(st.session_state['df'])
-	 delete_shape_id = st.selectbox("削除したい図形のIDを選択してください", [""]
-		    + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)])
-    # tab4.write(st.session_state['tuuka_list'])
+	 delete_shape_id = st.selectbox("削除したい図形のIDを選択してください", [""] + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)])
+    		# tab4.write(st.session_state['tuuka_list'])
 
-    # Deleteボタンがクリックされた場合
+   	 # Deleteボタンがクリックされた場合
 	 if delete_shape_id != "":
-	st.info("Deleteボタンをダブルクリックしてください")
-	if st.button("Delete"):
-	    delete_shape_id = int(delete_shape_id)
-	    # 削除対象の図形を特定
-	    delete_shape = st.session_state['draw_data'][delete_shape_id - 1]
-	    # 図形をマップから削除するためのキーを記録
-	    keys_to_remove = []
-	    for key, value in st.session_state['map']._children.items():
-		if isinstance(value, folium.features.GeoJson) and value.data == delete_shape:
-		    keys_to_remove.append(key)
-	    # マップから図形を削除
-	    for key in keys_to_remove:
-		del st.session_state['map']._children[key]
-	    # draw_dataから図形を削除
-	    st.session_state['draw_data'].remove(delete_shape)
-	    # tab5.write("削除しました")
+		st.info("Deleteボタンをダブルクリックしてください")
+		if st.button("Delete"):
+		    delete_shape_id = int(delete_shape_id)
+		    # 削除対象の図形を特定
+		    delete_shape = st.session_state['draw_data'][delete_shape_id - 1]
+		    # 図形をマップから削除するためのキーを記録
+		    keys_to_remove = []
+		    for key, value in st.session_state['map']._children.items():
+			if isinstance(value, folium.features.GeoJson) and value.data == delete_shape:
+			    keys_to_remove.append(key)
+		    # マップから図形を削除
+		    for key in keys_to_remove:
+			del st.session_state['map']._children[key]
+		    # draw_dataから図形を削除
+		    st.session_state['draw_data'].remove(delete_shape)
+		    # tab5.write("削除しました")
         
 	with tab3:
         	try:
