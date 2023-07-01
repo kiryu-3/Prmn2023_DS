@@ -467,10 +467,10 @@ with st.sidebar:
                     else:
                         st.write(f"ゲート{zukei_id}(ポリゴン)")
                     st.write(delete_shape)
-            append_list = list()
-            for _ in range(len(st.session_state['gate_data'])):
-                append_list.append(0)
-            st.session_state['tuuka_list'] = append_list
+            # append_list = list()
+            # for _ in range(len(st.session_state['gate_data'])):
+                # append_list.append(0)
+            # st.session_state['tuuka_list'] = append_list
             # tab4.write(len(st.session_state['draw_data'])-1)
             # tab4.write(len(st.session_state['gate_data']))
             st.write(st.session_state['tuuka_list'])
