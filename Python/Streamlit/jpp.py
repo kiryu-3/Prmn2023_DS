@@ -477,11 +477,11 @@ with st.sidebar:
         except:
             pass
     
-    with tab4:
-        try:
+    # with tab4:
+        # try:
             # st.write(st.session_state['kiseki_data'])
-        except:
-            pass
+        # except:
+            # pass
 
     # with tab5:
             # excel_df = st.session_state['df']
