@@ -295,9 +295,9 @@ with st.sidebar:
                         }
                     }
                     line_features.append(line_feature)
-                                st.session_state['kiseki_data'][f'{itr}'].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],
-                                                                                           [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]],
-                                                                                  '日時': df2.iloc[i, 1]})
+                    st.session_state['kiseki_data'][f'{itr}'].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],
+                                                                               [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]],
+                                                                      '日時': df2.iloc[i, 1]})
             # tab4.write(st.session_state['kiseki_data'])
             line_geojson = {'type': 'FeatureCollection', 'features': line_features}
             st.session_state["line_geojson"] = line_geojson
