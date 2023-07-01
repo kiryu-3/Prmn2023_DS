@@ -510,4 +510,5 @@ with st.sidebar:
 
                     # st.write(st.session_state['df'])
         except:
+            st.write("error")
             pass
