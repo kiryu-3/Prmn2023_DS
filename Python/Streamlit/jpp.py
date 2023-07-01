@@ -66,6 +66,8 @@ if "tuuka_list" not in st.session_state: # 初期化
     st.session_state['tuuka_list'] = list()
 if 'count' not in st.session_state: # 初期化
     st.session_state['count'] = 0
+if 'kasa' not in st.session_state: # 初期化
+    st.session_state['kasa'] = False
 
 
 def are_lines_intersecting(line1, line2):
@@ -151,7 +153,7 @@ def kousa():
                    # if found_intersection:
                        # found_intersection = False
                        # break # このIDのループを終了
-
+        st.session_state['kasa'] = False
         # # IDでループ
         # for key, values in st.session_state['kiseki_data'].items():
         #     # IDの軌跡ごとループ
@@ -213,6 +215,7 @@ try:
             for _ in range(len(st.session_state['draw_data'])):
                 append_list.append(0)
             st.session_state['tuuka_list'] = append_list
+            st.session_state['kasa'] = True
     else:
         pass
             
@@ -384,7 +387,7 @@ with st.sidebar:
         
             for idx, sdata in enumerate(st.session_state['draw_data']):
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
-                if len(st.session_state['df']) != 0 and len(st.session_state['tuuka_list']) != 0:
+                if len(st.session_state['df']) != 0 and len(st.session_state['tuuka_list']) != 0 and st.session_state['kasa']:
                     kousa()
                     st.session_state['count'] += 1
                     popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
