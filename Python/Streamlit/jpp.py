@@ -126,7 +126,7 @@ def kousa():
                         for idx2 in range(len(st.session_state['gate_data'][idx1][0])):
 
                             data_list = []
-                            for item in st.session_state['gate_data'][idx1][0][:idx2+1]:
+                            for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])+1]:
                                 data_list.append(item)
                                 
                             if ingate(values[0]["座標"][0], data_list):
