@@ -128,6 +128,7 @@ def kousa():
                    for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
                        data_list.append(item)
 
+                   st.write(data_list)
                    # ポリゴンゲートのときは初期座標をチェック
                    if st.session_state['gate_data'][idx1][0][0] == st.session_state['gate_data'][idx1][0][-1]:
                        if ingate(values[0]["座標"][0], data_list):
@@ -324,15 +325,7 @@ with st.sidebar:
                     line_features.append(line_feature)
                     st.session_state['kiseki_data'][itr].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], '日時': df2.iloc[i, 1]})
             tab4.write(st.session_state['kiseki_data'])
-            tab4.write(type(st.session_state['kiseki_data']))
-            tab4.write(st.session_state['kiseki_data'].keys())
-            tab4.write(st.session_state['kiseki_data'][20230403156])
-            tab4.write(len(st.session_state['kiseki_data'][20230403156]))
-            # st.write(len(st.session_state['gate_data']))
-            # st.write(len(st.session_state['gate_data'][0][0])-1)
-            st.write(len(st.session_state['kiseki_data']))
-            if "20230403156" in st.session_state['kiseki_data']:
-                st.write(len(st.session_state['kiseki_data']["20230403156"]))
+
             line_geojson = {'type': 'FeatureCollection', 'features': line_features}
             st.session_state["line_geojson"] = line_geojson
         
@@ -460,9 +453,7 @@ with st.sidebar:
         try:
             if len(st.session_state['draw_data']) == 0: 
                 st.session_state['gate_data'] = list()
-                if "20230403156" in st.session_state['kiseki_data']:
-                    tab1.write(len(st.session_state['kiseki_data']["20230403156"]))
-                    st.write(len(st.session_state['kiseki_data']["20230403156"]))
+
             else:
                 # st.session_state['gate_data'] = list()
                 # 最初の要素のみを取得してst.session_state['gate_data']に追加
