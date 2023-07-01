@@ -47,7 +47,8 @@ if 'map' not in st.session_state: # 初期化
     st.session_state['map'] = m
     
     
-    
+if 'csv' not in st.session_state: # 初期化
+    st.session_state['csv'] = None
 if 'draw_data' not in st.session_state: # 初期化
     st.session_state['draw_data'] = list()  
 if 'df' not in st.session_state: # 初期化
@@ -202,7 +203,8 @@ with st.sidebar:
     with tab1:
         # CSVファイルのアップロード
         uploaded_csvfile = st.file_uploader("CSVファイルをアップロード", type=["csv"])
-        st.write(uploaded_csvfile)
+        st.session_state['csv'] = uploaded_csvfile
+        st.write(st.session_state['csv'])
 
         # def multi_file_uploader(label, key):
         #     uploaded_files = st.file_uploader(label, key=key, accept_multiple_files=True)
@@ -219,8 +221,8 @@ with st.sidebar:
         # st.write(st.session_state['df'])
 	# excel_df = st.session_state['df']
 
-	if uploaded_csvfile is not None:
-	    file_data = uploaded_csvfile.read()
+	if st.session_state['csv'] is not None:
+	    file_data = st.session_state['csv'].read()
 	    # バイナリデータからPandas DataFrameを作成
 	    df = pd.read_csv(io.BytesIO(file_data))
 	    df.sort_values(by=[df.columns[1]], inplace=True)
