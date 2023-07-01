@@ -183,7 +183,7 @@ except Exception as e:
     pass
 
 st.subheader("地図の全描画データ")
-# st.write(len(st.session_state['draw_data'])
+st.write(len(st.session_state['draw_data']))
 # st.write(data["all_drawings"])
 st.write(st.session_state['draw_data'])
 # st.write(len(st.session_state['draw_data'])
