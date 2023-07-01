@@ -453,6 +453,7 @@ with st.sidebar:
         try:
             if len(st.session_state['draw_data']) == 0: 
                 st.session_state['gate_data'] = list()
+                st.write(len(st.session_state['kiseki_data']["20230403156"]))
             else:
                 # st.session_state['gate_data'] = list()
                 # 最初の要素のみを取得してst.session_state['gate_data']に追加
