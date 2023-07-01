@@ -258,8 +258,7 @@ with st.sidebar:
             df_new.index = range(1, len(df_new) + 1)
             st.session_state['df'] = df_new
             st.write(st.session_state['df'])
-            if "20230403156" in st.session_state['kiseki_data']:
-                st.write(len(st.session_state['kiseki_data']["20230403156"]))
+            
             if len(df_new) != 0:
                 selected_values = st.multiselect("選択してください", df.iloc[:, 0].unique())
                 if len(selected_values) == 0:
@@ -457,7 +456,9 @@ with st.sidebar:
         try:
             if len(st.session_state['draw_data']) == 0: 
                 st.session_state['gate_data'] = list()
-                # st.write(len(st.session_state['kiseki_data']["20230403156"]))
+                if "20230403156" in st.session_state['kiseki_data']:
+                    tab1.write(len(st.session_state['kiseki_data']["20230403156"]))
+                    st.write(len(st.session_state['kiseki_data']["20230403156"]))
             else:
                 # st.session_state['gate_data'] = list()
                 # 最初の要素のみを取得してst.session_state['gate_data']に追加
