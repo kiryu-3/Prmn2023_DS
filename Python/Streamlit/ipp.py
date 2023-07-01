@@ -222,62 +222,62 @@ with st.sidebar:
 
         # Deleteボタンがクリックされた場合
         if delete_shape_id != "":
-	    st.info("Deleteボタンをダブルクリックしてください")
-	    if st.button("Delete"):
-	        delete_shape_id = int(delete_shape_id)
-	        # 削除対象の図形を特定
-	        delete_shape = st.session_state['draw_data'][delete_shape_id - 1]
-	        # 図形をマップから削除するためのキーを記録
-	        keys_to_remove = []
-	        for key, value in st.session_state['map']._children.items():
-	            if isinstance(value, folium.features.GeoJson) and value.data == delete_shape:
-　　　　　　　　　　　    keys_to_remove.append(key)
-		    	# マップから図形を削除
-	        for key in keys_to_remove:
-	            del st.session_state['map']._children[key]
-	        # draw_dataから図形を削除
-	        st.session_state['draw_data'].remove(delete_shape)
-	        # tab5.write("削除しました")
+            st.info("Deleteボタンをダブルクリックしてください")
+        if st.button("Delete"):
+                delete_shape_id = int(delete_shape_id)
+                # 削除対象の図形を特定
+                delete_shape = st.session_state['draw_data'][delete_shape_id - 1]
+                # 図形をマップから削除するためのキーを記録
+                keys_to_remove = []
+                for key, value in st.session_state['map']._children.items():
+                    if isinstance(value, folium.features.GeoJson) and value.data == delete_shape:
+                        keys_to_remove.append(key)
+                        # マップから図形を削除
+                for key in keys_to_remove:
+                    del st.session_state['map']._children[key]
+                # draw_dataから図形を削除
+                st.session_state['draw_data'].remove(delete_shape)
+                # tab5.write("削除しました")
         
-	with tab3:
-        	try:
-			if len(st.session_state['draw_data']) == 0: 
-					st.session_state['gate_data'] = list()
-			else:
-			    st.session_state['gate_data'] = list()
-					# 最初の要素のみを取得してst.session_state['gate_data']に追加
-			    gate_append_list = list()
-			    for idx, sdata in enumerate(st.session_state['draw_data']):
-				gate_append_list.append(sdata[0]["geometry"]["coordinates"])
-					    st.session_state['gate_data'] = gate_append_list 
-			    # st.write(st.session_state['gate_data'])
-					# zukei_area = tab3.empty()
-			    zukei_id = st.selectbox("表示したい図形のIDを選択してください", [""]
-					    + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)])
-			    if zukei_id != "":
-			zukei_id = int(zukei_id)
-			# 表示対象の図形を特定
-			delete_shape = st.session_state['gate_data'][zukei_id - 1]
-			if len(delete_shape) == 2:
-			    st.write(f"ゲート{zukei_id}(ライン)")
-			else:
-			    st.write(f"ゲート{zukei_id}(ポリゴン)")
-			st.write(delete_shape)
-			append_list = list()
-			for _ in range(len(st.session_state['gate_data'])):
-				append_list.append(0)
-			st.session_state['tuuka_list'] = append_list
-			# tab4.write(len(st.session_state['draw_data'])-1)
-			# tab4.write(len(st.session_state['gate_data']))
-			st.write(st.session_state['tuuka_list'])
-        	except:
-			pass
-
+    with tab3:
+        try:
+            if len(st.session_state['draw_data']) == 0: 
+                st.session_state['gate_data'] = list()
+            else:
+                st.session_state['gate_data'] = list()
+                # 最初の要素のみを取得してst.session_state['gate_data']に追加
+                gate_append_list = list()
+                for idx, sdata in enumerate(st.session_state['draw_data']):
+                    gate_append_list.append(sdata[0]["geometry"]["coordinates"])
+                st.session_state['gate_data'] = gate_append_list 
+                # st.write(st.session_state['gate_data'])
+                # zukei_area = tab3.empty()
+                zukei_id = st.selectbox("表示したい図形のIDを選択してください", [""]
+	                                   + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)])
+                if zukei_id != "":
+                    zukei_id = int(zukei_id)
+                    # 表示対象の図形を特定
+                    delete_shape = st.session_state['gate_data'][zukei_id - 1]
+                    if len(delete_shape) == 2:
+                        st.write(f"ゲート{zukei_id}(ライン)")
+                    else:
+                        st.write(f"ゲート{zukei_id}(ポリゴン)")
+                    st.write(delete_shape)
+                    append_list = list()
+                    for _ in range(len(st.session_state['gate_data'])):
+                        append_list.append(0)
+                    st.session_state['tuuka_list'] = append_list
+                    # tab4.write(len(st.session_state['draw_data'])-1)
+                    # tab4.write(len(st.session_state['gate_data']))
+                    st.write(st.session_state['tuuka_list'])
+        except:
+            pass
+	
     with tab4:
-	try:
-		st.write(st.session_state['kiseki_data'])
-	except:
-		pass
+        try:
+            st.write(st.session_state['kiseki_data'])
+        except:
+            pass
 
     with tab5:
             excel_df = st.session_state['df']
