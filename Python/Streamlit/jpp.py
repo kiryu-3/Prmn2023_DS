@@ -224,7 +224,7 @@ st.subheader("地図の全描画データ")
 st.write(len(st.session_state['draw_data']))
 # st.write(data["all_drawings"])
 st.write(st.session_state['draw_data'])
-st.session_state['count']
+st.write(st.session_state['count'])
 # st.write(len(st.session_state['draw_data'])
 
 with st.sidebar:
