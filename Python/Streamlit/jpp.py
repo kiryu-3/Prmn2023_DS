@@ -175,12 +175,12 @@ try:
             for _ in range(len(st.session_state['draw_data'])+1):
                 append_list.append(0)
             st.session_state['tuuka_list'] = append_list
-
+    else:
+        pass
             
-            
-# except Exception as e:
+except Exception as e:
     # st.write(e)
-    # pass
+    pass
 
 st.subheader("地図の全描画データ")
 # st.write(data["all_drawings"])
