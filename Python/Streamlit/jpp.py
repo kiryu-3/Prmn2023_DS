@@ -57,7 +57,7 @@ if 'df' not in st.session_state: # 初期化
 if 'kiseki' not in st.session_state: # 初期化
     st.session_state['kiseki'] = False
 if 'kiseki_data' not in st.session_state: # 初期化
-    st.session_state['kiseki_data'] = dict() 
+    st.session_state['kiseki_data'] = list() 
 if 'gate_data' not in st.session_state: # 初期化
     st.session_state['gate_data'] = list()     
 if "line_geojson" not in st.session_state: # 初期化
