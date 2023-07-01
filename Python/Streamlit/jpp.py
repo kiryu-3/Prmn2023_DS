@@ -171,7 +171,7 @@ try:
 
         st.session_state['draw_data'].append(data["all_drawings"])
         append_list = list()
-        for _ in range(len(st.session_state['gate_data'])):
+        for _ in range(len(st.session_state['draw_data'])):
             append_list.append(0)
         st.session_state['tuuka_list'] = append_list
         # st.session_state['draw_data'].append(data["all_drawings"])
