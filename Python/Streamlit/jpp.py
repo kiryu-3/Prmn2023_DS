@@ -324,6 +324,8 @@ with st.sidebar:
                     line_features.append(line_feature)
                     st.session_state['kiseki_data'][itr].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], '日時': df2.iloc[i, 1]})
             tab4.write(st.session_state['kiseki_data'])
+            tab4.write(st.session_state['kiseki_data']["20230403156"])
+            tab4.write(len(st.session_state['kiseki_data']["20230403156"]))
             # st.write(len(st.session_state['gate_data']))
             # st.write(len(st.session_state['gate_data'][0][0])-1)
             st.write(len(st.session_state['kiseki_data']))
