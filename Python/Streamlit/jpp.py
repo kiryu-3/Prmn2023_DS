@@ -111,36 +111,90 @@ def ingate(plot_point, gate_polygon):
 def kousa():
     if len(st.session_state['df']) != 0:      
         found_intersection = False           
+
+        # ゲートでループ
+        for idx1 in range(len(st.session_state['gate_data'])):
+            # 初期座標がゲート内にあるかどうかチェック
+           data_list = []
+           for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
+               data_list.append(item)
+
+           # 初期座標を取得
+           first_value = next(iter(st.session_state['kiseki_data'].values()))
+
+           # ポリゴンゲートのときは初期座標をチェック
+           if st.session_state['gate_data'][idx1][0][0] == st.session_state['gate_data'][idx1][0][-1]:
+               if ingate(first_value["座標"][0], data_list):
+                   found_intersection = True
+                   break  # このゲートのループを終了
+
+           # 線分それぞれをチェック
+           for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):   
+               line1 = [(st.session_state['gate_data'][idx1][0][idx2][0], st.session_state['gate_data'][idx1][0][idx2][1]),
+                        (st.session_state['gate_data'][idx1][0][idx2+1][0], st.session_state['gate_data'][idx1][0][idx2+1][1])]
+               
+               # IDでループ
+               for key, values in st.session_state['kiseki_data'].items():
+                
+                   # 初期座標がゲート内にあるかどうかチェック
+                   data_list = []
+                   for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
+                       data_list.append(item)
+                   
+                   # ポリゴンゲートのときは初期座標をチェック
+                   if st.session_state['gate_data'][idx1][0][0] == st.session_state['gate_data'][idx1][0][-1]:
+                       if ingate(value[0]["座標"][0], data_list):
+                           found_intersection = True
+                           continue  # このIDのループを終了
+                
+                   # IDの軌跡ごとループ
+                   for value in values:
+                       line2 = [(value["座標"][0][0], value["座標"][0][1]),
+                                (value["座標"][1][0], value["座標"][1][1])]
+                    
+                       if are_lines_intersecting(line1, line2):
+                           # found_intersection = True
+                           st.session_state['tuuka_list'][idx1] += 1
+                           break  # このIDのループを終了
+
+                   # if found_intersection:
+                       # break # このIDのループを終了
+
+        # # IDでループ
+        # for key, values in st.session_state['kiseki_data'].items():
+        #     # IDの軌跡ごとループ
+        #     for value in values:
+
+        #         line1 = [(value["座標"][0][0], value["座標"][0][1]),
+        #                  (value["座標"][1][0], value["座標"][1][1])]
+                
+        #         # ゲートでループ
+        #         for idx1 in range(len(st.session_state['gate_data'])):
+        #            # 初期座標がゲート内にあるかどうかチェック
+        #            data_list = []
+        #            for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
+        #                data_list.append(item)
+        
+        #            # 初期座標を取得
+        #            first_value = next(iter(st.session_state['kiseki_data'].values()))
     
-        # IDでループ
-        for key, value in st.session_state['kiseki_data'].items():
-
-            line1 = [(value["座標"][0][0], value["座標"][0][1]),
-                     (value["座標"][1][0], value["座標"][1][1])]
-            
-            # ゲートでループ
-            for idx1 in range(len(st.session_state['gate_data'])):
-               # 初期座標がゲート内にあるかどうかチェック
-               data_list = []
-               for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
-                   data_list.append(item)
+        #            # ポリゴンゲートのときは初期座標をチェック
+        #            if st.session_state['gate_data'][idx1][0][0] == st.session_state['gate_data'][idx1][0][-1]:
+        #                if ingate(first_value["座標"][0], data_list):
+        #                    found_intersection = True
+        #                    break  # このゲートのループを終了
     
-               # 初期座標を取得
-               first_value = next(iter(st.session_state['kiseki_data'].values()))
+        #            # 線分それぞれをチェック
+        #            for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):   
+        #                line2 = [(st.session_state['gate_data'][idx1][0][idx2][0], st.session_state['gate_data'][idx1][0][idx2][1]),
+        #                         (st.session_state['gate_data'][idx1][0][idx2+1][0], st.session_state['gate_data'][idx1][0][idx2+1][1])]
+        #                if are_lines_intersecting(line1, line2):
+        #                    found_intersection = True
+        #                    st.session_state['tuuka_list'][idx1] += 1
+        #                    break  # このゲートのループを終了
 
-               # ポリゴンゲートのときは初期座標をチェック
-               if st.session_state['gate_data'][idx1][0][0] == st.session_state['gate_data'][idx1][0][-1]:
-                   if ingate(first_value["座標"][0], data_list):
-                       found_intersection = True
-                       continue  # このゲートのループを終了
-
-               # 線分それぞれをチェック
-               for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):   
-                   line2 = [(st.session_state['gate_data'][idx1][0][idx2][0], st.session_state['gate_data'][idx1][0][idx2][1]),
-                            (st.session_state['gate_data'][idx1][0][idx2+1][0], st.session_state['gate_data'][idx1][0][idx2+1][1])]
-                   if are_lines_intersecting(line1, line2):
-                       st.session_state['tuuka_list'][idx1] += 1
-                       break  # このゲートのループを終了
+        #            if found_intersection:
+                       
 
 # call to render Folium map in Streamlit
 st_data = st_folium(st.session_state['map'], width=725)  
