@@ -216,13 +216,13 @@ with st.sidebar:
         
         
     with tab2:    
-         st.write(st.session_state['df'])
-	 delete_shape_id = st.selectbox("削除したい図形のIDを選択してください", [""] + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)])
+        st.write(st.session_state['df'])
+	delete_shape_id = st.selectbox("削除したい図形のIDを選択してください", [""] + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)])
     		# tab4.write(st.session_state['tuuka_list'])
 
-   	 # Deleteボタンがクリックされた場合
-	 if delete_shape_id != "":
-		st.info("Deleteボタンをダブルクリックしてください")
+        # Deleteボタンがクリックされた場合
+        if delete_shape_id != "":
+        	st.info("Deleteボタンをダブルクリックしてください")
 		if st.button("Delete"):
 		    delete_shape_id = int(delete_shape_id)
 		    # 削除対象の図形を特定
