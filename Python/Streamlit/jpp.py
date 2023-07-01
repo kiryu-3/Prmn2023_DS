@@ -114,19 +114,6 @@ def kousa():
 
         # ゲートでループ
         for idx1 in range(len(st.session_state['gate_data'])):
-            # 初期座標がゲート内にあるかどうかチェック
-           data_list = []
-           for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
-               data_list.append(item)
-
-           # 初期座標を取得
-           first_value = next(iter(st.session_state['kiseki_data'].values()))
-
-           # ポリゴンゲートのときは初期座標をチェック
-           if st.session_state['gate_data'][idx1][0][0] == st.session_state['gate_data'][idx1][0][-1]:
-               if ingate(first_value["座標"][0], data_list):
-                   found_intersection = True
-                   break  # このゲートのループを終了
 
            # 線分それぞれをチェック
            for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):   
