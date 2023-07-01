@@ -324,7 +324,7 @@ with st.sidebar:
                     st.session_state['kiseki_data'][itr].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], '日時': df2.iloc[i, 1]})
             tab4.write(st.session_state['kiseki_data'])
             st.write(len(st.session_state['gate_data']))
-            st.write(len(st.session_state['gate_data'][idx1][0])-1)
+            st.write(len(st.session_state['gate_data'][0][0])-1)
             st.write(st.session_state['kiseki_data'])
             line_geojson = {'type': 'FeatureCollection', 'features': line_features}
             st.session_state["line_geojson"] = line_geojson
