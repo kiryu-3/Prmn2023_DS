@@ -64,6 +64,8 @@ if "line_geojson" not in st.session_state: # 初期化
     st.session_state['line_geojson'] = None
 if "tuuka_list" not in st.session_state: # 初期化
     st.session_state['tuuka_list'] = list()
+if 'count' not in st.session_state: # 初期化
+    st.session_state['count'] = 0
 
 
 def are_lines_intersecting(line1, line2):
@@ -383,6 +385,7 @@ with st.sidebar:
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
                 if len(st.session_state['df']) != 0 and len(st.session_state['tuuka_list']) != 0:
                     kousa()
+                    st.session_state['count'] += 1
                     popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
                     # folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
                     folium.GeoJson(sdata[0], tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
@@ -421,6 +424,7 @@ with st.sidebar:
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
                 if len(st.session_state['df']) != 0 and len(st.session_state['tuuka_list']) != 0:
                     kousa()
+                    st.session_state['count'] += 1
                     popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
                     folium.GeoJson(sdata[0], tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
                 else:
