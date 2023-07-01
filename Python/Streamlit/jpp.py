@@ -172,7 +172,7 @@ try:
         st.session_state['draw_data'].append(data["all_drawings"])
         if len(st.session_state['draw_data']) != 0:
             append_list = list()
-            for _ in range(len(st.session_state['draw_data'])):
+            for _ in range(len(st.session_state['draw_data'])-1):
                 append_list.append(0)
             st.session_state['tuuka_list'] = append_list
     else:
