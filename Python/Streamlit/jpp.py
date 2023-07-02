@@ -265,6 +265,7 @@ with st.sidebar:
             df_new.index = range(1, len(df_new) + 1)
             st.session_state['df'] = df_new
             st.write(st.session_state['df'])
+            st.session_state['kasa'] = True
             
             if len(df_new) != 0:
                 selected_values = st.multiselect("選択してください", df.iloc[:, 0].unique())
@@ -358,7 +359,7 @@ with st.sidebar:
                 for key in line_layers_to_remove:
                     del st.session_state['map']._children[key]
             
-                st.session_state["kiseki"] = True
+                st.session_state["kiseki"] = False
             
             geojson = {"type": "FeatureCollection", "features": features}
 
