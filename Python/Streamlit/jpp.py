@@ -515,7 +515,12 @@ with st.sidebar:
             st.multiselect("選択してください", st.session_state['df'].iloc[:, 0].unique(), key="select_data_id",on_change=select_data)
        
     with tab3:
-        st.selectbox("削除したい図形のIDを選択してください",
+        if len(st.session_state['draw_data']) != 0:
+            st.selectbox("表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)],
+                         key="select_shape_id",
+                         on_change=select_shape)
+
+            st.selectbox("削除したい図形のIDを選択してください",
                          [""] + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)],
                          key="delete_shape_id",
                          on_change=delete_shape)
