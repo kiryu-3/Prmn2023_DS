@@ -209,13 +209,15 @@ try:
                 center_dict["lng"] = center_list[1]
                 data["all_drawings"][0]["properties"]["center"] = center_dict
 
+        if len(st.session_state['draw_data']) != len(data["all_drawings"]):
+            st.session_state['kasa'] = True
         st.session_state['draw_data'].append(data["all_drawings"])
         if len(st.session_state['draw_data']) != 0:
             append_list = list()
             for _ in range(len(st.session_state['draw_data'])):
                 append_list.append(0)
             st.session_state['tuuka_list'] = append_list
-            st.session_state['kasa'] = True
+            
     else:
         pass
             
