@@ -190,7 +190,7 @@ def kousa():
         #            if found_intersection:
                        
 
-# call to render Folium map in Streamlit
+# call to render Folium map in eamlit
 st_data = st_folium(st.session_state['map'], width=725)  
 
 data = copy.deepcopy(dict(st_data))
@@ -282,10 +282,10 @@ with st.sidebar:
             list2 = list()
             for i, row in sorted_df.iterrows():
                 if row.iloc[0] not in list2:
-                    list2.append(str(row.iloc[0]))
+                    list2.append(row.iloc[0])
             features = []
             for i, row in sorted_df.iterrows():
-                indexNum = list2.index(str(row.iloc[0]))
+                indexNum = list2.index(row.iloc[0])
                 feature = {
                     "type": "Feature",
                     "geometry": {
@@ -313,7 +313,7 @@ with st.sidebar:
             for itr in list2:
                 list3 = []
                 for i, row in sorted_df.iterrows():
-                    if itr == str(row[0]):
+                    if itr == row[0]:
                         list3.append(row)
                 df2 = pd.DataFrame(list3)
                 for i in range(len(df2) - 1):
