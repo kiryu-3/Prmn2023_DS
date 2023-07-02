@@ -284,6 +284,8 @@ with st.sidebar:
             # df.sort_values(by=[df.columns[1]], inplace=True)
             kiseki = tab4.checkbox(label='軌跡の表示', key='kiseki2')
             tab4.write(kiseki)
+            if st.session_state['kiseki'] != kiseki:
+                st.experimental_rerun()
             
             list2 = list()
             for i, row in df.iterrows():
