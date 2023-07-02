@@ -68,7 +68,8 @@ if 'count' not in st.session_state: # 初期化
     st.session_state['count'] = 0
 if 'kasa' not in st.session_state: # 初期化
     st.session_state['kasa'] = True
-
+if 'kosin' not in st.session_state: # 初期化
+    st.session_state['kosin'] = True
 
 def are_lines_intersecting(line1, line2):
     x1, y1 = line1[0]
@@ -284,8 +285,12 @@ with st.sidebar:
             # df.sort_values(by=[df.columns[1]], inplace=True)
             kiseki = tab4.checkbox(label='軌跡の表示', key='kiseki2')
             tab4.write(kiseki)
-            if st.session_state['kiseki'] != kiseki:
+            if st.session_state['kosin']:
+                st.session_state['kosin'] = False
                 raise st.experimental_rerun()
+            elif ~(kiseki):
+                st.session_state['kosin'] = True
+                
             
             list2 = list()
             for i, row in df.iterrows():
