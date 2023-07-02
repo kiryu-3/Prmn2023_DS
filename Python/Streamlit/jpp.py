@@ -91,7 +91,7 @@ def upload_csv():
         # 描画するプロットデータ
         features = []
         for i, row in df.iterrows():
-            indexNum = list2.index(row.iloc[0])
+            indexNum = list2.index(str(row.iloc[0]))
             feature = {
                 "type": "Feature",
                 "geometry": {
@@ -116,11 +116,11 @@ def upload_csv():
         # 描画する軌跡データ
         line_features = []
         for itr in list2:
-            st.session_state['kiseki_data'][itr] = list()
+            st.session_state['kiseki_data'][str(itr)] = list()
         for itr in list2:
             list3 = []
             for i, row in df.iterrows():
-                if itr == row[0]:
+                if itr == str(row[0]):
                     list3.append(row)
             df2 = pd.DataFrame(list3)
             for i in range(len(df2) - 1):
@@ -137,7 +137,7 @@ def upload_csv():
                 }
                 line_features.append(line_feature)
                 # 軌跡のデータを管理する
-                st.session_state['kiseki_data'][itr].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], 
+                st.session_state['kiseki_data'][str(itr)].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], 
                                                              '日時': df2.iloc[i, 1]})
         # tab4.write(st.session_state['kiseki_data'])
         # 軌跡のデータをまとめる
@@ -231,7 +231,7 @@ def select_data():
         # 描画するプロットデータ
         features = []
         for i, row in st.session_state['sorted_df'].iterrows():
-            indexNum = list2.index(row.iloc[0])
+            indexNum = list2.index(str(row.iloc[0]))
             feature = {
                 "type": "Feature",
                 "geometry": {
@@ -256,11 +256,11 @@ def select_data():
         # 描画する軌跡データ
         line_features = []
         for itr in list2:
-            st.session_state['kiseki_data'][itr] = list()
+            st.session_state['kiseki_data'][str(itr)] = list()
         for itr in list2:
             list3 = []
             for i, row in st.session_state['df'].iterrows():
-                if itr == row[0]:
+                if itr == str(row[0]):
                     list3.append(row)
             df2 = pd.DataFrame(list3)
             for i in range(len(df2) - 1):
@@ -335,11 +335,11 @@ def kiseki_draw():
         # 描画する軌跡データ
         line_features = []
         for itr in list2:
-            st.session_state['kiseki_data'][itr] = list()
+            st.session_state['kiseki_data'][str(itr)] = list()
         for itr in list2:
             list3 = []
             for i, row in st.session_state['df'].iterrows():
-                if itr == row[0]:
+                if itr == str(row[0]):
                     list3.append(row)
             df2 = pd.DataFrame(list3)
             for i in range(len(df2) - 1):
@@ -356,7 +356,7 @@ def kiseki_draw():
                 }
                 line_features.append(line_feature)
                 # 軌跡データはいじらない
-                # st.session_state['kiseki_data'][itr].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], '日時': df2.iloc[i, 1]})
+                # st.session_state['kiseki_data'][str(itr)].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], '日時': df2.iloc[i, 1]})
 
         # 軌跡のデータをまとめる
         line_geojson = {'type': 'FeatureCollection', 'features': line_features}
