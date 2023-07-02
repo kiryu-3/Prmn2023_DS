@@ -368,7 +368,7 @@ def kiseki_draw():
 
 def select_shape():
     if st.session_state["select_shape_id"] != "":
-        select_shape_id = str(st.session_state["select_shape_id"])
+        select_shape_id = int(st.session_state["select_shape_id"])
         # 表示対象の図形を特定
         selected_shape = st.session_state['gate_data'][select_shape_id - 1]
         if selected_shape[0][0] == selected_shape[0][-1]:
