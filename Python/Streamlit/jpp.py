@@ -336,23 +336,10 @@ with st.sidebar:
 
             line_geojson = {'type': 'FeatureCollection', 'features': line_features}
             st.session_state["line_geojson"] = line_geojson
-        
-            # 線のジオJSONを追加
-            if kiseki and not st.session_state["kiseki"]:
-                # 線のジオJSONを削除する
-                line_layers_to_remove = []
-                for key, value in st.session_state['map']._children.items():
-                    if isinstance(value, folium.features.GeoJson):
-                        line_layers_to_remove.append(key)
-                for key in line_layers_to_remove:
-                    del st.session_state['map']._children[key]
+
+            if st.session_state['kasa']:
                 # 線のジオJSONを追加
-                folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
-                           style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
-                st.session_state["kiseki"] = True
-            
-            elif not kiseki:
-                if st.session_state['kasa']:
+                if kiseki and not st.session_state["kiseki"]:
                     # 線のジオJSONを削除する
                     line_layers_to_remove = []
                     for key, value in st.session_state['map']._children.items():
@@ -360,21 +347,35 @@ with st.sidebar:
                             line_layers_to_remove.append(key)
                     for key in line_layers_to_remove:
                         del st.session_state['map']._children[key]
+                    # 線のジオJSONを追加
+                    folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
+                               style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+                    st.session_state["kiseki"] = True
                 
-                    st.session_state["kiseki"] = False
-                
-                    geojson = {"type": "FeatureCollection", "features": features}
-    
-                
-                    # レイヤーを削除
-                    if 'map' in st.session_state:
-                        layers_to_remove = []
+                elif not kiseki:
+                    if st.session_state['kasa']:
+                        # 線のジオJSONを削除する
+                        line_layers_to_remove = []
                         for key, value in st.session_state['map']._children.items():
-                            if isinstance(value, TimestampedGeoJson):
-                                layers_to_remove.append(key)
-                        for key in layers_to_remove:
+                            if isinstance(value, folium.features.GeoJson):
+                                line_layers_to_remove.append(key)
+                        for key in line_layers_to_remove:
                             del st.session_state['map']._children[key]
                     
+                        st.session_state["kiseki"] = False
+                    
+                        geojson = {"type": "FeatureCollection", "features": features}
+        
+                    
+                        # レイヤーを削除
+                        if 'map' in st.session_state:
+                            layers_to_remove = []
+                            for key, value in st.session_state['map']._children.items():
+                                if isinstance(value, TimestampedGeoJson):
+                                    layers_to_remove.append(key)
+                            for key in layers_to_remove:
+                                del st.session_state['map']._children[key]
+                        
                     timestamped_geojson = TimestampedGeoJson(
                             geojson,
                             period="PT1M",
