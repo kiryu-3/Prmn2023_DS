@@ -63,6 +63,8 @@ if "line_geojson" not in st.session_state: # 初期化
     st.session_state['line_geojson'] = None
 if "tuuka_list" not in st.session_state: # 初期化
     st.session_state['tuuka_list'] = list()
+if "count" not in st.session_state: # 初期化
+    st.session_state['count'] = 0
 
 
 def upload_csv():
@@ -419,6 +421,7 @@ def are_lines_intersecting(line1, line2):
         # 交差点が線分の範囲内にあるかどうかをチェック
         if min(x1, x2) <= intersect_x <= max(x1, x2) and min(x3, x4) <= intersect_x <= max(x3, x4) and \
                 min(y1, y2) <= intersect_y <= max(y1, y2) and min(y3, y4) <= intersect_y <= max(y3, y4):
+            st.session_state['count'] += 1        
             return True
         else:
             return False
@@ -519,6 +522,7 @@ except Exception as e:
 st.subheader("地図の全描画データ")
 st.write(data["all_drawings"])
 st.write(st.session_state['draw_data'])
+st.write(st.session_state['count'])
 
 with st.sidebar:
     # タブ
