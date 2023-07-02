@@ -153,7 +153,7 @@ def kousa():
                    # if found_intersection:
                        # found_intersection = False
                        # break # このIDのループを終了
-        st.session_state['kasa'] = False
+    st.session_state['kasa'] = False
         # # IDでループ
         # for key, values in st.session_state['kiseki_data'].items():
         #     # IDの軌跡ごとループ
