@@ -363,13 +363,14 @@ with st.sidebar:
             geojson = {"type": "FeatureCollection", "features": features}
         
             # レイヤーを削除
-            if 'map' in st.session_state:
-                layers_to_remove = []
-                for key, value in st.session_state['map']._children.items():
-                    if isinstance(value, TimestampedGeoJson):
-                        layers_to_remove.append(key)
-                for key in layers_to_remove:
-                    del st.session_state['map']._children[key]
+            if st.session_state['kasa']:
+                if 'map' in st.session_state:
+                    layers_to_remove = []
+                    for key, value in st.session_state['map']._children.items():
+                        if isinstance(value, TimestampedGeoJson):
+                            layers_to_remove.append(key)
+                    for key in layers_to_remove:
+                        del st.session_state['map']._children[key]
             
             timestamped_geojson = TimestampedGeoJson(
                     geojson,
