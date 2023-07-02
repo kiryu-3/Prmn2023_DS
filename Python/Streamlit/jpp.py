@@ -385,17 +385,17 @@ with st.sidebar:
             # DataFrameをサイドバーに表示
             st.session_state['df'] = df_new
 
-            if st.session_state['kasa']:
-                for idx, sdata in enumerate(st.session_state['draw_data']):
-                    tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
-                    if len(st.session_state['df']) != 0 and len(st.session_state['tuuka_list']) != 0:
-                        kousa()
-                        st.session_state['count'] += 1
-                        popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
-                        # folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
-                        folium.GeoJson(sdata[0], tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
-                    else:
-                        folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
+            # if st.session_state['kasa']:
+            for idx, sdata in enumerate(st.session_state['draw_data']):
+                tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
+                if len(st.session_state['df']) != 0 and len(st.session_state['tuuka_list']) != 0:
+                    kousa()
+                    st.session_state['count'] += 1
+                    popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+                    # folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
+                    folium.GeoJson(sdata[0], tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+                else:
+                    folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
 
             
         else:
