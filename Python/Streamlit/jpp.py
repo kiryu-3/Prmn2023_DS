@@ -374,7 +374,7 @@ def select_shape():
             tab3.write(f"ゲート{select_shape_id}(ライン)")
         else:
             tab3.write(f"ゲート{select_shape_id}(ポリゴン)")
-        converted_shape = [{"経度": row[0], "緯度": row[1]} for row in selected_shape[0]]
+        converted_shape = [{"経度": row[0], "緯度": row[1]} for row in selected_shape]
         tab3.write(converted_shape)
     
 def delete_shape():
