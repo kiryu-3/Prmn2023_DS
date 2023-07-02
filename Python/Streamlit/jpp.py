@@ -375,7 +375,7 @@ def select_shape():
             tab3.write(f"ゲート{select_shape_id}(ライン)")
         else:
             tab3.write(f"ゲート{select_shape_id}(ポリゴン)")
-        tab3.write(select_shape_id)
+        tab3.write(select_shape)
     
 def delete_shape():
     if st.session_state["delete_shape_id"] != "":
