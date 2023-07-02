@@ -526,4 +526,5 @@ with st.sidebar:
                          on_change=delete_shape)
         
     with tab4:
-        st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
+        if len(st.session_state['df']) != 0:
+            st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
