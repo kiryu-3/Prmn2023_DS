@@ -352,19 +352,20 @@ with st.sidebar:
                 st.session_state["kiseki"] = True
             
             elif not kiseki:
-                # 線のジオJSONを削除する
-                line_layers_to_remove = []
-                for key, value in st.session_state['map']._children.items():
-                    if isinstance(value, folium.features.GeoJson):
-                        line_layers_to_remove.append(key)
-                for key in line_layers_to_remove:
-                    del st.session_state['map']._children[key]
-            
-                st.session_state["kiseki"] = False
-            
-            geojson = {"type": "FeatureCollection", "features": features}
+                if st.session_state['kasa']:
+                    # 線のジオJSONを削除する
+                    line_layers_to_remove = []
+                    for key, value in st.session_state['map']._children.items():
+                        if isinstance(value, folium.features.GeoJson):
+                            line_layers_to_remove.append(key)
+                    for key in line_layers_to_remove:
+                        del st.session_state['map']._children[key]
+                
+                    st.session_state["kiseki"] = False
+                
+                geojson = {"type": "FeatureCollection", "features": features}
 
-            if st.session_state['kasa']:
+            
                 # レイヤーを削除
                 if 'map' in st.session_state:
                     layers_to_remove = []
