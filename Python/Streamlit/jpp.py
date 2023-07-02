@@ -283,6 +283,7 @@ with st.sidebar:
         
             # df.sort_values(by=[df.columns[1]], inplace=True)
             kiseki = tab4.checkbox(label='軌跡の表示', key='kiseki2')
+            st.write(kiseki)
             
             list2 = list()
             for i, row in df.iterrows():
@@ -342,7 +343,7 @@ with st.sidebar:
 
             if st.session_state['kasa']:
                 # 線のジオJSONを追加
-                st.write(kiseki)
+                
                 if kiseki:
                     # 線のジオJSONを削除する
                     line_layers_to_remove = []
