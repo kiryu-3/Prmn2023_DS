@@ -492,7 +492,7 @@ try:
         pass
             
 except Exception as e:
-    # st.write(e)
+    st.write(e)
     pass
 
 st.subheader("地図の全描画データ")
