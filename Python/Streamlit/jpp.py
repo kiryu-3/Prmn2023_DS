@@ -282,7 +282,7 @@ with st.sidebar:
             list2 = list()
             for i, row in df.iterrows():
                 if row.iloc[0] not in list2:
-                    list2.append(row.iloc[0])
+                    list2.append(str(row.iloc[0]))
             features = []
             for i, row in sorted_df.iterrows():
                 indexNum = list2.index(row.iloc[0])
