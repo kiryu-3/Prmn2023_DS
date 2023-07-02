@@ -358,11 +358,11 @@ with st.sidebar:
                 for key in line_layers_to_remove:
                     del st.session_state['map']._children[key]
             
-                st.session_state["kiseki"] = False
+                st.session_state["kiseki"] = True
             
             geojson = {"type": "FeatureCollection", "features": features}
 
-            if ~st.session_state['kasa']:
+            if st.session_state['kasa']:
                 # レイヤーを削除
                 if 'map' in st.session_state:
                     layers_to_remove = []
