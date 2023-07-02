@@ -476,6 +476,7 @@ with st.sidebar:
     with tab3:
         try:
             tab4.write(st.session_state['kosin'])
+            tab4.write("kiseki")
             tab4.write(st.session_state['kiseki'])
             if st.session_state['kiseki']:
                 if st.session_state['kosin']:
