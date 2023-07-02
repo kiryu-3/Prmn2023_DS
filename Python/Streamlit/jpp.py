@@ -185,7 +185,6 @@ def upload_csv():
                 folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
             else:
                 folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
-        raise st.experimental_rerun()
 
     else:
         # 空のデータフレームを作成
