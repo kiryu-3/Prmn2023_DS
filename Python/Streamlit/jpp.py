@@ -525,7 +525,7 @@ with st.sidebar:
                          key="delete_shape_id",
                          on_change=delete_shape)
 
-            at.write(st.session_state['tuuka_list'])
+            st.write(st.session_state['tuuka_list'])
         
     with tab4:
         if len(st.session_state['df']) != 0:
