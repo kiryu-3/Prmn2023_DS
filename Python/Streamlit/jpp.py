@@ -313,7 +313,7 @@ with st.sidebar:
             for itr in list2:
                 list3 = []
                 for i, row in sorted_df.iterrows():
-                    if itr == row[0]:
+                    if itr == str(row[0]):
                         list3.append(row)
                 df2 = pd.DataFrame(list3)
                 for i in range(len(df2) - 1):
