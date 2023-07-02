@@ -372,10 +372,10 @@ def select_shape():
         # 表示対象の図形を特定
         selected_shape = st.session_state['gate_data'][select_shape_id - 1]
         if selected_shape[0][0] == selected_shape[0][-1]:
-            st.write(f"ゲート{select_shape_id}(ライン)")
+            tab3.write(f"ゲート{select_shape_id}(ライン)")
         else:
-            st.write(f"ゲート{select_shape_id}(ポリゴン)")
-        st.write(select_shape_id)
+            tab3.write(f"ゲート{select_shape_id}(ポリゴン)")
+        tab3.write(select_shape_id)
     
 def delete_shape():
     if st.session_state["delete_shape_id"] != "":
