@@ -285,13 +285,7 @@ with st.sidebar:
             # df.sort_values(by=[df.columns[1]], inplace=True)
             kiseki = tab4.checkbox(label='軌跡の表示', key='kiseki2')
             tab4.write(kiseki)
-            tab4.write(st.session_state['kosin'])
-            if kiseki:
-                if st.session_state['kosin']:
-                    st.session_state['kosin'] = False
-                    raise st.experimental_rerun()
-            else:
-                st.session_state['kosin'] = True
+            
                 
             
             list2 = list()
@@ -417,7 +411,8 @@ with st.sidebar:
                     else:
                         folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
                 st.session_state['kasa'] = False
-            
+
+        
         else:
             df = pd.DataFrame()
             st.session_state['df'] = df
@@ -480,6 +475,13 @@ with st.sidebar:
         #         # st.write(st.session_state['df'])
     with tab3:
         try:
+            tab4.write(st.session_state['kosin'])
+            if st.session_state['kiseki']:
+                if st.session_state['kosin']:
+                    st.session_state['kosin'] = False
+                    raise st.experimental_rerun()
+            else:
+                st.session_state['kosin'] = True
             if len(st.session_state['draw_data']) == 0: 
                 st.session_state['gate_data'] = list()
 
