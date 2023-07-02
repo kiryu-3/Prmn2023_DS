@@ -280,7 +280,7 @@ with st.sidebar:
             # df.sort_values(by=[df.columns[1]], inplace=True)
             kiseki = tab4.checkbox(label='軌跡の表示', key='kiseki2')
             list2 = list()
-            for i, row in sorted_df.iterrows():
+            for i, row in df.iterrows():
                 if row.iloc[0] not in list2:
                     list2.append(row.iloc[0])
             features = []
