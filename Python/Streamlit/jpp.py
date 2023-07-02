@@ -285,6 +285,7 @@ with st.sidebar:
             # df.sort_values(by=[df.columns[1]], inplace=True)
             kiseki = tab4.checkbox(label='軌跡の表示', key='kiseki2')
             tab4.write(kiseki)
+            tab4.write(st.session_state['kosin'])
             if st.session_state['kosin']:
                 st.session_state['kosin'] = False
                 raise st.experimental_rerun()
