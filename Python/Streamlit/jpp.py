@@ -471,6 +471,7 @@ try:
         if data["all_drawings"][0] not in st.session_state['draw_data']:
             # データの追加
             st.session_state['draw_data'].append(data["all_drawings"][0])
+            
                 
             # 通過人数カウントの準備
             append_list = list()
@@ -487,6 +488,7 @@ try:
                     folium.GeoJson(sdata[0], tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
                 else:
                     folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
+            raise st.experimental_rerun()
             
     else:
         pass
