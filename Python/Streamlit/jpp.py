@@ -363,25 +363,24 @@ with st.sidebar:
             geojson = {"type": "FeatureCollection", "features": features}
         
             # レイヤーを削除
-            if st.session_state['kasa']:
-                if 'map' in st.session_state:
-                    layers_to_remove = []
-                    for key, value in st.session_state['map']._children.items():
-                        if isinstance(value, TimestampedGeoJson):
-                            layers_to_remove.append(key)
-                    for key in layers_to_remove:
-                        del st.session_state['map']._children[key]
+            if 'map' in st.session_state:
+                layers_to_remove = []
+                for key, value in st.session_state['map']._children.items():
+                    if isinstance(value, TimestampedGeoJson):
+                        layers_to_remove.append(key)
+                for key in layers_to_remove:
+                    del st.session_state['map']._children[key]
             
-                timestamped_geojson = TimestampedGeoJson(
-                        geojson,
-                        period="PT1M",
-                        duration="PT1S",
-                        auto_play=False,
-                        loop=False
-                    )
-            
-                # TimestampedGeoJsonをマップに追加
-                timestamped_geojson.add_to(st.session_state['map'])
+            timestamped_geojson = TimestampedGeoJson(
+                    geojson,
+                    period="PT1M",
+                    duration="PT1S",
+                    auto_play=False,
+                    loop=False
+                )
+        
+            # TimestampedGeoJsonをマップに追加
+            timestamped_geojson.add_to(st.session_state['map'])
         
             # DataFrameをサイドバーに表示
             st.session_state['df'] = df_new
