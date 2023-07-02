@@ -500,8 +500,10 @@ try:
             for _ in range(len(st.session_state['draw_data'])):
                 append_list.append(0)
             st.session_state['tuuka_list'] = append_list
-            
+
+            gate_append_list = list()
             for idx, sdata in enumerate(st.session_state['draw_data']):
+                gate_append_list.append(sdata[0]["geometry"]["coordinates"])
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
                 if len(st.session_state['df_new']) != 0:
                     kousa()
@@ -510,7 +512,9 @@ try:
                     folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
                 else:
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
-            
+
+            # 最初の要素のみを取得してst.session_state['gate_data']に追加
+            st.session_state['gate_data'] = gate_append_list 
     else:
         pass
             
