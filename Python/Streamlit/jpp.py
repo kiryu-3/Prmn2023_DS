@@ -452,11 +452,11 @@ def kousa():
            for key, values in st.session_state['kiseki_data'].items():
             
                # 初期座標がゲート内にあるかどうかチェック
-               data_list = []
-               for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
-                   data_list.append(item)
+               # data_list = []
+               # for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
+               #     data_list.append(item)
+               data_list = st.session_state['gate_data'][idx1][0]
 
-               st.write(data_list)
                # ポリゴンゲートのときは初期座標をチェック
                if st.session_state['gate_data'][idx1][0][0] == st.session_state['gate_data'][idx1][0][-1]:
                    if ingate(values[0]["座標"][0], data_list):
@@ -560,4 +560,4 @@ with st.sidebar:
     with tab4:
         if len(st.session_state['df']) != 0:
             st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
-            # st.write(st.session_state['kiseki_data'])
+            st.write(st.session_state['kiseki_data'])
