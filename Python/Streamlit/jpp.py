@@ -215,7 +215,7 @@ try:
             for _ in range(len(st.session_state['draw_data'])):
                 append_list.append(0)
             st.session_state['tuuka_list'] = append_list
-            st.session_state['kasa'] = True
+            # st.session_state['kasa'] = True
     else:
         pass
             
