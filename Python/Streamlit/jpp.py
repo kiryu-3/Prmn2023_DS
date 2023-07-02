@@ -153,7 +153,7 @@ def kousa():
                    # if found_intersection:
                        # found_intersection = False
                        # break # このIDのループを終了
-        st.session_state['kasa'] = False
+        # st.session_state['kasa'] = False
         # # IDでループ
         # for key, values in st.session_state['kiseki_data'].items():
         #     # IDの軌跡ごとループ
@@ -396,11 +396,11 @@ with st.sidebar:
                         kousa()
                         st.session_state['count'] += 1
                         popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
-                        folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
-                        # folium.GeoJson(sdata[0], tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+                        # folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
+                        folium.GeoJson(sdata[0], tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
                     else:
                         folium.GeoJson(sdata[0], tooltip=tooltip_html).add_to(st.session_state['map'])
-
+                    st.session_state['kasa'] = False
             
         else:
             df = pd.DataFrame()
