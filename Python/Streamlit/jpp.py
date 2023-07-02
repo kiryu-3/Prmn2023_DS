@@ -46,31 +46,24 @@ if 'map' not in st.session_state: # 初期化
     
     st.session_state['map'] = m
     
-    
-if 'draw_data' not in st.session_state: # 初期化
-    st.session_state['draw_data'] = list()  
+ 
 if 'df' not in st.session_state: # 初期化
     df = pd.DataFrame()
     st.session_state['df'] = df
 if 'df_new' not in st.session_state: # 初期化
     df = pd.DataFrame()
     st.session_state['df_new'] = df
-if 'kiseki' not in st.session_state: # 初期化
-    st.session_state['kiseki'] = False
+if 'draw_data' not in st.session_state: # 初期化
+    st.session_state['draw_data'] = list() 
+if 'gate_data' not in st.session_state: # 初期化
+    st.session_state['gate_data'] = list()  
 if 'kiseki_data' not in st.session_state: # 初期化
     st.session_state['kiseki_data'] = dict() 
-if 'gate_data' not in st.session_state: # 初期化
-    st.session_state['gate_data'] = list()     
 if "line_geojson" not in st.session_state: # 初期化
     st.session_state['line_geojson'] = None
 if "tuuka_list" not in st.session_state: # 初期化
     st.session_state['tuuka_list'] = list()
-if 'count' not in st.session_state: # 初期化
-    st.session_state['count'] = 0
-if 'kasa' not in st.session_state: # 初期化
-    st.session_state['kasa'] = True
-if 'kosin' not in st.session_state: # 初期化
-    st.session_state['kosin'] = True
+
 
 def upload_csv():
     if st.session_state["upload_csvfile"] is not None:
@@ -475,8 +468,8 @@ with st.sidebar:
         st.write(st.session_state['df'])
             
         if len(st.session_state['df']) != 0:
-            # selected_values = st.multiselect("選択してください", df.iloc[:, 0].unique(), key="select_data_id",on_change=select_data)
-            st.multiselect("選択してください", df.iloc[:, 0].unique(), key="select_data_id",on_change=select_data)
+            # selected_values = st.multiselect("選択してください", st.session_state['df'].iloc[:, 0].unique(), key="select_data_id",on_change=select_data)
+            st.multiselect("選択してください", st.session_state['df'].iloc[:, 0].unique(), key="select_data_id",on_change=select_data)
        
     with tab3:
         st.selectbox("削除したい図形のIDを選択してください",
