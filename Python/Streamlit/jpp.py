@@ -86,7 +86,7 @@ def upload_csv():
         # tab2.write(st.session_state['df'])
 
         # ユニークなIDのリスト
-        list2 = list(unique_values)
+        list2 = [str(value) for value in unique_values]
         
         # 描画するプロットデータ
         features = []
@@ -330,7 +330,7 @@ def kiseki_draw():
             del st.session_state['map']._children[key]
 
         # 
-        list2 = list(st.session_state['new_df']['newid'])
+        list2 = [str(value) for value in st.session_state['new_df']['newid']]
         
         # 描画する軌跡データ
         line_features = []
