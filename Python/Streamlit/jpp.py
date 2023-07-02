@@ -342,6 +342,7 @@ with st.sidebar:
 
             if st.session_state['kasa']:
                 # 線のジオJSONを追加
+                st.write(kiseki)
                 if kiseki:
                     # 線のジオJSONを削除する
                     line_layers_to_remove = []
