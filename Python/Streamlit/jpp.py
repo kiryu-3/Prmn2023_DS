@@ -176,7 +176,7 @@ def upload_csv():
 
         for idx, sdata in enumerate(st.session_state['draw_data']):
             tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
-            if len(st.session_state['df']) != 0:
+            if len(st.session_state['df_new']) != 0:
                 kousa()
                 # st.session_state['count'] += 1
                 popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
@@ -500,7 +500,7 @@ try:
             
             for idx, sdata in enumerate(st.session_state['draw_data']):
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
-                if len(st.session_state['df']) != 0:
+                if len(st.session_state['df_new']) != 0:
                     kousa()
                     # st.session_state['count'] += 1
                     popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
@@ -529,7 +529,7 @@ with st.sidebar:
         st.file_uploader("CSVファイルをアップロード", type=["csv"], key="upload_csvfile", on_change=upload_csv)
         
     with tab2:    
-        st.write(st.session_state['df'])
+        st.write(st.session_state['df_new'])
             
         if len(st.session_state['df']) != 0:
             # selected_values = st.multiselect("選択してください", st.session_state['df'].iloc[:, 0].unique(), key="select_data_id",on_change=select_data)
