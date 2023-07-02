@@ -67,7 +67,7 @@ if "tuuka_list" not in st.session_state: # 初期化
 if 'count' not in st.session_state: # 初期化
     st.session_state['count'] = 0
 if 'kasa' not in st.session_state: # 初期化
-    st.session_state['kasa'] = False
+    st.session_state['kasa'] = True
 
 
 def are_lines_intersecting(line1, line2):
@@ -265,7 +265,7 @@ with st.sidebar:
             df_new.index = range(1, len(df_new) + 1)
             st.session_state['df'] = df_new
             st.write(st.session_state['df'])
-            st.session_state['kasa'] = True
+            # st.session_state['kasa'] = True
             
             if len(df_new) != 0:
                 selected_values = st.multiselect("選択してください", df.iloc[:, 0].unique())
