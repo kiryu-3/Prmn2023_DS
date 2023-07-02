@@ -285,7 +285,7 @@ with st.sidebar:
                     list2.append(str(row.iloc[0]))
             features = []
             for i, row in sorted_df.iterrows():
-                indexNum = list2.index(row.iloc[0])
+                indexNum = list2.index(str(row.iloc[0]))
                 feature = {
                     "type": "Feature",
                     "geometry": {
