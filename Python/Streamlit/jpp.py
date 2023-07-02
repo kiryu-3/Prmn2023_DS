@@ -283,7 +283,7 @@ with st.sidebar:
         
             # df.sort_values(by=[df.columns[1]], inplace=True)
             kiseki = tab4.checkbox(label='軌跡の表示', key='kiseki2')
-            st.write(kiseki)
+            tab4.write(kiseki)
             
             list2 = list()
             for i, row in df.iterrows():
