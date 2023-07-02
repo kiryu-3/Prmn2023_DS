@@ -362,7 +362,7 @@ with st.sidebar:
             
             geojson = {"type": "FeatureCollection", "features": features}
 
-            if st.session_state['kasa']:
+            if ~st.session_state['kasa']:
                 # レイヤーを削除
                 if 'map' in st.session_state:
                     layers_to_remove = []
