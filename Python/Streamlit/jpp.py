@@ -372,16 +372,16 @@ with st.sidebar:
                     for key in layers_to_remove:
                         del st.session_state['map']._children[key]
             
-            timestamped_geojson = TimestampedGeoJson(
-                    geojson,
-                    period="PT1M",
-                    duration="PT1S",
-                    auto_play=False,
-                    loop=False
-                )
-        
-            # TimestampedGeoJsonをマップに追加
-            timestamped_geojson.add_to(st.session_state['map'])
+                timestamped_geojson = TimestampedGeoJson(
+                        geojson,
+                        period="PT1M",
+                        duration="PT1S",
+                        auto_play=False,
+                        loop=False
+                    )
+            
+                # TimestampedGeoJsonをマップに追加
+                timestamped_geojson.add_to(st.session_state['map'])
         
             # DataFrameをサイドバーに表示
             st.session_state['df'] = df_new
