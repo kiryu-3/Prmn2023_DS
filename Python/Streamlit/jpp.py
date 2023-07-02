@@ -274,17 +274,16 @@ with st.sidebar:
                 selected_values = st.multiselect("選択してください", df.iloc[:, 0].unique())
                 if len(selected_values) == 0:
                     sorted_df = df
-                    st.session_state["kiseki"] = False
+                    # st.session_state['kiseki'] = False
                 else:
                     sorted_df = df[df.iloc[:, 0].isin(selected_values)]
-                    st.session_state['kiseki'] = False
+                    # st.session_state['kiseki'] = False
             else:
                 sorted_df = df
         
             # df.sort_values(by=[df.columns[1]], inplace=True)
             kiseki = tab4.checkbox(label='軌跡の表示', key='kiseki2')
-            if kiseki:
-                st.session_state['kasa'] = True
+            
             list2 = list()
             for i, row in df.iterrows():
                 if row.iloc[0] not in list2:
@@ -343,7 +342,7 @@ with st.sidebar:
 
             if st.session_state['kasa']:
                 # 線のジオJSONを追加
-                if kiseki and not st.session_state["kiseki"]:
+                if kiseki:
                     # 線のジオJSONを削除する
                     line_layers_to_remove = []
                     for key, value in st.session_state['map']._children.items():
@@ -354,7 +353,9 @@ with st.sidebar:
                     # 線のジオJSONを追加
                     folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
                                style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
-                    st.session_state["kiseki"] = True
+                    if ~(st.session_state['kiseki']):
+                        st.session_state['kasa'] = True
+                    st.session_state['kiseki'] = True
                 
                 elif not kiseki:
                     # 線のジオJSONを削除する
@@ -365,7 +366,7 @@ with st.sidebar:
                     for key in line_layers_to_remove:
                         del st.session_state['map']._children[key]
                 
-                    st.session_state["kiseki"] = False
+                    st.session_state['kiseki'] = False
                 
                 geojson = {"type": "FeatureCollection", "features": features}
 
