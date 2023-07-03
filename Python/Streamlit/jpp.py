@@ -664,7 +664,7 @@ with st.sidebar:
        
     with tab3:
         if len(st.session_state['draw_data']) != 0:
-            st.write(st.session_state['gate_data'])
+            # st.write(st.session_state['gate_data'])
             st.selectbox("表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
                          key="select_shape_id",
                          on_change=select_shape)
@@ -682,14 +682,14 @@ with st.sidebar:
             st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
 
             # st.write(st.session_state['kiseki_data'])
-            st.subheader("count")
-            st.write(st.session_state['count'])
-            st.subheader("ingate_count")
-            st.write(st.session_state['ingate_count'])
-            st.subheader("non_ingate_count")
-            st.write(st.session_state['non_ingate_count'])
-            st.subheader("cross_judge_count")
-            st.write(st.session_state['cross_judge_count'])  
-            st.subheader("non_cross_judge_count")
-            st.write(st.session_state['non_cross_judge_count'])
+            # st.subheader("count")
+            # st.write(st.session_state['count'])
+            # st.subheader("ingate_count")
+            # st.write(st.session_state['ingate_count'])
+            # st.subheader("non_ingate_count")
+            # st.write(st.session_state['non_ingate_count'])
+            # st.subheader("cross_judge_count")
+            # st.write(st.session_state['cross_judge_count'])  
+            # st.subheader("non_cross_judge_count")
+            # st.write(st.session_state['non_cross_judge_count'])
 
