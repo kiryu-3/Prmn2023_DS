@@ -472,7 +472,7 @@ def cross_judge(gates, values):
             tc2 = (a[0] - b[0]) * (d[1] - a[1]) + (a[1] - b[1]) * (a[0] - d[0])
             td1 = (c[0] - d[0]) * (a[1] - c[1]) + (c[1] - d[1]) * (c[0] - a[0])
             td2 = (c[0] - d[0]) * (b[1] - c[1]) + (c[1] - d[1]) * (c[0] - b[0])
-            if tc1 * tc2 <= 0 and td1 * td2 <= 0
+            if tc1 * tc2 <= 0 and td1 * td2 <= 0 :
                 flag = True
                 break
         if flag:
