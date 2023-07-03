@@ -548,6 +548,12 @@ def ingate(plot_point, gate_polygon):
         
 
 def kousa():
+    # 通過人数カウントの準備
+    append_list = list()
+    for _ in range(len(st.session_state['draw_data'])):
+        append_list.append(0)
+    st.session_state['tuuka_list'] = append_list
+    
     # ゲートとIDの組み合わせごとにループ
     for idx1, gates in enumerate(st.session_state['gate_data']):
         for key, values in st.session_state['kiseki_data'].items():  
@@ -596,11 +602,19 @@ try:
             st.session_state['draw_data'].append(data["all_drawings"][0])
             
                 
-            # 通過人数カウントの準備
-            append_list = list()
-            for _ in range(len(st.session_state['draw_data'])):
-                append_list.append(0)
-            st.session_state['tuuka_list'] = append_list
+            # # 通過人数カウントの準備
+            # append_list = list()
+            # for _ in range(len(st.session_state['draw_data'])):
+            #     append_list.append(0)
+            # st.session_state['tuuka_list'] = append_list
+
+            # 線のジオJSONを削除する
+            line_layers_to_remove = []
+            for key, value in st.session_state['map']._children.items():
+                if isinstance(value, folium.features.GeoJson):
+                    line_layers_to_remove.append(key)
+            for key in line_layers_to_remove:
+                del st.session_state['map']._children[key]
 
             gate_append_list = list()
             for idx, sdata in enumerate(st.session_state['draw_data']):
