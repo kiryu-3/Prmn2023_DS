@@ -64,9 +64,9 @@ if "line_geojson" not in st.session_state: # 初期化
     st.session_state['line_geojson'] = None
 if "tuuka_list" not in st.session_state: # 初期化
     st.session_state['tuuka_list'] = list()
-if "ingate" not in st.session_state: # 初期化
+if "ingate_count" not in st.session_state: # 初期化
     st.session_state['ingate_count'] = 0   
-if "non_ingate" not in st.session_state: # 初期化
+if "non_ingate_count" not in st.session_state: # 初期化
     st.session_state['non_ingate_count'] = 0 
 if "cross_judge_count" not in st.session_state: # 初期化
     st.session_state['cross_judge_count'] = 0   
