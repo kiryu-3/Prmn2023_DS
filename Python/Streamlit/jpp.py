@@ -505,6 +505,8 @@ def kousa():
                        st.session_state['count'] += 1
                        st.subheader("全描画データ")
                        break  # このIDのループを終了
+                   else:
+                       st.session_state['count'] += 1
 
 # call to render Folium map in eamlit
 st_data = st_folium(st.session_state['map'], width=725)  
