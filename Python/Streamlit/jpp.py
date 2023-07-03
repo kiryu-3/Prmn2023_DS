@@ -445,6 +445,7 @@ def max_min_cross(p1, p2, p3, p4):
 
 
 def cross_judge(gates, values):
+    flag = False
     # ゲートとIDの組み合わせごとにループ
     for idx1 in range(len(gates) - 1):
         line1 = [
@@ -461,17 +462,22 @@ def cross_judge(gates, values):
             
             # x座標による判定
             if not max_min_cross(a[0], b[0], c[0], d[0]):
-                return False
+                continue
         
             # y座標による判定
             if not max_min_cross(a[1], b[1], c[1], d[1]):
-                return False
+                continue
         
             tc1 = (a[0] - b[0]) * (c[1] - a[1]) + (a[1] - b[1]) * (a[0] - c[0])
             tc2 = (a[0] - b[0]) * (d[1] - a[1]) + (a[1] - b[1]) * (a[0] - d[0])
             td1 = (c[0] - d[0]) * (a[1] - c[1]) + (c[1] - d[1]) * (c[0] - a[0])
             td2 = (c[0] - d[0]) * (b[1] - c[1]) + (c[1] - d[1]) * (c[0] - b[0])
-            return tc1 * tc2 <= 0 and td1 * td2 <= 0
+            if tc1 * tc2 <= 0 and td1 * td2 <= 0
+                flag = True
+                break
+        if flag:
+            break
+    return flag
 
 def ingate(plot_point, gate_polygon):
     # plot_point = [float(plot_point)]
