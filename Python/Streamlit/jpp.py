@@ -402,7 +402,21 @@ def delete_shape():
             del st.session_state['map']._children[key]
         # draw_dataから図形を削除
         st.session_state['draw_data'].remove(delete_shape)
-        raise st.experimental_rerun()
+
+        gate_append_list = list()
+        for idx, sdata in enumerate(st.session_state['draw_data']):
+            if sdata["geometry"]["coordinates"][0][0] == sdata["geometry"]["coordinates"][0][-1]:
+                gate_append_list.append(sdata["geometry"]["coordinates"][0])
+            else:
+                gate_append_list.append(sdata["geometry"]["coordinates"])
+            tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
+            if len(st.session_state['df_new']) != 0:
+                kousa()
+                st.session_state['count'] += 1
+                popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+                folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+            else:
+                folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
 
 # def are_lines_intersecting(line1, line2):
 #     x1, y1 = line1[0]
@@ -666,11 +680,9 @@ with st.sidebar:
     with tab3:
         if len(st.session_state['draw_data']) != 0:
             # st.write(st.session_state['gate_data'])
-            hyoji = st.selectbox("表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
-                           key="select_shape_id",
-                           on_change=select_shape)
-            if hyoji != "":
-                raise st.experimental_rerun()
+            st.selectbox("表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
+                         key="select_shape_id",
+                         on_change=select_shape)
 
             st.selectbox("削除したい図形のIDを選択してください",
                          [""] + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)],
