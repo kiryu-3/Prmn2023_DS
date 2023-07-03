@@ -379,12 +379,12 @@ def select_shape():
         select_shape_id = int(st.session_state["select_shape_id"])
         # 表示対象の図形を特定
         selected_shape = st.session_state['gate_data'][select_shape_id - 1]
-        if selected_shape[0][0] != selected_shape[0][-1]:
+        if selected_shape[0] != selected_shape[-1]:
             tab3.write(f"ゲート{select_shape_id}(ライン)")
             converted_shape = [{"経度": row[0], "緯度": row[1]} for row in selected_shape]
         else:
             tab3.write(f"ゲート{select_shape_id}(ポリゴン)")
-            converted_shape = [{"経度": row[0], "緯度": row[1]} for row in selected_shape[0]]
+            converted_shape = [{"経度": row[0], "緯度": row[1]} for row in selected_shape]
         tab3.write(converted_shape)
     
 def delete_shape():
