@@ -461,12 +461,13 @@ def ingate(plot_point, gate_polygon):
     return boolean_point_in_polygon(point, polygon)
 
 
-    
 def kousa():
     found_intersection = False           
     
     # ゲートでループ
     for idx1 in range(len(st.session_state['gate_data'])):
+    # IDでループ
+    for key, values in st.session_state['kiseki_data'].items():
 
        # 線分それぞれをチェック
        for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):   
@@ -509,6 +510,54 @@ def kousa():
                        break  # このIDのループを終了
                    else:
                        st.session_state['count'] += 1
+                       
+# def kousa():
+#     found_intersection = False           
+    
+#     # ゲートでループ
+#     for idx1 in range(len(st.session_state['gate_data'])):
+
+#        # 線分それぞれをチェック
+#        for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):   
+#            line1 = [(st.session_state['gate_data'][idx1][0][idx2][0], st.session_state['gate_data'][idx1][0][idx2][1]),
+#                     (st.session_state['gate_data'][idx1][0][idx2+1][0], st.session_state['gate_data'][idx1][0][idx2+1][1])]
+#            if "line1" not in st.session_state: # 初期化
+#                st.session_state['line1'] = line1
+           
+#            # IDでループ
+#            for key, values in st.session_state['kiseki_data'].items():
+            
+#                # 初期座標がゲート内にあるかどうかチェック
+#                # data_list = []
+#                # for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
+#                #     data_list.append(item)
+#                data_list = st.session_state['gate_data'][idx1][0]
+
+#                # ポリゴンゲートのときは初期座標をチェック
+#                if st.session_state['gate_data'][idx1][0][0] == st.session_state['gate_data'][idx1][0][-1]:
+#                    if ingate(values[0]["座標"][0], data_list):
+#                        found_intersection = True
+#                        st.session_state['tuuka_list'][idx1] += 1
+#                        continue  # このIDのループを終了
+#                    # else:
+#                        # st.session_state['count'] += 1
+            
+#                # IDの軌跡ごとループ
+#                for value in values:
+#                    line2 = [(value["座標"][0][0], value["座標"][0][1]),
+#                             (value["座標"][1][0], value["座標"][1][1])]
+
+#                    if "line2" not in st.session_state: # 初期化
+#                        st.session_state['line2'] = line2
+                
+#                    if cross_judge(line1[0], line1[1], line2[0], line2[1]):
+#                        # found_intersection = True
+#                        st.session_state['tuuka_list'][idx1] += 1
+#                        st.session_state['count'] += 1
+#                        st.subheader("全描画データ")
+#                        break  # このIDのループを終了
+#                    else:
+#                        st.session_state['count'] += 1
 
 # call to render Folium map in eamlit
 st_data = st_folium(st.session_state['map'], width=725)  
@@ -603,4 +652,4 @@ with st.sidebar:
             except Exception as e:
                 st.write(e)
                 pass
-            # st.write(st.session_state['kiseki_data'])
+            st.write(st.session_state['kiseki_data'])
