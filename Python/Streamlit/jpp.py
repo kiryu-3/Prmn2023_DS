@@ -451,7 +451,7 @@ def cross_judge(gates, values):
     # ゲートとIDの組み合わせごとにループ
     for idx1 in range(len(gates) - 1):
         line1 = [
-                (gates][idx1][0], gates[idx1][1]),
+                (gates[idx1][0], gates[idx1][1]),
                 (gates[idx1 + 1][0], gates[idx1 + 1][1])
             ]
         for idx2 in range(len(values)):
