@@ -2,6 +2,7 @@ import io
 from io import BytesIO
 from turfpy.measurement import boolean_point_in_polygon
 from geojson import Point, Polygon, Feature
+import itertools
 
 import streamlit as st
 import json
@@ -63,8 +64,14 @@ if "line_geojson" not in st.session_state: # 初期化
     st.session_state['line_geojson'] = None
 if "tuuka_list" not in st.session_state: # 初期化
     st.session_state['tuuka_list'] = list()
-if "count" not in st.session_state: # 初期化
-    st.session_state['count'] = 0
+if "ingate" not in st.session_state: # 初期化
+    st.session_state['ingate'] = 0   
+if "non_ingate" not in st.session_state: # 初期化
+    st.session_state['non_ingate'] = 0 
+if "cross_judge_count" not in st.session_state: # 初期化
+    st.session_state['cross_judge_count'] = 0   
+if "non_cross_judge_count" not in st.session_state: # 初期化
+    st.session_state['non_cross_judge_count'] = 0 
 
 
 def upload_csv():
@@ -437,20 +444,34 @@ def max_min_cross(p1, p2, p3, p4):
     return True
 
 
-def cross_judge(a, b, c, d):
-    # x座標による判定
-    if not max_min_cross(a[0], b[0], c[0], d[0]):
-        return False
+def cross_judge(gates, values):
+    # ゲートとIDの組み合わせごとにループ
+    for idx1 in range(len(gates) - 1):
+        line1 = [
+                (gates[idx1][0], gates[idx1][1]),
+                (gates[idx2 + 1][0], gates[idx1 + 1][1])
+            ]
+        for idx2 in range(len(values)):
+            line2 = [
+                        (values[idx2]["座標"][0][0], values[idx2]["座標"][0][1]),
+                        (values[idx2]["座標"][1][0], values[idx2]["座標"][1][1])
+                    ]
+            (a, b, c, d) = (line1[0], line1[1], line2[0], line2[1])
 
-    # y座標による判定
-    if not max_min_cross(a[1], b[1], c[1], d[1]):
-        return False
-
-    tc1 = (a[0] - b[0]) * (c[1] - a[1]) + (a[1] - b[1]) * (a[0] - c[0])
-    tc2 = (a[0] - b[0]) * (d[1] - a[1]) + (a[1] - b[1]) * (a[0] - d[0])
-    td1 = (c[0] - d[0]) * (a[1] - c[1]) + (c[1] - d[1]) * (c[0] - a[0])
-    td2 = (c[0] - d[0]) * (b[1] - c[1]) + (c[1] - d[1]) * (c[0] - b[0])
-    return tc1 * tc2 <= 0 and td1 * td2 <= 0
+            
+            # x座標による判定
+            if not max_min_cross(a[0], b[0], c[0], d[0]):
+                return False
+        
+            # y座標による判定
+            if not max_min_cross(a[1], b[1], c[1], d[1]):
+                return False
+        
+            tc1 = (a[0] - b[0]) * (c[1] - a[1]) + (a[1] - b[1]) * (a[0] - c[0])
+            tc2 = (a[0] - b[0]) * (d[1] - a[1]) + (a[1] - b[1]) * (a[0] - d[0])
+            td1 = (c[0] - d[0]) * (a[1] - c[1]) + (c[1] - d[1]) * (c[0] - a[0])
+            td2 = (c[0] - d[0]) * (b[1] - c[1]) + (c[1] - d[1]) * (c[0] - b[0])
+            return tc1 * tc2 <= 0 and td1 * td2 <= 0
 
 def ingate(plot_point, gate_polygon):
     # plot_point = [float(plot_point)]
@@ -462,19 +483,25 @@ def ingate(plot_point, gate_polygon):
 
 
 # def kousa():
-#     found_intersection = False           
+#     # ゲートごとに通過人数を管理するリストを初期化
+#     tuuka_list = [0] * len(st.session_state['gate_data'])    
     
-#     # ゲートでループ
-#     for idx1 in range(len(st.session_state['gate_data'])):
+    
 #     # IDでループ
 #     for key, values in st.session_state['kiseki_data'].items():
+#         # 最初のプロットデータ
+#         first_data = values[0]["座標"][0]
+#         # IDの軌跡ごとループ
+#         for value in values:
+#             line1 = [(value["座標"][0][0], value["座標"][0][1]),
+#                      (value["座標"][1][0], value["座標"][1][1])]
 
 #        # 線分それぞれをチェック
 #        for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):   
 #            line1 = [(st.session_state['gate_data'][idx1][0][idx2][0], st.session_state['gate_data'][idx1][0][idx2][1]),
 #                     (st.session_state['gate_data'][idx1][0][idx2+1][0], st.session_state['gate_data'][idx1][0][idx2+1][1])]
-#            if "line1" not in st.session_state: # 初期化
-#                st.session_state['line1'] = line1
+
+        
            
 #            # IDでループ
 #            for key, values in st.session_state['kiseki_data'].items():
@@ -510,54 +537,29 @@ def ingate(plot_point, gate_polygon):
 #                        break  # このIDのループを終了
 #                    else:
 #                        st.session_state['count'] += 1
-                       
+        
+
 def kousa():
-    found_intersection = False           
-    
-    # ゲートでループ
-    for idx1 in range(len(st.session_state['gate_data'])):
-
-       # 線分それぞれをチェック
-       for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):   
-           line1 = [(st.session_state['gate_data'][idx1][0][idx2][0], st.session_state['gate_data'][idx1][0][idx2][1]),
-                    (st.session_state['gate_data'][idx1][0][idx2+1][0], st.session_state['gate_data'][idx1][0][idx2+1][1])]
-           if "line1" not in st.session_state: # 初期化
-               st.session_state['line1'] = line1
-           
-           # IDでループ
-           for key, values in st.session_state['kiseki_data'].items():
+    # ゲートとIDの組み合わせごとにループ
+    for idx1, gates in enumerate(st.session_state['gate_data']):
+        for key, values in st.session_state['kiseki_data'].items():  
             
-               # 初期座標がゲート内にあるかどうかチェック
-               # data_list = []
-               # for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
-               #     data_list.append(item)
-               data_list = st.session_state['gate_data'][idx1][0]
+           # ポリゴンゲートのときは初期座標をチェック
+           if gates[0][0] == gates[0][-1]:
+               if ingate(values[0]["座標"][0], gates[0]):
+                   st.session_state['tuuka_list'][idx1] += 1
+                   st.session_state['ingate_count'] += 1
+                   continue  # このIDのループを終了
+               else:
+                   st.session_state['non_ingate_count'] += 1
 
-               # ポリゴンゲートのときは初期座標をチェック
-               if st.session_state['gate_data'][idx1][0][0] == st.session_state['gate_data'][idx1][0][-1]:
-                   if ingate(values[0]["座標"][0], data_list):
-                       found_intersection = True
-                       st.session_state['tuuka_list'][idx1] += 1
-                       continue  # このIDのループを終了
-                   # else:
-                       # st.session_state['count'] += 1
-            
-               # IDの軌跡ごとループ
-               for value in values:
-                   line2 = [(value["座標"][0][0], value["座標"][0][1]),
-                            (value["座標"][1][0], value["座標"][1][1])]
-
-                   if "line2" not in st.session_state: # 初期化
-                       st.session_state['line2'] = line2
-                
-                   if cross_judge(line1[0], line1[1], line2[0], line2[1]):
-                       # found_intersection = True
-                       st.session_state['tuuka_list'][idx1] += 1
-                       st.session_state['count'] += 1
-                       st.subheader("全描画データ")
-                       break  # このIDのループを終了
-                   else:
-                       st.session_state['count'] += 1
+           if cross_judge(gates, values):
+               # found_intersection = True
+               st.session_state['tuuka_list'][idx1] += 1
+               st.session_state['cross_judge_count'] += 1
+               continue  # このIDのループを終了
+           else:
+               st.session_state['non_cross_judge_count'] += 1
 
 # call to render Folium map in eamlit
 st_data = st_folium(st.session_state['map'], width=725)  
