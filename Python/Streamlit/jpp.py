@@ -402,6 +402,7 @@ def delete_shape():
             del st.session_state['map']._children[key]
         # draw_dataから図形を削除
         st.session_state['draw_data'].remove(delete_shape)
+        raise st.experimental_rerun()
 
 # def are_lines_intersecting(line1, line2):
 #     x1, y1 = line1[0]
