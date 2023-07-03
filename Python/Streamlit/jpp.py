@@ -598,4 +598,4 @@ with st.sidebar:
                 st.write(st.session_state['line2'])
             except Exception as e:
                 pass
-            st.write(st.session_state['kiseki_data'])
+            # st.write(st.session_state['kiseki_data'])
