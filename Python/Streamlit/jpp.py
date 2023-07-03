@@ -449,10 +449,10 @@ def max_min_cross(p1, p2, p3, p4):
 def cross_judge(gates, values):
     flag = False
     # ゲートとIDの組み合わせごとにループ
-    for idx1 in range(len(gates[0]) - 1):
+    for idx1 in range(len(gates) - 1):
         line1 = [
-                (gates[0][idx1][0], gates[0][idx1][1]),
-                (gates[0][idx1 + 1][0], gates[0][idx1 + 1][1])
+                (gates][idx1][0], gates[idx1][1]),
+                (gates[idx1 + 1][0], gates[idx1 + 1][1])
             ]
         for idx2 in range(len(values)):
             line2 = [
@@ -558,8 +558,8 @@ def kousa():
                st.session_state['values'] = values
             
            # ポリゴンゲートのときは初期座標をチェック
-           if gates[0][0] == gates[0][-1]:
-               if ingate(values[0]["座標"][0], gates[0]):
+           if gates[0] == gates[-1]:
+               if ingate(values[0]["座標"][0], gates):
                    st.session_state['tuuka_list'][idx1] += 1
                    st.session_state['ingate_count'] += 1
                    continue  # このIDのループを終了
@@ -604,7 +604,10 @@ try:
 
             gate_append_list = list()
             for idx, sdata in enumerate(st.session_state['draw_data']):
-                gate_append_list.append(sdata["geometry"]["coordinates"])
+                if sdata["geometry"]["coordinates"][0][0] == sdata["geometry"]["coordinates"][0][-1]:
+                    gate_append_list.append(sdata["geometry"]["coordinates"][0])
+                else:
+                    gate_append_list.append(sdata["geometry"]["coordinates"])
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
                 if len(st.session_state['df_new']) != 0:
                     kousa()
