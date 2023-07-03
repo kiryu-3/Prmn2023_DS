@@ -562,6 +562,9 @@ def kousa():
                if ingate(values[0]["座標"][0], gates):
                    st.session_state['tuuka_list'][idx1] += 1
                    st.session_state['ingate_count'] += 1
+                   tab3.write(st.session_state['tuuka_list'])
+                   tab4.subheader("ingate_count")
+                   tab4.write(st.session_state['ingate_count'])
                    continue  # このIDのループを終了
                else:
                    st.session_state['non_ingate_count'] += 1
@@ -570,6 +573,9 @@ def kousa():
                # found_intersection = True
                st.session_state['tuuka_list'][idx1] += 1
                st.session_state['cross_judge_count'] += 1
+               tab3.write(st.session_state['tuuka_list'])
+               tab4.subheader("cross_judge_count")
+               tab4.write(st.session_state['cross_judge_count'])
                continue  # このIDのループを終了
            else:
                st.session_state['non_cross_judge_count'] += 1
@@ -668,17 +674,12 @@ with st.sidebar:
             # st.write(st.session_state['kiseki_data'])
             st.subheader("count")
             st.write(st.session_state['count'])
-            st.subheader("ingate_count")
-            st.write(st.session_state['ingate_count'])
-            st.subheader("non_ingate_count")
-            st.write(st.session_state['non_ingate_count'])
-            st.subheader("cross_judge_count")
-            st.write(st.session_state['cross_judge_count'])  
-            st.subheader("non_cross_judge_count")
-            st.write(st.session_state['non_cross_judge_count'])
+            # st.subheader("ingate_count")
+            # st.write(st.session_state['ingate_count'])
+            # st.subheader("non_ingate_count")
+            # st.write(st.session_state['non_ingate_count'])
+            # st.subheader("cross_judge_count")
+            # st.write(st.session_state['cross_judge_count'])  
+            # st.subheader("non_cross_judge_count")
+            # st.write(st.session_state['non_cross_judge_count'])
 
-            try:
-                st.write(st.session_state['gates'])
-                st.write(st.session_state['values'])
-            except:
-                pass
