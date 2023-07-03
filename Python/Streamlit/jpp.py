@@ -65,9 +65,9 @@ if "line_geojson" not in st.session_state: # 初期化
 if "tuuka_list" not in st.session_state: # 初期化
     st.session_state['tuuka_list'] = list()
 if "ingate" not in st.session_state: # 初期化
-    st.session_state['ingate'] = 0   
+    st.session_state['ingate_count'] = 0   
 if "non_ingate" not in st.session_state: # 初期化
-    st.session_state['non_ingate'] = 0 
+    st.session_state['non_ingate_count'] = 0 
 if "cross_judge_count" not in st.session_state: # 初期化
     st.session_state['cross_judge_count'] = 0   
 if "non_cross_judge_count" not in st.session_state: # 初期化
@@ -650,10 +650,10 @@ with st.sidebar:
             st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
 
             # st.write(st.session_state['kiseki_data'])
-            st.subheader("ingate")
-            st.write(st.session_state['ingate'])
-            st.subheader("non_ingate")
-            st.write(st.session_state['non_ingate'])
+            st.subheader("ingate_count")
+            st.write(st.session_state['ingate_count'])
+            st.subheader("non_ingate_count")
+            st.write(st.session_state['non_ingate_count'])
             st.subheader("cross_judge_count")
             st.write(st.session_state['cross_judge_count'])  
             st.subheader("non_cross_judge_count")
