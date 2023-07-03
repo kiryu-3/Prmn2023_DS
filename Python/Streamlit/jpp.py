@@ -491,7 +491,7 @@ def kousa():
                        st.session_state['tuuka_list'][idx1] += 1
                        continue  # このIDのループを終了
                    else:
-                       st.session_state['count'] += 1
+                       # st.session_state['count'] += 1
             
                # IDの軌跡ごとループ
                for value in values:
