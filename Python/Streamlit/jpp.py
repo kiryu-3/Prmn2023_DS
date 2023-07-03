@@ -497,6 +497,7 @@ def kousa():
                    if cross_judge(line1[0], line1[1], line2[0], line2[1]):
                        # found_intersection = True
                        st.session_state['tuuka_list'][idx1] += 1
+                       st.session_state['count'] += 1
                        break  # このIDのループを終了
 
 # call to render Folium map in eamlit
@@ -581,6 +582,7 @@ with st.sidebar:
                          on_change=delete_shape)
 
             st.write(st.session_state['tuuka_list'])
+            st.write(st.session_state['count'])
         
     with tab4:
         if len(st.session_state['df']) != 0:
