@@ -657,7 +657,7 @@ with st.sidebar:
         if len(st.session_state['df']) != 0:
             st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
 
-            # st.write(st.session_state['kiseki_data'])
+            st.write(st.session_state['kiseki_data'])
             st.subheader("count")
             st.write(st.session_state['count'])
             st.subheader("ingate_count")
