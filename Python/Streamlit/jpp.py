@@ -620,13 +620,13 @@ try:
                     st.session_state['count'] += 1
                     popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
                     folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
-                    raise st.experimental_rerun()
                 else:
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
-                    raise st.experimental_rerun()
+                    
 
             # 最初の要素のみを取得してst.session_state['gate_data']に追加
-            st.session_state['gate_data'] = gate_append_list 
+            st.session_state['gate_data'] = gate_append_list
+            raise st.experimental_rerun()
     else:
         pass
             
