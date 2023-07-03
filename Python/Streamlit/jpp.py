@@ -654,4 +654,12 @@ with st.sidebar:
             except Exception as e:
                 st.write(e)
                 pass
-            st.write(st.session_state['kiseki_data'])
+            # st.write(st.session_state['kiseki_data'])
+            st.subheader("ingate")
+            st.write(st.session_state['ingate'])
+            st.subheader("non_ingate")
+            st.write(st.session_state['non_ingate'])
+            st.subheader("cross_judge_count")
+            st.write(st.session_state['cross_judge_count'])  
+            st.subheader("non_cross_judge_count")
+            st.write(st.session_state['non_cross_judge_count'])
