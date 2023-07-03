@@ -643,17 +643,12 @@ with st.sidebar:
                          on_change=delete_shape)
 
             st.write(st.session_state['tuuka_list'])
-            st.write(st.session_state['count'])
+            # st.write(st.session_state['count'])
         
     with tab4:
         if len(st.session_state['df']) != 0:
             st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
-            try:
-                st.write(st.session_state['line1'])
-                st.write(st.session_state['line2'])
-            except Exception as e:
-                st.write(e)
-                pass
+
             # st.write(st.session_state['kiseki_data'])
             st.subheader("ingate")
             st.write(st.session_state['ingate'])
