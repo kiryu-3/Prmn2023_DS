@@ -394,39 +394,64 @@ def delete_shape():
         # draw_dataから図形を削除
         st.session_state['draw_data'].remove(delete_shape)
 
-def are_lines_intersecting(line1, line2):
-    x1, y1 = line1[0]
-    x2, y2 = line1[1]
-    x3, y3 = line2[0]
-    x4, y4 = line2[1]
+# def are_lines_intersecting(line1, line2):
+#     x1, y1 = line1[0]
+#     x2, y2 = line1[1]
+#     x3, y3 = line2[0]
+#     x4, y4 = line2[1]
 
-    # 線分の方程式を計算
-    a1 = y2 - y1
-    b1 = x1 - x2
-    c1 = a1 * x1 + b1 * y1
+#     # 線分の方程式を計算
+#     a1 = y2 - y1
+#     b1 = x1 - x2
+#     c1 = a1 * x1 + b1 * y1
 
-    a2 = y4 - y3
-    b2 = x3 - x4
-    c2 = a2 * x3 + b2 * y3
+#     a2 = y4 - y3
+#     b2 = x3 - x4
+#     c2 = a2 * x3 + b2 * y3
 
-    # 交差判定
-    determinant = a1 * b2 - a2 * b1
+#     # 交差判定
+#     determinant = a1 * b2 - a2 * b1
 
-    if determinant == 0:
-        # 2つの線分が平行である場合
+#     if determinant == 0:
+#         # 2つの線分が平行である場合
+#         return False
+#     else:
+#         intersect_x = (b2 * c1 - b1 * c2) / determinant
+#         intersect_y = (a1 * c2 - a2 * c1) / determinant
+
+#         # 交差点が線分の範囲内にあるかどうかをチェック
+#         if min(x1, x2) <= intersect_x <= max(x1, x2) and min(x3, x4) <= intersect_x <= max(x3, x4) and \
+#                 min(y1, y2) <= intersect_y <= max(y1, y2) and min(y3, y4) <= intersect_y <= max(y3, y4):
+#             st.session_state['count'] += 1        
+#             return True
+#         else:
+#             return False
+
+def max_min_cross(p1, p2, p3, p4):
+    min_ab, max_ab = min(p1, p2), max(p1, p2)
+    min_cd, max_cd = min(p3, p4), max(p3, p4)
+
+    if min_ab > max_cd or max_ab < min_cd:
         return False
-    else:
-        intersect_x = (b2 * c1 - b1 * c2) / determinant
-        intersect_y = (a1 * c2 - a2 * c1) / determinant
 
-        # 交差点が線分の範囲内にあるかどうかをチェック
-        if min(x1, x2) <= intersect_x <= max(x1, x2) and min(x3, x4) <= intersect_x <= max(x3, x4) and \
-                min(y1, y2) <= intersect_y <= max(y1, y2) and min(y3, y4) <= intersect_y <= max(y3, y4):
-            st.session_state['count'] += 1        
-            return True
-        else:
-            return False
-            
+    return True
+
+
+def cross_judge(a, b, c, d):
+    # x座標による判定
+    if not max_min_cross(a[0], b[0], c[0], d[0]):
+        return False
+
+    # y座標による判定
+    if not max_min_cross(a[1], b[1], c[1], d[1]):
+        return False
+
+    tc1 = (a[0] - b[0]) * (c[1] - a[1]) + (a[1] - b[1]) * (a[0] - c[0])
+    tc2 = (a[0] - b[0]) * (d[1] - a[1]) + (a[1] - b[1]) * (a[0] - d[0])
+    td1 = (c[0] - d[0]) * (a[1] - c[1]) + (c[1] - d[1]) * (c[0] - a[0])
+    td2 = (c[0] - d[0]) * (b[1] - c[1]) + (c[1] - d[1]) * (c[0] - b[0])
+    return tc1 * tc2 <= 0 and td1 * td2 <= 0
+
 def ingate(plot_point, gate_polygon):
     # plot_point = [float(plot_point)]
     point = Feature(geometry=Point(plot_point))
@@ -469,7 +494,7 @@ def kousa():
                    line2 = [(value["座標"][0][0], value["座標"][0][1]),
                             (value["座標"][1][0], value["座標"][1][1])]
                 
-                   if are_lines_intersecting(line1, line2):
+                   if cross_judge(line1[0], line1[1], line2[0], line2[1]):
                        # found_intersection = True
                        st.session_state['tuuka_list'][idx1] += 1
                        break  # このIDのループを終了
