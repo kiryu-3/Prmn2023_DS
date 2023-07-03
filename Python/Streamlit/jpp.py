@@ -472,6 +472,8 @@ def kousa():
        for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):   
            line1 = [(st.session_state['gate_data'][idx1][0][idx2][0], st.session_state['gate_data'][idx1][0][idx2][1]),
                     (st.session_state['gate_data'][idx1][0][idx2+1][0], st.session_state['gate_data'][idx1][0][idx2+1][1])]
+           if "line1" not in st.session_state: # 初期化
+               st.session_state['line1'] = line1
            
            # IDでループ
            for key, values in st.session_state['kiseki_data'].items():
@@ -493,6 +495,9 @@ def kousa():
                for value in values:
                    line2 = [(value["座標"][0][0], value["座標"][0][1]),
                             (value["座標"][1][0], value["座標"][1][1])]
+
+                   if "line2" not in st.session_state: # 初期化
+                       st.session_state['line2'] = line2
                 
                    if cross_judge(line1[0], line1[1], line2[0], line2[1]):
                        # found_intersection = True
@@ -588,4 +593,6 @@ with st.sidebar:
     with tab4:
         if len(st.session_state['df']) != 0:
             st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
+            st.write(st.session_state['line1'])
+            st.write(st.session_state['line2'])
             # st.write(st.session_state['kiseki_data'])
