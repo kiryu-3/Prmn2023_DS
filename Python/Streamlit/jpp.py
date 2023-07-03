@@ -72,6 +72,8 @@ if "cross_judge_count" not in st.session_state: # 初期化
     st.session_state['cross_judge_count'] = 0   
 if "non_cross_judge_count" not in st.session_state: # 初期化
     st.session_state['non_cross_judge_count'] = 0 
+if "count" not in st.session_state:
+    st.session_state['count'] = 0
 
 
 def upload_csv():
@@ -601,7 +603,7 @@ try:
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
                 if len(st.session_state['df_new']) != 0:
                     kousa()
-                    # st.session_state['count'] += 1
+                    st.session_state['count'] += 1
                     popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
                     folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
                 else:
@@ -656,6 +658,8 @@ with st.sidebar:
             st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
 
             # st.write(st.session_state['kiseki_data'])
+            st.subheader("count")
+            st.write(st.session_state['count'])
             st.subheader("ingate_count")
             st.write(st.session_state['ingate_count'])
             st.subheader("non_ingate_count")
