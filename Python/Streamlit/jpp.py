@@ -498,6 +498,7 @@ def kousa():
                        # found_intersection = True
                        st.session_state['tuuka_list'][idx1] += 1
                        st.session_state['count'] += 1
+                       st.subheader("全描画データ")
                        break  # このIDのループを終了
 
 # call to render Folium map in eamlit
