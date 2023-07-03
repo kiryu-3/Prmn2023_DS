@@ -551,6 +551,11 @@ def kousa():
     # ゲートとIDの組み合わせごとにループ
     for idx1, gates in enumerate(st.session_state['gate_data']):
         for key, values in st.session_state['kiseki_data'].items():  
+
+           if "gates" not in st.session_state:
+               st.session_state['gates'] = gates
+           if "values" not in st.session_state:
+               st.session_state['values'] = values
             
            # ポリゴンゲートのときは初期座標をチェック
            if gates[0][0] == gates[0][-1]:
@@ -657,7 +662,7 @@ with st.sidebar:
         if len(st.session_state['df']) != 0:
             st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
 
-            st.write(st.session_state['kiseki_data'])
+            # st.write(st.session_state['kiseki_data'])
             st.subheader("count")
             st.write(st.session_state['count'])
             st.subheader("ingate_count")
@@ -668,3 +673,9 @@ with st.sidebar:
             st.write(st.session_state['cross_judge_count'])  
             st.subheader("non_cross_judge_count")
             st.write(st.session_state['non_cross_judge_count'])
+
+            try:
+                st.write(st.session_state['gates'])
+                st.write(st.session_state['values'])
+            except:
+                pass
