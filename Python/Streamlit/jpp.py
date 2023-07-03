@@ -634,7 +634,7 @@ try:
 
             # 最初の要素のみを取得してst.session_state['gate_data']に追加
             st.session_state['gate_data'] = gate_append_list
-            # raise st.experimental_rerun()
+            raise st.experimental_rerun()
     else:
         pass
             
