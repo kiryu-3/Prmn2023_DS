@@ -666,9 +666,11 @@ with st.sidebar:
     with tab3:
         if len(st.session_state['draw_data']) != 0:
             # st.write(st.session_state['gate_data'])
-            st.selectbox("表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
-                         key="select_shape_id",
-                         on_change=select_shape)
+            hyoji = st.selectbox("表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
+                           key="select_shape_id",
+                           on_change=select_shape)
+            if hyoji != "":
+                raise st.experimental_rerun()
 
             st.selectbox("削除したい図形のIDを選択してください",
                          [""] + [str(value) for value in range(1, len(st.session_state['draw_data']) + 1)],
