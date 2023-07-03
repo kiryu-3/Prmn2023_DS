@@ -676,6 +676,6 @@ with st.sidebar:
             st.write(st.session_state['non_ingate_count'])
             st.subheader("cross_judge_count")
             st.write(st.session_state['cross_judge_count'])  
-            # st.subheader("non_cross_judge_count")
-            # st.write(st.session_state['non_cross_judge_count'])
+            st.subheader("non_cross_judge_count")
+            st.write(st.session_state['non_cross_judge_count'])
 
