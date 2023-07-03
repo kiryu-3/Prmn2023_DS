@@ -490,7 +490,7 @@ def kousa():
                        found_intersection = True
                        st.session_state['tuuka_list'][idx1] += 1
                        continue  # このIDのループを終了
-                   else:
+                   # else:
                        # st.session_state['count'] += 1
             
                # IDの軌跡ごとループ
