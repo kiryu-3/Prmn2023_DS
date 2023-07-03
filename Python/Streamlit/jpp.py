@@ -584,7 +584,7 @@ try:
                 center_dict["lng"] = center_list[1]
                 data["all_drawings"][0]["properties"]["center"] = center_dict
         
-        if data["all_drawings"][0] not in st.session_state['draw_data']:
+        if data["all_drawings"][0] not in st.session_state['draw_data'] or len(st.session_state['draw_data']) == 0:
             # データの追加
             st.session_state['draw_data'].append(data["all_drawings"][0])
             
