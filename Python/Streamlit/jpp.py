@@ -449,10 +449,10 @@ def max_min_cross(p1, p2, p3, p4):
 def cross_judge(gates, values):
     flag = False
     # ゲートとIDの組み合わせごとにループ
-    for idx1 in range(len(gates) - 1):
+    for idx1 in range(len(gates[0]) - 1):
         line1 = [
-                (gates[idx1][0], gates[idx1][1]),
-                (gates[idx1 + 1][0], gates[idx1 + 1][1])
+                (gates[0][idx1][0], gates[0][idx1][1]),
+                (gates[0][idx1 + 1][0], gates[0][idx1 + 1][1])
             ]
         for idx2 in range(len(values)):
             line2 = [
