@@ -238,7 +238,8 @@ def select_data():
             del st.session_state['map']._children[key]
 
         # ユニークなIDのリスト
-        list2 = selected_values
+        # リストの全ての要素を文字列型に変換する
+        list2 = [str(value) for value in selected_values]
         
         # 描画するプロットデータ
         features = []
