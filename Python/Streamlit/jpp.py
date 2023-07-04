@@ -389,10 +389,11 @@ def select_shape():
             converted_shape = [{"経度": row[0], "緯度": row[1]} for row in selected_shape]
         else:
             st.session_state["selected_shape_type"] = f"ゲート{select_shape_id}(ポリゴン)"
-            tab3.write(f"ゲート{select_shape_id}(ポリゴン)")
+            # tab3.write(f"ゲート{select_shape_id}(ポリゴン)")
             converted_shape = [{"経度": row[0], "緯度": row[1]} for row in selected_shape]
         st.session_state["selected_shape"] = converted_shape
     else:
+         st.session_state["selected_shape_type"] = ""
          st.session_state["selected_shape"] = list()
     
 def delete_shape():
