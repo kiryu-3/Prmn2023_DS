@@ -76,6 +76,8 @@ if "count" not in st.session_state: # 初期化
     st.session_state['count'] = 0
 if "selected_shape" not in st.session_state: # 初期化
     st.session_state["selected_shape"] = list()
+if "selected_shape_type" not in st.session_state: # 初期化
+    st.session_state["selected_shape_type"] = ""
 
 
 def upload_csv():
@@ -382,12 +384,16 @@ def select_shape():
         # 表示対象の図形を特定
         selected_shape = st.session_state['gate_data'][select_shape_id - 1]
         if selected_shape[0] != selected_shape[-1]:
-            tab3.write(f"ゲート{select_shape_id}(ライン)")
+            st.session_state["selected_shape_type"] = f"ゲート{select_shape_id}(ライン)"
+            # tab3.write(f"ゲート{select_shape_id}(ライン)")
             converted_shape = [{"経度": row[0], "緯度": row[1]} for row in selected_shape]
         else:
+            st.session_state["selected_shape_type"] = f"ゲート{select_shape_id}(ポリゴン)"
             tab3.write(f"ゲート{select_shape_id}(ポリゴン)")
             converted_shape = [{"経度": row[0], "緯度": row[1]} for row in selected_shape]
         st.session_state["selected_shape"] = converted_shape
+    else:
+         st.session_state["selected_shape"] = list()
     
 def delete_shape():
     if st.session_state["delete_shape_id"] != "":
@@ -692,6 +698,7 @@ with st.sidebar:
                          on_change=delete_shape)
 
             st.write(st.session_state['tuuka_list'])
+            st.write(st.session_state["selected_shape_type"])
             st.write(st.session_state["selected_shape"])
             # st.write(st.session_state['count'])
         
