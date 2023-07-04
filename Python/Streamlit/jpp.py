@@ -72,8 +72,10 @@ if "cross_judge_count" not in st.session_state: # 初期化
     st.session_state['cross_judge_count'] = 0   
 if "non_cross_judge_count" not in st.session_state: # 初期化
     st.session_state['non_cross_judge_count'] = 0 
-if "count" not in st.session_state:
+if "count" not in st.session_state: # 初期化
     st.session_state['count'] = 0
+if "selected_shape" not in st.session_state: # 初期化
+    st.session_state["selected_shape"] = list()
 
 
 def upload_csv():
@@ -385,7 +387,7 @@ def select_shape():
         else:
             tab3.write(f"ゲート{select_shape_id}(ポリゴン)")
             converted_shape = [{"経度": row[0], "緯度": row[1]} for row in selected_shape]
-        tab3.write(converted_shape)
+        st.session_state["selected_shape"] = converted_shape
     
 def delete_shape():
     if st.session_state["delete_shape_id"] != "":
@@ -690,6 +692,7 @@ with st.sidebar:
                          on_change=delete_shape)
 
             st.write(st.session_state['tuuka_list'])
+            st.write(st.session_state["selected_shape"])
             # st.write(st.session_state['count'])
         
     with tab4:
