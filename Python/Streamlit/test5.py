@@ -141,3 +141,4 @@ st.text_input(label="翻訳する文を入力してください",
               key="input_text",
               on_change=nlp)
 st.session_state["cols"] = st.columns([3, 7])
+st.write(st.session_state['selected_languages'])
