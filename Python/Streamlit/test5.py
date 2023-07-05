@@ -62,7 +62,7 @@ if 'mapping' not in st.session_state:  # 初期化
         "tl": "タガログ語",
         "ur": "ウルドゥー語",
         "yi": "イディッシュ語"
-    }
+    } 
 
 if 'select_languages' not in st.session_state:  # 初期化
     st.session_state['select_languages'] = [
