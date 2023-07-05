@@ -142,9 +142,10 @@ def honyaku():
         error_message = str(e)
         st.error(error_message)
 
-text_area.text_input(label="翻訳する文を入力してください",
+text_area.text_area(label="翻訳する文を入力してください",
               key="input_text",
-              on_change=nlp)
+              on_change=nlp,
+              height=200)
 # st.session_state["cols"] = st.columns([3, 7])
 if st.session_state["input_text"] != "":
     cols[0].selectbox(
