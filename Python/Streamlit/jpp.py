@@ -78,6 +78,8 @@ if "selected_shape" not in st.session_state: # 初期化
     st.session_state["selected_shape"] = list()
 if "selected_shape_type" not in st.session_state: # 初期化
     st.session_state["selected_shape_type"] = ""
+if "select_mode" not in st.session_state: # 初期化
+    st.session_state["select_mode"] = False
 
 
 def upload_csv():
@@ -225,6 +227,7 @@ def select_data():
     # 選択されていない場合はそのままのデータ
     if len(selected_values) == 0:
         st.session_state['sorted_df'] = st.session_state['df']
+        st.session_state["select_mode"] = False
 
     # 選択された場合はデータをソート
     else:
@@ -337,6 +340,8 @@ def select_data():
                 folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
             else:
                 folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
+
+        st.session_state["select_mode"] = True
     
 
 def kiseki_draw():
@@ -389,6 +394,7 @@ def kiseki_draw():
         # 線のジオJSONを追加
         folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
                        style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+        
 
 def select_shape():
     if st.session_state["select_shape_id"] != "":
@@ -633,7 +639,7 @@ try:
                 center_dict["lng"] = center_list[1]
                 data["all_drawings"][0]["properties"]["center"] = center_dict
         
-        if data["all_drawings"][0] not in st.session_state['draw_data'] or len(st.session_state['draw_data']) == 0:
+        if data["all_drawings"][0] not in st.session_state['draw_data'] or len(st.session_state['draw_data']) == 0 and ~(st.session_state["select_mode"]):
             # データの追加
             st.session_state['draw_data'].append(data["all_drawings"][0])
             
