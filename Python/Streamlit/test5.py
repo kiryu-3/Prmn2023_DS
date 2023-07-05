@@ -92,19 +92,14 @@ if 'voices' not in st.session_state:  # 初期化
 
 def nlp():
     if st.session_state["input_text"] != "":
+        st.session_state['input_language'] = ""
         response = comprehend.detect_dominant_language(Text=st.session_state["input_text"])
         st.session_state["language_code"] = response['Languages'][0]['LanguageCode']
 
         # マッピングから言語名を取得
         st.session_state["language_name"] = st.session_state["mapping"][st.session_state["language_code"]]
         st.session_state['selected_languages'] = [lang for lang in st.session_state['select_languages'] if lang != st.session_state['language_name']]         
-        st.session_state["cols"][0].selectbox(
-            label="言語を選んでください",
-            options=st.session_state['selected_languages'],
-            key="input_language",
-            on_change=honyaku
-        )
-        st.write(st.session_state['input_language'])
+        
     else:
         st.session_state["language_code"] = ""
         st.session_state["language_name"] = ""
@@ -129,10 +124,10 @@ def honyaku():
         )
         audio_stream = response['AudioStream'].read()
     
-        st.session_state["cols"][1].write(f"言語：{st.session_state['input_language']}")
-        st.session_state["cols"][1].write(f"テキスト：{st.session_state['translated_text']}")
-        # 音声をバイナリストリームとして再生する
-        st.session_state["cols"][1].audio(BytesIO(audio_stream), format='audio/mp3')
+        # st.session_state["cols"][1].write(f"言語：{st.session_state['input_language']}")
+        # st.session_state["cols"][1].write(f"テキスト：{st.session_state['translated_text']}")
+        # # 音声をバイナリストリームとして再生する
+        # st.session_state["cols"][1].audio(BytesIO(audio_stream), format='audio/mp3')
 
     except Exception as e:
         error_message = str(e)
@@ -142,4 +137,15 @@ st.text_input(label="翻訳する文を入力してください",
               key="input_text",
               on_change=nlp)
 st.session_state["cols"] = st.columns([3, 7])
-st.write(st.session_state['selected_languages']) 
+if st.session_state["input_text"] != "":
+    st.session_state["cols"][0].selectbox(
+                label="言語を選んでください",
+                options=st.session_state['selected_languages'],
+                key="input_language",
+                on_change=honyaku
+            )
+if st.session_state["language_code"] != "":
+    st.session_state["cols"][1].write(f"言語：{st.session_state['input_language']}")
+    st.session_state["cols"][1].write(f"テキスト：{st.session_state['translated_text']}")
+    # 音声をバイナリストリームとして再生する
+    st.session_state["cols"][1].audio(BytesIO(audio_stream), format='audio/mp3')
