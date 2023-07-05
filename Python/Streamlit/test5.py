@@ -147,11 +147,11 @@ st.session_state["cols"] = st.columns([3, 7])
 if st.session_state["input_text"] != "":
     st.session_state["cols"][0].selectbox(
                 label="言語を選んでください",
-                options=st.session_state['selected_languages'],
+                options=[""]+ st.session_state['selected_languages'],
                 key="input_language",
                 on_change=honyaku
             )
-if st.session_state["language_code"] != "":
+if st.session_state["input_language"] != "":
     st.session_state["cols"][1].write(f"言語：{st.session_state['input_language']}")
     st.session_state["cols"][1].write(f"テキスト：{st.session_state['translated_text']}")
     # 音声をバイナリストリームとして再生する
