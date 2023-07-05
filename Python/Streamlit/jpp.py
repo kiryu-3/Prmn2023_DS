@@ -226,7 +226,7 @@ def upload_csv():
 def select_data():
     # プロット・軌跡を描画するデータの選択
     selected_values = st.session_state["select_data_id"]
-    selected_values = [str(value) for value in selected_values]
+    # selected_values = [str(value) for value in selected_values]
     # 選択されていない場合はそのままのデータ
     if len(selected_values) == 0:
         st.session_state['sorted_df'] = st.session_state['df']
