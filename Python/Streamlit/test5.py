@@ -90,8 +90,10 @@ if 'voices' not in st.session_state:  # 初期化
    }
 
 if "language_code" not in st.session_state:  # 初期化
-    st.session_state['language_code'] = st.session_state['select_languages']
+    st.session_state['language_code'] = ""
 
+if "input_language" not in st.session_state:  # 初期化
+    st.session_state['input_language'] = ""
 
 def nlp():
     if st.session_state["input_text"] != "":
