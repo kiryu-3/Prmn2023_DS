@@ -154,7 +154,7 @@ if st.session_state["input_text"] != "":
                 on_change=honyaku
             )
 if st.session_state["input_language"] != "" and st.session_state["audio_stream"] != "":
-    st.session_state["cols"][1].write(f"言語：{st.session_state['input_language']}")
-    st.session_state["cols"][1].write(f"テキスト：{st.session_state['translated_text']}")
+    cols[1].write(f"言語：{st.session_state['input_language']}")
+    cols[1].write(f"テキスト：{st.session_state['translated_text']}")
     # 音声をバイナリストリームとして再生する
     cols[1].audio(BytesIO(st.session_state['audio_stream']), format='audio/mp3')
