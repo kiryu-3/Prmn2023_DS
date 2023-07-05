@@ -70,11 +70,12 @@ def nlp():
         st.session_state['translated_text'] = ""
 
 
-def honyaku():  
+def honyaku():
+    reverse_mapping = {v: k for k, v in st.session_state['mapping'].items()}
     response = translate.translate_text(
         Text=st.session_state["input_text"],
         SourceLanguageCode= st.session_state["language_code"],
-        TargetLanguageCode=st.session_state["input_language"]
+        TargetLanguageCode=reverse_mapping[st.session_state["input_language"]]
     )
     st.session_state["translated_text"] = response['TranslatedText']
     response = polly.synthesize_speech(
