@@ -78,7 +78,8 @@ if 'select_languages' not in st.session_state:  # 初期化
 if 'selected_languages' not in st.session_state:  # 初期化
     st.session_state['selected_languages'] = st.session_state['select_languages']
 
-st.session_state["cols"] = st.columns([3, 7])
+text_area = st.empty()
+cols = st.columns([3, 7])
 
 if 'voices' not in st.session_state:  # 初期化
    st.session_state['voices'] = {
@@ -129,7 +130,7 @@ def honyaku():
             OutputFormat='mp3',
             VoiceId=st.session_state['voices'][st.session_state["input_language"]]
         )
-        audio_stream = response['AudioStream'].read()
+        st.session_state['audio_stream'] = response['AudioStream'].read()
     
         # st.session_state["cols"][1].write(f"言語：{st.session_state['input_language']}")
         # st.session_state["cols"][1].write(f"テキスト：{st.session_state['translated_text']}")
@@ -137,22 +138,23 @@ def honyaku():
         # st.session_state["cols"][1].audio(BytesIO(audio_stream), format='audio/mp3')
 
     except Exception as e:
+        st.session_state['audio_stream'] = ""
         error_message = str(e)
         st.error(error_message)
 
-st.text_input(label="翻訳する文を入力してください",
+text_area.text_input(label="翻訳する文を入力してください",
               key="input_text",
               on_change=nlp)
 # st.session_state["cols"] = st.columns([3, 7])
 if st.session_state["input_text"] != "":
-    st.session_state["cols"][0].selectbox(
+    cols[0].selectbox(
                 label="言語を選んでください",
                 options=[""]+ st.session_state['selected_languages'],
                 key="input_language",
                 on_change=honyaku
             )
-if st.session_state["input_language"] != "":
+if st.session_state["input_language"] != "" and st.session_state["audio_stream"] != "":
     st.session_state["cols"][1].write(f"言語：{st.session_state['input_language']}")
     st.session_state["cols"][1].write(f"テキスト：{st.session_state['translated_text']}")
     # 音声をバイナリストリームとして再生する
-    st.session_state["cols"][1].audio(BytesIO(audio_stream), format='audio/mp3')
+    cols[1].audio(BytesIO(st.session_state['audio_stream']), format='audio/mp3')
