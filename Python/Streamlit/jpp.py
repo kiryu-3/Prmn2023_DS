@@ -678,6 +678,7 @@ try:
             st.session_state['gate_data'] = gate_append_list
             # raise st.experimental_rerun()
     else:
+        st.write(e)
         pass
             
 except Exception as e:
