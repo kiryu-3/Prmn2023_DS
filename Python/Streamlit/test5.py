@@ -104,6 +104,7 @@ def nlp():
             key="input_language",
             on_change=honyaku
         )
+        st.write(st.session_state['input_language'])
     else:
         st.session_state["language_code"] = ""
         st.session_state["language_name"] = ""
@@ -113,7 +114,7 @@ def nlp():
 
 def honyaku():
     reverse_mapping = {v: k for k, v in st.session_state['mapping'].items()}
-    st.session_state["cols"][0].write(st.session_state['input_language'])
+    st.write(st.session_state['input_language'])
     try:
         response = translate.translate_text(
             Text=st.session_state["input_text"],
