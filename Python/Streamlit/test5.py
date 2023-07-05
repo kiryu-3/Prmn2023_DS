@@ -78,6 +78,8 @@ if 'select_languages' not in st.session_state:  # 初期化
 if 'selected_languages' not in st.session_state:  # 初期化
     st.session_state['selected_languages'] = st.session_state['select_languages']
 
+st.session_state["cols"] = st.columns([3, 7])
+
 if 'voices' not in st.session_state:  # 初期化
    st.session_state['voices'] = {
        "英語": "Joanna",
