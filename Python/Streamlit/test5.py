@@ -143,7 +143,7 @@ def honyaku():
 st.text_input(label="翻訳する文を入力してください",
               key="input_text",
               on_change=nlp)
-st.session_state["cols"] = st.columns([3, 7])
+# st.session_state["cols"] = st.columns([3, 7])
 if st.session_state["input_text"] != "":
     st.session_state["cols"][0].selectbox(
                 label="言語を選んでください",
