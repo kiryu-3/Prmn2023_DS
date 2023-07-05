@@ -252,7 +252,7 @@ def select_data():
         # 描画するプロットデータ
         features = []
         for i, row in st.session_state['sorted_df'].iterrows():
-            indexNum = list2.index(str(row.iloc[0]))
+            indexNum = list2.index(row.iloc[0])
             feature = {
                 "type": "Feature",
                 "geometry": {
@@ -281,7 +281,7 @@ def select_data():
         for itr in list2:
             list3 = []
             for i, row in st.session_state['df'].iterrows():
-                if itr == str(row[0]):
+                if itr == row[0]:
                     list3.append(row)
             df2 = pd.DataFrame(list3)
             for i in range(len(df2) - 1):
