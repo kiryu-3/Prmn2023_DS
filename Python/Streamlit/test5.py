@@ -90,7 +90,6 @@ def honyaku():
     st.session_state["cols"][1].audio(BytesIO(audio_stream), format='audio/mp3')
 
 st.text_input(label="翻訳する文を入力してください",
-              value="こんにちは",
               key="input_text",
               on_change=nlp)
 st.session_state["cols"] = st.columns([3, 7])
