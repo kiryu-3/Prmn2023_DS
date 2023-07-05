@@ -613,12 +613,15 @@ def kousa():
             
            # ポリゴンゲートのときは初期座標をチェック
            if gates[0] == gates[-1]:
-               if ingate(values[0]["座標"][0], gates):
-                   st.session_state['tuuka_list'][idx1] += 1
-                   st.session_state['ingate_count'] += 1
-                   continue  # このIDのループを終了
-               else:
-                   st.session_state['non_ingate_count'] += 1
+               try:
+                   if ingate(values[0]["座標"][0], gates):
+                       st.session_state['tuuka_list'][idx1] += 1
+                       st.session_state['ingate_count'] += 1
+                       continue  # このIDのループを終了
+                   else:
+                       st.session_state['non_ingate_count'] += 1
+                except:
+                    st.write(values)
 
            if cross_judge(gates, values):
                # found_intersection = True
