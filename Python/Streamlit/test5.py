@@ -72,23 +72,28 @@ def nlp():
 
 def honyaku():
     reverse_mapping = {v: k for k, v in st.session_state['mapping'].items()}
-    response = translate.translate_text(
-        Text=st.session_state["input_text"],
-        SourceLanguageCode= st.session_state["language_code"],
-        TargetLanguageCode=reverse_mapping[st.session_state["input_language"]]
-    )
-    st.session_state["translated_text"] = response['TranslatedText']
-    response = polly.synthesize_speech(
-        Text=st.session_state["translated_text"],
-        OutputFormat='mp3',
-        VoiceId=st.session_state['voices'][reverse_mapping[st.session_state["input_language"]]]
-    )
-    audio_stream = response['AudioStream'].read()
+    try:
+        response = translate.translate_text(
+            Text=st.session_state["input_text"],
+            SourceLanguageCode= st.session_state["language_code"],
+            TargetLanguageCode=reverse_mapping[st.session_state["input_language"]]
+        )
+        st.session_state["translated_text"] = response['TranslatedText']
+        response = polly.synthesize_speech(
+            Text=st.session_state["translated_text"],
+            OutputFormat='mp3',
+            VoiceId=st.session_state['voices'][reverse_mapping[st.session_state["input_language"]]]
+        )
+        audio_stream = response['AudioStream'].read()
+    
+        st.session_state["cols"][1].write(f"言語：{st.session_state['input_language']}")
+        st.session_state["cols"][1].write(f"テキスト：{st.session_state['translated_text']}")
+        # 音声をバイナリストリームとして再生する
+        st.session_state["cols"][1].audio(BytesIO(audio_stream), format='audio/mp3')
 
-    st.session_state["cols"][1].write(f"言語：{st.session_state['input_language']}")
-    st.session_state["cols"][1].write(f"テキスト：{st.session_state['translated_text']}")
-    # 音声をバイナリストリームとして再生する
-    st.session_state["cols"][1].audio(BytesIO(audio_stream), format='audio/mp3')
+    except translate.exceptions.TranslateTextException as e:
+        error_message = str(e)
+        st.error(error_message)
 
 st.text_input(label="翻訳する文を入力してください",
               key="input_text",
