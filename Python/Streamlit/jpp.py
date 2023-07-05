@@ -235,116 +235,117 @@ def select_data():
     # 選択された場合はデータをソート
     else:
         st.session_state['sorted_df'] = st.session_state['df'][st.session_state['df'].iloc[:, 0].isin(selected_values)]
+        st.session_state['sorted_df'] = st.session_state['sorted_df'].reset_index(drop=True)
         tab2.write(st.session_state['sorted_df'])
         
-        # # 線のジオJSONを削除する
-        # line_layers_to_remove = []
-        # for key, value in st.session_state['map']._children.items():
-        #     if isinstance(value, folium.features.GeoJson):
-        #         line_layers_to_remove.append(key)
-        # for key in line_layers_to_remove:
-        #     del st.session_state['map']._children[key]
+        # 線のジオJSONを削除する
+        line_layers_to_remove = []
+        for key, value in st.session_state['map']._children.items():
+            if isinstance(value, folium.features.GeoJson):
+                line_layers_to_remove.append(key)
+        for key in line_layers_to_remove:
+            del st.session_state['map']._children[key]
 
-        # # ユニークなIDのリスト
-        # # リストの全ての要素を文字列型に変換する
-        # list2 = selected_values
+        # ユニークなIDのリスト
+        # リストの全ての要素を文字列型に変換する
+        list2 = selected_values
         
-        # # 描画するプロットデータ
-        # features = []
-        # for i, row in st.session_state['sorted_df'].iterrows():
-        #     indexNum = list2.index(row.iloc[0])
-        #     feature = {
-        #         "type": "Feature",
-        #         "geometry": {
-        #             "type": "Point",
-        #             "coordinates": [row.iloc[3], row.iloc[2]]
-        #         },
-        #         "properties": {
-        #             "icon": "circle",
-        #             "iconstyle": {
-        #                 "color": "#4169e1",
-        #                 "fillColor": "#01bfff",
-        #                 "weight": 10,
-        #                 "radius": 3
-        #             },
-        #             "time": row.iloc[1],
-        #             "popup": f"{indexNum+1} - {row.iloc[0]}",
-        #             "ID": row.iloc[0]
-        #         }
-        #     }
-        #     features.append(feature)
+        # 描画するプロットデータ
+        features = []
+        for i, row in st.session_state['sorted_df'].iterrows():
+            indexNum = list2.index(row.iloc[0])
+            feature = {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [row.iloc[3], row.iloc[2]]
+                },
+                "properties": {
+                    "icon": "circle",
+                    "iconstyle": {
+                        "color": "#4169e1",
+                        "fillColor": "#01bfff",
+                        "weight": 10,
+                        "radius": 3
+                    },
+                    "time": row.iloc[1],
+                    "popup": f"{indexNum+1} - {row.iloc[0]}",
+                    "ID": row.iloc[0]
+                }
+            }
+            features.append(feature)
 
-        # # 描画する軌跡データ
-        # line_features = []
-        # for itr in list2:
-        #     st.session_state['kiseki_data'][str(itr)] = list()
-        # for itr in list2:
-        #     list3 = []
-        #     for i, row in st.session_state['df'].iterrows():
-        #         if itr == row[0]:
-        #             list3.append(row)
-        #     df2 = pd.DataFrame(list3)
-        #     for i in range(len(df2) - 1):
-        #         line_feature = {
-        #              'type': 'Feature',
-        #             'geometry': {
-        #                 'type': 'LineString',
-        #                 'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
-        #                                 [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
-        #             },
-        #             'properties': {
-        #                 'time': df2.iloc[i, 1]
-        #             }
-        #         }
-        #         line_features.append(line_feature)
-        #         # 軌跡データはいじらない
-        #         # st.session_state['kiseki_data'][itr].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], '日時': df2.iloc[i, 1]})
+        # 描画する軌跡データ
+        line_features = []
+        for itr in list2:
+            st.session_state['kiseki_data'][str(itr)] = list()
+        for itr in list2:
+            list3 = []
+            for i, row in st.session_state['df'].iterrows():
+                if itr == row[0]:
+                    list3.append(row)
+            df2 = pd.DataFrame(list3)
+            for i in range(len(df2) - 1):
+                line_feature = {
+                     'type': 'Feature',
+                    'geometry': {
+                        'type': 'LineString',
+                        'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
+                                        [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
+                    },
+                    'properties': {
+                        'time': df2.iloc[i, 1]
+                    }
+                }
+                line_features.append(line_feature)
+                # 軌跡データはいじらない
+                # st.session_state['kiseki_data'][itr].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], '日時': df2.iloc[i, 1]})
 
-        # # 軌跡のデータをまとめる
-        # line_geojson = {'type': 'FeatureCollection', 'features': line_features}
-        # st.session_state["line_geojson"] = line_geojson
+        # 軌跡のデータをまとめる
+        line_geojson = {'type': 'FeatureCollection', 'features': line_features}
+        st.session_state["line_geojson"] = line_geojson
         
 
-        # # プロットのデータをまとめる
-        # geojson = {"type": "FeatureCollection", "features": features}
+        # プロットのデータをまとめる
+        geojson = {"type": "FeatureCollection", "features": features}
 
-        # # TimestampedGeoJsonの作成
-        # timestamped_geojson = TimestampedGeoJson(
-        #         geojson,
-        #         period="PT1M",
-        #         duration="PT1S",
-        #         auto_play=False,
-        #         loop=False
-        #     )
+        # TimestampedGeoJsonの作成
+        timestamped_geojson = TimestampedGeoJson(
+                geojson,
+                period="PT1M",
+                duration="PT1S",
+                auto_play=False,
+                loop=False
+            )
 
-        # # TimestampedGeoJsonレイヤーを削除
-        # if 'map' in st.session_state:
-        #     layers_to_remove = []
-        #     for key, value in st.session_state['map']._children.items():
-        #         if isinstance(value, TimestampedGeoJson):
-        #             layers_to_remove.append(key)
-        #     for key in layers_to_remove:
-        #         del st.session_state['map']._children[key]
+        # TimestampedGeoJsonレイヤーを削除
+        if 'map' in st.session_state:
+            layers_to_remove = []
+            for key, value in st.session_state['map']._children.items():
+                if isinstance(value, TimestampedGeoJson):
+                    layers_to_remove.append(key)
+            for key in layers_to_remove:
+                del st.session_state['map']._children[key]
     
-        # # TimestampedGeoJsonをマップに追加
-        # timestamped_geojson.add_to(st.session_state['map'])
+        # TimestampedGeoJsonをマップに追加
+        timestamped_geojson.add_to(st.session_state['map'])
 
-        # # 軌跡の追加
-        # if st.session_state['kiseki_flag']:
-        #         # 線のジオJSONを追加
-        #         folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
-        #                        style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+        # 軌跡の追加
+        if st.session_state['kiseki_flag']:
+                # 線のジオJSONを追加
+                folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
+                               style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
 
-        # if len(st.session_state['draw_data']) != 0:
-        #     for idx, sdata in enumerate(st.session_state['draw_data']):
-        #         tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
-        #         if len(st.session_state['df_new']) != 0:
-        #             kousa()
-        #             # st.session_state['count'] += 1
-        #             popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
-        #             folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
-        #         else:
-        #             folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
+        if len(st.session_state['draw_data']) != 0:
+            for idx, sdata in enumerate(st.session_state['draw_data']):
+                tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
+                if len(st.session_state['df_new']) != 0:
+                    kousa()
+                    # st.session_state['count'] += 1
+                    popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+                    folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+                else:
+                    folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
 
         st.session_state["select_mode"] = True
     
