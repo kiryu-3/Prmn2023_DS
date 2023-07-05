@@ -51,6 +51,9 @@ if 'map' not in st.session_state: # 初期化
 if 'df' not in st.session_state: # 初期化
     df = pd.DataFrame()
     st.session_state['df'] = df
+if 'sorted_df' not in st.session_state: # 初期化
+    df = pd.DataFrame()
+    st.session_state['sorted_df'] = df
 if 'df_new' not in st.session_state: # 初期化
     df = pd.DataFrame()
     st.session_state['df_new'] = df
