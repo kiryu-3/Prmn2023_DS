@@ -10,7 +10,7 @@ region_name = st.secrets["region_name"]
 session = boto3.Session(aws_access_key_id=access_key, aws_secret_access_key=secret_key, region_name=region_name)
 comprehend = session.client('comprehend')
 translate = session.client('translate')
-polly = session.client('polly')
+polly = session.client('polly') 
 
 if 'mapping' not in st.session_state:  # 初期化 
     st.session_state['mapping'] = {
