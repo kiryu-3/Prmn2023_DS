@@ -12,15 +12,14 @@ translate = session.client('translate')
 polly = session.client('polly')
 
 if 'mapping' not in st.session_state:  # 初期化
-    st.session_state['mapping'] = {
-        "ja": "日本語",
-        "en": "英語",
-        "zh": "中国語",
-        "ko": "韓国語",
-        "de": "ドイツ語",
-        "es": "スペイン語",
-        "fr": "フランス語"
-    }
+    st.session_state['mapping'] = {}
+
+    with open("languages.txt", "r", encoding="utf-8") as file:
+        for line in file:
+            line = line.strip()
+            if line:
+                key, value = line.split(":")  # もしくは line.split("\t")
+                st.session_state['mapping'][key.strip()] = value.strip()
 
 if 'select_languages' not in st.session_state:  # 初期化
     st.session_state['select_languages'] = [
