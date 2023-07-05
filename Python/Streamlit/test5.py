@@ -132,7 +132,7 @@ def honyaku():
         # 音声をバイナリストリームとして再生する
         st.session_state["cols"][1].audio(BytesIO(audio_stream), format='audio/mp3')
 
-    except as e:
+    except Exception as e:
         error_message = str(e)
         st.error(error_message)
 
