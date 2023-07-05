@@ -2,9 +2,10 @@ import boto3
 import streamlit as st
 from io import BytesIO
 
-access_key = 'AKIAW7ZW5WIR5VJRHQRC'
-secret_key = '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'
-region_name = 'ap-northeast-1'
+# シークレットから秘密情報を取得する
+access_key = st.secrets["access_key"]
+secret_key = st.secrets["secret_key"]
+region_name = st.secrets["region_name"]
 
 session = boto3.Session(aws_access_key_id=access_key, aws_secret_access_key=secret_key, region_name=region_name)
 comprehend = session.client('comprehend')
