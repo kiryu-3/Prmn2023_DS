@@ -89,6 +89,9 @@ if 'voices' not in st.session_state:  # 初期化
        "ドイツ語": "Marlene"
    }
 
+if "language_code" not in st.session_state:  # 初期化
+    st.session_state['selected_languages'] = st.session_state['select_languages']
+
 
 def nlp():
     if st.session_state["input_text"] != "":
