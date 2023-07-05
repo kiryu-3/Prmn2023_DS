@@ -53,10 +53,8 @@ def nlp():
         st.session_state["language_code"] = response['Languages'][0]['LanguageCode']
 
         # マッピングから言語名を取得
-        try:
-            st.session_state["language_name"] = st.session_state["mapping"][st.session_state["language_code"]]
-        if 'select_languages' in st.session_state and 'language_name' in st.session_state:
-            st.session_state['selected_languages'] = [lang for lang in st.session_state['select_languages'] if lang != st.session_state['language_name']]
+        st.session_state["language_name"] = st.session_state["mapping"][st.session_state["language_code"]]
+        st.session_state['selected_languages'] = [lang for lang in st.session_state['select_languages'] if lang != st.session_state['language_name']]         
         st.session_state["cols"][0].selectbox(
             label="言語を選んでください",
             options=st.session_state['selected_languages'],
