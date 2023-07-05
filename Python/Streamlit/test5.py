@@ -81,7 +81,7 @@ def honyaku():
     response = polly.synthesize_speech(
         Text=st.session_state["translated_text"],
         OutputFormat='mp3',
-        VoiceId=st.session_state['voices'][st.session_state["language_name"]]
+        VoiceId=st.session_state['voices'][reverse_mapping[st.session_state["input_language"]]]
     )
     audio_stream = response['AudioStream'].read()
 
