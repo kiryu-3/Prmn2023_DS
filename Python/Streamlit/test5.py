@@ -79,13 +79,13 @@ def honyaku():
     )
     st.session_state["translated_text"] = response['TranslatedText']
     response = polly.synthesize_speech(
-        Text=st.session_state["input_text"],
+        Text=st.session_state["translated_text"],
         OutputFormat='mp3',
         VoiceId=st.session_state['voices'][st.session_state["language_name"]]
     )
     audio_stream = response['AudioStream'].read()
 
-    st.session_state["cols"][1].write(f"言語：{st.session_state['language_name']}")
+    st.session_state["cols"][1].write(f"言語：{st.session_state['input_language']}")
     st.session_state["cols"][1].write(f"テキスト：{st.session_state['translated_text']}")
     # 音声をバイナリストリームとして再生する
     st.session_state["cols"][1].audio(BytesIO(audio_stream), format='audio/mp3')
