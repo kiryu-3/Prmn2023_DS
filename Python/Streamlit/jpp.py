@@ -706,7 +706,7 @@ with st.sidebar:
         
     with tab2:    
         st.write(st.session_state['df_new'])
-        tab2.write(st.session_state['sorted_df'])
+        # tab2.write(st.session_state['sorted_df'])
             
         if len(st.session_state['df']) != 0:
             # selected_values = st.multiselect("選択してください", st.session_state['df'].iloc[:, 0].unique(), key="select_data_id",on_change=select_data)
@@ -733,7 +733,7 @@ with st.sidebar:
         if len(st.session_state['df']) != 0:
             st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
 
-            st.write(st.session_state['kiseki_data'])
+            # st.write(st.session_state['kiseki_data'])
             # st.subheader("count")
             # st.write(st.session_state['count'])
             # st.subheader("ingate_count")
