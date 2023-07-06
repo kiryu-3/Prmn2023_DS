@@ -235,7 +235,6 @@ def select_data():
     else:
         st.session_state['sorted_df'] = st.session_state['df'][st.session_state['df'].iloc[:, 0].isin(selected_values)]
         st.session_state['sorted_df'] = st.session_state['sorted_df'].reset_index(drop=True)
-        tab2.write(st.session_state['sorted_df'])
         
         # 線のジオJSONを削除する
         line_layers_to_remove = []
@@ -623,7 +622,7 @@ with st.sidebar:
         
     with tab2:    
         st.write(st.session_state['df_new'])
-        # tab2.write(st.session_state['sorted_df'])
+        tab2.write(st.session_state['sorted_df'])
             
         if len(st.session_state['df']) != 0:
             # selected_values = st.multiselect("選択してください", st.session_state['df'].iloc[:, 0].unique(), key="select_data_id",on_change=select_data)
