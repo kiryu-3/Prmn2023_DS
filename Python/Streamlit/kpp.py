@@ -619,6 +619,7 @@ def kousa():
                continue  # このIDのループを終了
            else:
                st.session_state['non_cross_judge_count'] += 1
+    raise st.experimental_rerun()
 
 # call to render Folium map in eamlit
 st_data = st_folium(st.session_state['map'], width=725)  
