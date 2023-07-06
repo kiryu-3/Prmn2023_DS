@@ -162,6 +162,8 @@ def zukei_draw():
         else:
             folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
 
+    raise st.experimental_rerun()
+
 
 def upload_csv():
     if st.session_state["upload_csvfile"] is not None:
