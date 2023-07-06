@@ -579,7 +579,7 @@ try:
                 if sdata["geometry"]["coordinates"][0][0] == sdata["geometry"]["coordinates"][0][-1]:
                     gate_append_list.append(sdata["geometry"]["coordinates"][0])
                 else:
-                    gate_append_list.append(sdata["geometry"]["coordinates"])
+                    gate_append_list.append(sdata["geometry"]["coordinates"]) 
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
                 if len(st.session_state['df_new']) != 0:
                     kousa()
