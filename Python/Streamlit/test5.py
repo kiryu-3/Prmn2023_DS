@@ -5,7 +5,7 @@ from io import BytesIO
 # シークレットから秘密情報を取得する
 access_key = st.secrets["access_key"]
 secret_key = st.secrets["secret_key"]
-region_name = st.secrets["region_name"]
+region_name = st.secrets["region_name"] 
 
 session = boto3.Session(aws_access_key_id=access_key, aws_secret_access_key=secret_key, region_name=region_name)
 comprehend = session.client('comprehend')
