@@ -140,7 +140,7 @@ def kiseki_maker(df):
             }
             line_features.append(line_feature)
             # 軌跡のデータを管理する
-            if st.session_state['kiseki_data'][itr] == list():
+            if st.session_state['kiseki']:
                 st.session_state['kiseki_data'][itr].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], 
                                                              '日時': df2.iloc[i, 1]})
                 
@@ -183,8 +183,11 @@ def upload_csv():
 
         # ユニークなIDのリスト
         st.session_state['sorted_index'] = [str(value) for value in unique_values]
+        st.session_state['kiseki'] = True
         features = plot(df)
         line_features = kiseki_maker(df)
+        st.session_state['kiseki'] = False
+        
         
         # # 描画するプロットデータ
         # features = []
