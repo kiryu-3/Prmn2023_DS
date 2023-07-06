@@ -596,16 +596,15 @@ def kousa():
             
            # ポリゴンゲートのときは初期座標をチェック
            if gates[0] == gates[-1]:
-               try:
-                   if ingate(values[0]["座標"][0], gates):
+               if ingate(values[0]["座標"][0], gates):
                        st.session_state['tuuka_list'][idx1] += 1
                        st.session_state['ingate_count'] += 1
                        continue  # このIDのループを終了
-                   else:
+               else:
                        st.session_state['non_ingate_count'] += 1
-               except Exception as e:
-                   st.session_state['non_ingate_count'] += 1
-                   pass
+               # except Exception as e:
+               #     st.session_state['non_ingate_count'] += 1
+               #     pass
                     #  tab4.write(values)
 
            if cross_judge(gates, values):
