@@ -246,14 +246,14 @@ def upload_csv():
         # プロットのデータをまとめる
         geojson = {"type": "FeatureCollection", "features": features}
             
-        # # レイヤーを削除
-        # if 'map' in st.session_state:
-        #     layers_to_remove = []
-        #     for key, value in st.session_state['map']._children.items():
-        #         if isinstance(value, TimestampedGeoJson):
-        #             layers_to_remove.append(key)
-        #     for key in layers_to_remove:
-        #         del st.session_state['map']._children[key]
+        # レイヤーを削除
+        if 'map' in st.session_state:
+            layers_to_remove = []
+            for key, value in st.session_state['map']._children.items():
+                if isinstance(value, TimestampedGeoJson):
+                    layers_to_remove.append(key)
+            for key in layers_to_remove:
+                del st.session_state['map']._children[key]
 
         # TimestampedGeoJsonの作成
         timestamped_geojson = TimestampedGeoJson(
@@ -677,7 +677,7 @@ try:
             folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
                        style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
     
-            raise st.experimental_rerun()
+            # raise st.experimental_rerun()
     else:
         # st.write(e)
         pass
