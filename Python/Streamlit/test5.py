@@ -104,6 +104,7 @@ if "input_language" not in st.session_state:  # 初期化
 
 def nlp():
     if st.session_state["input_text"] != "":
+        st.session_state["honyaku_mode"] = True
         st.session_state['input_language'] = ""
         response = comprehend.detect_dominant_language(Text=st.session_state["input_text"])
         st.session_state["language_code"] = response['Languages'][0]['LanguageCode']
@@ -113,6 +114,7 @@ def nlp():
         st.session_state['selected_languages'] = [lang for lang in st.session_state['select_languages'] if lang != st.session_state['language_name']]         
         
     else:
+        st.session_state["honyaku_mode"] = False
         st.session_state["language_code"] = ""
         st.session_state["language_name"] = ""
         st.session_state['selected_languages'] = st.session_state['select_languages']
