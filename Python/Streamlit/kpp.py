@@ -230,7 +230,7 @@ def upload_csv():
         #                                 [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
         #             },
         #             'properties': {
-        #                 'time': df2.iloc[i, 1]
+        #                 'time': df2.iloc[i, 1] 
         #             }
         #         }
         #         line_features.append(line_feature)
