@@ -1,6 +1,6 @@
 import boto3
 import streamlit as st
-from io import BytesIO 
+from io import BytesIO
 
 # シークレットから秘密情報を取得する
 access_key = st.secrets["access_key"]
