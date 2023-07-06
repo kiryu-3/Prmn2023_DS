@@ -604,7 +604,7 @@ def kousa():
                    else:
                        st.session_state['non_ingate_count'] += 1
                except Exception as e:
-                   st.write(e)
+                   st.session_state['non_ingate_count'] += 1
                    pass
                     #  tab4.write(values)
 
