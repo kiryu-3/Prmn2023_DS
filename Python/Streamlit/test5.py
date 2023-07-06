@@ -152,8 +152,8 @@ def start():
         
 text_area.text_area(label="翻訳する文を入力してください",
               key="input_text",
-              height=200,
-              on_change=start)
+              height=200)
+button_area.button(label="Go!", on_click=nlp)
 
 # st.session_state["cols"] = st.columns([3, 7])
 if st.session_state["honyaku_mode"]:
