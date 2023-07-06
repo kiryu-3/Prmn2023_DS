@@ -153,7 +153,7 @@ def start():
 text_area.text_area(label="翻訳する文を入力してください",
               key="input_text",
               height=200,
-              on_click=start)
+              on_change=start)
 
 # st.session_state["cols"] = st.columns([3, 7])
 if st.session_state["honyaku_mode"]:
