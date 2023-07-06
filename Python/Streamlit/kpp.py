@@ -671,7 +671,7 @@ try:
                     folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
                 else:
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
-
+      
             
                     
 
