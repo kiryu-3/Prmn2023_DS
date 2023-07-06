@@ -140,8 +140,9 @@ def kiseki_maker(df):
             }
             line_features.append(line_feature)
             # 軌跡のデータを管理する
-            st.session_state['kiseki_data'][itr].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], 
-                                                         '日時': df2.iloc[i, 1]})
+            if itr not in st.session_state['kiseki_data']:
+                st.session_state['kiseki_data'][itr].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], 
+                                                             '日時': df2.iloc[i, 1]})
                 
     return line_features
     
