@@ -230,7 +230,6 @@ def select_data():
     # 選択されていない場合はそのままのデータ
     if len(selected_values) == 0:
         st.session_state['sorted_df'] = st.session_state['df']
-        st.session_state["select_mode"] = False
 
     # 選択された場合はデータをソート
     else:
@@ -346,8 +345,6 @@ def select_data():
                     folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
                 else:
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
-
-        st.session_state["select_mode"] = True
     
 
 def kiseki_draw():
@@ -451,39 +448,6 @@ def delete_shape():
             else:
                 folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
 
-# def are_lines_intersecting(line1, line2):
-#     x1, y1 = line1[0]
-#     x2, y2 = line1[1]
-#     x3, y3 = line2[0]
-#     x4, y4 = line2[1]
-
-#     # 線分の方程式を計算
-#     a1 = y2 - y1
-#     b1 = x1 - x2
-#     c1 = a1 * x1 + b1 * y1
-
-#     a2 = y4 - y3
-#     b2 = x3 - x4
-#     c2 = a2 * x3 + b2 * y3
-
-#     # 交差判定
-#     determinant = a1 * b2 - a2 * b1
-
-#     if determinant == 0:
-#         # 2つの線分が平行である場合
-#         return False
-#     else:
-#         intersect_x = (b2 * c1 - b1 * c2) / determinant
-#         intersect_y = (a1 * c2 - a2 * c1) / determinant
-
-#         # 交差点が線分の範囲内にあるかどうかをチェック
-#         if min(x1, x2) <= intersect_x <= max(x1, x2) and min(x3, x4) <= intersect_x <= max(x3, x4) and \
-#                 min(y1, y2) <= intersect_y <= max(y1, y2) and min(y3, y4) <= intersect_y <= max(y3, y4):
-#             st.session_state['count'] += 1        
-#             return True
-#         else:
-#             return False
-
 def max_min_cross(p1, p2, p3, p4):
     min_ab, max_ab = min(p1, p2), max(p1, p2)
     min_cd, max_cd = min(p3, p4), max(p3, p4)
@@ -536,64 +500,6 @@ def ingate(plot_point, gate_polygon):
         [gate_polygon]
     )
     return boolean_point_in_polygon(point, polygon)
-
-
-# def kousa():
-#     # ゲートごとに通過人数を管理するリストを初期化
-#     tuuka_list = [0] * len(st.session_state['gate_data'])    
-    
-    
-#     # IDでループ
-#     for key, values in st.session_state['kiseki_data'].items():
-#         # 最初のプロットデータ
-#         first_data = values[0]["座標"][0]
-#         # IDの軌跡ごとループ
-#         for value in values:
-#             line1 = [(value["座標"][0][0], value["座標"][0][1]),
-#                      (value["座標"][1][0], value["座標"][1][1])]
-
-#        # 線分それぞれをチェック
-#        for idx2 in range(len(st.session_state['gate_data'][idx1][0])-1):   
-#            line1 = [(st.session_state['gate_data'][idx1][0][idx2][0], st.session_state['gate_data'][idx1][0][idx2][1]),
-#                     (st.session_state['gate_data'][idx1][0][idx2+1][0], st.session_state['gate_data'][idx1][0][idx2+1][1])]
-
-        
-           
-#            # IDでループ
-#            for key, values in st.session_state['kiseki_data'].items():
-            
-#                # 初期座標がゲート内にあるかどうかチェック
-#                # data_list = []
-#                # for item in st.session_state['gate_data'][idx1][0][:len(st.session_state['gate_data'][idx1][0])]:
-#                #     data_list.append(item)
-#                data_list = st.session_state['gate_data'][idx1][0]
-
-#                # ポリゴンゲートのときは初期座標をチェック
-#                if st.session_state['gate_data'][idx1][0][0] == st.session_state['gate_data'][idx1][0][-1]:
-#                    if ingate(values[0]["座標"][0], data_list):
-#                        found_intersection = True
-#                        st.session_state['tuuka_list'][idx1] += 1
-#                        continue  # このIDのループを終了
-#                    # else:
-#                        # st.session_state['count'] += 1
-            
-#                # IDの軌跡ごとループ
-#                for value in values:
-#                    line2 = [(value["座標"][0][0], value["座標"][0][1]),
-#                             (value["座標"][1][0], value["座標"][1][1])]
-
-#                    if "line2" not in st.session_state: # 初期化
-#                        st.session_state['line2'] = line2
-                
-#                    if cross_judge(line1[0], line1[1], line2[0], line2[1]):
-#                        # found_intersection = True
-#                        st.session_state['tuuka_list'][idx1] += 1
-#                        st.session_state['count'] += 1
-#                        st.subheader("全描画データ")
-#                        break  # このIDのループを終了
-#                    else:
-#                        st.session_state['count'] += 1
-        
 
 def kousa():
     # 通過人数カウントの準備
@@ -648,7 +554,7 @@ try:
                 center_dict["lng"] = center_list[1]
                 data["all_drawings"][0]["properties"]["center"] = center_dict
         
-        if (data["all_drawings"][0] not in st.session_state['draw_data'] or len(st.session_state['draw_data']) == 0) and not st.session_state["select_mode"]:
+        if (data["all_drawings"][0] not in st.session_state['draw_data'] or len(st.session_state['draw_data']) == 0):
 
             # データの追加
             st.session_state['draw_data'].append(data["all_drawings"][0])
@@ -661,12 +567,12 @@ try:
             # st.session_state['tuuka_list'] = append_list
 
             # 線のジオJSONを削除する
-            line_layers_to_remove = []
-            for key, value in st.session_state['map']._children.items():
-                if isinstance(value, folium.features.GeoJson):
-                    line_layers_to_remove.append(key)
-            for key in line_layers_to_remove:
-                del st.session_state['map']._children[key]
+            # line_layers_to_remove = []
+            # for key, value in st.session_state['map']._children.items():
+            #     if isinstance(value, folium.features.GeoJson):
+            #         line_layers_to_remove.append(key)
+            # for key in line_layers_to_remove:
+            #     del st.session_state['map']._children[key]
 
             gate_append_list = list()
             for idx, sdata in enumerate(st.session_state['draw_data']):
