@@ -144,7 +144,7 @@ def honyaku():
 
     except Exception as e:
         st.session_state['audio_stream'] = ""
-        error_message = str(e)
+        error_message = str(e) 
         st.error(error_message)
 
 def start():
