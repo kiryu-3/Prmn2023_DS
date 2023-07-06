@@ -78,7 +78,9 @@ if 'select_languages' not in st.session_state:  # 初期化
 
 if 'selected_languages' not in st.session_state:  # 初期化
     st.session_state['selected_languages'] = st.session_state['select_languages']
-
+if "honyaku_mode" not in st.session_state:  # 初期化
+    st.session_state["honyaku_mode"] = False
+    
 text_area = st.empty()
 button_area = st.empty()
 cols = st.columns([3, 7])
@@ -143,13 +145,18 @@ def honyaku():
         error_message = str(e)
         st.error(error_message)
 
+def start():
+    if st.session_state["input_text"] != "":
+        button_area.button(label="Go!", on_click=nlp)
+        st.session_state["honyaku_mode"] = True
+        
 text_area.text_area(label="翻訳する文を入力してください",
               key="input_text",
-              height=200)
-if st.session_state["input_text"] != "":
-    button_area.button(label="Go!", on_click=nlp)
+              height=200,
+              on_click=start)
+
 # st.session_state["cols"] = st.columns([3, 7])
-if st.session_state["input_text"] != "":
+if st.session_state["honyaku_mode"]:
     cols[0].selectbox(
                 label="言語を選んでください",
                 options=[""]+ st.session_state['selected_languages'],
