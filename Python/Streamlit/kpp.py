@@ -525,7 +525,8 @@ def kousa():
                        continue  # このIDのループを終了
                    else:
                        st.session_state['non_ingate_count'] += 1
-               # except:
+               except:
+                   pass
                     #  tab4.write(values)
 
            if cross_judge(gates, values):
