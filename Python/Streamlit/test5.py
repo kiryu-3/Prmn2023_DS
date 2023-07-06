@@ -80,6 +80,7 @@ if 'selected_languages' not in st.session_state:  # 初期化
     st.session_state['selected_languages'] = st.session_state['select_languages']
 
 text_area = st.empty()
+button_area = st.empty()
 cols = st.columns([3, 7])
 
 if 'voices' not in st.session_state:  # 初期化
@@ -146,7 +147,7 @@ text_area.text_area(label="翻訳する文を入力してください",
               key="input_text",
               height=200)
 if st.session_state["input_text"] != "":
-    st.button(label="Go!", on_click=nlp)
+    button_area.button(label="Go!", on_click=nlp)
 # st.session_state["cols"] = st.columns([3, 7])
 if st.session_state["input_text"] != "":
     cols[0].selectbox(
