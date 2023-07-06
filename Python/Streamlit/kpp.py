@@ -184,7 +184,7 @@ def upload_csv():
         # ユニークなIDのリスト
         st.session_state['sorted_index'] = [str(value) for value in unique_values]
         features = plot(df)
-        line_deatures = kiseki_maker(df)
+        line_features = kiseki_maker(df)
         
         # # 描画するプロットデータ
         # features = []
