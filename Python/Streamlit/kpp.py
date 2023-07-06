@@ -677,7 +677,7 @@ try:
             folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
                        style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
     
-            # raise st.experimental_rerun()
+            raise st.experimental_rerun()
     else:
         # st.write(e)
         pass
