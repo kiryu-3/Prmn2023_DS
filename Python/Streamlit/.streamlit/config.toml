@@ -1,7 +1,2 @@
 [server]
 maxUploadSize = 2000
-
-[credentials]
-access_key = 'AKIAW7ZW5WIR5VJRHQRC'
-secret_key = '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'
-region_name = 'ap-northeast-1'
