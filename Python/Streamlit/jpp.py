@@ -364,42 +364,42 @@ def kiseki_draw():
         for key in line_layers_to_remove:
             del st.session_state['map']._children[key]
 
-        # 
-        list2 = [str(value) for value in st.session_state['df_new']['newid']]
+        # # 
+        # list2 = [str(value) for value in st.session_state['df_new']['newid']]
         
-        # 描画する軌跡データ
-        line_features = []
-        for itr in list2:
-            st.session_state['kiseki_data'][str(itr)] = list()
-        for itr in list2:
-            list3 = []
-            for i, row in st.session_state['df'].iterrows():
-                if itr == str(row[0]):
-                    list3.append(row)
-            df2 = pd.DataFrame(list3)
-            for i in range(len(df2) - 1):
-                line_feature = {
-                     'type': 'Feature',
-                    'geometry': {
-                        'type': 'LineString',
-                        'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
-                                        [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
-                    },
-                    'properties': {
-                        'time': df2.iloc[i, 1]
-                    }
-                }
-                line_features.append(line_feature)
-                # 軌跡データはいじらない
-                # st.session_state['kiseki_data'][str(itr)].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], '日時': df2.iloc[i, 1]})
+        # # 描画する軌跡データ
+        # line_features = []
+        # for itr in list2:
+        #     st.session_state['kiseki_data'][str(itr)] = list()
+        # for itr in list2:
+        #     list3 = []
+        #     for i, row in st.session_state['df'].iterrows():
+        #         if itr == str(row[0]):
+        #             list3.append(row)
+        #     df2 = pd.DataFrame(list3)
+        #     for i in range(len(df2) - 1):
+        #         line_feature = {
+        #              'type': 'Feature',
+        #             'geometry': {
+        #                 'type': 'LineString',
+        #                 'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
+        #                                 [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
+        #             },
+        #             'properties': {
+        #                 'time': df2.iloc[i, 1]
+        #             }
+        #         }
+        #         line_features.append(line_feature)
+        #         # 軌跡データはいじらない
+        #         # st.session_state['kiseki_data'][str(itr)].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], '日時': df2.iloc[i, 1]})
 
-        # 軌跡のデータをまとめる
-        line_geojson = {'type': 'FeatureCollection', 'features': line_features}
-        st.session_state["line_geojson"] = line_geojson
+        # # 軌跡のデータをまとめる
+        # line_geojson = {'type': 'FeatureCollection', 'features': line_features}
+        # st.session_state["line_geojson"] = line_geojson
 
-        # 線のジオJSONを追加
-        folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
-                       style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+        # # 線のジオJSONを追加
+        # folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
+        #                style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
         
 
 def select_shape():
