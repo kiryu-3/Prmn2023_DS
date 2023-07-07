@@ -1,7 +1,7 @@
 import io
 from io import BytesIO
 from turfpy.measurement import boolean_point_in_polygon
-from geojson import Point, Polygon, Feature
+from geojson import Point, Polygon, Feature 
 import itertools
 
 import streamlit as st
@@ -168,7 +168,7 @@ def zukei_draw():
 
 
 def upload_csv():
-    if st.session_state["upload_csvfile"] is not None:
+    if st.session_state["upload_csvfile"]:
         file_data = st.session_state["upload_csvfile"].read()
         # バイナリデータからPandas DataFrameを作成
         df = pd.read_csv(io.BytesIO(file_data))
