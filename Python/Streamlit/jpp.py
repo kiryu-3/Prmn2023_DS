@@ -63,6 +63,8 @@ if 'gate_data' not in st.session_state: # 初期化
     st.session_state['gate_data'] = list()  
 if 'kiseki_data' not in st.session_state: # 初期化
     st.session_state['kiseki_data'] = dict() 
+if 'kiseki_flag' not in st.session_state: # 初期化
+    st.session_state['kiseki_flag'] = False
 if "line_geojson" not in st.session_state: # 初期化
     st.session_state['line_geojson'] = None
 if "tuuka_list" not in st.session_state: # 初期化
@@ -332,9 +334,9 @@ def select_data():
 
         # 軌跡の追加
         if st.session_state['kiseki_flag']:
-                # 線のジオJSONを追加
-                folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
-                               style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+            # 線のジオJSONを追加
+            folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
+                           style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
 
         if len(st.session_state['draw_data']) != 0:
             for idx, sdata in enumerate(st.session_state['draw_data']):
@@ -435,6 +437,7 @@ def delete_shape():
             del st.session_state['map']._children[key]
         # draw_dataから図形を削除
         st.session_state['draw_data'].remove(delete_shape)
+        st.session_state['tuuka_list'].pop(delete_shape_id - 1)
 
         gate_append_list = list()
         for idx, sdata in enumerate(st.session_state['draw_data']):
