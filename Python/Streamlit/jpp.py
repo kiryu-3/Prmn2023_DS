@@ -749,8 +749,8 @@ with st.sidebar:
 
             # st.write(st.session_state['kiseki_data'])
             # st.write(st.session_state['tuuka_list'])
-            # st.subheader("count")
-            # st.write(st.session_state['count'])
+            st.subheader("count")
+            st.write(st.session_state['count'])
             # st.subheader("ingate_count")
             # st.write(st.session_state['ingate_count'])
             # st.subheader("non_ingate_count")
