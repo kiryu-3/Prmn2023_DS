@@ -274,13 +274,13 @@ def upload_csv():
         # TimestampedGeoJsonをマップに追加
         timestamped_geojson.add_to(st.session_state['map'])
 
-        # # 線のジオJSONを削除する
-        # line_layers_to_remove = []
-        # for key, value in st.session_state['map']._children.items():
-        #     if isinstance(value, folium.features.GeoJson):
-        #         line_layers_to_remove.append(key)
-        # for key in line_layers_to_remove:
-        #     del st.session_state['map']._children[key]
+        # 線のジオJSONを削除する
+        line_layers_to_remove = []
+        for key, value in st.session_state['map']._children.items():
+            if isinstance(value, folium.features.GeoJson):
+                line_layers_to_remove.append(key)
+        for key in line_layers_to_remove:
+            del st.session_state['map']._children[key]
 
         # for idx, sdata in enumerate(st.session_state['draw_data']):
         #     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
