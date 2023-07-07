@@ -637,7 +637,16 @@ def kousa():
 st_data = st_folium(st.session_state['map'], width=725)  
 
 data = copy.deepcopy(dict(st_data))
-
+# if (data["all_drawings"][0] not in st.session_state['draw_data'] or len(st.session_state['draw_data']) == 0):
+#     # GeoJSONデータをマップに追加する
+#     if data["last_circle_polygon"] is not None:
+#             data["all_drawings"][0]["geometry"]["type"] = "Polygon"
+#             data["all_drawings"][0]["geometry"]["coordinates"] = data["last_circle_polygon"]["coordinates"]
+#             center_list = data["last_active_drawing"]["geometry"]["coordinates"]
+#             center_dict = dict()
+#             center_dict["lat"] = center_list[0]
+#             center_dict["lng"] = center_list[1]
+#             data["all_drawings"][0]["properties"]["center"] = center_dict
 try:
     if data["all_drawings"] is not None and isinstance(data["all_drawings"], list) and len(data["all_drawings"]) > 0:
         # GeoJSONデータをマップに追加する
@@ -707,7 +716,7 @@ except Exception as e:
 st.subheader("地図の全描画データ")
 st.write(data["all_drawings"])
 st.write(st.session_state['draw_data'])
-# st.write(st.session_state['count'])
+st.write(st_data)
 
 with st.sidebar:
     # タブ
