@@ -65,6 +65,8 @@ if 'kiseki_data' not in st.session_state: # 初期化
     st.session_state['kiseki_data'] = dict() 
 if 'kiseki' not in st.session_state: # 初期化
     st.session_state['kiseki'] = False
+if 'kiseki_flag' not in st.session_state: # 初期化
+    st.session_state['kiseki_flag'] = False
 if "line_geojson" not in st.session_state: # 初期化
     st.session_state['line_geojson'] = None
 if "tuuka_list" not in st.session_state: # 初期化
