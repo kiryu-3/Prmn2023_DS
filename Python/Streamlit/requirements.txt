@@ -4,3 +4,4 @@ turfpy
 boto3
 awscli
 pylatex
+texlive
