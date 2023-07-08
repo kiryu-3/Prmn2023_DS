@@ -1,17 +1,17 @@
 import io
 from io import BytesIO
-from turfpy.measurement import boolean_point_in_polygon 
-from geojson import Point, Polygon, Feature
-import itertools
-
-import streamlit as st
 import json
-import folium
+import itertools
 import pandas as pd
 import copy
+
+import streamlit as st
+import folium
 from streamlit_folium import st_folium
 from folium import plugins
 from folium.plugins import Draw, TimestampedGeoJson
+from turfpy.measurement import boolean_point_in_polygon
+from geojson import Point, Polygon, Feature
 
 st.set_page_config(
     page_title="streamlit-folium documentation",
@@ -32,18 +32,6 @@ if 'map' not in st.session_state: # 初期化
     draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
     draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
     draw.add_to(m)
-    
-    # Custom CSS style for the export button
-    st.markdown("""
-        <style>
-        .leaflet-draw-actions {
-            background-color: #ffffff;
-            border: 1px solid #cccccc;
-            padding: 5px;
-            border-radius: 5px;
-        }
-        </style>
-        """, unsafe_allow_html=True)
     
     st.session_state['map'] = m
     
