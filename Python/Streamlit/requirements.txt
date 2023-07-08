@@ -4,7 +4,3 @@ turfpy
 boto3
 awscli
 pylatex
-texlive-base
-texlive-latex-extra
-texlive-fonts-recommended
-
