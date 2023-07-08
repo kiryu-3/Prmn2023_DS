@@ -631,7 +631,7 @@ try:
                            else:
                                pass
                     
-                    # 図形IDを表示するツールチップを設定
+                    # 図形IDを表示するツールチップを設定 
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
                     # 通過人数を表示するポップアップを指定
                     popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
