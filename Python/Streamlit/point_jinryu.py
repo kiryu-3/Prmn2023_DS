@@ -638,7 +638,7 @@ try:
                     folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
                 else: 
                     # 図形IDを表示するツールチップを設定
-                    tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) 
+                    tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata))
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
 
             if st.session_state["kiseki_flag"]:
