@@ -564,13 +564,13 @@ try:
         
         # サークルのデータを加工
         if data["last_circle_polygon"] is not None:
-                data["all_drawings"][0]["geometry"]["type"] = "Polygon"
-                data["all_drawings"][0]["geometry"]["coordinates"] = data["last_circle_polygon"]["coordinates"]
-                center_list = data["last_active_drawing"]["geometry"]["coordinates"]
-                center_dict = dict()
-                center_dict["lat"] = center_list[0]
-                center_dict["lng"] = center_list[1]
-                data["all_drawings"][0]["properties"]["center"] = center_dict
+            data["all_drawings"][0]["geometry"]["type"] = "Polygon"
+            data["all_drawings"][0]["geometry"]["coordinates"] = data["last_circle_polygon"]["coordinates"]
+            center_list = data["last_active_drawing"]["geometry"]["coordinates"]
+            center_dict = dict()
+            center_dict["lat"] = center_list[0]
+            center_dict["lng"] = center_list[1]
+            data["all_drawings"][0]["properties"]["center"] = center_dict
 
         # data["all_drawings"][0]が追加できそうなら追加
         if (data["all_drawings"][0] not in st.session_state['draw_data'] or len(st.session_state['draw_data']) == 0):
@@ -640,12 +640,13 @@ try:
                     # 図形IDを表示するツールチップを設定
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) 
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
-                    
-            # 線のジオJSONを追加
-            folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
-                           style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+
+            if st.session_state["kiseki_flag"]:
+                # 線のジオJSONを追加
+                folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
+                               style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
                                                                                           
-    # 地図に当たらな図形が描画されていないなら何もしない
+    # 地図に新たな図形が描画されていないなら何もしない
     else:
         pass
 
