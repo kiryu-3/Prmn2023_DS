@@ -397,8 +397,9 @@ def select_data():
                                continue  # このIDのループを終了
                            else:
                                st.session_state['non_ingate_count'] += 1
-                       except:
-                            tab4.write(values)
+                       except Exception as e:
+                            st.write(e)
+                            st.write(values)
         
                    if cross_judge(gates, values):
                        # found_intersection = True
