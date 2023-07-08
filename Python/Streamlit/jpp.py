@@ -27,7 +27,7 @@ st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 if 'map' not in st.session_state: # 初期化
     # 初めての表示時は空のマップを表示
-    m = folium.Map(location=[35.6895, 137.43896484375003], zoom_start=5)
+    m = folium.Map(location=[35.6895, 137.43896484375003], zoom_start=6)
     # Leaflet.jsのDrawプラグインを追加
     draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
     draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
@@ -635,7 +635,7 @@ def kousa():
                st.session_state['non_cross_judge_count'] += 1
 
 # call to render Folium map in eamlit
-st_data = st_folium(st.session_state['map'], width=500, height=500)  
+st_data = st_folium(st.session_state['map'], width=700, height=700)  
 
 data = copy.deepcopy(dict(st_data))
 
