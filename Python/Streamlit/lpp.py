@@ -412,7 +412,9 @@ def select_data():
             popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
             folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
-        st.session_state["select_mode"] = True
+        # 線のジオJSONを追加
+        folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
+                       style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
     
 
 def kiseki_draw():
