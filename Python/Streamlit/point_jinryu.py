@@ -686,7 +686,7 @@ with st.sidebar:
                          key="delete_shape_id",
                          on_change=delete_shape)
 
-            # st.write(st.session_state['tuuka_list'])
+            st.write(st.session_state['tuuka_list'])
             st.write(st.session_state["selected_shape_type"])
             st.write(st.session_state["selected_shape"])
 
