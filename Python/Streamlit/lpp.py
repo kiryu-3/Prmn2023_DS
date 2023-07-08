@@ -384,7 +384,40 @@ def select_data():
             for idx, sdata in enumerate(st.session_state['draw_data']):
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
                 if len(st.session_state['df_new']) != 0:
-                    kousa()
+                    # 通過人数カウントの準備
+                    append_list = list()
+                    for _ in range(len(st.session_state['draw_data'])):
+                        append_list.append(0)
+                    st.session_state['tuuka_list'] = append_list
+                    
+                    # ゲートとIDの組み合わせごとにループ
+                    for idx1, gates in enumerate(st.session_state['gate_data']):
+                        for key, values in st.session_state['kiseki_data'].items():  
+                
+                           if "gates" not in st.session_state:
+                               st.session_state['gates'] = gates
+                           if "values" not in st.session_state:
+                               st.session_state['values'] = values
+                            
+                           # ポリゴンゲートのときは初期座標をチェック
+                           if gates[0] == gates[-1]:
+                               try:
+                                   if ingate(values[0]["座標"][0], gates):
+                                       st.session_state['tuuka_list'][idx1] += 1
+                                       st.session_state['ingate_count'] += 1
+                                       continue  # このIDのループを終了
+                                   else:
+                                       st.session_state['non_ingate_count'] += 1
+                               except:
+                                    tab4.write(values)
+                
+                           if cross_judge(gates, values):
+                               # found_intersection = True
+                               st.session_state['tuuka_list'][idx1] += 1
+                               st.session_state['cross_judge_count'] += 1
+                               continue  # このIDのループを終了
+                           else:
+                               st.session_state['non_cross_judge_count'] += 1
                     # st.session_state['count'] += 1
                     popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
                     folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
@@ -489,7 +522,40 @@ def delete_shape():
                 gate_append_list.append(sdata["geometry"]["coordinates"])
             tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(st.session_state['draw_data'].index(sdata) + 1)
             if len(st.session_state['df_new']) != 0:
-                kousa()
+                # 通過人数カウントの準備
+                append_list = list()
+                for _ in range(len(st.session_state['draw_data'])):
+                    append_list.append(0)
+                st.session_state['tuuka_list'] = append_list
+                
+                # ゲートとIDの組み合わせごとにループ
+                for idx1, gates in enumerate(st.session_state['gate_data']):
+                    for key, values in st.session_state['kiseki_data'].items():  
+            
+                       if "gates" not in st.session_state:
+                           st.session_state['gates'] = gates
+                       if "values" not in st.session_state:
+                           st.session_state['values'] = values
+                        
+                       # ポリゴンゲートのときは初期座標をチェック
+                       if gates[0] == gates[-1]:
+                           try:
+                               if ingate(values[0]["座標"][0], gates):
+                                   st.session_state['tuuka_list'][idx1] += 1
+                                   st.session_state['ingate_count'] += 1
+                                   continue  # このIDのループを終了
+                               else:
+                                   st.session_state['non_ingate_count'] += 1
+                           except:
+                                tab4.write(values)
+            
+                       if cross_judge(gates, values):
+                           # found_intersection = True
+                           st.session_state['tuuka_list'][idx1] += 1
+                           st.session_state['cross_judge_count'] += 1
+                           continue  # このIDのループを終了
+                       else:
+                           st.session_state['non_cross_judge_count'] += 1
                 st.session_state['count'] += 1
                 popup_html = '<div style="font-size: 16px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
                 folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
