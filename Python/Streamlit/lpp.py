@@ -312,8 +312,8 @@ def select_data():
 
         # 描画する軌跡データ
         line_features = []
-        for itr in list2:
-            st.session_state['kiseki_data'][str(itr)] = list()
+        # for itr in list2:
+            # st.session_state['kiseki_data'][str(itr)] = list()
         for itr in list2:
             list3 = []
             for i, row in st.session_state['df'].iterrows():
