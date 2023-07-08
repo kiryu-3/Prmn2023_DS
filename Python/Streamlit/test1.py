@@ -9,7 +9,7 @@ if uploaded_file is not None:
     tex_content = uploaded_file.getvalue().decode()
 
     # LaTeXドキュメントを作成
-    doc = Document()
+    doc = Document(compiler='pdflatex')
     doc.append(Command('title', 'Generated PDF'))
     doc.append(Command('author', 'User'))
     doc.append(Command('date', 'Today'))
