@@ -1,20 +1,22 @@
 import streamlit as st
-from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
-import pandas as pd
+from pylatex import Document, Section, Subsection, Command
 
+# ファイルのアップロード
+uploaded_file = st.file_uploader("Upload LaTeX File", type="tex")
 
-DATA_URL = 'https://raw.githubusercontent.com/fivethirtyeight/data/master/airline-safety/airline-safety.csv'
+if uploaded_file is not None:
+    # テキストファイルの内容を取得
+    tex_content = uploaded_file.getvalue().decode()
 
+    # LaTeXドキュメントを作成
+    doc = Document()
+    doc.append(Command('title', 'Generated PDF'))
+    doc.append(Command('author', 'User'))
+    doc.append(Command('date', 'Today'))
+    doc.append(tex_content)
 
-def main():
-    df = pd.read_csv(DATA_URL)
-    
-    gb = GridOptionsBuilder.from_dataframe(df, editable=True)
-    grid = AgGrid(df, gridOptions=gb.build(), updateMode=GridUpdateMode.VALUE_CHANGED)
-    
-    # 修正が反映される
-    st.dataframe(grid['data'])
+    # PDFに変換
+    pdf_bytes = doc.generate_pdf()
 
-
-if __name__ == '__main__':
-    main()
+    # 変換後のPDFをダウンロード
+    st.download_button("Download PDF", pdf_bytes, file_name='output.pdf', mime='application/pdf')
