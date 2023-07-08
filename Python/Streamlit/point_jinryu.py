@@ -73,7 +73,7 @@ if "selected_shape_type" not in st.session_state: # 初期化
     st.session_state["selected_shape_type"] = ""
 
 # 描画するプロットデータの作成
-def features_maker(list2)
+def features_maker(list2):
     # 描画するプロットデータ
     features = []
     for i, row in df.iterrows():
@@ -101,7 +101,7 @@ def features_maker(list2)
     return features
 
 # 描画する軌跡データの作成
-def line_features_maker(list2, kiseki)
+def line_features_maker(list2, kiseki):
     # 描画する軌跡データのリスト
         line_features = []
         # 各IDごとにループ
