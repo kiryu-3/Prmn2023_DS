@@ -27,7 +27,7 @@ st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 if 'map' not in st.session_state: # 初期化
     # 初めての表示時は空のマップを表示
-    m = folium.Map(location=[41.50857729743935, 134.82421875000003], zoom_start=5)
+    m = folium.Map(location=[38.85682013474361, 139.87792968750003], zoom_start=5)
     # Leaflet.jsのDrawプラグインを追加
     draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
     draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
