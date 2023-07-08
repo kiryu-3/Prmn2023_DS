@@ -103,34 +103,34 @@ def features_maker(list2):
 # 描画する軌跡データの作成
 def line_features_maker(list2, kiseki):
     # 描画する軌跡データのリスト
-        line_features = []
-        # 各IDごとにループ
-        for itr in list2:
-            st.session_state['kiseki_data'][str(itr)] = list()
-            # IDに対応する行のデータを抽出
-            list3 = []
-            for i, row in df.iterrows():
-                if itr == str(row[0]):
-                    list3.append(row)
-            df2 = pd.DataFrame(list3)
-            # 各行の座標データから軌跡データを作成
-            for i in range(len(df2) - 1):
-                line_feature = {
-                     'type': 'Feature',
-                    'geometry': {
-                        'type': 'LineString',
-                        'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
-                                        [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
-                    },
-                    'properties': {
-                        'time': df2.iloc[i, 1]
-                    }
+    line_features = []
+    # 各IDごとにループ
+    for itr in list2:
+        st.session_state['kiseki_data'][str(itr)] = list()
+        # IDに対応する行のデータを抽出
+        list3 = []
+        for i, row in df.iterrows():
+            if itr == str(row[0]):
+                list3.append(row)
+        df2 = pd.DataFrame(list3)
+        # 各行の座標データから軌跡データを作成
+        for i in range(len(df2) - 1):
+            line_feature = {
+                 'type': 'Feature',
+                'geometry': {
+                    'type': 'LineString',
+                    'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
+                                    [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
+                },
+                'properties': {
+                    'time': df2.iloc[i, 1]
                 }
-                line_features.append(line_feature)
-                if kiseki:
-                    # 軌跡データをセッションの状態に保存
-                    st.session_state['kiseki_data'][str(itr)].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], 
-                                                                      '日時': df2.iloc[i, 1]})
+            }
+            line_features.append(line_feature)
+            if kiseki:
+                # 軌跡データをセッションの状態に保存
+                st.session_state['kiseki_data'][str(itr)].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], 
+                                                                  '日時': df2.iloc[i, 1]})
     return line_features
 
 # csvのuploaderの状態が変化したときに呼ばれるcallback関数
