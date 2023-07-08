@@ -367,7 +367,7 @@ def kiseki_draw():
             del st.session_state['map']._children[key]
 
         # # 
-        # list2 = [str(value) for value in st.session_state['df_new']['newid']]
+        list2 = [str(value) for value in st.session_state['df_new']['newid']]
         
         # 描画する軌跡データ
         line_features = []
