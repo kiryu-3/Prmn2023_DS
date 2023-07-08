@@ -283,12 +283,12 @@ def select_data():
 
         # ユニークなIDのリスト
         # リストの全ての要素を文字列型に変換する
-        list2 = selected_values
+        list2 = [str(value) for value in selected_values]
         
         # 描画するプロットデータ
         features = []
         for i, row in st.session_state['sorted_df'].iterrows():
-            indexNum = list2.index(row.iloc[0])
+            indexNum = list2.index(str(row.iloc[0]))
             feature = {
                 "type": "Feature",
                 "geometry": {
