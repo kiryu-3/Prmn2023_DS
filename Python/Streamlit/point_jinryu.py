@@ -76,7 +76,7 @@ if "selected_shape_type" not in st.session_state: # 初期化
 def features_maker(list2):
     # 描画するプロットデータ
     features = []
-    for i, row in df.iterrows():
+    for i, row in st.session_state['sorted_df'].iterrows():
         indexNum = list2.index(str(row.iloc[0]))
         feature = {
             "type": "Feature",
@@ -109,7 +109,7 @@ def line_features_maker(list2, kiseki):
         st.session_state['kiseki_data'][str(itr)] = list()
         # IDに対応する行のデータを抽出
         list3 = []
-        for i, row in df.iterrows():
+        for i, row in st.session_state['sorted_df'].iterrows():
             if itr == str(row[0]):
                 list3.append(row)
         df2 = pd.DataFrame(list3)
