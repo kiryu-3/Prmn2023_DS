@@ -266,12 +266,14 @@ def select_data():
     if len(selected_values) == 0:
         st.session_state['sorted_df'] = st.session_state['df']
         st.session_state["select_mode"] = False
+        # ユニークなIDを取得
+        unique_values = st.session_state['sorted_df'].iloc[:, 0].unique()
+        list2 = [str(value) for value in unique_values]
 
     # 選択された場合はデータをソート
     else:
         st.session_state['sorted_df'] = st.session_state['df'][st.session_state['df'].iloc[:, 0].isin(selected_values)]
         st.session_state['sorted_df'] = st.session_state['sorted_df'].reset_index(drop=True)
-        tab2.write(st.session_state['sorted_df'])
         
         # 線のジオJSONを削除する
         line_layers_to_remove = []
@@ -281,9 +283,9 @@ def select_data():
         for key in line_layers_to_remove:
             del st.session_state['map']._children[key]
 
-    # ユニークなIDのリスト
-    # リストの全ての要素を文字列型に変換する
-    list2 = [str(value) for value in selected_values]
+        # ユニークなIDのリスト
+        # リストの全ての要素を文字列型に変換する
+        list2 = [str(value) for value in selected_values]
     
     # 描画するプロットデータ
     features = []
