@@ -635,7 +635,7 @@ def kousa():
                st.session_state['non_cross_judge_count'] += 1
 
 # call to render Folium map in eamlit
-st_data = st_folium(st.session_state['map'], width=600, height=600)  
+st_data = st_folium(st.session_state['map'], width=500, height=500)  
 
 data = copy.deepcopy(dict(st_data))
 
