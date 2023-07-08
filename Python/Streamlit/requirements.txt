@@ -3,3 +3,4 @@ streamlit_folium
 turfpy
 boto3
 awscli
+pylatex
