@@ -838,7 +838,7 @@ try:
                                    else:
                                        st.session_state['non_ingate_count'] += 1
                                except:
-                                    tab4.write(values)
+                                    st.write(values)
                 
                            if cross_judge(gates, values):
                                # found_intersection = True
