@@ -106,7 +106,6 @@ def line_features_maker(list2, kiseki):
     line_features = []
     # 各IDごとにループ
     for itr in list2:
-        st.session_state['kiseki_data'][str(itr)] = list()
         # IDに対応する行のデータを抽出
         list3 = []
         for i, row in st.session_state['sorted_df'].iterrows():
@@ -159,6 +158,8 @@ def upload_csv():
 
         # ユニークなIDのリスト
         list2 = [str(value) for value in unique_values]
+        for itr in list2:
+          st.session_state['kiseki_data'][str(itr)] = list()
 
         features = features_maker(list2)
         line_features = line_features_maker(list2, True)
