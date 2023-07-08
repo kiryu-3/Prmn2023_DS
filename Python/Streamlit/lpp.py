@@ -236,7 +236,7 @@ def upload_csv():
                 
                            if cross_judge(gates, values):
                                # found_intersection = True
-                               st.session_state['tuuka_list'][idx1] += 1
+                               st.session_state['tuuka_list'][idx1] += 1 
                                st.session_state['cross_judge_count'] += 1
                                continue  # このIDのループを終了
                            else:
