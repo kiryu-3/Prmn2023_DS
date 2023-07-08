@@ -288,7 +288,7 @@ def select_data():
         # 描画するプロットデータ
         features = []
         for i, row in st.session_state['sorted_df'].iterrows():
-            indexNum = list2.index(str(row.iloc[0]))
+            indexNum = list2.index(row.iloc[0])
             feature = {
                 "type": "Feature",
                 "geometry": {
