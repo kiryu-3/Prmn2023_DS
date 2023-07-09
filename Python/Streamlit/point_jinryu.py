@@ -446,6 +446,7 @@ def delete_shape():
           
         # draw_dataから図形を削除
         st.session_state['draw_data'].remove(delete_shape)
+        st.session_state['gate_data'].pop(delete_shape_id - 1)
         if len(st.session_state['tuuka_list']) != 0:
             st.session_state['tuuka_list'].pop(delete_shape_id - 1)
 
@@ -465,11 +466,8 @@ def delete_shape():
                        if gates[0] == gates[-1]:
                            try:
                                if ingate(values[0]["座標"][0], gates):
-                                   try:
-                                       st.session_state['tuuka_list'][idx1] += 1
-                                       continue  # このIDのループを終了
-                                   except Exception as e:
-                                       st.write(st.session_state['tuuka_list'])
+                                   st.session_state['tuuka_list'][idx1] += 1
+                                   continue  # このIDのループを終了
                                else:
                                    pass
                            except:
