@@ -465,8 +465,11 @@ def delete_shape():
                        if gates[0] == gates[-1]:
                            try:
                                if ingate(values[0]["座標"][0], gates):
-                                   st.session_state['tuuka_list'][idx1] += 1
-                                   continue  # このIDのループを終了
+                                   try:
+                                       st.session_state['tuuka_list'][idx1] += 1
+                                       continue  # このIDのループを終了
+                                   except Exception as e:
+                                       st.write(st.session_state['tuuka_list'])
                                else:
                                    pass
                            except:
