@@ -460,11 +460,6 @@ def delete_shape():
                 # ゲートとIDの組み合わせごとにループ
                 for idx1, gates in enumerate(st.session_state['gate_data']):
                     for key, values in st.session_state['kiseki_data'].items():  
-            
-                       if "gates" not in st.session_state:
-                           st.session_state['gates'] = gates
-                       if "values" not in st.session_state:
-                           st.session_state['values'] = values
                         
                        # ポリゴンゲートのときは初期座標をチェック
                        if gates[0] == gates[-1]:
