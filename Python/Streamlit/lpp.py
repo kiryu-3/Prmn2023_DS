@@ -222,12 +222,9 @@ def upload_csv():
                        st.session_state['non_cross_judge_count'] += 1
             
             st.session_state['count'] += 1
-            popup_html = '<div style="font-size: 16px; background-color: #F0F0F0;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
-            folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
-
-                
-            
-
+            popup_html = '<div style="font-size: 16px; font-weight: bold; width: 120px; height: 20px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+    　      folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+    
     else:
         # 空のデータフレームを作成
         df = pd.DataFrame()
@@ -395,8 +392,9 @@ def select_data():
                    st.session_state['non_cross_judge_count'] += 1
         
         st.session_state['count'] += 1
-        popup_html = '<div style="font-size: 16px; background-color: #F0F0F0;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+        popup_html = '<div style="font-size: 16px; font-weight: bold; width: 120px; height: 20px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
         folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+
 
         
     # 軌跡の追加
@@ -495,7 +493,7 @@ def kiseki_draw():
                        st.session_state['non_cross_judge_count'] += 1
             
             st.session_state['count'] += 1
-            popup_html = '<div style="font-size: 16px; background-color: #F0F0F0;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+            popup_html = '<div style="font-size: 16px; font-weight: bold; width: 120px; height: 20px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
             folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
                 
@@ -574,8 +572,9 @@ def delete_shape():
                        st.session_state['non_cross_judge_count'] += 1
             
             st.session_state['count'] += 1
-            popup_html = '<div style="font-size: 16px; background-color: #F0F0F0;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+            popup_html = '<div style="font-size: 16px; font-weight: bold; width: 120px; height: 20px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
             folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+
 
             
 # def are_lines_intersecting(line1, line2):
@@ -842,8 +841,9 @@ try:
                                st.session_state['non_cross_judge_count'] += 1
                     
                     st.session_state['count'] += 1
-                    popup_html = '<div style="font-size: 16px; background-color: #F0F0F0;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+                    popup_html = '<div style="font-size: 16px; font-weight: bold; width: 120px; height: 20px;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
                     folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+
 
                     # st.experimental_rerun()
                 else:
