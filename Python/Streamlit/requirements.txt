@@ -4,5 +4,4 @@ turfpy
 boto3
 awscli
 pylatex
-pywin32
-xlwings
+
