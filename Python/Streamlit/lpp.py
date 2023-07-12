@@ -145,8 +145,8 @@ def upload_csv():
                 }
                 line_features.append(line_feature)
                 # 軌跡のデータを管理する
-                st.session_state['kiseki_data'][str(itr)].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], 
-                                                             '日時': df2.iloc[i, 1]})
+                # st.session_state['kiseki_data'][str(itr)].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], 
+                                                             # '日時': df2.iloc[i, 1]})
         # tab4.write(st.session_state['kiseki_data'])
         # 軌跡のデータをまとめる
         line_geojson = {'type': 'FeatureCollection', 'features': line_features}
