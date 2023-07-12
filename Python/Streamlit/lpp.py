@@ -5,7 +5,7 @@ import itertools
 import pandas as pd
 import copy
 
-import streamlit as st
+import streamlit as st 
 import folium
 from streamlit_folium import st_folium
 from folium import plugins
