@@ -132,6 +132,7 @@ def upload_csv():
                     list3.append(row)
             df2 = pd.DataFrame(list3)
             for i in range(len(df2) - 1):
+                indexNum = list2.index(str(df2.iloc[i, 0]))
                 line_feature = {
                      'type': 'Feature',
                     'geometry': {
@@ -140,6 +141,7 @@ def upload_csv():
                                         [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
                     },
                     'properties': {
+                        "popup": f"{indexNum+1} - {df2.iloc[i, 0]}",
                         'time': df2.iloc[i, 1]
                     }
                 }
