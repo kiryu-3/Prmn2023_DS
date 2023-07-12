@@ -4,5 +4,5 @@ turfpy
 boto3
 awscli
 pylatex
-openpyxl
-PDFDocument
+pywin32
+xlwings
