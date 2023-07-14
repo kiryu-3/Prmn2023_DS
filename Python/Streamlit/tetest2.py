@@ -251,6 +251,12 @@ def upload_csv():
 
         # 軌跡のデータを削除
         st.session_state['kiseki_data'] = dict()
+        line_layers_to_remove = []
+        for key, value in st.session_state['map']._children.items():
+            if isinstance(value, folium.features.GeoJson):
+                line_layers_to_remove.append(key)
+        for key in line_layers_to_remove:
+            del st.session_state['map']._children[key]
 
 def select_data():
   
