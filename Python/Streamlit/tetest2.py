@@ -354,6 +354,7 @@ def select_data():
             folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
     # 軌跡の追加
     if st.session_state['kiseki_flag']:
+        pass
         # 線のジオJSONを追加
         # folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
                        # style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
