@@ -184,7 +184,7 @@ def upload_csv():
             )
     
         # TimestampedGeoJsonをマップに追加
-        # timestamped_geojson.add_to(st.session_state['map'])
+        timestamped_geojson.add_to(st.session_state['map'])
 
         # 軌跡のGeoJSONを削除する
         line_layers_to_remove = []
@@ -307,7 +307,7 @@ def select_data():
             del st.session_state['map']._children[key]
 
     # TimestampedGeoJsonをマップに追加
-    # timestamped_geojson.add_to(st.session_state['map'])
+    timestamped_geojson.add_to(st.session_state['map'])
 
     # 地図に図形情報を追加
     for idx, sdata in enumerate(st.session_state['draw_data']):
@@ -345,18 +345,16 @@ def select_data():
             folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
     # 軌跡の追加
     if st.session_state['kiseki_flag']:
-        pass
         # 線のジオJSONを追加
-        # folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
-                       # style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+        folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
+                       style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
     
 
 def kiseki_draw():
     if st.session_state['kiseki_flag']:
-        pass
         # 線のジオJSONを追加
-        # folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
-                       # style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+        folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
+                       style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
     else:
         # 線のジオJSONを削除する
         line_layers_to_remove = []
@@ -623,10 +621,9 @@ try:
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
 
             if st.session_state["kiseki_flag"]:
-                pass
                 # 線のジオJSONを追加
-                # folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
-                               # style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+                folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
+                               style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
                                                                                           
     # 地図に新たな図形が描画されていないなら何もしない
     else:
