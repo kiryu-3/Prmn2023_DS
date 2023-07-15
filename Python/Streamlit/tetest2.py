@@ -74,17 +74,17 @@ if "selected_shape_type" not in st.session_state: # 初期化
 
 # 描画するプロットデータの作成
 def features_maker(list2):
-    # 描画するプロットデータ
     features = []
-    # IDとインデックスの対応を辞書で作成
+    coordinates = st.session_state['sorted_df'][['longitude', 'latitude']].values  # 座標データのみを抽出
+
     index_map = {value: index for index, value in enumerate(list2)}
     for i, row in st.session_state['sorted_df'].iterrows():
-        indexNum = index_map[str(row.iloc[0])]
+        indexNum = index_map[row[0]]
         feature = {
             "type": "Feature",
             "geometry": {
                 "type": "Point",
-                "coordinates": [row.iloc[3], row.iloc[2]]
+                "coordinates": [row[3], row[2]]
             },
             "properties": {
                 "icon": "circle",
@@ -94,9 +94,9 @@ def features_maker(list2):
                     "weight": 10,
                     "radius": 3
                 },
-                "time": row.iloc[1],
-                "popup": f"{indexNum+1} - {row.iloc[0]}",
-                "ID": row.iloc[0]
+                "time": row[1],
+                "popup": f"{indexNum+1} - {row[0]}",
+                "ID": row[0]
             }
         }
         features.append(feature)
@@ -104,34 +104,30 @@ def features_maker(list2):
 
 # 描画する軌跡データの作成
 def line_features_maker(list2, kiseki):
-    # 描画する軌跡データのリスト
     line_features = []
-    # 各IDごとにループ
+    coordinates = st.session_state['sorted_df'][['latitude', 'longitude']].values  # 座標データのみを抽出
+
     for itr in list2:
-        # IDに対応する行のデータを抽出
-        list3 = []
-        for i, row in st.session_state['sorted_df'].iterrows():
-            if itr == str(row[0]):
-                list3.append(row)
-        df2 = pd.DataFrame(list3)
-        # 各行の座標データから軌跡データを作成
-        for i in range(len(df2) - 1):
+        filtered_data = st.session_state['sorted_df'][st.session_state['sorted_df']['newid'] == itr]  # データをフィルタリング
+
+        for i in range(len(filtered_data) - 1):
             line_feature = {
-                 'type': 'Feature',
+                'type': 'Feature',
                 'geometry': {
                     'type': 'LineString',
-                    'coordinates': [[df2.iloc[i, 3], df2.iloc[i, 2]],
-                                    [df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]]
+                    'coordinates': [list(coordinates[i]), list(coordinates[i + 1])]  # 直接座標データを使用
                 },
                 'properties': {
-                    'time': df2.iloc[i, 1]
+                    'time': filtered_data.iloc[i, 1],
+                    'popup': str(itr)
                 }
             }
             line_features.append(line_feature)
+
             if kiseki:
                 # 軌跡データをセッションの状態に保存
-                st.session_state['kiseki_data'][str(itr)].append({'座標': [[df2.iloc[i, 3], df2.iloc[i, 2]],[df2.iloc[i + 1, 3], df2.iloc[i + 1, 2]]], 
-                                                                  '日時': df2.iloc[i, 1]})
+                st.session_state['kiseki_data'][str(itr)].append({'座標': [list(coordinates[i]), list(coordinates[i + 1])], 
+                                                                  '日時': filtered_data.iloc[i, 1]})
     return line_features
 
 # csvのuploaderの状態が変化したときに呼ばれるcallback関数
@@ -157,14 +153,11 @@ def upload_csv():
         st.session_state['df'] = df
         st.session_state['df_new'] = df_new
         st.session_state['sorted_df'] = df
+        
+        st.session_state['kiseki_data'] = {str(itr): [] for itr in unique_values}
 
-        # ユニークなIDのリスト
-        list2 = [str(value) for value in unique_values]
-        for itr in list2:
-          st.session_state['kiseki_data'][str(itr)] = list()
-
-        features = features_maker(list2)
-        line_features = line_features_maker(list2, True)
+        features = features_maker(unique_values)
+        line_features = line_features_maker(unique_values, True)
         
         # プロットデータをまとめる
         geojson = {"type": "FeatureCollection", "features": features}
@@ -268,7 +261,6 @@ def select_data():
         st.session_state['sorted_df'] = st.session_state['df']
         # ユニークなIDを取得
         unique_values = st.session_state['sorted_df'].iloc[:, 0].unique()
-        list2 = [str(value) for value in unique_values]
 
     # 選択された場合はデータをソート
     else:
@@ -284,12 +276,11 @@ def select_data():
             del st.session_state['map']._children[key]
 
         # ユニークなIDのリスト
-        # リストの全ての要素を文字列型に変換する
-        list2 = [str(value) for value in selected_values]
+        unique_values = selected_values
     
     # 描画するプロットデータ
-    features = features_maker(list2)
-    line_features = line_features_maker(list2, False)
+    features = features_maker(unique_values)
+    line_features = line_features_maker(unique_values, False)
 
     # プロットデータをまとめる
     geojson = {"type": "FeatureCollection", "features": features}
