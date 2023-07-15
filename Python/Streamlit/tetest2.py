@@ -105,7 +105,7 @@ def features_maker(list2):
 # 描画する軌跡データの作成
 def line_features_maker(list2, kiseki):
     line_features = []
-    coordinates = st.session_state['sorted_df'][['latitude', 'longitude']].values  # 座標データのみを抽出
+    coordinates = st.session_state['sorted_df'][['longitude', 'latitude']].values  # 座標データのみを抽出
 
     for itr in list2:
         filtered_data = st.session_state['sorted_df'][st.session_state['sorted_df']['newid'] == itr]  # データをフィルタリング
