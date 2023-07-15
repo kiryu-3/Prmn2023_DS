@@ -355,15 +355,15 @@ def select_data():
     # 軌跡の追加
     if st.session_state['kiseki_flag']:
         # 線のジオJSONを追加
-        folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
-                       style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+        # folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
+                       # style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
     
 
 def kiseki_draw():
     if st.session_state['kiseki_flag']:
         # 線のジオJSONを追加
-        folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
-                       style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+        # folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
+                       # style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
     else:
         # 線のジオJSONを削除する
         line_layers_to_remove = []
@@ -631,8 +631,8 @@ try:
 
             if st.session_state["kiseki_flag"]:
                 # 線のジオJSONを追加
-                folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
-                               style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+                # folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
+                               # style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
                                                                                           
     # 地図に新たな図形が描画されていないなら何もしない
     else:
