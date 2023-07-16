@@ -113,7 +113,7 @@ def line_features_maker(list2):
     
     for itr in list2:
         if itr in grouped_data.groups:
-            indexNum = index_map[row[0]]
+            indexNum = index_map[itr]
             group_df = grouped_data.get_group(itr)
             coords = group_df[[group_df.columns[3], group_df.columns[2]]].values.tolist()
             times = group_df[group_df.columns[1]].values.tolist()
