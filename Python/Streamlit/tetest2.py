@@ -362,15 +362,22 @@ def select_data():
             name='線の表示/非表示',
             style_function=lambda x: {"weight": 2, "opacity": 1},
             popup=folium.Popup(fields=['popup'], labels=False)
-        ).add_to(m)
+        ).add_to(st.session_state['map'])
 
     
 
 def kiseki_draw():
     if st.session_state['kiseki_flag']:
         # 線のジオJSONを追加
-        folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
-                       style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+        # folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
+        #                style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
+        folium.GeoJson(
+        st.session_state["line_geojson"],
+            name='線の表示/非表示',
+            style_function=lambda x: {"weight": 2, "opacity": 1},
+            popup=folium.Popup(fields=['popup'], labels=False)
+        ).add_to(st.session_state['map'])
+        
     else:
         # 線のジオJSONを削除する
         line_layers_to_remove = []
