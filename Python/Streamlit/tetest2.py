@@ -204,36 +204,37 @@ def upload_csv():
             del st.session_state['map']._children[key]
 
         # 地図に図形情報を追加
-        for idx, sdata in enumerate(st.session_state['draw_data']):
-            
-            # 通過人数カウントの準備
-            append_list = [0] * len(st.session_state['draw_data'])
-            st.session_state['tuuka_list'] = append_list
-            
-            # ゲートとIDの組み合わせごとにループ
-            for idx1, gates in enumerate(st.session_state['gate_data']):
-                for key, values in st.session_state['kiseki_data'].items():  
-            
-                    # ポリゴンゲートのときは初期座標をチェック
-                    if gates[0] == gates[-1]:
-                        if ingate(values[0]["座標"][0], gates):
+        if len(st.session_state['draw_data']) != 0:
+            for idx, sdata in enumerate(st.session_state['draw_data']):
+                
+                # 通過人数カウントの準備
+                append_list = [0] * len(st.session_state['draw_data'])
+                st.session_state['tuuka_list'] = append_list
+                
+                # ゲートとIDの組み合わせごとにループ
+                for idx1, gates in enumerate(st.session_state['gate_data']):
+                    for key, values in st.session_state['kiseki_data'].items():  
+                
+                        # ポリゴンゲートのときは初期座標をチェック
+                        if gates[0] == gates[-1]:
+                            if ingate(values[0]["座標"][0], gates):
+                                st.session_state['tuuka_list'][idx1] += 1
+                                continue  # このIDのループを終了
+                            else:
+                                pass
+                
+                        if cross_judge(gates, values):
                             st.session_state['tuuka_list'][idx1] += 1
                             continue  # このIDのループを終了
                         else:
                             pass
-            
-                    if cross_judge(gates, values):
-                        st.session_state['tuuka_list'][idx1] += 1
-                        continue  # このIDのループを終了
-                    else:
-                        pass
-            
-            # 図形IDを表示するツールチップを設定
-            tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
-            # 通過人数を表示するポップアップを指定
-            popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
-            # 地図にツールチップとポップアップを追加する
-            folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+                
+                # 図形IDを表示するツールチップを設定
+                tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
+                # 通過人数を表示するポップアップを指定
+                popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+                # 地図にツールチップとポップアップを追加する
+                folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
   
     else:
         # 空のデータフレームを作成
