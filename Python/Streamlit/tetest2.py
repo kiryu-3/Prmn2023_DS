@@ -103,7 +103,7 @@ def features_maker(list2):
     return features
 
 # 描画する軌跡データの作成
-def line_features_maker(list2):
+def line_features_maker(list2, kiseki):
     line_features = []
 
     index_map = {value: index for index, value in enumerate(list2)}
@@ -133,7 +133,7 @@ def line_features_maker(list2):
                 }
                 line_features.append(line_feature)
 
-            if st.session_state['kiseki_flag']:
+            if kiseki:
                 # 軌跡データをセッションの状態に保存
                 st.session_state['kiseki_data'][str(itr)].append({'座標': [list(coordinates[i]), list(coordinates[i + 1])], 
                                                                   '日時': filtered_data.iloc[i, 1]})
@@ -166,7 +166,7 @@ def upload_csv():
         st.session_state['kiseki_data'] = {str(itr): [] for itr in unique_values}
 
         features = features_maker(unique_values)
-        line_features = line_features_maker(unique_values)
+        line_features = line_features_maker(unique_values, True)
         
         # プロットデータをまとめる
         geojson = {"type": "FeatureCollection", "features": features}
@@ -289,7 +289,7 @@ def select_data():
     
     # 描画するプロットデータ
     features = features_maker(unique_values)
-    line_features = line_features_maker(unique_values)
+    line_features = line_features_maker(unique_values, False)
 
     # プロットデータをまとめる
     geojson = {"type": "FeatureCollection", "features": features}
