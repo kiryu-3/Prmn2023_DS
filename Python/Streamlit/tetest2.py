@@ -667,6 +667,7 @@ with st.sidebar:
     with tab1:
         # CSVファイルのアップロード
         st.file_uploader("CSVファイルをアップロード", type=["csv"], key="upload_csvfile", on_change=upload_csv)
+        st.write(st.session_state["upload_csvfile"])
 
     # csvから読み込んだIDの表示とプロットするマーカー・軌跡の選択
     with tab2:    
