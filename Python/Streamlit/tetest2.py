@@ -135,8 +135,8 @@ def line_features_maker(list2, kiseki):
 
             if kiseki:
                 # 軌跡データをセッションの状態に保存
-                st.session_state['kiseki_data'][str(itr)].append({'座標': [list(coordinates[i]), list(coordinates[i + 1])], 
-                                                                  '日時': filtered_data.iloc[i, 1]})
+                st.session_state['kiseki_data'][str(itr)].append({'座標': [coords[i], coords[i + 1]], 
+                                                                  '日時': itr)
     return line_features 
 
 # csvのuploaderの状態が変化したときに呼ばれるcallback関数
