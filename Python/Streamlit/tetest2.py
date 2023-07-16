@@ -361,7 +361,7 @@ def select_data():
         st.session_state["line_geojson"],
             name='線の表示/非表示',
             style_function=lambda x: {"weight": 2, "opacity": 1},
-            popup=folium.Popup(fields=['popup'], labels=False)
+            popup=folium.GeoJsonPopup(fields=['popup'], labels=False)
         ).add_to(st.session_state['map'])
 
     
@@ -375,7 +375,7 @@ def kiseki_draw():
         st.session_state["line_geojson"],
             name='線の表示/非表示',
             style_function=lambda x: {"weight": 2, "opacity": 1},
-            popup=folium.Popup(fields=['popup'], labels=False)
+            popup=folium.GeoJsonPopup(fields=['popup'], labels=False)
         ).add_to(st.session_state['map'])
         
     else:
