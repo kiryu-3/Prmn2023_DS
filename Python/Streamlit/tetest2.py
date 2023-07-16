@@ -193,7 +193,7 @@ def upload_csv():
             )
     
         # TimestampedGeoJsonをマップに追加
-        timestamped_geojson.add_to(st.session_state['map'])
+        # timestamped_geojson.add_to(st.session_state['map'])
 
         # 軌跡のGeoJSONを削除する
         line_layers_to_remove = []
