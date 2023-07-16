@@ -103,26 +103,35 @@ def features_maker(list2):
     return features
 
 # 描画する軌跡データの作成
-def line_features_maker(list2, kiseki):
+def line_features_maker(list2):
     line_features = []
-    coordinates = st.session_state['sorted_df'][['longitude', 'latitude']].values  # 座標データのみを抽出
 
+    index_map = {value: index for index, value in enumerate(list2)}
+    
+    # データをIDでグループ化する
+    grouped_data = df.groupby(df.columns[0])
+    
     for itr in list2:
-        filtered_data = st.session_state['sorted_df'][st.session_state['sorted_df']['newid'] == itr]  # データをフィルタリング
-
-        for i in range(len(filtered_data) - 1):
-            line_feature = {
-                'type': 'Feature',
-                'geometry': {
-                    'type': 'LineString',
-                    'coordinates': [list(coordinates[i]), list(coordinates[i + 1])]  # 直接座標データを使用
-                },
-                'properties': {
-                    'time': filtered_data.iloc[i, 1],
-                    'popup': str(itr)
+        if itr in grouped_data.groups:
+            indexNum = index_map[row[0]]
+            group_df = grouped_data.get_group(itr)
+            coords = group_df[[group_df.columns[3], group_df.columns[2]]].values.tolist()
+            times = group_df[group_df.columns[1]].values.tolist()
+            
+            # 各行の座標データから軌跡データを作成
+            for i in range(len(coords) - 1):
+                line_feature = {
+                    'type': 'Feature',
+                    'geometry': {
+                        'type': 'LineString',
+                        'coordinates': [coords[i], coords[i + 1]]
+                    },
+                    'properties': {
+                        'time': times[i],
+                        "popup": f"{indexNum+1} - {itr}"
+                    }
                 }
-            }
-            line_features.append(line_feature)
+                line_features.append(line_feature)
 
             if st.session_state['kiseki_flag']:
                 # 軌跡データをセッションの状態に保存
@@ -157,7 +166,7 @@ def upload_csv():
         st.session_state['kiseki_data'] = {str(itr): [] for itr in unique_values}
 
         features = features_maker(unique_values)
-        line_features = line_features_maker(unique_values, True)
+        line_features = line_features_maker(unique_values)
         
         # プロットデータをまとめる
         geojson = {"type": "FeatureCollection", "features": features}
@@ -280,7 +289,7 @@ def select_data():
     
     # 描画するプロットデータ
     features = features_maker(unique_values)
-    line_features = line_features_maker(unique_values, False)
+    line_features = line_features_maker(unique_values)
 
     # プロットデータをまとめる
     geojson = {"type": "FeatureCollection", "features": features}
