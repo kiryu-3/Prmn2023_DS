@@ -124,7 +124,7 @@ def line_features_maker(list2, kiseki):
             }
             line_features.append(line_feature)
 
-            if kiseki:
+            if st.session_state['kiseki_flag']:
                 # 軌跡データをセッションの状態に保存
                 st.session_state['kiseki_data'][str(itr)].append({'座標': [list(coordinates[i]), list(coordinates[i + 1])], 
                                                                   '日時': filtered_data.iloc[i, 1]})
