@@ -665,6 +665,7 @@ except Exception as e:
 
 st.subheader("地図の全描画データ")
 st.write(st.session_state['draw_data'])
+st.write(st.session_state['gate_data'])
 
 with st.sidebar:
     # タブ
