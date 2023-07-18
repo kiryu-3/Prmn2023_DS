@@ -497,7 +497,6 @@ def delete_shape():
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
                 # 通過人数を表示するポップアップを指定
                 popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
-)
                 folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
             else:
