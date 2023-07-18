@@ -242,6 +242,7 @@ def upload_csv():
         st.session_state['df'] = df
         st.session_state['df_new'] = df
         st.session_state['sorted_df'] = df
+        st.session_state['tuuka_list'] = list()
 
         # TimestampedGeoJsonレイヤーを削除
         if 'map' in st.session_state:
