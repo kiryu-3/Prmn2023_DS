@@ -208,7 +208,7 @@ def upload_csv():
             for idx, sdata in enumerate(st.session_state['draw_data']):
                 
                 # 通過人数カウントの準備
-                append_list = [0] * len(st.session_state['draw_data'])
+                append_list = list() * len(st.session_state['draw_data'])
                 st.session_state['tuuka_list'] = append_list
                 
                 # ゲートとIDの組み合わせごとにループ
@@ -232,7 +232,7 @@ def upload_csv():
                 # 図形IDを表示するツールチップを設定
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
                 # 通過人数を表示するポップアップを指定
-                popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+                popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
                 # 地図にツールチップとポップアップを追加する
                 folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
   
@@ -323,7 +323,7 @@ def select_data():
     for idx, sdata in enumerate(st.session_state['draw_data']):
         if len(st.session_state['df_new']) != 0: 
             # 通過人数カウントの準備
-            append_list = [0] * len(st.session_state['draw_data'])
+            append_list = list() * len(st.session_state['draw_data'])
             st.session_state['tuuka_list'] = append_list
             
             # ゲートとIDの組み合わせごとにループ
@@ -347,7 +347,7 @@ def select_data():
             # 図形IDを表示するツールチップを設定
             tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
             # 通過人数を表示するポップアップを指定
-            popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(st.session_state['tuuka_list'][idx])
+            popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
             folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
         else:
             # 図形IDを表示するツールチップを設定
