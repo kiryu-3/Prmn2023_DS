@@ -635,7 +635,7 @@ try:
 
                             kekka = cross_judge(gates, values)
                             if kekka[0]: 
-                                st.session_state['tuuka_list'][idx1].append({key:values[kekka[1]]["日時"]})
+                                st.session_state['tuuka_list'][idx1].append({key:values[kekka[1]]["日時"]}) 
                                 continue  # このIDのループを終了
                             else:
                                 pass
