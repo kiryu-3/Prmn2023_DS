@@ -218,14 +218,14 @@ def upload_csv():
                         # ポリゴンゲートのときは初期座標をチェック
                         if gates[0] == gates[-1]:
                             if ingate(values[0]["座標"][0], gates):
-                                st.session_state['tuuka_list'][idx].append({key:values[0]["座標"]})
+                                st.session_state['tuuka_list'][idx1].append({key:values[0]["座標"]})
                                 continue  # このIDのループを終了
                             else:
                                 pass
 
                         kekka = cross_judge(gates, values)
                         if kekka[0]:
-                            st.session_state['tuuka_list'][idx].append({key:values[kekka[1]]["座標"]})
+                            st.session_state['tuuka_list'][idx1].append({key:values[kekka[1]]["座標"]})
                             continue  # このIDのループを終了
                         else:
                             pass
