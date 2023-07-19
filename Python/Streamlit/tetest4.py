@@ -3,6 +3,7 @@ from io import BytesIO
 import json
 import itertools
 import pandas as pd 
+import matplotlib.pyplot as plt
 import copy
 from datetime import datetime
 
