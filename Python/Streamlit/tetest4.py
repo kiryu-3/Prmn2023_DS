@@ -71,8 +71,6 @@ if "selected_shape" not in st.session_state: # 初期化
 # tab3に表示する選択された図形のタイプを管理する  
 if "selected_shape_type" not in st.session_state: # 初期化
     st.session_state["selected_shape_type"] = ""
-if "cols" not in st.session_state:
-    st.session_state["cols"] = st.columns(2)
 
 # 描画するプロットデータの作成
 def features_maker(list2):
@@ -240,6 +238,11 @@ def upload_csv():
                 popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
                 # 地図にツールチップとポップアップを追加する
                 folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+
+                col = st.columns(2)
+                col[1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
+                           key="select_graph_id",
+                           on_change=select_graph)
   
     else:
         # 空のデータフレームを作成
@@ -324,6 +327,7 @@ def select_data():
     # TimestampedGeoJsonをマップに追加
     timestamped_geojson.add_to(st.session_state['map'])
 
+    col = st.columns(2)
     # 地図に図形情報を追加
     for idx, sdata in enumerate(st.session_state['draw_data']):
         if len(st.session_state['df_new']) != 0: 
@@ -360,7 +364,8 @@ def select_data():
             popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
             folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
-            st.session_state["cols"][1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
+            
+            col[1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
                            key="select_graph_id",
                            on_change=select_graph)
         else:
@@ -477,7 +482,7 @@ def kiseki_draw():
             popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
             folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
-            st.session_state["cols"][1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
+            col[1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
                            key="select_graph_id",
                            on_change=select_graph)
                 
@@ -530,6 +535,7 @@ def delete_shape():
             st.session_state['tuuka_list'].pop(delete_shape_id - 1)
 
         for idx, sdata in enumerate(st.session_state['draw_data']):
+            col = st.columns(2)
             if len(st.session_state['df_new']) != 0:  
                 # 通過人数カウントの準備
                 append_list = [list() for _ in range(len(st.session_state['draw_data']))]
@@ -562,7 +568,7 @@ def delete_shape():
                 popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
                 folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
-                st.session_state["cols"][1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
+                col[1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
                            key="select_graph_id",
                            on_change=select_graph)
 
@@ -571,7 +577,7 @@ def delete_shape():
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
                 folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])    
 
-                st.session_state["cols"][1].empty()
+                col[1].empty()
 
 # x座標、y座標ごとに座標が一切被っていない場合はfalseを返す
 def max_min_cross(p1, p2, p3, p4):
@@ -683,6 +689,7 @@ try:
             st.session_state['gate_data'] = gate_append_list
           
             for idx, sdata in enumerate(st.session_state['draw_data']):
+                col = st.columns(2)
                 # データがあるときは当たり判定を行う
                 if len(st.session_state['df_new']) != 0:
                     # 通過人数カウントの準備
@@ -716,7 +723,7 @@ try:
                     popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
                     folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
-                    st.session_state["cols"][1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
+                    col[1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
                            key="select_graph_id",
                            on_change=select_graph)
                 else: 
@@ -724,7 +731,7 @@ try:
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
 
-                    st.session_state["cols"][1].empty()
+                    col[1].empty()
                   
             if st.session_state["kiseki_flag"]:
                 # 線のジオJSONを追加
@@ -739,9 +746,9 @@ try:
 except Exception as e:
     pass
 
-st.session_state["cols"][0].subheader("地図の全描画データ")
-st.session_state["cols"][0].write(st.session_state['draw_data'])
-st.session_state["cols"][0].write(st.session_state['gate_data'])
+# st.session_state["cols"][0].subheader("地図の全描画データ")
+# st.session_state["cols"][0].write(st.session_state['draw_data'])
+# st.session_state["cols"][0].write(st.session_state['gate_data'])
 
 with st.sidebar:
     # タブ
