@@ -326,7 +326,7 @@ def select_data():
     for idx, sdata in enumerate(st.session_state['draw_data']):
         if len(st.session_state['df_new']) != 0: 
             # 通過人数カウントの準備
-            append_list = [] * len(st.session_state['draw_data'])
+            append_list = [None] * len(st.session_state['draw_data'])
             st.session_state['tuuka_list'] = append_list
             
             # ゲートとIDの組み合わせごとにループ
@@ -399,7 +399,7 @@ def kiseki_draw():
         # 地図に図形情報を追加
         for idx, sdata in enumerate(st.session_state['draw_data']):
             # 通過人数カウントの準備
-            append_list = [] * len(st.session_state['draw_data'])
+            append_list = [None] * len(st.session_state['draw_data'])
             st.session_state['tuuka_list'] = append_list
             
             # ゲートとIDの組み合わせごとにループ
@@ -479,7 +479,7 @@ def delete_shape():
         for idx, sdata in enumerate(st.session_state['draw_data']):
             if len(st.session_state['df_new']) != 0:  
                 # 通過人数カウントの準備
-                append_list = [] * len(st.session_state['draw_data'])
+                append_list = [None] * len(st.session_state['draw_data'])
                 st.session_state['tuuka_list'] = append_list
                 
                 # ゲートとIDの組み合わせごとにループ
@@ -627,7 +627,7 @@ try:
                 # データがあるときは当たり判定を行う
                 if len(st.session_state['df_new']) != 0:
                     # 通過人数カウントの準備
-                    append_list = [] * len(st.session_state['draw_data'])
+                    append_list = [None] * len(st.session_state['draw_data'])
                     st.session_state['tuuka_list'] = append_list
                     
                     # ゲートとIDの組み合わせごとにループ
