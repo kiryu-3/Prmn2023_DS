@@ -238,11 +238,6 @@ def upload_csv():
                 popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
                 # 地図にツールチップとポップアップを追加する
                 folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
-
-                col = st.columns(2)
-                col[1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
-                           key="select_graph_id",
-                           on_change=select_graph)
   
     else:
         # 空のデータフレームを作成
@@ -364,16 +359,11 @@ def select_data():
             popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
             folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
-            
-            col[1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
-                           key="select_graph_id",
-                           on_change=select_graph)
         else:
             # 図形IDを表示するツールチップを設定
             tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
             folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
 
-            st.session_state["cols"][1].empty()
           
     # 軌跡の追加
     if st.session_state['kiseki_flag']:
@@ -481,10 +471,6 @@ def kiseki_draw():
             # 通過人数を表示するポップアップを指定
             popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
             folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
-
-            col[1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
-                           key="select_graph_id",
-                           on_change=select_graph)
                 
 # 図形情報を表示する図形の選択・加工        
 def select_shape():
@@ -568,16 +554,10 @@ def delete_shape():
                 popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
                 folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
-                col[1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
-                           key="select_graph_id",
-                           on_change=select_graph)
-
             else:
                 # 図形IDを表示するツールチップを設定
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
                 folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])    
-
-                col[1].empty()
 
 # x座標、y座標ごとに座標が一切被っていない場合はfalseを返す
 def max_min_cross(p1, p2, p3, p4):
@@ -723,15 +703,11 @@ try:
                     popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
                     folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
-                    col[1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
-                           key="select_graph_id",
-                           on_change=select_graph)
                 else: 
                     # 図形IDを表示するツールチップを設定
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
 
-                    col[1].empty()
                   
             if st.session_state["kiseki_flag"]:
                 # 線のジオJSONを追加
@@ -766,6 +742,7 @@ with st.sidebar:
             
         if len(st.session_state['df']) != 0:
             st.multiselect("選択してください", st.session_state['df'].iloc[:, 0].unique(), key="select_data_id",on_change=select_data)
+            st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
 
     # 図形の情報の選択と削除
     with tab3:
@@ -785,6 +762,8 @@ with st.sidebar:
 
     # 軌跡を描画するか選択
     with tab4:
-        if len(st.session_state['df']) != 0:
-            st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
+        if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
+            st.selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
+                           key="select_graph_id",
+                           on_change=select_graph)
             # st.write(st.session_state['kiseki_data'])
