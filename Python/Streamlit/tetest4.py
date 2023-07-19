@@ -384,7 +384,7 @@ def select_graph():
     graph_area = st.empty()
     if st.session_state['select_graph_id'] != "":
         idx = int(st.session_state['select_graph_id'])
-        data = st.session_state['tuuka_list'][idx]
+        data = st.session_state['tuuka_list'][idx-1]
 
         # 辞書のリストから日付と時刻を取り出して整理する
         count_by_hour = {hour: 0 for hour in range(0, 24, 3)}
