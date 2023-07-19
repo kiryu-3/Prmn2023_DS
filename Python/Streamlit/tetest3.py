@@ -392,7 +392,7 @@ def kiseki_draw():
         # 地図に図形情報を追加
         for idx, sdata in enumerate(st.session_state['draw_data']):
             # 通過人数カウントの準備
-            append_list = list() * len(st.session_state['draw_data'])
+            append_list = [] * len(st.session_state['draw_data'])
             st.session_state['tuuka_list'] = append_list
             
             # ゲートとIDの組み合わせごとにループ
@@ -402,14 +402,14 @@ def kiseki_draw():
                     # ポリゴンゲートのときは初期座標をチェック
                     if gates[0] == gates[-1]:
                         if ingate(values[0]["座標"][0], gates):
-                            st.session_state['tuuka_list'][idx1].append({key:values[0]["座標"]})
+                            st.session_state['tuuka_list'][idx1].append({key:values[0]["日時"]})
                             continue  # このIDのループを終了
                         else:
                             pass
 
                     kekka = cross_judge(gates, values)
                     if cross_judge(gates, values):
-                        st.session_state['tuuka_list'][idx1].append({key:values[kekka[1]]["座標"]})
+                        st.session_state['tuuka_list'][idx1].append({key:values[kekka[1]]["日時"]})
                         continue  # このIDのループを終了
                     else:
                         pass
