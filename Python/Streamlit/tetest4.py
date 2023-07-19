@@ -635,7 +635,7 @@ def ingate(plot_point, gate_polygon):
     return boolean_point_in_polygon(point, polygon)
 
 # 表示する地図
-st_data = st_folium(st.session_state["cols"][0].session_state['map'], width=725)  
+st_data = st_folium(st.session_state['map'], width=725)  
 
 # 地図のデータをコピー
 data = copy.deepcopy(dict(st_data))
