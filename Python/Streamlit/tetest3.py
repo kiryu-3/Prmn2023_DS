@@ -627,7 +627,7 @@ try:
                 # データがあるときは当たり判定を行う
                 if len(st.session_state['df_new']) != 0:
                     # 通過人数カウントの準備
-                    append_list = [None] * len(st.session_state['draw_data'])
+                    append_list = [list() for _ in range(len(st.session_state['draw_data']))]
                     st.session_state['tuuka_list'] = append_list
                     
                     # ゲートとIDの組み合わせごとにループ
