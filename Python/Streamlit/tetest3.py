@@ -644,7 +644,8 @@ try:
                                 else:
                                     pass
                     
-                            if cross_judge(gates, values):
+                            kekka = cross_judge(gates, values)
+                            if kekka[0]:
                                 temp_dict = {}
                                 temp_dict[key] = values[kekka[1]]["日時"]
                                 st.session_state['tuuka_list'][idx1].append(temp_dict)
