@@ -1,5 +1,3 @@
 [server]
 maxUploadSize = 2000
 
-[deprecation]
-showPyplotGlobalUse = false
