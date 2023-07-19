@@ -4,4 +4,4 @@ turfpy
 boto3
 awscli
 pylatex
-
+matplotlib
