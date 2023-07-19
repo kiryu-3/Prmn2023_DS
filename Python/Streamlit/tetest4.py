@@ -403,11 +403,34 @@ def select_graph():
         hours = [hour for hour in range(0, 24, 3)]
         counts = [count_by_hour[hour] for hour in hours]
 
-        st.session_state["graph_data"] = (hours, counts)
+        # グラフを作成
+        fig, ax = plt.subplots()
+        ax.bar(hours, counts, width=2.5, align='edge')
+    
+        # グラフのラベルやタイトルを設定
+        ax.set_xlabel('Hour')
+        ax.set_ylabel('Count')
+        ax.set_title('Count per 3 hours')
+    
+        # スケールを整数値に設定
+        ax.set_xticks(range(0, 24, 3))
+        ax.set_yticks(range(max(counts) + 1))
+    
+        # グラフをバイトストリームに変換
+        buffer = BytesIO()
+        plt.savefig(buffer, format='png')
+        buffer.seek(0)
+
+        
+        # バイトストリームをst.session_stateに保存
+        st.session_state['graph_image'] = buffer.getvalue()
+
+        # グラフを表示
+        st.image(st.session_state['graph_image'], use_column_width=True)
         
     else:
         # グラフを空にする
-        st.session_state["graph_data"] = ()
+        st.session_state["graph_image"] = None
 
 def kiseki_draw():
     if st.session_state['kiseki_flag']:
@@ -757,19 +780,5 @@ with st.sidebar:
                            key="select_graph_id",
                            on_change=select_graph)
             if st.session_state["select_graph_id"] != "":
-                # グラフを作成
-                fig, ax = plt.subplots()
-                ax.bar(st.session_state["graph_data"][0], st.session_state["graph_data"][1], width=2.5, align='edge')
-            
-                # グラフのラベルやタイトルを設定
-                ax.set_xlabel('Hour')
-                ax.set_ylabel('Count')
-                ax.set_title('Count per 3 hours')
-            
-                # スケールを整数値に設定
-                ax.set_xticks(range(0, 24, 3))
-                ax.set_yticks(range(max(counts) + 1))
-            
                 # グラフを表示
-                st.pyplot(fig)
-            # st.write(st.session_state['kiseki_data'])
+                st.image(st.session_state['graph_image'], use_column_width=True)
