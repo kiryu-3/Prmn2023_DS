@@ -404,19 +404,21 @@ def select_graph():
         counts = [count_by_hour[hour] for hour in hours]
         
         # グラフを作成
-        plt.bar(hours, counts, width=2.5, align='edge')
-        
+        fig, ax = plt.subplots()
+        ax.bar(hours, counts, width=2.5, align='edge')
+    
         # グラフのラベルやタイトルを設定
-        plt.xlabel('Hour')
-        plt.ylabel('Count')
-        plt.title('Count per 3 hours on 9/5')
-        
+        ax.set_xlabel('Hour')
+        ax.set_ylabel('Count')
+        ax.set_title('Count per 3 hours on 9/5')
+    
         # スケールを整数値に設定
-        plt.xticks(range(0, 24, 3))
-        plt.yticks(range(max(counts) + 1))
-        
+        ax.set_xticks(range(0, 24, 3))
+        ax.set_yticks(range(max(counts) + 1))
+    
         # グラフを表示
-        tab4.pyplot()
+        tab4.pyplot(fig)
+        
     # else:
     #     # グラフを空にする
     #     graph_area.empty()
