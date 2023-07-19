@@ -426,7 +426,7 @@ def select_graph():
         st.session_state['graph_image'] = buffer.getvalue()
 
         # グラフを表示
-        st.image(st.session_state['graph_image'], use_column_width=True)
+        # tab4.image(st.session_state['graph_image'], use_column_width=True)
         
     else:
         # グラフを空にする
