@@ -383,7 +383,7 @@ def select_graph():
     # st.session_state["cols"][1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
     #                        key="select_graph_id",
     #                        on_change=select_graph)
-    graph_area = st.empty()
+
     if st.session_state['select_graph_id'] != "":
         idx = int(st.session_state['select_graph_id'])
         data = st.session_state['tuuka_list'][idx-1]
@@ -416,10 +416,10 @@ def select_graph():
         plt.yticks(range(max(counts) + 1))
         
         # グラフを表示
-        graph_area.pyplot()
-    else:
-        # グラフを空にする
-        graph_area.empty()
+        tab4.pyplot()
+    # else:
+    #     # グラフを空にする
+    #     graph_area.empty()
 
 def kiseki_draw():
     if st.session_state['kiseki_flag']:
