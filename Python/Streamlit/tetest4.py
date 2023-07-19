@@ -391,30 +391,44 @@ def select_graph():
 
         # 辞書のリストから日付と時刻を取り出して整理する
         count_by_hour = {hour: 0 for hour in range(0, 24, 3)}
+        min_date = datetime.max  # データに含まれる最小の日付を初期化
+        max_date = datetime.min  # データに含まれる最大の日付を初期化
+
         for entry in data:
             for timestamp in entry.values():
                 date_str, time_str = timestamp.split()
                 date_obj = datetime.strptime(date_str, "%Y/%m/%d")
+                min_date = min(min_date, date_obj)  # 最小の日付を更新
+                max_date = max(max_date, date_obj)  # 最大の日付を更新
+
                 hour = int(time_str.split(":")[0])
                 for h in range(0, 24, 3):
                     if h <= hour < h + 3:
                         count_by_hour[h] += 1
-        
+
         # グラフを描画するためのデータを準備する
         hours = [hour for hour in range(0, 24, 3)]
         counts = [count_by_hour[hour] for hour in hours]
 
         # グラフを作成
         fig, ax = plt.subplots()
+
+        # X軸の目盛りを設定
+        num_hours = (max_date - min_date).days * 24 + (max_date.hour - min_date.hour) + 1
+        x_ticks = [min_date + timedelta(hours=i) for i in range(0, num_hours, 3)]
+        x_tick_labels = [dt.strftime("%m/%d %H:%M") for dt in x_ticks]
+        ax.set_xticks(x_ticks)
+        ax.set_xticklabels(x_tick_labels, rotation=45, ha="right")
+
         ax.bar(hours, counts, width=2.5, align='edge')
-    
+
         # グラフのラベルやタイトルを設定
-        ax.set_xlabel('Hour')
+        ax.set_xlabel('Date and Hour')
         ax.set_ylabel('Count')
         ax.set_title('Count per 3 hours')
-    
+
         # スケールを整数値に設定
-        ax.set_xticks(hours)
+        ax.set_yticks(range(max(counts) + 1))
     
         # グラフをバイトストリームに変換
         buffer = BytesIO()
