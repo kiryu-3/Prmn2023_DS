@@ -224,8 +224,9 @@ def upload_csv():
                                 continue  # このIDのループを終了
                             else:
                                 pass
-                
-                        if cross_judge(gates, values):
+
+                        kekka = cross_judge(gates, values)
+                        if kekka[0]:
                             temp_dict = {}
                             temp_dict[key] = values[kekka[1]]["日時"]
                             st.session_state['tuuka_list'][idx1].append(temp_dict)
@@ -342,7 +343,8 @@ def select_data():
                         else:
                             pass
             
-                    if cross_judge(gates, values):
+                    kekka = cross_judge(gates, values)
+                    if kekka[0]:
                         temp_dict = {}
                         temp_dict[key] = values[kekka[1]]["日時"]
                         st.session_state['tuuka_list'][idx1].append(temp_dict)
@@ -413,11 +415,11 @@ def kiseki_draw():
                             pass
 
                     kekka = cross_judge(gates, values)
-                    if cross_judge(gates, values):
-                        st.session_state['tuuka_list'][idx1].append({key:values[kekka[1]]["日時"]})
+                    if kekka[0]:
+                        temp_dict = {}
+                        temp_dict[key] = values[kekka[1]]["日時"]
+                        st.session_state['tuuka_list'][idx1].append(temp_dict)
                         continue  # このIDのループを終了
-                    else:
-                        pass
 
             
             # 図形IDを表示するツールチップを設定
@@ -494,7 +496,8 @@ def delete_shape():
                             else:
                                 pass
                 
-                        if cross_judge(gates, values):
+                        kekka = cross_judge(gates, values)
+                        if kekka[0]:
                             temp_dict = {}
                             temp_dict[key] = values[kekka[1]]["日時"]
                             st.session_state['tuuka_list'][idx1].append(temp_dict)
