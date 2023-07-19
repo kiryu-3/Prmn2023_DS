@@ -413,8 +413,7 @@ def select_graph():
         ax.set_title('Count per 3 hours')
     
         # スケールを整数値に設定
-        ax.set_xticks(range(0, 24, 3))
-        ax.set_yticks(range(max(counts) + 1))
+        ax.set_xticks(hours)
     
         # グラフをバイトストリームに変換
         buffer = BytesIO()
