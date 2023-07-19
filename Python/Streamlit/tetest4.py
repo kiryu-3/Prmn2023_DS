@@ -149,6 +149,7 @@ def upload_csv():
         file_data = st.session_state["upload_csvfile"].read()
         # バイナリデータからPandas DataFrameを作成
         df = pd.read_csv(io.BytesIO(file_data))
+        df.loc[df["newid"] == "20230403156", "daytime"] = df.loc[df["newid"] == "20230403156", "daytime"].str.replace("2023/4/3", "2023/4/4")
         # 通過時間でソート
         df.sort_values(by=[df.columns[1]], inplace=True)
       
