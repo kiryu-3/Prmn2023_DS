@@ -218,17 +218,18 @@ def upload_csv():
                         # ポリゴンゲートのときは初期座標をチェック
                         if gates[0] == gates[-1]:
                             if ingate(values[0]["座標"][0], gates):
-                                st.session_state['tuuka_list'][idx1].append({key:values[0]["日時"]})
+                                temp_dict = {}
+                                temp_dict[key] = values[0]["日時"]
+                                st.session_state['tuuka_list'][idx1].append(temp_dict)
                                 continue  # このIDのループを終了
                             else:
                                 pass
-
-                        kekka = cross_judge(gates, values)
-                        if kekka[0]:
-                            st.session_state['tuuka_list'][idx1].append({key:values[kekka[1]]["日時"]})
+                
+                        if cross_judge(gates, values):
+                            temp_dict = {}
+                            temp_dict[key] = values[kekka[1]]["日時"]
+                            st.session_state['tuuka_list'][idx1].append(temp_dict)
                             continue  # このIDのループを終了
-                        else:
-                            pass
                 
                 # 図形IDを表示するツールチップを設定
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
@@ -334,13 +335,17 @@ def select_data():
                     # ポリゴンゲートのときは初期座標をチェック
                     if gates[0] == gates[-1]:
                         if ingate(values[0]["座標"][0], gates):
-                            st.session_state['tuuka_list'][idx1].append({key:values[0]["日時"]})
+                            temp_dict = {}
+                            temp_dict[key] = values[0]["日時"]
+                            st.session_state['tuuka_list'][idx1].append(temp_dict)
                             continue  # このIDのループを終了
                         else:
                             pass
             
                     if cross_judge(gates, values):
-                        st.session_state['tuuka_list'][idx1].append({key:values[kekka[1]]["日時"]})
+                        temp_dict = {}
+                        temp_dict[key] = values[kekka[1]]["日時"]
+                        st.session_state['tuuka_list'][idx1].append(temp_dict)
                         continue  # このIDのループを終了
                     else:
                         pass
@@ -482,17 +487,18 @@ def delete_shape():
                         # ポリゴンゲートのときは初期座標をチェック
                         if gates[0] == gates[-1]:
                             if ingate(values[0]["座標"][0], gates):
-                                st.session_state['tuuka_list'][idx1].append({key:values[0]["日時"]})
+                                temp_dict = {}
+                                temp_dict[key] = values[0]["日時"]
+                                st.session_state['tuuka_list'][idx1].append(temp_dict)
                                 continue  # このIDのループを終了
                             else:
                                 pass
-
-                        kekka = cross_judge(gates, values)
-                        if kekka[0]:
-                            st.session_state['tuuka_list'][idx1].append({key:values[kekka[1]]["日時"]})
+                
+                        if cross_judge(gates, values):
+                            temp_dict = {}
+                            temp_dict[key] = values[kekka[1]]["日時"]
+                            st.session_state['tuuka_list'][idx1].append(temp_dict)
                             continue  # このIDのループを終了
-                        else:
-                            pass
                 
                 # 図形IDを表示するツールチップを設定
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
@@ -628,17 +634,18 @@ try:
                             # ポリゴンゲートのときは初期座標をチェック
                             if gates[0] == gates[-1]:
                                 if ingate(values[0]["座標"][0], gates):
-                                    st.session_state['tuuka_list'][idx1].append({key:values[0]["日時"]})
+                                    temp_dict = {}
+                                    temp_dict[key] = values[0]["日時"]
+                                    st.session_state['tuuka_list'][idx1].append(temp_dict)
                                     continue  # このIDのループを終了
                                 else:
                                     pass
-
-                            kekka = cross_judge(gates, values)
-                            if kekka[0]: 
-                                st.session_state['tuuka_list'][idx1].append({key:values[kekka[1]]["日時"]}) 
+                    
+                            if cross_judge(gates, values):
+                                temp_dict = {}
+                                temp_dict[key] = values[kekka[1]]["日時"]
+                                st.session_state['tuuka_list'][idx1].append(temp_dict)
                                 continue  # このIDのループを終了
-                            else:
-                                pass
                     
                     # 図形IDを表示するツールチップを設定
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
