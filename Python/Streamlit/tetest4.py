@@ -1,19 +1,22 @@
-import io
-from io import BytesIO
 import json
-import itertools
-import pandas as pd 
-import matplotlib.pyplot as plt
-import copy
+import random
 from datetime import datetime, timedelta
+from collections import defaultdict
 
-import streamlit as st
+import matplotlib.pyplot as plt
+import japanize_matplotlib
+import pandas as pd
 import folium
-from streamlit_folium import st_folium
 from folium import plugins
 from folium.plugins import Draw, TimestampedGeoJson
 from turfpy.measurement import boolean_point_in_polygon
 from geojson import Point, Polygon, Feature
+import streamlit as st
+from streamlit_folium import st_folium
+import io
+from io import BytesIO
+import itertools
+import copy
 
 st.set_page_config(
     page_title="streamlit-folium documentation",
@@ -380,6 +383,7 @@ def select_graph():
     if st.session_state['select_graph_id'] != "":
         idx = int(st.session_state['select_graph_id'])
         data = st.session_state['tuuka_list'][idx-1]
+        dates = data.values()
 
         # 日付と時間帯ごとに人数をカウントする辞書を初期化
         hourly_counts = defaultdict(lambda: defaultdict(int))
