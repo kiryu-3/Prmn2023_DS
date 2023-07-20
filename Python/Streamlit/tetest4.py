@@ -426,12 +426,6 @@ def select_graph():
         # ax.set_xlabel('時間')
         ax.set_ylabel('通過人数[人]')
         # ax.set_title('通過人数')
-
-        # 最終日の日付 24時のxlabelを追加
-        last_date = datetime.strptime(time_points[-1], '%m/%d %H時')
-        last_date += timedelta(hours=1)
-        time_points.append(last_date.strftime('%m/%d 24時'))
-        values.append(counts_dict[last_date.strftime('%m/%d 23時')])
         
         # x軸の目盛りを6時間ごとに設定
         ax.set_xticks(range(0, len(time_points), 6))
