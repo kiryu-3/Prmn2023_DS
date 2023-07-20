@@ -413,17 +413,23 @@ def select_graph():
         ax.plot(time_points, values)
         
         # x軸とy軸のラベル、タイトルを設定
-        ax.set_xlabel('時間')
-        ax.set_ylabel('通過人数')
-        ax.set_title('通過人数')
+        # ax.set_xlabel('時間')
+        ax.set_ylabel('通過人数[人]')
+        # ax.set_title('通過人数')
         
-        # x軸の目盛りを3時間ごとに設定
+        # x軸の目盛りを6時間ごとに設定
         ax.set_xticks(range(0, len(time_points), 6))
         ax.set_xticklabels(time_points[::6])
         
         # y軸のスケールを整数値に設定
         count_per_group = 5
+
+        # スケールが1ずつの条件を追加
+        if max(values) <= 5:
+            count_per_group = 1
+        
         ax.set_yticks(range(0, max(values) + count_per_group, count_per_group))
+
 
     
         # グラフをバイトストリームに変換
