@@ -324,7 +324,6 @@ def select_data():
     # TimestampedGeoJsonをマップに追加
     timestamped_geojson.add_to(st.session_state['map'])
 
-    col = st.columns(2)
     # 地図に図形情報を追加
     for idx, sdata in enumerate(st.session_state['draw_data']):
         if len(st.session_state['df_new']) != 0: 
@@ -407,6 +406,17 @@ def select_graph():
         
         # 時刻と値をリストに分ける
         time_points, values = zip(*sorted_data)
+
+        # 最終日の日付を取得
+        last_date_str = time_points[-1].split()[0]
+        last_date = datetime.strptime(last_date_str, '%m/%d')
+        
+        # 最終日のデータが24時まであるか確認
+        if last_date.hour != 23:
+            # 24時までのデータを追加
+            for hour in range(last_date.hour + 1, 24):
+                time_points = time_points + (f"{last_date_str} {hour:02d}時",)
+                values = values + (0,)
         
         # グラフの作成
         fig, ax = plt.subplots(figsize=(12, 6))
@@ -435,8 +445,6 @@ def select_graph():
             count_per_group = 1
         
         ax.set_yticks(range(0, max(values) + count_per_group, count_per_group))
-
-
     
         # グラフをバイトストリームに変換
         buffer = BytesIO()
