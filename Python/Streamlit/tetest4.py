@@ -417,13 +417,17 @@ def select_graph():
         ax.set_ylabel('通過人数[人]')
         # ax.set_title('通過人数')
         
-        # x軸の目盛りを6時間ごとに設定
+        # x軸の目盛りを設定
+        num_days = (len(time_points) - 1) // 24 + 1
+        x_ticks_labels = []
+        for day in range(num_days):
+            x_ticks_labels.extend([f"{day+1}日目 {hour:02d}時" for hour in range(24)])
         ax.set_xticks(range(0, len(time_points), 6))
-        ax.set_xticklabels(time_points[::6])
+        ax.set_xticklabels(x_ticks_labels[::6])
         
         # y軸のスケールを整数値に設定
         count_per_group = 5
-
+    
         # スケールが1ずつの条件を追加
         if max(values) <= 5:
             count_per_group = 1
