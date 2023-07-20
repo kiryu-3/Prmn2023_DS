@@ -438,7 +438,7 @@ def select_graph():
         if max(values) <= 5:
             count_per_group = 1
         
-        ax.set_yticks(range(0, max(values) + count_per_group, count_per_group))
+        ax.set_yticks(list(range(0, max(values) + count_per_group, count_per_group)) + [max(values)])
     
         # グラフをバイトストリームに変換
         buffer = BytesIO()
