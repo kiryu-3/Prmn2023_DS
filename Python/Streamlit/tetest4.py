@@ -211,7 +211,7 @@ def upload_csv():
             for idx, sdata in enumerate(st.session_state['draw_data']):
                 
                 # 通過人数カウントの準備
-                append_list = [list() for _ in range(len(st.session_state['draw_data']))]
+                append_list = [dict() for _ in range(len(st.session_state['draw_data']))]
                 st.session_state['tuuka_list'] = append_list
                 
                 # ゲートとIDの組み合わせごとにループ
@@ -221,18 +221,14 @@ def upload_csv():
                         # ポリゴンゲートのときは初期座標をチェック
                         if gates[0] == gates[-1]:
                             if ingate(values[0]["座標"][0], gates):
-                                temp_dict = {}
-                                temp_dict[key] = values[0]["日時"]
-                                st.session_state['tuuka_list'][idx1].append(temp_dict)
+                                st.session_state['tuuka_list'][idx1][key] = values[0]["日時"]
                                 continue  # このIDのループを終了
                             else:
                                 pass
 
                         kekka = cross_judge(gates, values)
                         if kekka[0]:
-                            temp_dict = {}
-                            temp_dict[key] = values[kekka[1]]["日時"]
-                            st.session_state['tuuka_list'][idx1].append(temp_dict)
+                            st.session_state['tuuka_list'][idx1][key] = values[kekka[1]]["日時"]
                             continue  # このIDのループを終了
                 
                 # 図形IDを表示するツールチップを設定
@@ -330,7 +326,7 @@ def select_data():
     for idx, sdata in enumerate(st.session_state['draw_data']):
         if len(st.session_state['df_new']) != 0: 
             # 通過人数カウントの準備
-            append_list = [list() for _ in range(len(st.session_state['draw_data']))]
+            append_list = [dict() for _ in range(len(st.session_state['draw_data']))]
             st.session_state['tuuka_list'] = append_list
             
             # ゲートとIDの組み合わせごとにループ
@@ -340,18 +336,14 @@ def select_data():
                     # ポリゴンゲートのときは初期座標をチェック
                     if gates[0] == gates[-1]:
                         if ingate(values[0]["座標"][0], gates):
-                            temp_dict = {}
-                            temp_dict[key] = values[0]["日時"]
-                            st.session_state['tuuka_list'][idx1].append(temp_dict)
+                            st.session_state['tuuka_list'][idx1][key] = values[0]["日時"]
                             continue  # このIDのループを終了
                         else:
                             pass
             
                     kekka = cross_judge(gates, values)
                     if kekka[0]:
-                        temp_dict = {}
-                        temp_dict[key] = values[kekka[1]]["日時"]
-                        st.session_state['tuuka_list'][idx1].append(temp_dict)
+                        st.session_state['tuuka_list'][idx1][key] = values[kekka[1]]["日時"]
                         continue  # このIDのループを終了
                     else:
                         pass
@@ -470,7 +462,7 @@ def kiseki_draw():
         # 地図に図形情報を追加
         for idx, sdata in enumerate(st.session_state['draw_data']):
             # 通過人数カウントの準備
-            append_list = [list() for _ in range(len(st.session_state['draw_data']))]
+            append_list = [dict() for _ in range(len(st.session_state['draw_data']))]
             st.session_state['tuuka_list'] = append_list
             
             # ゲートとIDの組み合わせごとにループ
@@ -480,16 +472,14 @@ def kiseki_draw():
                     # ポリゴンゲートのときは初期座標をチェック
                     if gates[0] == gates[-1]:
                         if ingate(values[0]["座標"][0], gates):
-                            st.session_state['tuuka_list'][idx1].append({key:values[0]["日時"]})
+                            st.session_state['tuuka_list'][idx1][key] = values[0]["日時"]
                             continue  # このIDのループを終了
                         else:
                             pass
 
                     kekka = cross_judge(gates, values)
                     if kekka[0]:
-                        temp_dict = {}
-                        temp_dict[key] = values[kekka[1]]["日時"]
-                        st.session_state['tuuka_list'][idx1].append(temp_dict)
+                        st.session_state['tuuka_list'][idx1][key] = values[kekka[1]]["日時"]
                         continue  # このIDのループを終了
 
             
@@ -548,10 +538,9 @@ def delete_shape():
             st.session_state['tuuka_list'].pop(delete_shape_id - 1)
 
         for idx, sdata in enumerate(st.session_state['draw_data']):
-            col = st.columns(2)
             if len(st.session_state['df_new']) != 0:  
                 # 通過人数カウントの準備
-                append_list = [list() for _ in range(len(st.session_state['draw_data']))]
+                append_list = [dict() for _ in range(len(st.session_state['draw_data']))]
                 st.session_state['tuuka_list'] = append_list
                 
                 # ゲートとIDの組み合わせごとにループ
@@ -561,18 +550,14 @@ def delete_shape():
                         # ポリゴンゲートのときは初期座標をチェック
                         if gates[0] == gates[-1]:
                             if ingate(values[0]["座標"][0], gates):
-                                temp_dict = {}
-                                temp_dict[key] = values[0]["日時"]
-                                st.session_state['tuuka_list'][idx1].append(temp_dict)
+                                st.session_state['tuuka_list'][idx1][key] = values[0]["日時"]
                                 continue  # このIDのループを終了
                             else:
                                 pass
                 
                         kekka = cross_judge(gates, values)
                         if kekka[0]:
-                            temp_dict = {}
-                            temp_dict[key] = values[kekka[1]]["日時"]
-                            st.session_state['tuuka_list'][idx1].append(temp_dict)
+                            st.session_state['tuuka_list'][idx1][key] = values[kekka[1]]["日時"]
                             continue  # このIDのループを終了
                 
                 # 図形IDを表示するツールチップを設定
@@ -696,11 +681,10 @@ try:
             st.session_state['gate_data'] = gate_append_list
           
             for idx, sdata in enumerate(st.session_state['draw_data']):
-                col = st.columns(2)
                 # データがあるときは当たり判定を行う
                 if len(st.session_state['df_new']) != 0:
                     # 通過人数カウントの準備
-                    append_list = [list() for _ in range(len(st.session_state['draw_data']))]
+                    append_list = [dict() for _ in range(len(st.session_state['draw_data']))]
                     st.session_state['tuuka_list'] = append_list
                     
                     # ゲートとIDの組み合わせごとにループ
@@ -710,18 +694,14 @@ try:
                             # ポリゴンゲートのときは初期座標をチェック
                             if gates[0] == gates[-1]:
                                 if ingate(values[0]["座標"][0], gates):
-                                    temp_dict = {}
-                                    temp_dict[key] = values[0]["日時"]
-                                    st.session_state['tuuka_list'][idx1].append(temp_dict)
+                                    st.session_state['tuuka_list'][idx1][key] = values[0]["日時"]
                                     continue  # このIDのループを終了
                                 else:
                                     pass
                     
                             kekka = cross_judge(gates, values)
                             if kekka[0]:
-                                temp_dict = {}
-                                temp_dict[key] = values[kekka[1]]["日時"]
-                                st.session_state['tuuka_list'][idx1].append(temp_dict)
+                                st.session_state['tuuka_list'][idx1][key] = values[kekka[1]]["日時"]
                                 continue  # このIDのループを終了
                     
                     # 図形IDを表示するツールチップを設定
