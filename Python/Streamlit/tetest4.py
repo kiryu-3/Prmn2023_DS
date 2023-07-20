@@ -390,7 +390,7 @@ def select_graph():
         
         # 日付ごとにデータを処理して人数をカウント
         for date_str in dates:
-            dt = datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S')
+            dt = datetime.strptime(date_str, '%Y/%m/%d %H:%M')
             date = dt.date()
             hour = dt.hour
             hourly_counts[date][hour] += 1
