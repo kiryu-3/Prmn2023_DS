@@ -414,7 +414,8 @@ def select_graph():
         # 最終日のデータが24時まであるか確認
         if last_date.hour != 23:
             # 24時までのデータを追加
-            time_points = tuple(list(time_points) + [f"{last_date_str} 24時"])
+            last_date += timedelta(days=1)
+            time_points = tuple(list(time_points) + [f"{last_date.strftime('%m/%d')} 00時"])
             values = tuple(list(values) + [0])
         
         # グラフの作成
