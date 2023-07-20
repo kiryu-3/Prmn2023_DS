@@ -447,8 +447,6 @@ def select_graph():
 
         
         # バイトストリームをst.session_stateに保存
-        width = 725
-        st.session_state['graph_image'] = save_graph_to_bytes(width)
         st.session_state['graph_image'] = buffer.getvalue()
 
         # グラフを表示
