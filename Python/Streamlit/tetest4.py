@@ -419,7 +419,7 @@ def select_graph():
             values = tuple(list(values) + [0])
         
         # グラフの作成
-        fig, ax = plt.subplots(figsize=(12, 6))
+        fig, ax = plt.subplots(figsize=(725/96, 6))
         ax.plot(time_points, values)
         
         # x軸とy軸のラベル、タイトルを設定
@@ -447,6 +447,8 @@ def select_graph():
 
         
         # バイトストリームをst.session_stateに保存
+        width = 725
+        st.session_state['graph_image'] = save_graph_to_bytes(width)
         st.session_state['graph_image'] = buffer.getvalue()
 
         # グラフを表示
