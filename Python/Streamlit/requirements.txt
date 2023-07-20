@@ -5,3 +5,4 @@ boto3
 awscli
 pylatex
 matplotlib
+japanize-matplotlib
