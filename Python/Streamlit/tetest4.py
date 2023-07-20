@@ -736,7 +736,14 @@ except Exception as e:
 # st.session_state["cols"][0].subheader("地図の全描画データ")
 # st.session_state["cols"][0].write(st.session_state['draw_data'])
 # st.session_state["cols"][0].write(st.session_state['gate_data'])
-
+if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
+    st.selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
+                   key="select_graph_id",
+                   on_change=select_graph)
+    if st.session_state["select_graph_id"] != "":
+        # グラフを表示
+        st.image(st.session_state['graph_image'], use_column_width=True)
+                
 with st.sidebar:
     # タブ
     tab1, tab2, tab3, tab4 = st.tabs(["Uploader", "Data_info", "Gate_info", "Kiseki_info"])
@@ -751,10 +758,7 @@ with st.sidebar:
     with tab2:    
         st.write(st.session_state['df_new'])
             
-        if len(st.session_state['df']) != 0:
-            st.multiselect("選択してください", st.session_state['df'].iloc[:, 0].unique(), key="select_data_id",on_change=select_data)
-            st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
-
+        
     # 図形の情報の選択と削除
     with tab3:
         if len(st.session_state['draw_data']) != 0:
@@ -773,10 +777,6 @@ with st.sidebar:
 
     # 軌跡を描画するか選択
     with tab4:
-        if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
-            st.selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
-                           key="select_graph_id",
-                           on_change=select_graph)
-            if st.session_state["select_graph_id"] != "":
-                # グラフを表示
-                st.image(st.session_state['graph_image'], use_column_width=True)
+        if len(st.session_state['df']) != 0:
+            st.multiselect("選択してください", st.session_state['df'].iloc[:, 0].unique(), key="select_data_id",on_change=select_data)
+            st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
