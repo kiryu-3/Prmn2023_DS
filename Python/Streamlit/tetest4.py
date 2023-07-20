@@ -406,7 +406,7 @@ def select_graph():
         
         # 時刻と値をリストに分ける
         time_points, values = zip(*sorted_data)
-
+        
         # 最終日の日付を取得
         last_date_str = time_points[-1].split()[0]
         last_date = datetime.strptime(last_date_str, '%m/%d')
@@ -414,9 +414,8 @@ def select_graph():
         # 最終日のデータが24時まであるか確認
         if last_date.hour != 23:
             # 24時までのデータを追加
-            for hour in range(last_date.hour + 1, 24):
-                time_points = time_points + (f"{last_date_str} {hour:02d}時",)
-                values = values + (0,)
+            time_points = tuple(list(time_points) + [f"{last_date_str} 24時"])
+            values = tuple(values + [0])
         
         # グラフの作成
         fig, ax = plt.subplots(figsize=(12, 6))
