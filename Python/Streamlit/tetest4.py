@@ -18,6 +18,7 @@ import io
 from io import BytesIO
 import itertools
 import copy
+import json
 
 st.set_page_config(
     page_title="streamlit-folium documentation",
@@ -421,6 +422,12 @@ def select_graph():
         
         # グラフオブジェクトを作成
         fig = go.Figure(data=[trace], layout=layout)
+
+        # グラフをJSON形式に変換
+        graph_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+        
+        # JSONをst.session_stateに保存
+        st.session_state['graph_data'] = graph_json
         
         # グラフを表示
         st.plotly_chart(fig)
@@ -777,7 +784,17 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
                    on_change=select_graph)
     if st.session_state["select_graph_id"] != "":
         # グラフを表示
-        st.image(st.session_state['graph_image'], use_column_width=True)
+        # st.session_stateからグラフのJSONデータを取得
+        graph_json = st.session_state['graph_data']
+        
+        # JSONデータをPythonオブジェクトに変換
+        fig_dict = json.loads(graph_json)
+        
+        # PlotlyのFigureオブジェクトに戻す
+        fig = go.Figure(fig_dict)
+        
+        # グラフを表示
+        st.plotly_chart(fig)
                 
 with st.sidebar:
     # タブ
