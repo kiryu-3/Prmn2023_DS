@@ -3,7 +3,7 @@ import json
 import random
 from datetime import datetime, timedelta
 from collections import defaultdict
-import plotly.graph_objs as go
+import plotly.graph_objs as go 
 import plotly.io as pio
 import plotly
 
@@ -838,6 +838,7 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
 
         # グラフを表示
         st.plotly_chart(fig)
+        st.write(max_y_value)
                 
 with st.sidebar:
     # タブ
