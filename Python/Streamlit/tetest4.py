@@ -1,10 +1,4 @@
 
-おっしゃる通り、エラーが発生しているのはplotlyがインポートされていないためです。plotlyをインポートすることで、plotly.utils.PlotlyJSONEncoderを使用することができます。
-
-以下のようにplotlyを追加でインポートしてください：
-
-python
-Copy code
 import json
 import random
 from datetime import datetime, timedelta
