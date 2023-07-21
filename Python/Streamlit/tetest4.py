@@ -3,6 +3,7 @@ import random
 from datetime import datetime, timedelta
 from collections import defaultdict
 import plotly.graph_objs as go
+import plotly.io as pio
 
 import matplotlib.pyplot as plt
 import japanize_matplotlib
@@ -18,7 +19,6 @@ import io
 from io import BytesIO
 import itertools
 import copy
-import json
 
 st.set_page_config(
     page_title="streamlit-folium documentation",
