@@ -795,12 +795,16 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
 
     if len(st.session_state["select_graph_ids"]) != 0:
         fig = go.Figure()
+        max_y_value = 0  # 全折れ線のy値の最大値を保持する変数を初期化
         for idx in st.session_state["select_graph_ids"]:
             # st.session_stateから選択された図形のIDに対応するグラフのJSONデータを取得
             graph_json = st.session_state[f'graph_data'][int(idx) - 1]
     
             # JSONデータをPythonオブジェクトに変換
             fig_dict = json.loads(graph_json)
+
+            # 全折れ線のy値の最大値を更新
+            max_y_value = max(max_y_value, max(trace['y'][-1] for trace in fig_dict['data']))
 
             # PlotlyのFigureオブジェクトにトレースを追加
             for trace in fig_dict['data']:
@@ -812,14 +816,20 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
             # fig = go.Figure(fig_dict)
     
             # fig_list.append(fig)
-    
+
+        # 目盛りの間隔を設定
+        if max_y_value > 5:
+            dtick_value = 5
+        else:
+            dtick_value = 1
+        
         # グラフのレイアウトを設定
         layout = go.Layout(
             title='通過人数',
             xaxis=dict(title='日時'),
             yaxis=dict(
                 title='通過人数[人]',
-                tickvals=list(range(max([trace['y'][-1] for trace in fig.data]) + 1)),  # 整数のリストを設定
+                tickvals=list(range(0, max_y_value + 1, dtick_value)),  # 目盛りの間隔を設定
                 tickformat='d',  # 整数表示に設定
             )
         )
