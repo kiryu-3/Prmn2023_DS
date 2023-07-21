@@ -384,6 +384,8 @@ def select_graph():
         idx = int(st.session_state['select_graph_id'])
         data = st.session_state['tuuka_list'][idx-1]
         dates = data.values()
+        first_date_str = next(iter(dates))
+        start_date = datetime.strptime(first_date_str, '%Y/%m/%d %H:%M').date()
 
         # 日付と時間帯ごとに人数をカウントする辞書を初期化
         hourly_counts = defaultdict(lambda: defaultdict(int))
