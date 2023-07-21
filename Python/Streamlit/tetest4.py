@@ -795,7 +795,7 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
 
     if len(st.session_state["select_graph_ids"]) != 0:
         fig = go.Figure()
-        max_y_value = 0  # 全折れ線のy値の最大値を保持する変数を初期化
+        y_values = []  # 全折れ線のy値を保持するリストを初期化
         for idx in st.session_state["select_graph_ids"]:
             # st.session_stateから選択された図形のIDに対応するグラフのJSONデータを取得
             graph_json = st.session_state[f'graph_data'][int(idx) - 1]
@@ -803,8 +803,8 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
             # JSONデータをPythonオブジェクトに変換
             fig_dict = json.loads(graph_json)
 
-            # 全折れ線のy値の最大値を更新
-            max_y_value = max(max_y_value, max(trace['y'][-1] for trace in fig_dict['data']))
+            # 折れ線のy値をリストに追加
+            y_values.extend(trace['y'] for trace in fig_dict['data'])
 
             # PlotlyのFigureオブジェクトにトレースを追加
             for trace in fig_dict['data']:
@@ -816,6 +816,9 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
             # fig = go.Figure(fig_dict)
     
             # fig_list.append(fig)
+
+        # 全折れ線のy値の最大値を取得
+        max_y_value = max(max(y) for y in y_values)
 
         # 目盛りの間隔を設定
         if max_y_value > 5:
