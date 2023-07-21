@@ -794,21 +794,40 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
                on_change=select_graph)
 
     if len(st.session_state["select_graph_ids"]) != 0:
-        fig_list = []
+        fig = go.Figure()
         for idx in st.session_state["select_graph_ids"]:
             # st.session_stateから選択された図形のIDに対応するグラフのJSONデータを取得
             graph_json = st.session_state[f'graph_data'][int(idx) - 1]
     
             # JSONデータをPythonオブジェクトに変換
             fig_dict = json.loads(graph_json)
+
+            # PlotlyのFigureオブジェクトにトレースを追加
+            for trace in fig_dict['data']:
+                # 凡例を変更する場合は、nameプロパティを設定する
+                name = f"図形{idx}"
+                fig.add_trace(go.Scatter(x=trace['x'], y=trace['y'], mode=trace['mode'], name=name))
     
             # PlotlyのFigureオブジェクトに戻す
-            fig = go.Figure(fig_dict)
+            # fig = go.Figure(fig_dict)
     
-            fig_list.append(fig)
+            # fig_list.append(fig)
     
+        # グラフのレイアウトを設定
+        layout = go.Layout(
+            title='通過人数',
+            xaxis=dict(title='日時'),
+            yaxis=dict(
+                title='通過人数[人]',
+                tickvals=list(range(max([trace['y'][-1] for trace in fig.data]) + 1)),  # 整数のリストを設定
+                tickformat='d',  # 整数表示に設定
+            )
+        )
+
+        fig.update_layout(layout)
+
         # グラフを表示
-        st.plotly_chart(fig_list)
+        st.plotly_chart(fig)
                 
 with st.sidebar:
     # タブ
