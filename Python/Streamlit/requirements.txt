@@ -6,3 +6,4 @@ awscli
 pylatex
 matplotlib
 japanize-matplotlib
+plotly
