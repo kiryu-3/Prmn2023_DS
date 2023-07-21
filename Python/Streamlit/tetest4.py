@@ -797,7 +797,7 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
         fig_list = []
         for idx in st.session_state["select_graph_ids"]:
             # st.session_stateから選択された図形のIDに対応するグラフのJSONデータを取得
-            graph_json = st.session_state[f'graph_data'][int(idx)]
+            graph_json = st.session_state[f'graph_data'][int(idx) - 1]
     
             # JSONデータをPythonオブジェクトに変換
             fig_dict = json.loads(graph_json)
