@@ -80,6 +80,9 @@ if "selected_shape" not in st.session_state: # 初期化
 # tab3に表示する選択された図形のタイプを管理する  
 if "selected_shape_type" not in st.session_state: # 初期化
     st.session_state["selected_shape_type"] = ""
+# グラフデータを管理する  
+if "graph_data" not in st.session_state: # 初期化
+    st.session_state["graph_data"] = list()
 
 # 描画するプロットデータの作成
 def features_maker(list2):
@@ -383,56 +386,61 @@ def select_graph():
     #                        key="select_graph_id",
     #                        on_change=select_graph)
 
-    if st.session_state['select_graph_id'] != "":
-        idx = int(st.session_state['select_graph_id'])
-        data = st.session_state['tuuka_list'][idx-1]
-        dates = data.values()
-        first_date_str = next(iter(dates))
-        start_date = datetime.strptime(first_date_str, '%Y/%m/%d %H:%M').date()
-
-        # 日付と時間帯ごとに人数をカウントする辞書を初期化
-        hourly_counts = defaultdict(lambda: defaultdict(int))
-        
-        # 日付ごとにデータを処理して人数をカウント
-        for date_str in dates:
-            dt = datetime.strptime(date_str, '%Y/%m/%d %H:%M')
-            date = dt.date()
-            hour = dt.hour
-            hourly_counts[date][hour] += 1
-        
-        # print(hourly_counts.items())
-        # 結果を表示
-        counts_dict = dict()
-        for date, counts in hourly_counts.items():
-            for hour in range(24):
-                counts_dict[f"{date.strftime('%m/%d')} {hour:02d}時"] = counts[hour]
-        
-        # データを時刻順にソート
-        sorted_data = sorted(counts_dict.items())
-
-        # 折れ線グラフのトレースを作成
-        trace = go.Scatter(x=[f"{start_date.strftime('%m/%d')} {hour:02d}:00" for hour in range(24)],
-                           y=[counts for hour, counts in sorted_data],
-                           mode='lines', name='通過人数[人]')
-        
-        # グラフのレイアウトを設定
-        layout = go.Layout(
-            title='通過人数',
-            xaxis=dict(title='日時'),
-            yaxis=dict(title='通過人数[人]')
-        )
-        
-        # グラフオブジェクトを作成
-        fig = go.Figure(data=[trace], layout=layout)
-
-        # グラフをJSON形式に変換
-        graph_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-        
-        # JSONをst.session_stateに保存
-        st.session_state['graph_data'] = graph_json
+    if len(st.session_state['select_graph_ids']) != 0:
+        for idx in st.session_state['select_graph_ids']:
+            data = st.session_state['tuuka_list'][int(idx) - 1]
+            data = st.session_state['tuuka_list'][idx-1]
+            dates = data.values()
+            first_date_str = next(iter(dates))
+            start_date = datetime.strptime(first_date_str, '%Y/%m/%d %H:%M').date()
+    
+            # 日付と時間帯ごとに人数をカウントする辞書を初期化
+            hourly_counts = defaultdict(lambda: defaultdict(int))
+            
+            # 日付ごとにデータを処理して人数をカウント
+            for date_str in dates:
+                dt = datetime.strptime(date_str, '%Y/%m/%d %H:%M')
+                date = dt.date()
+                hour = dt.hour
+                hourly_counts[date][hour] += 1
+            
+            # print(hourly_counts.items())
+            # 結果を表示
+            counts_dict = dict()
+            for date, counts in hourly_counts.items():
+                for hour in range(24):
+                    counts_dict[f"{date.strftime('%m/%d')} {hour:02d}時"] = counts[hour]
+            
+            # データを時刻順にソート
+            sorted_data = sorted(counts_dict.items())
+    
+            # 折れ線グラフのトレースを作成
+            trace = go.Scatter(x=[f"{start_date.strftime('%m/%d')} {hour:02d}:00" for hour in range(24)],
+                               y=[counts for hour, counts in sorted_data],
+                               mode='lines', name='通過人数[人]')
+            
+            # グラフのレイアウトを設定
+            layout = go.Layout(
+                title='通過人数',
+                xaxis=dict(title='日時'),
+                yaxis=dict(
+                    title='通過人数[人]',
+                    tickvals=list(range(max([counts for hour, counts in sorted_data]) + 1)),  # 整数のリストを設定
+                    tickformat='d',  # 整数表示に設定
+                )
+            )
+            
+            # グラフオブジェクトを作成
+            fig = go.Figure(data=[trace], layout=layout)
+    
+            # グラフをJSON形式に変換
+            graph_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+            
+            # JSONをst.session_stateに保存
+            st.session_state['graph_data'].append(graph_json)
         
         # グラフを表示
-        st.plotly_chart(fig)
+        # st.plotly_chart(fig)
         
         # # 時刻と値をリストに分ける
         # time_points, values = zip(*sorted_data)
@@ -484,7 +492,7 @@ def select_graph():
         
     else:
         # グラフを空にする
-        st.session_state["graph_image"] = None
+        st.session_state["graph_data"] = list()
 
 def kiseki_draw():
     if st.session_state['kiseki_flag']:
@@ -781,22 +789,27 @@ except Exception as e:
 # st.session_state["cols"][0].write(st.session_state['draw_data'])
 # st.session_state["cols"][0].write(st.session_state['gate_data'])
 if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
-    st.selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
-                   key="select_graph_id",
-                   on_change=select_graph)
-    if st.session_state["select_graph_id"] != "":
+    st.multiselect("グラフを表示したい図形のIDを選択してください",
+               [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
+               key="select_graph_ids",
+               on_change=select_graph)
+
+    if len(st.session_state["select_graph_ids"]) != 0:
+        fig_list = []
+        for idx in st.session_state["select_graph_ids"]:
+            # st.session_stateから選択された図形のIDに対応するグラフのJSONデータを取得
+            graph_json = st.session_state[f'graph_data_{idx}']
+    
+            # JSONデータをPythonオブジェクトに変換
+            fig_dict = json.loads(graph_json)
+    
+            # PlotlyのFigureオブジェクトに戻す
+            fig = go.Figure(fig_dict)
+    
+            fig_list.append(fig)
+    
         # グラフを表示
-        # st.session_stateからグラフのJSONデータを取得
-        graph_json = st.session_state['graph_data']
-        
-        # JSONデータをPythonオブジェクトに変換
-        fig_dict = json.loads(graph_json)
-        
-        # PlotlyのFigureオブジェクトに戻す
-        fig = go.Figure(fig_dict)
-        
-        # グラフを表示
-        st.plotly_chart(fig)
+        st.plotly_chart(fig_list)
                 
 with st.sidebar:
     # タブ
