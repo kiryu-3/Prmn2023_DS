@@ -2,6 +2,7 @@ import json
 import random
 from datetime import datetime, timedelta
 from collections import defaultdict
+import plotly.graph_objs as go
 
 import matplotlib.pyplot as plt
 import japanize_matplotlib
@@ -403,54 +404,72 @@ def select_graph():
         
         # データを時刻順にソート
         sorted_data = sorted(counts_dict.items())
-        
-        # 時刻と値をリストに分ける
-        time_points, values = zip(*sorted_data)
-        
-        # 最終日の日付を取得
-        last_date_str = time_points[-1].split()[0]
-        last_date = datetime.strptime(last_date_str, '%m/%d')
-        
-        # 最終日のデータが24時まであるか確認
-        if last_date.hour != 23:
-            # 24時までのデータを追加
-            last_date += timedelta(days=1)
-            time_points = tuple(list(time_points) + [f"{last_date.strftime('%m/%d')} 00時"])
-            values = tuple(list(values) + [0])
-        
-        # グラフの作成
-        fig, ax = plt.subplots(figsize=(725/96, 6))
-        ax.plot(time_points, values)
-        
-        # x軸とy軸のラベル、タイトルを設定
-        # ax.set_xlabel('時間')
-        ax.set_ylabel('通過人数[人]')
-        # ax.set_title('通過人数')
-        
-        # x軸の目盛りを6時間ごとに設定
-        ax.set_xticks(range(0, len(time_points), 6))
-        ax.set_xticklabels(time_points[::6])
-        
-        # y軸のスケールを整数値に設定
-        count_per_group = 5
 
-        # スケールが1ずつの条件を追加
-        if max(values) <= 5:
-            count_per_group = 1
+        # 折れ線グラフのトレースを作成
+        trace = go.Scatter(x=[f"{start_date.strftime('%m/%d')} {hour:02d}:00" for hour in range(24)],
+                           y=[counts for hour, counts in sorted_data],
+                           mode='lines', name='通過人数[人]')
         
-        ax.set_yticks(list(range(0, max(values) + count_per_group, count_per_group)) + [max(values)])
-    
-        # グラフをバイトストリームに変換
-        buffer = BytesIO()
-        plt.savefig(buffer, format='png')
-        buffer.seek(0)
-
+        # グラフのレイアウトを設定
+        layout = go.Layout(
+            title='通過人数',
+            xaxis=dict(title='日時'),
+            yaxis=dict(title='通過人数[人]')
+        )
         
-        # バイトストリームをst.session_stateに保存
-        st.session_state['graph_image'] = buffer.getvalue()
-
+        # グラフオブジェクトを作成
+        fig = go.Figure(data=[trace], layout=layout)
+        
         # グラフを表示
-        # tab4.image(st.session_state['graph_image'], use_column_width=True)
+        st.plotly_chart(fig)
+        
+        # # 時刻と値をリストに分ける
+        # time_points, values = zip(*sorted_data)
+        
+        # # 最終日の日付を取得
+        # last_date_str = time_points[-1].split()[0]
+        # last_date = datetime.strptime(last_date_str, '%m/%d')
+        
+        # # 最終日のデータが24時まであるか確認
+        # if last_date.hour != 23:
+        #     # 24時までのデータを追加
+        #     last_date += timedelta(days=1)
+        #     time_points = tuple(list(time_points) + [f"{last_date.strftime('%m/%d')} 00時"])
+        #     values = tuple(list(values) + [0])
+        
+        # # グラフの作成
+        # fig, ax = plt.subplots(figsize=(725/96, 6))
+        # ax.plot(time_points, values)
+        
+        # # x軸とy軸のラベル、タイトルを設定
+        # # ax.set_xlabel('時間')
+        # ax.set_ylabel('通過人数[人]')
+        # # ax.set_title('通過人数')
+        
+        # # x軸の目盛りを6時間ごとに設定
+        # ax.set_xticks(range(0, len(time_points), 6))
+        # ax.set_xticklabels(time_points[::6])
+        
+        # # y軸のスケールを整数値に設定
+        # count_per_group = 5
+
+        # # スケールが1ずつの条件を追加
+        # if max(values) <= 5:
+        #     count_per_group = 1
+        
+        # ax.set_yticks(list(range(0, max(values) + count_per_group, count_per_group)) + [max(values)])
+    
+        # # グラフをバイトストリームに変換
+        # buffer = BytesIO()
+        # plt.savefig(buffer, format='png')
+        # buffer.seek(0)
+
+        
+        # # バイトストリームをst.session_stateに保存
+        # st.session_state['graph_image'] = buffer.getvalue()
+
+        # # グラフを表示
+        # # tab4.image(st.session_state['graph_image'], use_column_width=True)
         
     else:
         # グラフを空にする
