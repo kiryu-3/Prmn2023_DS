@@ -1,9 +1,17 @@
+
+おっしゃる通り、エラーが発生しているのはplotlyがインポートされていないためです。plotlyをインポートすることで、plotly.utils.PlotlyJSONEncoderを使用することができます。
+
+以下のようにplotlyを追加でインポートしてください：
+
+python
+Copy code
 import json
 import random
 from datetime import datetime, timedelta
 from collections import defaultdict
 import plotly.graph_objs as go
 import plotly.io as pio
+import plotly
 
 import matplotlib.pyplot as plt
 import japanize_matplotlib
