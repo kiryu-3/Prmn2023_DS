@@ -829,12 +829,11 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
         # グラフのレイアウトを設定
         layout = go.Layout(
             title='通過人数',
-            xaxis=dict(title='日時', tickmode='linear', dtick=6*60*60*1000),
+            xaxis=dict(title='日時', tickmode='linear', dtick=1000*60*60*6),
             yaxis=dict(
                 title='通過人数[人]',
                 tickvals=list(range(0, max_y_value + 1, dtick_value)) + [max_y_value],  # 目盛りの間隔を設定
                 tickformat='d',  # 整数表示に設定
-                tickangle=-45
             )
         )
 
