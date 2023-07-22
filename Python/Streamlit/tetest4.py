@@ -388,7 +388,7 @@ def select_graph():
     #                        key="select_graph_id",
     #                        on_change=select_graph)
 
-    st.session_state["graph_data"] = list()
+    # st.session_state["graph_data"] = list()
     if len(st.session_state['select_graph_ids']) != 0:
         for idx in st.session_state['select_graph_ids']:
             data = st.session_state['tuuka_list'][int(idx) - 1]            
