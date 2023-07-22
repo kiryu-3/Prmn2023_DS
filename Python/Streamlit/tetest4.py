@@ -388,10 +388,10 @@ def select_graph():
     #                        key="select_graph_id",
     #                        on_change=select_graph)
 
+    st.session_state["graph_data"] = list()
     if len(st.session_state['select_graph_ids']) != 0:
         for idx in st.session_state['select_graph_ids']:
-            data = st.session_state['tuuka_list'][int(idx) - 1]
-            st.session_state["graph_data"] = list()
+            data = st.session_state['tuuka_list'][int(idx) - 1]            
             dates = data.values()
             first_date_str = next(iter(dates))
             start_date = datetime.strptime(first_date_str, '%Y/%m/%d %H:%M').date()
