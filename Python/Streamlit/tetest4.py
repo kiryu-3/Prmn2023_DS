@@ -591,6 +591,9 @@ def delete_shape():
         st.session_state['gate_data'].pop(delete_shape_id - 1)
         if len(st.session_state['tuuka_list']) != 0:
             st.session_state['tuuka_list'].pop(delete_shape_id - 1)
+        if len(st.session_state['selected_shape']) != 0:
+            st.session_state["selected_shape"].pop(delete_shape_id - 1)
+
 
         for idx, sdata in enumerate(st.session_state['draw_data']):
             if len(st.session_state['df_new']) != 0:  
@@ -621,6 +624,7 @@ def delete_shape():
                 popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
                 folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
+        
             else:
                 # 図形IDを表示するツールチップを設定
                 tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
