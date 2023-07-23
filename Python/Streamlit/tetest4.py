@@ -797,10 +797,17 @@ except Exception as e:
 # st.session_state["cols"][0].write(st.session_state['draw_data'])
 # st.session_state["cols"][0].write(st.session_state['gate_data'])
 if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
-    st.multiselect("グラフを表示したい図形のIDを選択してください",
-               [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
-               key="select_graph_ids",
-               on_change=select_graph)
+    # マルチセレクトに加えるIDリストを生成
+    available_ids = [str(value) for value in range(1, len(st.session_state['gate_data']) + 1) if len(st.session_state['tuuka_list'][value - 1]) > 0]
+    
+    # st.multiselectを呼び出し
+    selected_ids = st.multiselect(
+        "グラフを表示したい図形のIDを選択してください",
+        available_ids,  # 上記で生成したリストを使用
+        key="select_graph_ids",
+        on_change=select_graph
+    )
+
 
     if len(st.session_state["select_graph_ids"]) != 0:
         fig = go.Figure()
