@@ -801,7 +801,7 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
     available_ids = [str(value) for value in range(1, len(st.session_state['gate_data']) + 1) if len(st.session_state['tuuka_list'][value - 1]) > 0]
     
     # st.multiselectを呼び出し
-    selected_ids = st.multiselect(
+    st.multiselect(
         "グラフを表示したい図形のIDを選択してください",
         available_ids,  # 上記で生成したリストを使用
         key="select_graph_ids",
@@ -814,7 +814,14 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
         y_values = []  # 全折れ線のy値を保持するリストを初期化
         for idx in st.session_state["select_graph_ids"]:
             # st.session_stateから選択された図形のIDに対応するグラフのJSONデータを取得
-            graph_json = st.session_state[f'graph_data'][int(idx) - 1]
+            idx2 = int(idx)
+            while idx2 >= 0:
+                try:
+                    graph_json = st.session_state['graph_data'][idx2 - 1]
+                    break
+                except IndexError:
+                    idx2 -= 1
+            
     
             # JSONデータをPythonオブジェクトに変換
             fig_dict = json.loads(graph_json)
