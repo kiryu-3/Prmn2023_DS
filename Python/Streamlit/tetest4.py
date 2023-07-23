@@ -388,8 +388,8 @@ def select_graph():
     #                        key="select_graph_id",
     #                        on_change=select_graph)
 
-    if len(st.session_state["graph_data"]) < len(st.session_state['select_graph_ids']):
-        st.session_state["graph_data"] = list()
+    # if len(st.session_state["graph_data"]) < len(st.session_state['select_graph_ids']):
+    #     st.session_state["graph_data"] = list()
     if len(st.session_state['select_graph_ids']) != 0:
         for idx in st.session_state['select_graph_ids']:
             data = st.session_state['tuuka_list'][int(idx) - 1]            
@@ -440,7 +440,8 @@ def select_graph():
             graph_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
             
             # JSONをst.session_stateに保存
-            st.session_state['graph_data'].append(graph_json)
+            if graph_json not in st.session_state['graph_data']:
+                st.session_state['graph_data'].append(graph_json)
         
         # グラフを表示
         # st.plotly_chart(fig)
