@@ -390,7 +390,6 @@ def select_graph():
 
     # if len(st.session_state["graph_data"]) < len(st.session_state['select_graph_ids']):
     st.session_state["graph_data"] = dict()
-    st.session_state['select_graph_ids'].sort()
     if len(st.session_state['select_graph_ids']) != 0:
         for idx in st.session_state['select_graph_ids']:
             data = st.session_state['tuuka_list'][int(idx) - 1]            
