@@ -389,7 +389,7 @@ def select_graph():
     #                        on_change=select_graph)
 
     # if len(st.session_state["graph_data"]) < len(st.session_state['select_graph_ids']):
-    #     st.session_state["graph_data"] = list()
+    st.session_state["graph_data"] = list()
     if len(st.session_state['select_graph_ids']) != 0:
         for idx in st.session_state['select_graph_ids']:
             data = st.session_state['tuuka_list'][int(idx) - 1]            
@@ -865,7 +865,7 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
         # グラフを表示
         st.plotly_chart(fig)
         st.write(max_y_value)
-        st.write(len(st.session_state['graph_data']))
+        st.write(st.session_state['graph_data'])
                 
 with st.sidebar:
     # タブ
