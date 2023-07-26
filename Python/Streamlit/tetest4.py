@@ -866,7 +866,7 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
         # グラフを表示
         st.plotly_chart(fig)
         st.write(max_y_value)
-        st.write(len(st.session_state['graph_data']))
+        st.write(st.session_state['graph_data'])
                 
 with st.sidebar:
     # タブ
