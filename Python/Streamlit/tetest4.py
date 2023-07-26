@@ -82,7 +82,7 @@ if "selected_shape_type" not in st.session_state: # 初期化
     st.session_state["selected_shape_type"] = ""
 # グラフデータを管理する  
 if "graph_data" not in st.session_state: # 初期化
-    st.session_state["graph_data"] = list()
+    st.session_state["graph_data"] = dict()
 
 # 描画するプロットデータの作成
 def features_maker(list2):
@@ -255,7 +255,7 @@ def upload_csv():
         st.session_state['df_new'] = df
         st.session_state['sorted_df'] = df
 
-        st.session_state["graph_data"] = list()
+        st.session_state["graph_data"] = dict()
 
         # TimestampedGeoJsonレイヤーを削除
         if 'map' in st.session_state:
@@ -389,7 +389,7 @@ def select_graph():
     #                        on_change=select_graph)
 
     # if len(st.session_state["graph_data"]) < len(st.session_state['select_graph_ids']):
-    st.session_state["graph_data"] = list()
+    st.session_state["graph_data"] = dict()
     st.session_state['select_graph_ids'].sort()
     if len(st.session_state['select_graph_ids']) != 0:
         for idx in st.session_state['select_graph_ids']:
@@ -441,8 +441,7 @@ def select_graph():
             graph_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
             
             # JSONをst.session_stateに保存
-            if graph_json not in st.session_state['graph_data']:
-                st.session_state['graph_data'].append(graph_json)
+            st.session_state["graph_data"][idx] = graph_json
         
         # グラフを表示
         # st.plotly_chart(fig)
@@ -497,7 +496,7 @@ def select_graph():
         
     else:
         # グラフを空にする
-        st.session_state["graph_data"] = list()
+        st.session_state["graph_data"] = dict()
 
 def kiseki_draw():
     if st.session_state['kiseki_flag']:
@@ -812,16 +811,11 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
 
     if len(st.session_state["select_graph_ids"]) != 0:
         fig = go.Figure()
+        diff = len(st.session_state['tuuka_list']) - len(st.session_state["select_graph_ids"])
         y_values = []  # 全折れ線のy値を保持するリストを初期化
         for idx in st.session_state["select_graph_ids"]:
             # st.session_stateから選択された図形のIDに対応するグラフのJSONデータを取得
-            idx2 = int(idx)
-            while idx2 >= 0:
-                try:
-                    graph_json = st.session_state['graph_data'][idx2 - 1]
-                    break
-                except IndexError:
-                    idx2 -= 1
+            graph_json = st.session_state['graph_data'][idx]
             
     
             # JSONデータをPythonオブジェクトに変換
@@ -866,7 +860,7 @@ if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
         # グラフを表示
         st.plotly_chart(fig)
         st.write(max_y_value)
-        st.write(st.session_state['graph_data'])
+        st.write(len(st.session_state['graph_data']))
                 
 with st.sidebar:
     # タブ
