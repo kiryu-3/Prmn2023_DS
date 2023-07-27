@@ -36,7 +36,6 @@ st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 # 地図の情報を管理する
 if 'map_info' not in st.session_state: # 初期化
-    df = pd.DataFrame()
     st.session_state['map_info'] = [41.0130657870063, 140.73486328125003, 5]
 
 if 'map' not in st.session_state: # 初期化
