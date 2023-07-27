@@ -707,9 +707,12 @@ st_data = st_folium(st.session_state['map'], width=725)
 data = copy.deepcopy(dict(st_data))
 
 # 地図の情報の更新
-st.session_state['map_info'][0] = data["center"]["lat"]
-st.session_state['map_info'][1] = data["center"]["lng"]
-st.session_state['map_info'][2] = data["zoom"]
+try:
+    st.session_state['map_info'][0] = data["center"]["lat"]
+    st.session_state['map_info'][1] = data["center"]["lng"]
+    st.session_state['map_info'][2] = data["zoom"]
+except Exception as e:
+    st.write(e)
 
 try:
     # data["all_drawings"]が有効なリストであるかどうか判定
