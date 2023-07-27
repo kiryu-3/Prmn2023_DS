@@ -38,6 +38,10 @@ st.markdown(hide_menu_style, unsafe_allow_html=True)
 if 'map_info' not in st.session_state: # 初期化
     st.session_state['map_info'] = [41.0130657870063, 140.73486328125003, 5]
 
+# 地図の情報を管理する
+if 'map_count' not in st.session_state: # 初期化
+    st.session_state['map_count'] = 0
+
 if 'map' not in st.session_state: # 初期化
     # 初めての表示時は空のマップを表示
     m = folium.Map(location=[st.session_state['map_info'][0], st.session_state['map_info'][1]], zoom_start=st.session_state['map_info'][2])
@@ -47,6 +51,7 @@ if 'map' not in st.session_state: # 初期化
     draw.add_to(m)
     
     st.session_state['map'] = m
+    st.session_state['map_count'] += 1
 
 
 # 読み込んだデータフレームを管理する 
