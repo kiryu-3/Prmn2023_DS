@@ -1,5 +1,6 @@
 import streamlit as st
 import folium
+from folium.plugins import Draw, TimestampedGeoJson
 
 # 地図の初期ズームレベル
 initial_zoom_level = 16
