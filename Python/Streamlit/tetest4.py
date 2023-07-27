@@ -44,7 +44,7 @@ if 'map_count' not in st.session_state: # 初期化
 
 if 'map' not in st.session_state: # 初期化
     # 初めての表示時は空のマップを表示
-    m = folium.Map(location=[st.session_state['map_info'][0], st.session_state['map_info'][1]], zoom_start=st.session_state['map_info'][2])
+    m = folium.Map(location=[41.0130657870063, 140.73486328125003], zoom_start=5)
     # Leaflet.jsのDrawプラグインを追加
     draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
     draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
@@ -713,11 +713,11 @@ data = copy.deepcopy(dict(st_data))
 
 # 地図の情報の更新
 try:
-    st.session_state['map_info'][0] = data["center"]["lat"]
-    st.session_state['map_info'][1] = data["center"]["lng"]
-    st.session_state['map_info'][2] = data["zoom"]
+    st.session_state['map'].location[0] = data["center"]["lat"]
+    st.session_state['map'].location[1] = data["center"]["lng"]
+    st.session_state['map'].zoom = data["zoom"]
 except Exception as e:
-    st.write(e)
+    pass
 
 try:
     # data["all_drawings"]が有効なリストであるかどうか判定
