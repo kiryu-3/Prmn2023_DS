@@ -792,8 +792,8 @@ try:
 except Exception as e:
     pass
 
-# st.session_state["cols"][0].subheader("地図の全描画データ")
-# st.session_state["cols"][0].write(st.session_state['draw_data'])
+st.session_state["cols"][0].subheader("地図の全描画データ")
+st.session_state["cols"][0].write(st.session_state['draw_data'])
 # st.session_state["cols"][0].write(st.session_state['gate_data'])
 if len(st.session_state['df']) != 0 and len(st.session_state['gate_data']):
     # マルチセレクトに加えるIDリストを生成
