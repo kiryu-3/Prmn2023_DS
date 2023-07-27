@@ -1,6 +1,7 @@
 import streamlit as st
 import folium
 from folium.plugins import Draw, TimestampedGeoJson
+from streamlit_folium import st_folium
 
 # 地図の初期ズームレベル
 initial_zoom_level = 16
@@ -30,4 +31,4 @@ if 'zoom' in m.to_dict():
     st.session_state[zoom_level_key] = m.to_dict()['zoom']
 
 # 地図を表示する
-st.write(m)
+st_folium(m)
