@@ -907,7 +907,8 @@ with st.sidebar:
 
     # 軌跡を描画するか選択
     with tab4:
+        st.write(st.session_state["map_info"])
         if len(st.session_state['df']) != 0:
             st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
-            st.write(st.session_state["map_info"])
+            
             # st.write(st.session_state["select_graph_ids"])
