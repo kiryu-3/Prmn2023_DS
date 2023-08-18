@@ -728,7 +728,7 @@ except:
     pass
 
 # st.write(data)
-st.write(st.session_state["center"])
+st.write(st.session_state.map.location)
 
 try:
     # data["all_drawings"]が有効なリストであるかどうか判定
