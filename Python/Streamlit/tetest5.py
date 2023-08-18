@@ -736,8 +736,11 @@ st_data = st_folium(st.session_state['map'], width=725)
 
 # 地図のデータをコピー
 data = copy.deepcopy(dict(st_data))
-st.session_state["center"]["lat"] = data["center"]["lat"]
-st.session_state["center"]["lng"] = data["center"]["lng"]
+try:
+    st.session_state["center"]["lat"] = data["center"]["lat"]
+    st.session_state["center"]["lng"] = data["center"]["lng"]
+except:
+    pass
 
 # st.write(data)
 st.write(st.session_state["center"])
