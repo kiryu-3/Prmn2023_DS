@@ -718,11 +718,16 @@ st_data = st_folium(st.session_state['map'], width=725)
 # 地図のデータをコピー
 data = copy.deepcopy(dict(st_data))
 
-st.session_state.map.location = [data["center"]["lat"], data["center"]["lng"]]
-st.session_state['zoom_level'] = data["zoom"]
+try:
+    st.session_state.map.location = [data["center"]["lat"], data["center"]["lng"]]
+    st.session_state.map.location = [data["center"]["lat"], data["center"]["lng"]]
+    st.session_state['zoom_level'] = data["zoom"]
+except:
+    pass
 
 # st.write(data)
 st.write(st.session_state.map.location)
+st.write(st.session_state['zoom_level'])
 
 try:
     # data["all_drawings"]が有効なリストであるかどうか判定
