@@ -34,14 +34,12 @@ hide_menu_style = """
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 # 読み込んだデータフレームを管理する
-if 'center' not in st.session_state:  # 初期化
-    st.session_state['center'] = dict()
-    st.session_state['center']["lat"] = 42.80961703023506
-    st.session_state['center']["lng"] = 141.69487953186038
+if 'zoom_level' not in st.session_state:  # 初期化
+    st.session_state['zoom_level'] = 16
 
 if 'map' not in st.session_state:  # 初期化
     # 初めての表示時は空のマップを表示
-    m = folium.Map(location=[42.793553, 141.6958724], zoom_start=16)
+    m = folium.Map(location=[42.793553, 141.6958724], zoom_start=st.session_state['zoom_level'])
     # Leaflet.jsのDrawプラグインを追加
     draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
     draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
@@ -719,18 +717,11 @@ st_data = st_folium(st.session_state['map'], width=725)
 
 # 地図のデータをコピー
 data = copy.deepcopy(dict(st_data))
-try:
-   #  st.session_state["center"]["lat"] = data["center"]["lat"]
-   #  st.session_state["center"]["lng"] = data["center"]["lng"]
-   change_list = [data["center"]["lat"], data["center"]["lng"]]
-   # st.session_state.map.location = change_list
-   # st.session_state.map.zoom_start = data["zoom"]
-except:
-    pass
+
+st.session_state.map.location = [data["center"]["lat"], data["center"]["lng"]]
 
 # st.write(data)
 st.write(st.session_state.map.location)
-st.write(st.session_state.map.zoom_start)
 
 try:
     # data["all_drawings"]が有効なリストであるかどうか判定
