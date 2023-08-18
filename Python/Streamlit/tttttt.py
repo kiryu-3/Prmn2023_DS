@@ -31,4 +31,6 @@ m = folium.Map(location=[st.session_state.map_info["latitude"], st.session_state
                zoom_start=st.session_state.map_info["zoom"])
 
 # StreamlitコンポーネントにFolium Mapオブジェクトを埋め込む
-st_folium(m)
+data = st_folium(m)
+
+st.write(data)
