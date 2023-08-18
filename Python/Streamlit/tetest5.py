@@ -719,8 +719,10 @@ st_data = st_folium(st.session_state['map'], width=725)
 data = copy.deepcopy(dict(st_data))
 
 try:
-    st.session_state.map.location = [data["center"]["lat"], data["center"]["lng"]]
-    st.session_state.map.location = [data["center"]["lat"], data["center"]["lng"]]
+    change_list = list()
+    change_list[0] = data["center"]["lat"]
+    change_list[1] = data["center"]["lng"]
+    st.session_state.map.location = change_list
     st.session_state['zoom_level'] = data["zoom"]
 except:
     pass
