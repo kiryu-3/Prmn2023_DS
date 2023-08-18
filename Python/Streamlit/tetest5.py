@@ -719,6 +719,7 @@ st_data = st_folium(st.session_state['map'], width=725)
 data = copy.deepcopy(dict(st_data))
 
 st.session_state.map.location = [data["center"]["lat"], data["center"]["lng"]]
+st.session_state['zoom_level'] = data["zoom"]
 
 # st.write(data)
 st.write(st.session_state.map.location)
