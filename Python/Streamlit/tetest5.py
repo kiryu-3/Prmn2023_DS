@@ -724,11 +724,13 @@ try:
    #  st.session_state["center"]["lng"] = data["center"]["lng"]
    change_list = [data["center"]["lat"], data["center"]["lng"]]
    st.session_state.map.location = change_list
+   st.session_state.map.zoom_start = data["zoom"]
 except:
     pass
 
 # st.write(data)
 st.write(st.session_state.map.location)
+st.write(st.session_state.map.zoom_start)
 
 try:
     # data["all_drawings"]が有効なリストであるかどうか判定
