@@ -740,6 +740,7 @@ st.session_state["center"]["lat"] = data["center"]["lat"]
 st.session_state["center"]["lng"] = data["center"]["lng"]
 
 # st.write(data)
+st.write(st.session_state["center"])
 
 try:
     # data["all_drawings"]が有効なリストであるかどうか判定
