@@ -730,7 +730,7 @@ except:
 
 # st.write(data)
 st.write(st.session_state.map.location)
-st.write(st.session_state.map.zoom_start)
+st.write(st.session_state.map.zoom)
 
 try:
     # data["all_drawings"]が有効なリストであるかどうか判定
