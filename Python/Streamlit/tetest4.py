@@ -714,7 +714,7 @@ st_data = st_folium(st.session_state['map'], width=725)
 # 地図のデータをコピー
 data = copy.deepcopy(dict(st_data))
 
-st.write(data)
+st.write(data["center"])
 
 try:
     # data["all_drawings"]が有効なリストであるかどうか判定
