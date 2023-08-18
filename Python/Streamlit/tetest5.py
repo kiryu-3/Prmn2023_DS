@@ -39,24 +39,15 @@ if 'center' not in st.session_state:  # 初期化
     st.session_state['center']["lat"] = 42.80961703023506
     st.session_state['center']["lng"] = 141.69487953186038
 
-# if 'map' not in st.session_state:  # 初期化
-#     # 初めての表示時は空のマップを表示
-#     m = folium.Map(location=[42.793553, 141.6958724], zoom_start=16)
-#     # Leaflet.jsのDrawプラグインを追加
-#     draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
-#     draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
-#     draw.add_to(m)
+if 'map' not in st.session_state:  # 初期化
+    # 初めての表示時は空のマップを表示
+    m = folium.Map(location=[42.793553, 141.6958724], zoom_start=16)
+    # Leaflet.jsのDrawプラグインを追加
+    draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
+    draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
+    draw.add_to(m)
 
-#     st.session_state['map'] = m
-
-# else:
-#     m = folium.Map(location=[st.session_state['center']["lat"], st.session_state['center']["lng"]], zoom_start=16)
-#     # Leaflet.jsのDrawプラグインを追加
-#     draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
-#     draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
-#     draw.add_to(m)
-
-#     st.session_state['map'] = m
+    st.session_state['map'] = m
 
 # 読み込んだデータフレームを管理する
 if 'df' not in st.session_state:  # 初期化
@@ -724,21 +715,15 @@ def ingate(plot_point, gate_polygon):
 
 
 # 表示する地図
-
-m = folium.Map(location=[st.session_state['center']["lat"], st.session_state['center']["lng"]], zoom_start=16)
-# Leaflet.jsのDrawプラグインを追加
-draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
-draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
-draw.add_to(m)
-
-st.session_state['map'] = m
 st_data = st_folium(st.session_state['map'], width=725)
 
 # 地図のデータをコピー
 data = copy.deepcopy(dict(st_data))
 try:
-    st.session_state["center"]["lat"] = data["center"]["lat"]
-    st.session_state["center"]["lng"] = data["center"]["lng"]
+   #  st.session_state["center"]["lat"] = data["center"]["lat"]
+   #  st.session_state["center"]["lng"] = data["center"]["lng"]
+   change_list = [data["center"]["lat"], data["center"]["lng"]]
+   st.session_state.map.location = change_list
 except:
     pass
 
