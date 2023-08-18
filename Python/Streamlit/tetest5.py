@@ -728,6 +728,7 @@ except:
     pass
 
 # st.write(data)
+st.write(change_list)
 st.write(st.session_state.map.location)
 st.write(st.session_state['zoom_level'])
 
