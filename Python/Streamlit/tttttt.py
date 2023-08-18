@@ -21,7 +21,7 @@ new_zoom = st.sidebar.slider("Zoom Level", min_value=1, max_value=20, value=st.s
 st.session_state.map_info["zoom"] = new_zoom
 
 # 中心座標（緯度と経度）を更新
-st.sidebar.file_uploader("CSVファイルをアップロード", type=["csv"], key="upload_csvfile", on_change=upload_csv)
+st.sidebar.file_uploader("CSVファイルをアップロード", type=["csv"])
 new_latitude = st.sidebar.number_input("Latitude", value=st.session_state.map_info["latitude"])
 new_longitude = st.sidebar.number_input("Longitude", value=st.session_state.map_info["longitude"])
 st.session_state.map_info["latitude"] = new_latitude
