@@ -37,15 +37,15 @@ st.markdown(hide_menu_style, unsafe_allow_html=True)
 if 'zoom_level' not in st.session_state:  # 初期化
     st.session_state['zoom_level'] = 16
 
-if 'map' not in st.session_state:  # 初期化
-    # 初めての表示時は空のマップを表示
-    m = folium.Map(location=[42.793553, 141.6958724])
-    # Leaflet.jsのDrawプラグインを追加
-    draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
-    draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
-    draw.add_to(m)
+# if 'map' not in st.session_state:  # 初期化
+#     # 初めての表示時は空のマップを表示
+#     m = folium.Map(location=[42.793553, 141.6958724])
+#     # Leaflet.jsのDrawプラグインを追加
+#     draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
+#     draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
+#     draw.add_to(m)
 
-    st.session_state['map'] = m
+#     st.session_state['map'] = m
 
 # 読み込んだデータフレームを管理する
 if 'df' not in st.session_state:  # 初期化
@@ -711,11 +711,27 @@ def ingate(plot_point, gate_polygon):
     )
     return boolean_point_in_polygon(point, polygon)
 
+# 読み込んだデータフレームを管理する
+if 'center' not in st.session_state:  # 初期化
+    syoki_list = list()
+    syoki_list.append(42.793553)
+    syoki_list.append(141.6958724)
+    st.session_state['center'] = syoki_list
+    
+# 読み込んだデータフレームを管理する
+if 'zoom_level' not in st.session_state:  # 初期化
+    st.session_state['zoom_level'] = 16
 
 # 表示する地図
-st_data = st_folium(st.session_state['map'], width=725)
+# 初めての表示時は空のマップを表示
+m = folium.Map(location=st.session_state['center'], zoom_start=st.session_state['zoom_level'])
+# Leaflet.jsのDrawプラグインを追加
+draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
+draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
+draw.add_to(m)
 
-st.write(st.session_state['map'].zoom_start)
+st.session_state['map'] = m
+st_data = st_folium(st.session_state['map'], width=725)
 
 # 地図のデータをコピー
 data = copy.deepcopy(dict(st_data))
@@ -724,7 +740,7 @@ try:
     change_list = list()
     change_list.append(data["center"]["lat"])
     change_list.append(data["center"]["lng"])
-    # st.session_state.map.location = change_list
+    st.session_state.['center'] = change_list
     st.session_state['zoom_level'] = data["zoom"]
 except:
     pass
