@@ -45,10 +45,10 @@ if 'map' not in st.session_state:  # 初期化
 
 # 読み込んだデータフレームを管理する
 if 'center' not in st.session_state:  # 初期化
-    syoki_list = list()
-    syoki_list.append(42.793553)
-    syoki_list.append(141.6958724)
-    st.session_state['center'] = syoki_list
+    change_dict = dict()
+    change_dict["lat"] = 42.79355312
+    change_dict["lng"] = 141.695872412
+    st.session_state['center'] = change_dict
 # 読み込んだデータフレームを管理する
 if 'zoom_level' not in st.session_state:  # 初期化
     st.session_state['zoom_level'] = 16
