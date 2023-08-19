@@ -740,7 +740,7 @@ try:
     change_list = list()
     change_list.append(data["center"]["lat"])
     change_list.append(data["center"]["lng"])
-    st.session_state.['center'] = change_list
+    st.session_state['center'] = change_list
     st.session_state['zoom_level'] = data["zoom"]
 except:
     pass
