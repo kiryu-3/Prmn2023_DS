@@ -723,8 +723,10 @@ st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.sess
 # 地図のデータをコピー
 data = copy.deepcopy(dict(st_data))
 
-st.write(data)
+
 st.write(st.session_state['zoom_level'])
+st.write(st.session_state['center'])
+st.write(data)
 
 # try:
 #     change_list = list()
