@@ -814,10 +814,10 @@ try:
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
 
-            change_list = list()
-            change_list.append(data["center"]["lat"])
-            change_list.append(data["center"]["lng"])
-            st.session_state['center'] = change_list
+            change_dict = dict()
+            change_dict["lat"] = data["center"]["lat"]
+            change_dict["lng"] = data["center"]["lng"]
+            st.session_state['center'] = change_dict
             st.session_state['zoom_level'] = data["zoom"]
 
             if st.session_state["kiseki_flag"]:
