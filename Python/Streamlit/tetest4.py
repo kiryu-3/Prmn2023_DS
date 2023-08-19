@@ -44,6 +44,9 @@ if 'map' not in st.session_state:  # 初期化
     st.session_state['map'] = m
 
 # 読み込んだデータフレームを管理する
+if 'zoom_level' not in st.session_state:  # 初期化
+    st.session_state['zoom_level'] = 16
+# 読み込んだデータフレームを管理する
 if 'df' not in st.session_state:  # 初期化
     df = pd.DataFrame()
     st.session_state['df'] = df
@@ -709,12 +712,21 @@ def ingate(plot_point, gate_polygon):
 
 
 # 表示する地図
-st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=10)
+st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.session_state['zoom_level'])
 
 # 地図のデータをコピー
 data = copy.deepcopy(dict(st_data))
 
 st.write(data)
+
+try:
+    change_list = list()
+    change_list.append(data["center"]["lat"])
+    change_list.append(data["center"]["lng"])
+    st.session_state['center'] = change_list
+    st.session_state['zoom_level'] = data["zoom"]
+except:
+    pass
 
 try:
     # data["all_drawings"]が有効なリストであるかどうか判定
