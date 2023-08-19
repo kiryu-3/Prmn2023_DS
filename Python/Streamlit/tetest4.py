@@ -44,6 +44,12 @@ if 'map' not in st.session_state:  # 初期化
     st.session_state['map'] = m
 
 # 読み込んだデータフレームを管理する
+if 'center' not in st.session_state:  # 初期化
+    syoki_list = list()
+    syoki_list.append(42.793553)
+    syoki_list.append(141.6958724)
+    st.session_state['center'] = syoki_list
+# 読み込んだデータフレームを管理する
 if 'zoom_level' not in st.session_state:  # 初期化
     st.session_state['zoom_level'] = 16
 # 読み込んだデータフレームを管理する
@@ -712,7 +718,7 @@ def ingate(plot_point, gate_polygon):
 
 
 # 表示する地図
-st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.session_state['zoom_level'])
+st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.session_state['zoom_level'], location=st.session_state['center'])
 
 # 地図のデータをコピー
 data = copy.deepcopy(dict(st_data))
