@@ -709,7 +709,7 @@ def ingate(plot_point, gate_polygon):
 
 
 # 表示する地図
-st_data = st_folium(st.session_state['map'], width=725)
+st_data = st_folium(st.session_state['map'], width=800, height=800, zoom_start=16)
 
 # 地図のデータをコピー
 data = copy.deepcopy(dict(st_data))
