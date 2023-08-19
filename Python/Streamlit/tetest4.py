@@ -715,9 +715,10 @@ def ingate(plot_point, gate_polygon):
 st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.session_state['zoom_level'])
 
 # 地図のデータをコピー
-st.session_state['ddata'] = copy.deepcopy(dict(st_data))
+data = copy.deepcopy(dict(st_data))
 
-st.write(st.session_state['ddata'])
+st.write(data)
+st.write(st.session_state['zoom_level'])
 
 # try:
 #     change_list = list()
@@ -808,10 +809,10 @@ try:
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
 
             change_list = list()
-            change_list.append(st.session_state['ddata']["center"]["lat"])
-            change_list.append(st.session_state['ddata']["center"]["lng"])
+            change_list.append(data["center"]["lat"])
+            change_list.append(data["center"]["lng"])
             st.session_state['center'] = change_list
-            st.session_state['zoom_level'] = st.session_state['ddata']["zoom"]
+            st.session_state['zoom_level'] = data["zoom"]
 
             if st.session_state["kiseki_flag"]:
                 # 線のジオJSONを追加
