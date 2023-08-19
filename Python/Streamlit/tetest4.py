@@ -719,14 +719,14 @@ data = copy.deepcopy(dict(st_data))
 
 st.write(data)
 
-try:
-    change_list = list()
-    change_list.append(data["center"]["lat"])
-    change_list.append(data["center"]["lng"])
-    st.session_state['center'] = change_list
-    st.session_state['zoom_level'] = data["zoom"]
-except:
-    pass
+# try:
+#     change_list = list()
+#     change_list.append(data["center"]["lat"])
+#     change_list.append(data["center"]["lng"])
+#     st.session_state['center'] = change_list
+#     st.session_state['zoom_level'] = data["zoom"]
+# except:
+#     pass
 
 try:
     # data["all_drawings"]が有効なリストであるかどうか判定
@@ -806,6 +806,12 @@ try:
                     # 図形IDを表示するツールチップを設定
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
+
+            change_list = list()
+            change_list.append(data["center"]["lat"])
+            change_list.append(data["center"]["lng"])
+            st.session_state['center'] = change_list
+            st.session_state['zoom_level'] = data["zoom"]
 
             if st.session_state["kiseki_flag"]:
                 # 線のジオJSONを追加
