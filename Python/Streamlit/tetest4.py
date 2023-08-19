@@ -726,7 +726,7 @@ data = copy.deepcopy(dict(st_data))
 
 st.write(st.session_state['zoom_level'])
 st.write(st.session_state['center'])
-tab4.write(data)
+# st.write(data)
 
 # try:
 #     change_list = list()
@@ -941,3 +941,4 @@ with st.sidebar:
     with tab4:
         if len(st.session_state['df']) != 0:
             st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
+        st.write(data)
