@@ -444,6 +444,11 @@ def select_data():
             popup=folium.GeoJsonPopup(fields=['popup'], labels=False)
         ).add_to(st.session_state['map'])
 
+    change_dict = dict()
+    change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+    change_dict["lng"] = st.session_state["data"]["center"]["lng"]
+    st.session_state['center'] = change_dict
+    st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
 
 def select_graph():
     # st.session_state["cols"][1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
@@ -558,6 +563,11 @@ def select_graph():
         # グラフを空にする
         st.session_state["graph_data"] = dict()
 
+    change_dict = dict()
+    change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+    change_dict["lng"] = st.session_state["data"]["center"]["lng"]
+    st.session_state['center'] = change_dict
+    st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
 
 def kiseki_draw():
     if st.session_state['kiseki_flag']:
@@ -610,6 +620,11 @@ def kiseki_draw():
                 len(st.session_state['tuuka_list'][idx]))
             folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
+    change_dict = dict()
+    change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+    change_dict["lng"] = st.session_state["data"]["center"]["lng"]
+    st.session_state['center'] = change_dict
+    st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
 
 # 図形情報を表示する図形の選択・加工
 def select_shape():
@@ -635,6 +650,11 @@ def select_shape():
         st.session_state["selected_shape_type"] = ""
         st.session_state["selected_shape"] = list()
 
+    change_dict = dict()
+    change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+    change_dict["lng"] = st.session_state["data"]["center"]["lng"]
+    st.session_state['center'] = change_dict
+    st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
 
 # 地図から図形を削除する
 def delete_shape():
@@ -701,6 +721,11 @@ def delete_shape():
 
             # x座標、y座標ごとに座標が一切被っていない場合はfalseを返す
 
+    change_dict = dict()
+    change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+    change_dict["lng"] = st.session_state["data"]["center"]["lng"]
+    st.session_state['center'] = change_dict
+    st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
 
 def max_min_cross(p1, p2, p3, p4):
     min_ab, max_ab = min(p1, p2), max(p1, p2)
