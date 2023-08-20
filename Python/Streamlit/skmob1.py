@@ -2,8 +2,19 @@ import streamlit as st
 import folium
 from streamlit_folium import folium_static
 import skmob
+from datetime import datetime
 
-# データの読み込みと前処理（scikit-mobilityを使用）
+# ダミーのデータと関数（実際のデータや関数に置き換える必要があります）
+latitude = 37.7749
+longitude = -122.4194
+path_coordinates = [(37.7749, -122.4194), (37.774, -122.419), (37.773, -122.418)]
+def filter_data_by_date(selected_date):
+    # ダミーのデータフィルタリング
+    return []
+
+def calculate_total_distance(data):
+    # ダミーの統計情報計算
+    return 10.0
 
 # Streamlitアプリケーションの設定
 st.title("移動データ可視化アプリ")
@@ -18,7 +29,7 @@ folium.PolyLine(locations=path_coordinates, color='blue').add_to(m)
 folium_static(m)
 
 # ユーザーインタラクション
-selected_date = st.date_input("表示する日付を選択")
+selected_date = st.date_input("表示する日付を選択", datetime.today())
 filtered_data = filter_data_by_date(selected_date)
 
 # 統計情報の表示（scikit-mobilityを使用）
