@@ -1,31 +1,42 @@
-import json
-import random
-from datetime import datetime, timedelta
-from collections import defaultdict
-import plotly.graph_objs as go
-import plotly.io as pio
-import plotly
-
-import matplotlib.pyplot as plt
-import japanize_matplotlib
+import streamlit as st
 import pandas as pd
+from PIL import Image
+import base64
+import requests
+from io import BytesIO
+import japanize_matplotlib
+import matplotlib.pyplot as plt
 import folium
 from folium import plugins
 from folium.plugins import Draw, TimestampedGeoJson
 from turfpy.measurement import boolean_point_in_polygon
 from geojson import Point, Polygon, Feature
-import streamlit as st
-from streamlit_folium import st_folium
-import io
-from io import BytesIO
-import itertools
-import copy
+import plotly.graph_objs as go
+import plotly.io as pio
+import plotly
 
+# 画像URLを指定
+image_url = "https://imgur.com/okIhGTb.jpg"
+
+# 画像をダウンロードしPILのImageオブジェクトとして読み込む
+response = requests.get(image_url)
+image = Image.open(BytesIO(response.content))
+
+# 画像をBase64エンコード
+image_data = base64.b64encode(response.content).decode("utf-8")
+
+# Streamlit ページの設定
 st.set_page_config(
     page_title="cist-mobmap",
-    page_icon=":world_map:️",
-    layout="wide",
+    page_icon=image_data
+    layout="wide"
 )
+
+# st.set_page_config(
+#     page_title="cist-mobmap",
+#     page_icon=":world_map:️",
+#     layout="wide",
+# )
 hide_menu_style = """
     <style>
     #MainMenu {visibility: hidden;}
