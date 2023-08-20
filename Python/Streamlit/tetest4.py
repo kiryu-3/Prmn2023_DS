@@ -30,9 +30,6 @@ image_url = "https://imgur.com/okIhGTb.jpg"
 response = requests.get(image_url)
 image = Image.open(BytesIO(response.content))
 
-# 画像をBase64エンコード
-image_data = base64.b64encode(response.content).decode("utf-8")
-
 # Streamlit ページの設定
 st.set_page_config(
     page_title="cist-mobmap",
