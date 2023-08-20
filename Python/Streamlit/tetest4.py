@@ -22,7 +22,7 @@ import itertools
 import copy
 
 st.set_page_config(
-    page_title="streamlit-folium documentation",
+    page_title="cist-mobmap",
     page_icon=":world_map:️",
     layout="wide",
 )
