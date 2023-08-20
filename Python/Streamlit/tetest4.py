@@ -989,6 +989,7 @@ with st.sidebar:
         if len(st.session_state['df']) != 0:
             st.multiselect("選択してください", st.session_state['df'].iloc[:, 0].unique(), key="select_data_id",
                            on_change=select_data)
+            st.write(st.session_state['sorted_df'])
 
     # 図形の情報の選択と削除
     with tab3:
