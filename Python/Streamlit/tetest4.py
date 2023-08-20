@@ -105,7 +105,7 @@ if "selected_shape" not in st.session_state:  # 初期化
     st.session_state["selected_shape"] = list()
 # tab3に表示する選択された図形のタイプを管理する
 if "selected_shape_type" not in st.session_state:  # 初期化
-    st.session_state["selected_shape_type"] = ""
+    st.session_state["selected_shape_type"] = "ゲート情報"
 # グラフデータを管理する
 if "graph_data" not in st.session_state:  # 初期化
     st.session_state["graph_data"] = dict()
