@@ -295,35 +295,41 @@ def upload_csv():
         if len(st.session_state['draw_data']) != 0:
             for idx, sdata in enumerate(st.session_state['draw_data']):
 
-                # 通過人数カウントの準備
-                append_list = [dict() for _ in range(len(st.session_state['draw_data']))]
-                st.session_state['tuuka_list'] = append_list
-
-                # ゲートとIDの組み合わせごとにループ
-                for idx1, gates in enumerate(st.session_state['gate_data']):
-                    for key, values in st.session_state['kiseki_data'].items():
-
-                        # ポリゴンゲートのときは初期座標をチェック
-                        if gates[0] == gates[-1]:
-                            if ingate(values[0]["座標"][0], gates):
-                                st.session_state['tuuka_list'][idx1][key] = values[0]["日時"]
+                if len(st.session_state['df_new']) != 0:
+                    # 通過人数カウントの準備
+                    append_list = [dict() for _ in range(len(st.session_state['draw_data']))]
+                    st.session_state['tuuka_list'] = append_list
+        
+                    # ゲートとIDの組み合わせごとにループ
+                    for idx1, gates in enumerate(st.session_state['gate_data']):
+                        for key, values in st.session_state['kiseki_data'].items():
+        
+                            # ポリゴンゲートのときは初期座標をチェック
+                            if gates[0] == gates[-1]:
+                                if ingate(values[0]["座標"][0], gates):
+                                    st.session_state['tuuka_list'][idx1][key] = values[0]["日時"]
+                                    continue  # このIDのループを終了
+                                else:
+                                    pass
+        
+                            kekka = cross_judge(gates, values)
+                            if kekka[0]:
+                                st.session_state['tuuka_list'][idx1][key] = values[kekka[1]]["日時"]
                                 continue  # このIDのループを終了
                             else:
                                 pass
-
-                        kekka = cross_judge(gates, values)
-                        if kekka[0]:
-                            st.session_state['tuuka_list'][idx1][key] = values[kekka[1]]["日時"]
-                            continue  # このIDのループを終了
-
-                # 図形IDを表示するツールチップを設定
-                tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
-                # 通過人数を表示するポップアップを指定
-                popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(
-                    len(st.session_state['tuuka_list'][idx]))
-                # 地図にツールチップとポップアップを追加する
-                folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(
-                    st.session_state['map'])
+        
+                    # 図形IDを表示するツールチップを設定
+                    tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
+                    # 通過人数を表示するポップアップを指定
+                    popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(
+                        len(st.session_state['tuuka_list'][idx]))
+                    folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+        
+                else:
+                    # 図形IDを表示するツールチップを設定
+                    tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
+                    folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
 
     change_dict = dict()
     change_dict["lat"] = data["center"]["lat"]
