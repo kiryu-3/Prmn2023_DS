@@ -7,3 +7,4 @@ pylatex
 matplotlib
 japanize-matplotlib
 plotly
+skmob
