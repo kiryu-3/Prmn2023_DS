@@ -989,8 +989,11 @@ with st.sidebar:
         if len(st.session_state['df']) != 0:
             st.multiselect("選択してください", st.session_state['df'].iloc[:, 0].unique(), key="select_data_id",
                            on_change=select_data)
-            st.write(st.session_state['sorted_df'])
-
+            # データフレームをCSVファイルに保存
+            csv_file = st.session_state['sorted_df'].to_csv(index=False)
+            # ダウンロードボタンを追加
+            st.download_button(label="Download CSV", data=csv_file, file_name='sorted.csv')
+            
     # 図形の情報の選択と削除
     with tab3:
         if len(st.session_state['draw_data']) != 0:
