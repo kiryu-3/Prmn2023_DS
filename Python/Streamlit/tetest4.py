@@ -34,7 +34,8 @@ image = Image.open(BytesIO(response.content))
 st.set_page_config(
     page_title="cist-mobmap",
     page_icon=image,
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 # st.set_page_config(
