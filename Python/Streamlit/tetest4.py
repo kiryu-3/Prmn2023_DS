@@ -614,7 +614,7 @@ def select_shape():
 
     # 図形IDが指定されていないとき
     else:
-        st.session_state["selected_shape_type"] = ""
+        st.session_state["selected_shape_type"] = "ゲート情報"
         st.session_state["selected_shape"] = list()
 
     change_dict = dict()
