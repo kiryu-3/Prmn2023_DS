@@ -991,8 +991,10 @@ with st.sidebar:
                            on_change=select_data)
             # データフレームをCSVファイルに保存
             csv_file = st.session_state['sorted_df'].to_csv(index=False)
-            # ダウンロードボタンを追加
-            st.download_button(label="Download CSV", data=csv_file, file_name='sorted.csv')
+
+            if len(st.session_state['select_data_id']) != 0:
+                # ダウンロードボタンを追加
+                st.download_button(label="Download CSV", data=csv_file, file_name='sorted.csv')
             
     # 図形の情報の選択と削除
     with tab3:
