@@ -332,10 +332,10 @@ def upload_csv():
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
 
     change_dict = dict()
-    change_dict["lat"] = data["center"]["lat"]
-    change_dict["lng"] = data["center"]["lng"]
+    change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+    change_dict["lng"] = st.session_state["data"]["center"]["lng"]
     st.session_state['center'] = change_dict
-    st.session_state['zoom_level'] = data["zoom"]
+    st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
 
 def select_data():
     # プロット・軌跡を描画するデータの選択
@@ -768,7 +768,7 @@ def ingate(plot_point, gate_polygon):
 st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.session_state['zoom_level'], center=st.session_state['center'])
 
 # 地図のデータをコピー
-data = copy.deepcopy(dict(st_data))
+st.session_state["data"] = copy.deepcopy(dict(st_data))
 
 
 st.write(st.session_state['zoom_level'])
@@ -787,23 +787,23 @@ st.write(st.session_state['center'])
 try:
     # data["all_drawings"]が有効なリストであるかどうか判定
     # 値が入っていたら値を追加する
-    if data["all_drawings"] is not None and isinstance(data["all_drawings"], list) and len(data["all_drawings"]) > 0:
+    if st.session_state["data"]["all_drawings"] is not None and isinstance(st.session_state["data"]["all_drawings"], list) and len(st.session_state["data"]["all_drawings"]) > 0:
 
         # サークルのデータを加工
-        if data["last_circle_polygon"] is not None:
-            data["all_drawings"][0]["geometry"]["type"] = "Polygon"
-            data["all_drawings"][0]["geometry"]["coordinates"] = data["last_circle_polygon"]["coordinates"]
-            center_list = data["last_active_drawing"]["geometry"]["coordinates"]
+        if st.session_state["data"]["last_circle_polygon"] is not None:
+            st.session_state["data"]["all_drawings"][0]["geometry"]["type"] = "Polygon"
+            st.session_state["data"]["all_drawings"][0]["geometry"]["coordinates"] = st.session_state["data"]["last_circle_polygon"]["coordinates"]
+            center_list = st.session_state["data"]["last_active_drawing"]["geometry"]["coordinates"]
             center_dict = dict()
             center_dict["lat"] = center_list[0]
             center_dict["lng"] = center_list[1]
-            data["all_drawings"][0]["properties"]["center"] = center_dict
+            st.session_state["data"]["all_drawings"][0]["properties"]["center"] = center_dict
 
         # data["all_drawings"][0]が追加できそうなら追加
-        if (data["all_drawings"][0] not in st.session_state['draw_data'] or len(st.session_state['draw_data']) == 0):
+        if (st.session_state["data"]["all_drawings"][0] not in st.session_state['draw_data'] or len(st.session_state['draw_data']) == 0):
 
             # st.session_state['draw_data']に追加
-            st.session_state['draw_data'].append(data["all_drawings"][0])
+            st.session_state['draw_data'].append(st.session_state["data"]["all_drawings"][0])
 
             # 線のジオJSONを削除する
             line_layers_to_remove = []
@@ -853,10 +853,8 @@ try:
                     # 図形IDを表示するツールチップを設定
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
                     # 通過人数を表示するポップアップを指定
-                    popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(
-                        len(st.session_state['tuuka_list'][idx]))
-                    folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(
-                        st.session_state['map'])
+                    popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
+                    folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
                 else:
                     # 図形IDを表示するツールチップを設定
@@ -864,10 +862,10 @@ try:
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
 
             change_dict = dict()
-            change_dict["lat"] = data["center"]["lat"]
-            change_dict["lng"] = data["center"]["lng"]
+            change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+            change_dict["lng"] = st.session_state["data"]["center"]["lng"]
             st.session_state['center'] = change_dict
-            st.session_state['zoom_level'] = data["zoom"]
+            st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
 
             if st.session_state["kiseki_flag"]:
                 # 線のジオJSONを追加
@@ -988,4 +986,4 @@ with st.sidebar:
     with tab4:
         if len(st.session_state['df']) != 0:
             st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
-        st.write(data)
+        st.write(st.session_state["data"])
