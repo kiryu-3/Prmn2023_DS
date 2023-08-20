@@ -526,56 +526,6 @@ def select_graph():
             # JSONをst.session_stateに保存
             st.session_state["graph_data"][idx] = graph_json
 
-        # グラフを表示
-        # st.plotly_chart(fig)
-
-        # # 時刻と値をリストに分ける
-        # time_points, values = zip(*sorted_data)
-
-        # # 最終日の日付を取得
-        # last_date_str = time_points[-1].split()[0]
-        # last_date = datetime.strptime(last_date_str, '%m/%d')
-
-        # # 最終日のデータが24時まであるか確認
-        # if last_date.hour != 23:
-        #     # 24時までのデータを追加
-        #     last_date += timedelta(days=1)
-        #     time_points = tuple(list(time_points) + [f"{last_date.strftime('%m/%d')} 00時"])
-        #     values = tuple(list(values) + [0])
-
-        # # グラフの作成
-        # fig, ax = plt.subplots(figsize=(725/96, 6))
-        # ax.plot(time_points, values)
-
-        # # x軸とy軸のラベル、タイトルを設定
-        # # ax.set_xlabel('時間')
-        # ax.set_ylabel('通過人数[人]')
-        # # ax.set_title('通過人数')
-
-        # # x軸の目盛りを6時間ごとに設定
-        # ax.set_xticks(range(0, len(time_points), 6))
-        # ax.set_xticklabels(time_points[::6])
-
-        # # y軸のスケールを整数値に設定
-        # count_per_group = 5
-
-        # # スケールが1ずつの条件を追加
-        # if max(values) <= 5:
-        #     count_per_group = 1
-
-        # ax.set_yticks(list(range(0, max(values) + count_per_group, count_per_group)) + [max(values)])
-
-        # # グラフをバイトストリームに変換
-        # buffer = BytesIO()
-        # plt.savefig(buffer, format='png')
-        # buffer.seek(0)
-
-        # # バイトストリームをst.session_stateに保存
-        # st.session_state['graph_image'] = buffer.getvalue()
-
-        # # グラフを表示
-        # # tab4.image(st.session_state['graph_image'], use_column_width=True)
-
     else:
         # グラフを空にする
         st.session_state["graph_data"] = dict()
@@ -813,18 +763,10 @@ st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.sess
 st.session_state["data"] = copy.deepcopy(dict(st_data))
 
 
-st.write(st.session_state['zoom_level'])
-st.write(st.session_state['center'])
+# st.write(st.session_state['zoom_level'])
+# st.write(st.session_state['center'])
 # st.write(data)
 
-# try:
-#     change_list = list()
-#     change_list.append(data["center"]["lat"])
-#     change_list.append(data["center"]["lng"])
-#     st.session_state['center'] = change_list
-#     st.session_state['zoom_level'] = data["zoom"]
-# except:
-#     pass
 
 try:
     # data["all_drawings"]が有効なリストであるかどうか判定
@@ -1034,4 +976,4 @@ with st.sidebar:
     with tab4:
         if len(st.session_state['df']) != 0:
             st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
-        st.write(st.session_state["data"])
+        # st.write(st.session_state["data"])
