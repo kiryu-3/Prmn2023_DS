@@ -18,11 +18,11 @@ if uploaded_file is not None:
     traj_df = skmob.TrajDataFrame(df, timestamp=True)
 
     # 地図の初期設定
-    m = folium.Map(location=[traj_df[traj_df.columns[3]].mean(), traj_df[traj_df.columns[2]].mean()], zoom_start=12)
+    m = folium.Map(location=[traj_df[traj_df.columns[2]].mean(), traj_df[traj_df.columns[3]].mean()], zoom_start=12)
 
     # 移動経路のプロット（streamlit-foliumを使用）
     for _, row in traj_df.iterrows():
-        folium.CircleMarker(location=(row[3], row[2]), radius=5, color='blue').add_to(m)
+        folium.CircleMarker(location=(row[2], row[3]), radius=5, color='blue').add_to(m)
 
     # 地図の表示
     folium_static(m)
