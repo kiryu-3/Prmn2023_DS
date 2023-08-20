@@ -7,4 +7,4 @@ pylatex
 matplotlib
 japanize-matplotlib
 plotly
-skmob
+scikit-mobility
