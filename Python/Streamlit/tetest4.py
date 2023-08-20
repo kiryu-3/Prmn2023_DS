@@ -263,6 +263,7 @@ def upload_csv():
                 folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(
                     st.session_state['map'])
 
+    
     else:
         # 空のデータフレームを作成
         df = pd.DataFrame()
@@ -290,6 +291,11 @@ def upload_csv():
         for key in line_layers_to_remove:
             del st.session_state['map']._children[key]
 
+    change_dict = dict()
+    change_dict["lat"] = data["center"]["lat"]
+    change_dict["lng"] = data["center"]["lng"]
+    st.session_state['center'] = change_dict
+    st.session_state['zoom_level'] = data["zoom"]
 
 def select_data():
     # プロット・軌跡を描画するデータの選択
