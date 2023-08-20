@@ -28,7 +28,7 @@ image_data = base64.b64encode(response.content).decode("utf-8")
 # Streamlit ページの設定
 st.set_page_config(
     page_title="cist-mobmap",
-    page_icon=image_data
+    page_icon=image_data,
     layout="wide"
 )
 
