@@ -968,7 +968,7 @@ with st.sidebar:
                          key="delete_shape_id",
                          on_change=delete_shape)
 
-            st.write("ゲートとその通過人数")
+            st.write("ゲートと通過時刻")
             st.write(st.session_state['tuuka_list'])
             st.write(st.session_state["selected_shape_type"])
             st.write(st.session_state["selected_shape"])
