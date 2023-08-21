@@ -117,13 +117,13 @@ if "graph_data" not in st.session_state:  # 初期化
 def features_maker():
     # TrajDataFrameをTimestampedGeoJsonとして追加
     features = []
-    for user_id, user_data in st.session_state['sorted_df'].groupby("userid"):
+    for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):
         popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">f"User ID: {user_id}"</div>'
         feature = {
             "type": "Feature",
             "geometry": {
                 "type": "MultiPoint",
-                "coordinates": user_data[['longitude', 'latitude']].values.tolist()
+                "coordinates": user_data[['lng', 'lat']].values.tolist()
             },
             "properties": {
                 "times": user_data["datetime"].dt.strftime("%Y-%m-%dT%H:%M:%S").tolist(),  # タイムスタンプを文字列に変換
@@ -179,9 +179,9 @@ def features_maker():
 #     return line_features
 
 def polylines_maker():
-    for user_id, user_data in st.session_state['sorted_df'].groupby("userid"):
+    for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):
         popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">f"User ID: {user_id}"</div>'
-        folium.PolyLine(locations=user_data[['longitude', 'latitude']].values.tolist(), color='#01bfff', weight=3, opacity=0.9,
+        folium.PolyLine(locations=user_data[['lng', 'lat']].values.tolist(), color='#01bfff', weight=3, opacity=0.9,
                         popup=folium.Popup(popup_html)).add_to(m)
 
 def change_mapinfo():
