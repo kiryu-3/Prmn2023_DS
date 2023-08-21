@@ -148,7 +148,7 @@ def features_maker():
 
 
 # 描画する軌跡データの作成
-def line_features_maker(list2, kiseki):
+def line_features_maker(kiseki):
     line_features = []
 
     # index_map = {value: index for index, value in enumerate(list2)}
@@ -156,7 +156,7 @@ def line_features_maker(list2, kiseki):
     # データをIDでグループ化する
     grouped_data = st.session_state['sorted_df'].groupby(st.session_state['sorted_df'].columns[0])
 
-    for itr in list2:
+    for itr in st.session_state['sorted_df']["uid"].unique():
         if itr in grouped_data.groups:
             indexNum = index_map[itr]
             group_df = grouped_data.get_group(itr)
