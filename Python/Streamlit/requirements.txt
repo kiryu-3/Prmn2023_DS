@@ -8,3 +8,4 @@ matplotlib
 japanize-matplotlib
 plotly
 scikit-mobility
+skmob
