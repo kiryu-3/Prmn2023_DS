@@ -180,18 +180,18 @@ def line_features_maker(kiseki):
 
                 if kiseki:
                     # times[i] がタイムスタンプ（ms since epoch または ISO string）とする
-                    timestamp = times[i]  # ここにタイムスタンプを代入
+                    # timestamp = times[i]  # ここにタイムスタンプを代入
                     
-                    # times[i] を datetime オブジェクトに変換
-                    timestamp = times[i]  # ここに適切な times の要素を代入する
-                    dt_object = datetime.fromtimestamp(timestamp)
+                    # # times[i] を datetime オブジェクトに変換
+                    # timestamp = times[i]  # ここに適切な times の要素を代入する
+                    # dt_object = datetime.fromtimestamp(timestamp)
                     
-                    # datetime オブジェクトを指定のフォーマットに変換
-                    formatted_string = dt_object.strftime("%Y-%m-%dT%H:%M:%S")
+                    # # datetime オブジェクトを指定のフォーマットに変換
+                    # formatted_string = dt_object.strftime("%Y-%m-%dT%H:%M:%S")
                     
                     # 軌跡データをセッションの状態に保存
                     st.session_state['kiseki_data'][str(itr)].append({'座標': [coords[i], coords[i + 1]],
-                                                                      '日時':  formatted_string})
+                                                                      '日時':  times[i]})
     return line_features
 
 def polylines_maker():
