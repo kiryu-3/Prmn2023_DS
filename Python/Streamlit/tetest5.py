@@ -150,10 +150,11 @@ def features_maker():
 # 描画する軌跡データの作成
 def line_features_maker(kiseki):
     for itr, group in st.session_state['sorted_df'].groupby(st.session_state['sorted_df'].columns[0]):
-        if kiseki:
-            st.session_state['kiseki_data'][str(itr)].append({'座標': [group["lng"], group["lat"]], '日時': str(group["datetime"])})
-        else:
-            pass
+        for zahyou in group:
+            if kiseki:
+                st.session_state['kiseki_data'][str(itr)].append({'座標': [zahyou["lng"], zahyou["lat"]], '日時': str(zahyou["datetime"])})
+            else:
+                pass
     # line_features = []
 
     # index_map = {value: index for index, value in enumerate(st.session_state['sorted_df']["uid"].unique())}
