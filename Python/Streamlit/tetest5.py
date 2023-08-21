@@ -179,9 +179,21 @@ def line_features_maker(kiseki):
             #     line_features.append(line_feature)
 
                 if kiseki:
+                    # times[i] がタイムスタンプ（ms since epoch または ISO string）とする
+                    timestamp = times[i]  # ここにタイムスタンプを代入
+                    
+                    # タイムスタンプを datetime オブジェクトに変換
+                    if isinstance(timestamp, int):  # タイムスタンプが ms since epoch 形式の場合
+                        dt = datetime.fromtimestamp(timestamp / 1000)  # タイムスタンプを秒単位に変換して datetime に
+                    elif isinstance(timestamp, str):  # タイムスタンプが ISO string 形式の場合
+                        dt = datetime.fromisoformat(timestamp)  # ISO string を datetime に変換
+                    
+                    # datetime オブジェクトを指定した形式の文字列に変換
+                    formatted_datetime = dt.strftime("%Y-%m-%dT%H:%M:%S")
+                    
                     # 軌跡データをセッションの状態に保存
                     st.session_state['kiseki_data'][str(itr)].append({'座標': [coords[i], coords[i + 1]],
-                                                                      '日時': times[i]})
+                                                                      '日時': formatted_datetime})
     return line_features
 
 def polylines_maker():
