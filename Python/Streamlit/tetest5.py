@@ -178,10 +178,10 @@ def line_features_maker(list2, kiseki):
             #     }
             #     line_features.append(line_feature)
 
-                if kiseki:
-                    # 軌跡データをセッションの状態に保存
-                    st.session_state['kiseki_data'][str(itr)].append({'座標': [coords[i], coords[i + 1]],
-                                                                      '日時': times[i]})
+            if kiseki:
+                # 軌跡データをセッションの状態に保存
+                st.session_state['kiseki_data'][str(itr)].append({'座標': [coords[i], coords[i + 1]],
+                                                                  '日時': times[i]})
     return line_features
 
 def polylines_maker():
