@@ -358,6 +358,7 @@ def upload_csv():
                     # 図形IDを表示するツールチップを設定
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
+    change_mapinfo()
 
 def select_data():
     # プロット・軌跡を描画するデータの選択
