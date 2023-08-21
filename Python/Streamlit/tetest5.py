@@ -14,7 +14,7 @@ from folium.plugins import Draw, TimestampedGeoJson
 from turfpy.measurement import boolean_point_in_polygon
 from geojson import Point, Polygon, Feature
 import skmob
-from skmob import TrajDataFrame
+from skmob import TrajDataFrame 
 import streamlit as st
 from streamlit_folium import st_folium
 import base64
