@@ -771,8 +771,8 @@ st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.sess
 st.session_state["data"] = copy.deepcopy(dict(st_data))
 
 
-# st.write(st.session_state['zoom_level'])
-# st.write(st.session_state['center'])
+st.write(st.session_state['zoom_level'])
+st.write(st.session_state['center'])
 # st.write(data)
 
 
