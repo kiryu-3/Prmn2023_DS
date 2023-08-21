@@ -156,7 +156,7 @@ def line_features_maker(kiseki):
                 next_index, next_zahyou = rows[i + 1]
                 if kiseki:
                     st.session_state['kiseki_data'][str(itr)].append(
-                        {'座標': [[zahyou["lng"], zahyou["lat"]], [next_zahyou["lng"], next_zahyou["lat"]]], '日時': datetime.strptime(zahyou["datetime"], '%Y-%m-%d %H:%M:%S').strftime('%Y/%m/%d %H:%M')})
+                        {'座標': [[zahyou["lng"], zahyou["lat"]], [next_zahyou["lng"], next_zahyou["lat"]]], '日時': datetime.strptime(str(zahyou["datetime"]), '%Y-%m-%d %H:%M:%S').strftime('%Y/%m/%d %H:%M')})
                 else:
                     pass
                 
