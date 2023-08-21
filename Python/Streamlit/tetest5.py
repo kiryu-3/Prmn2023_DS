@@ -161,7 +161,7 @@ def line_features_maker(kiseki):
             indexNum = index_map[itr]
             group_df = grouped_data.get_group(itr)
             coords = group_df[[group_df.columns[3], group_df.columns[2]]].values.tolist()
-            times = group_df[group_df.columns[1]].values.strftime("%Y-%m-%dT%H:%M:%S").tolist()
+            times = group_df[group_df.columns[1]].values.tolist()
 
             # 各行の座標データから軌跡データを作成
             for i in range(len(coords) - 1):
