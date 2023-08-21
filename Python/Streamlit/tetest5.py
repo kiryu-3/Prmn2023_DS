@@ -205,6 +205,7 @@ def upload_csv():
         # データフレームをセッションの状態に保存
         st.session_state['df'] = df
         st.session_state['df_new'] = df_new
+        df['daytime'] = pd.to_datetime(df['daytime'])
         st.session_state['sorted_df'] = TrajDataFrame(df, timestamp=True)
 
         st.session_state['kiseki_data'] = {str(itr): [] for itr in unique_values}
