@@ -971,6 +971,7 @@ with st.sidebar:
     # csvから読み込んだIDの表示とプロットするマーカー・軌跡の選択
     with tab2:
         st.write(st.session_state['df_new'])
+        st.write(st.session_state['sorted_df'])
         if len(st.session_state['df']) != 0:
             st.multiselect("選択してください", st.session_state['df'].iloc[:, 0].unique(), key="select_data_id",
                            on_change=select_data)
