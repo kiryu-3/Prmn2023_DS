@@ -124,7 +124,7 @@ def features_maker():
     popup_width = max_id_length * 13  # 1文字あたりの幅を13pxと仮定
     
     for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):
-        popup_html = '<div style="font-size: 14px; font-weight: bold; width: f"{popup_width}"px; height: 15px;  color: black;">UserID：{}</div>'.format(user_id)
+        popup_html = f'<div style="font-size: 14px; font-weight: bold; width: {int(popup_width)}px; height: 15px; color: black;">UserID：{user_id}</div>'
         feature = {
             "type": "Feature",
             "geometry": {
@@ -190,8 +190,8 @@ def polylines_maker():
     # 文字数に基づいて最適なポップアップの幅を計算
     popup_width = max_id_length * 13  # 1文字あたりの幅を13pxと仮定
     
-    for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):    
-        popup_html = '<div style="font-size: 14px; font-weight: bold; width: f"{popup_width}"px; height: 15px;  color: black;">UserID：{}</div>'.format(user_id)
+    for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):
+        popup_html = f'<div style="font-size: 14px; font-weight: bold; width: {int(popup_width)}px; height: 15px; color: black;">UserID：{user_id}</div>'
         folium.PolyLine(locations=user_data[['lat', 'lng']].values.tolist(), color='#01bfff', weight=3, opacity=0.9,
                         popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
