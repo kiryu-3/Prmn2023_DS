@@ -162,7 +162,7 @@ def line_features_maker(kiseki):
             group_df = grouped_data.get_group(itr)
             # group_df[group_df.columns[0]].dt.strftime("%Y-%m-%dT%H:%M:%S")
             coords = group_df[[group_df.columns[3], group_df.columns[2]]].values.tolist()
-            times = group_df[group_df.columns[0]].values.tolist()
+            times = group_df[group_df.columns[1]].values.tolist()
 
             # 各行の座標データから軌跡データを作成
             for i in range(len(coords) - 1):
@@ -182,7 +182,7 @@ def line_features_maker(kiseki):
                 if kiseki:                   
                     # 軌跡データをセッションの状態に保存
                     st.session_state['kiseki_data'][str(itr)].append({'座標': [coords[i], coords[i + 1]],
-                                                                      '日時':  datetime.fromtimestamp(times[i]).strftime("%Y-%m-%dT%H:%M:%S")})
+                                                                      '日時':  str(times[i]})
     return line_features
 
 def polylines_maker():
