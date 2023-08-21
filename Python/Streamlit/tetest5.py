@@ -182,7 +182,7 @@ def line_features_maker(kiseki):
                 if kiseki:                   
                     # 軌跡データをセッションの状態に保存
                     st.session_state['kiseki_data'][str(itr)].append({'座標': [coords[i], coords[i + 1]],
-                                                                      '日時':  group_df.columns[1]})
+                                                                      '日時':  times[i]})
     return line_features
 
 def polylines_maker():
@@ -212,7 +212,7 @@ def upload_csv():
         # バイナリデータからPandas DataFrameを作成
         df = pd.read_csv(io.BytesIO(file_data))
         df.columns = ['userid', 'datetime', 'latitude', 'longitude']
-        df['datetime'] = pd.to_datetime(df['datetime'])
+        # df['datetime'] = pd.to_datetime(df['datetime'])
         # 通過時間でソート
         df.sort_values(by=[df.columns[1]], inplace=True)
 
