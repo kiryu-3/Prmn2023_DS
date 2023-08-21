@@ -13,6 +13,7 @@ from folium import plugins
 from folium.plugins import Draw, TimestampedGeoJson
 from turfpy.measurement import boolean_point_in_polygon
 from geojson import Point, Polygon, Feature
+from skmob import TrajDataFrame
 import streamlit as st
 from streamlit_folium import st_folium
 import base64
@@ -188,8 +189,7 @@ def upload_csv():
         file_data = st.session_state["upload_csvfile"].read()
         # バイナリデータからPandas DataFrameを作成
         df = pd.read_csv(io.BytesIO(file_data))
-        df.loc[df["newid"] == 20230403156, "daytime"] = df.loc[df["newid"] == 20230403156, "daytime"].str.replace(
-            "2023/4/3", "2023/4/4")
+        # df.loc[df["newid"] == 20230403156, "daytime"] = df.loc[df["newid"] == 20230403156, "daytime"].str.replace("2023/4/3", "2023/4/4")
         # 通過時間でソート
         df.sort_values(by=[df.columns[1]], inplace=True)
 
@@ -204,7 +204,7 @@ def upload_csv():
         # データフレームをセッションの状態に保存
         st.session_state['df'] = df
         st.session_state['df_new'] = df_new
-        st.session_state['sorted_df'] = df
+        st.session_state['sorted_df'] = TrajDataFrame(df, timestamp=True)
 
         st.session_state['kiseki_data'] = {str(itr): [] for itr in unique_values}
 
