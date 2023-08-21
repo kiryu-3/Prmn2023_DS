@@ -5,7 +5,6 @@ from collections import defaultdict
 import plotly.graph_objs as go
 import plotly.io as pio
 import plotly
-
 import matplotlib.pyplot as plt
 import japanize_matplotlib
 import pandas as pd
@@ -14,18 +13,38 @@ from folium import plugins
 from folium.plugins import Draw, TimestampedGeoJson
 from turfpy.measurement import boolean_point_in_polygon
 from geojson import Point, Polygon, Feature
+import skmob
+from skmob import TrajDataFrame
 import streamlit as st
 from streamlit_folium import st_folium
+import base64
+import requests
+from PIL import Image
 import io
 from io import BytesIO
 import itertools
 import copy
 
+# 画像URLを指定
+image_url = "https://imgur.com/okIhGTb.jpg"
+
+# 画像をダウンロードしPILのImageオブジェクトとして読み込む
+response = requests.get(image_url)
+image = Image.open(BytesIO(response.content))
+
+# Streamlit ページの設定
 st.set_page_config(
-    page_title="streamlit-folium documentation",
-    page_icon=":world_map:️",
+    page_title="cist-mobmap",
+    page_icon=image,
     layout="wide",
+    initial_sidebar_state="expanded"
 )
+
+# st.set_page_config(
+#     page_title="cist-mobmap",
+#     page_icon=":world_map:️",
+#     layout="wide",
+# )
 hide_menu_style = """
     <style>
     #MainMenu {visibility: hidden;}
@@ -33,20 +52,26 @@ hide_menu_style = """
 """
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
+if 'map' not in st.session_state:  # 初期化
+    # 初めての表示時は空のマップを表示
+    # m = folium.Map(location=[42.793553, 141.6958724])
+    m = folium.Map()
+    # Leaflet.jsのDrawプラグインを追加
+    draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
+    draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
+    draw.add_to(m)
+
+    st.session_state['map'] = m
+
+# 読み込んだデータフレームを管理する
+if 'center' not in st.session_state:  # 初期化
+    change_dict = dict()
+    change_dict["lat"] = 42.79355312
+    change_dict["lng"] = 141.695872412
+    st.session_state['center'] = change_dict
 # 読み込んだデータフレームを管理する
 if 'zoom_level' not in st.session_state:  # 初期化
     st.session_state['zoom_level'] = 16
-
-# if 'map' not in st.session_state:  # 初期化
-#     # 初めての表示時は空のマップを表示
-#     m = folium.Map(location=[42.793553, 141.6958724])
-#     # Leaflet.jsのDrawプラグインを追加
-#     draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
-#     draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
-#     draw.add_to(m)
-
-#     st.session_state['map'] = m
-
 # 読み込んだデータフレームを管理する
 if 'df' not in st.session_state:  # 初期化
     df = pd.DataFrame()
@@ -82,7 +107,7 @@ if "selected_shape" not in st.session_state:  # 初期化
     st.session_state["selected_shape"] = list()
 # tab3に表示する選択された図形のタイプを管理する
 if "selected_shape_type" not in st.session_state:  # 初期化
-    st.session_state["selected_shape_type"] = ""
+    st.session_state["selected_shape_type"] = "ゲート情報"
 # グラフデータを管理する
 if "graph_data" not in st.session_state:  # 初期化
     st.session_state["graph_data"] = dict()
@@ -165,8 +190,7 @@ def upload_csv():
         file_data = st.session_state["upload_csvfile"].read()
         # バイナリデータからPandas DataFrameを作成
         df = pd.read_csv(io.BytesIO(file_data))
-        df.loc[df["newid"] == 20230403156, "daytime"] = df.loc[df["newid"] == 20230403156, "daytime"].str.replace(
-            "2023/4/3", "2023/4/4")
+        # df.loc[df["newid"] == 20230403156, "daytime"] = df.loc[df["newid"] == 20230403156, "daytime"].str.replace("2023/4/3", "2023/4/4")
         # 通過時間でソート
         df.sort_values(by=[df.columns[1]], inplace=True)
 
@@ -181,7 +205,7 @@ def upload_csv():
         # データフレームをセッションの状態に保存
         st.session_state['df'] = df
         st.session_state['df_new'] = df_new
-        st.session_state['sorted_df'] = df
+        st.session_state['sorted_df'] = TrajDataFrame(df, timestamp=True)
 
         st.session_state['kiseki_data'] = {str(itr): [] for itr in unique_values}
 
@@ -257,6 +281,7 @@ def upload_csv():
                 folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(
                     st.session_state['map'])
 
+    
     else:
         # 空のデータフレームを作成
         df = pd.DataFrame()
@@ -284,6 +309,51 @@ def upload_csv():
         for key in line_layers_to_remove:
             del st.session_state['map']._children[key]
 
+        # 地図に図形情報を追加
+        if len(st.session_state['draw_data']) != 0:
+            for idx, sdata in enumerate(st.session_state['draw_data']):
+
+                if len(st.session_state['df_new']) != 0:
+                    # 通過人数カウントの準備
+                    append_list = [dict() for _ in range(len(st.session_state['draw_data']))]
+                    st.session_state['tuuka_list'] = append_list
+        
+                    # ゲートとIDの組み合わせごとにループ
+                    for idx1, gates in enumerate(st.session_state['gate_data']):
+                        for key, values in st.session_state['kiseki_data'].items():
+        
+                            # ポリゴンゲートのときは初期座標をチェック
+                            if gates[0] == gates[-1]:
+                                if ingate(values[0]["座標"][0], gates):
+                                    st.session_state['tuuka_list'][idx1][key] = values[0]["日時"]
+                                    continue  # このIDのループを終了
+                                else:
+                                    pass
+        
+                            kekka = cross_judge(gates, values)
+                            if kekka[0]:
+                                st.session_state['tuuka_list'][idx1][key] = values[kekka[1]]["日時"]
+                                continue  # このIDのループを終了
+                            else:
+                                pass
+        
+                    # 図形IDを表示するツールチップを設定
+                    tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
+                    # 通過人数を表示するポップアップを指定
+                    popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(
+                        len(st.session_state['tuuka_list'][idx]))
+                    folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
+        
+                else:
+                    # 図形IDを表示するツールチップを設定
+                    tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
+                    folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
+
+    change_dict = dict()
+    change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+    change_dict["lng"] = st.session_state["data"]["center"]["lng"]
+    st.session_state['center'] = change_dict
+    st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
 
 def select_data():
     # プロット・軌跡を描画するデータの選択
@@ -392,6 +462,11 @@ def select_data():
             popup=folium.GeoJsonPopup(fields=['popup'], labels=False)
         ).add_to(st.session_state['map'])
 
+    change_dict = dict()
+    change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+    change_dict["lng"] = st.session_state["data"]["center"]["lng"]
+    st.session_state['center'] = change_dict
+    st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
 
 def select_graph():
     # st.session_state["cols"][1].selectbox("グラフを表示したい図形のIDを選択してください", [""]+ [str(value) for value in range(1, len(st.session_state['gate_data']) + 1)],
@@ -452,60 +527,15 @@ def select_graph():
             # JSONをst.session_stateに保存
             st.session_state["graph_data"][idx] = graph_json
 
-        # グラフを表示
-        # st.plotly_chart(fig)
-
-        # # 時刻と値をリストに分ける
-        # time_points, values = zip(*sorted_data)
-
-        # # 最終日の日付を取得
-        # last_date_str = time_points[-1].split()[0]
-        # last_date = datetime.strptime(last_date_str, '%m/%d')
-
-        # # 最終日のデータが24時まであるか確認
-        # if last_date.hour != 23:
-        #     # 24時までのデータを追加
-        #     last_date += timedelta(days=1)
-        #     time_points = tuple(list(time_points) + [f"{last_date.strftime('%m/%d')} 00時"])
-        #     values = tuple(list(values) + [0])
-
-        # # グラフの作成
-        # fig, ax = plt.subplots(figsize=(725/96, 6))
-        # ax.plot(time_points, values)
-
-        # # x軸とy軸のラベル、タイトルを設定
-        # # ax.set_xlabel('時間')
-        # ax.set_ylabel('通過人数[人]')
-        # # ax.set_title('通過人数')
-
-        # # x軸の目盛りを6時間ごとに設定
-        # ax.set_xticks(range(0, len(time_points), 6))
-        # ax.set_xticklabels(time_points[::6])
-
-        # # y軸のスケールを整数値に設定
-        # count_per_group = 5
-
-        # # スケールが1ずつの条件を追加
-        # if max(values) <= 5:
-        #     count_per_group = 1
-
-        # ax.set_yticks(list(range(0, max(values) + count_per_group, count_per_group)) + [max(values)])
-
-        # # グラフをバイトストリームに変換
-        # buffer = BytesIO()
-        # plt.savefig(buffer, format='png')
-        # buffer.seek(0)
-
-        # # バイトストリームをst.session_stateに保存
-        # st.session_state['graph_image'] = buffer.getvalue()
-
-        # # グラフを表示
-        # # tab4.image(st.session_state['graph_image'], use_column_width=True)
-
     else:
         # グラフを空にする
         st.session_state["graph_data"] = dict()
 
+    change_dict = dict()
+    change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+    change_dict["lng"] = st.session_state["data"]["center"]["lng"]
+    st.session_state['center'] = change_dict
+    st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
 
 def kiseki_draw():
     if st.session_state['kiseki_flag']:
@@ -558,6 +588,11 @@ def kiseki_draw():
                 len(st.session_state['tuuka_list'][idx]))
             folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
+    change_dict = dict()
+    change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+    change_dict["lng"] = st.session_state["data"]["center"]["lng"]
+    st.session_state['center'] = change_dict
+    st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
 
 # 図形情報を表示する図形の選択・加工
 def select_shape():
@@ -580,9 +615,14 @@ def select_shape():
 
     # 図形IDが指定されていないとき
     else:
-        st.session_state["selected_shape_type"] = ""
+        st.session_state["selected_shape_type"] = "ゲート情報"
         st.session_state["selected_shape"] = list()
 
+    change_dict = dict()
+    change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+    change_dict["lng"] = st.session_state["data"]["center"]["lng"]
+    st.session_state['center'] = change_dict
+    st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
 
 # 地図から図形を削除する
 def delete_shape():
@@ -649,6 +689,11 @@ def delete_shape():
 
             # x座標、y座標ごとに座標が一切被っていない場合はfalseを返す
 
+    change_dict = dict()
+    change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+    change_dict["lng"] = st.session_state["data"]["center"]["lng"]
+    st.session_state['center'] = change_dict
+    st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
 
 def max_min_cross(p1, p2, p3, p4):
     min_ab, max_ab = min(p1, p2), max(p1, p2)
@@ -711,65 +756,39 @@ def ingate(plot_point, gate_polygon):
     )
     return boolean_point_in_polygon(point, polygon)
 
-# 読み込んだデータフレームを管理する
-if 'center' not in st.session_state:  # 初期化
-    syoki_list = list()
-    syoki_list.append(42.793553)
-    syoki_list.append(141.6958724)
-    st.session_state['center'] = syoki_list
-    
-# 読み込んだデータフレームを管理する
-if 'zoom_level' not in st.session_state:  # 初期化
-    st.session_state['zoom_level'] = 16
 
 # 表示する地図
-# 初めての表示時は空のマップを表示
-m = folium.Map(location=st.session_state['center'], zoom_start=st.session_state['zoom_level'])
-# Leaflet.jsのDrawプラグインを追加
-draw_options = {'polyline': True, 'rectangle': True, 'circle': True, 'marker': False, 'circlemarker': False}
-draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
-draw.add_to(m)
-
-st.session_state['map'] = m
-st_data = st_folium(st.session_state['map'], width=725)
+st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.session_state['zoom_level'], center=st.session_state['center'])
 
 # 地図のデータをコピー
-data = copy.deepcopy(dict(st_data))
+st.session_state["data"] = copy.deepcopy(dict(st_data))
 
-try:
-    change_list = list()
-    change_list.append(data["center"]["lat"])
-    change_list.append(data["center"]["lng"])
-    st.session_state['center'] = change_list
-    st.session_state['zoom_level'] = data["zoom"]
-except:
-    pass
 
+# st.write(st.session_state['zoom_level'])
+# st.write(st.session_state['center'])
 # st.write(data)
-st.write(change_list)
-st.write(st.session_state.map.location)
-st.write(st.session_state['zoom_level'])
+
 
 try:
     # data["all_drawings"]が有効なリストであるかどうか判定
     # 値が入っていたら値を追加する
-    if data["all_drawings"] is not None and isinstance(data["all_drawings"], list) and len(data["all_drawings"]) > 0:
+    if st.session_state["data"]["all_drawings"] is not None and isinstance(st.session_state["data"]["all_drawings"], list) and len(st.session_state["data"]["all_drawings"]) > 0:
 
         # サークルのデータを加工
-        if data["last_circle_polygon"] is not None:
-            data["all_drawings"][0]["geometry"]["type"] = "Polygon"
-            data["all_drawings"][0]["geometry"]["coordinates"] = data["last_circle_polygon"]["coordinates"]
-            center_list = data["last_active_drawing"]["geometry"]["coordinates"]
+        if st.session_state["data"]["last_circle_polygon"] is not None:
+            st.session_state["data"]["all_drawings"][0]["geometry"]["type"] = "Polygon"
+            st.session_state["data"]["all_drawings"][0]["geometry"]["coordinates"] = st.session_state["data"]["last_circle_polygon"]["coordinates"]
+            center_list = st.session_state["data"]["last_active_drawing"]["geometry"]["coordinates"]
             center_dict = dict()
             center_dict["lat"] = center_list[0]
             center_dict["lng"] = center_list[1]
-            data["all_drawings"][0]["properties"]["center"] = center_dict
+            st.session_state["data"]["all_drawings"][0]["properties"]["center"] = center_dict
 
         # data["all_drawings"][0]が追加できそうなら追加
-        if (data["all_drawings"][0] not in st.session_state['draw_data'] or len(st.session_state['draw_data']) == 0):
+        if (st.session_state["data"]["all_drawings"][0] not in st.session_state['draw_data'] or len(st.session_state['draw_data']) == 0):
 
             # st.session_state['draw_data']に追加
-            st.session_state['draw_data'].append(data["all_drawings"][0])
+            st.session_state['draw_data'].append(st.session_state["data"]["all_drawings"][0])
 
             # 線のジオJSONを削除する
             line_layers_to_remove = []
@@ -819,23 +838,24 @@ try:
                     # 図形IDを表示するツールチップを設定
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
                     # 通過人数を表示するポップアップを指定
-                    popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(
-                        len(st.session_state['tuuka_list'][idx]))
-                    folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(
-                        st.session_state['map'])
-                    st.session_state.map.location = change_list
+                    popup_html = '<div style="font-size: 16px; font-weight: bold; width: 110px; height: 20px;  color: #27b9cc;">通過人数：{}人</div>'.format(len(st.session_state['tuuka_list'][idx]))
+                    folium.GeoJson(sdata, tooltip=tooltip_html, popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
                 else:
                     # 図形IDを表示するツールチップを設定
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
-                    st.session_state.map.location = change_list
+
+            change_dict = dict()
+            change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+            change_dict["lng"] = st.session_state["data"]["center"]["lng"]
+            st.session_state['center'] = change_dict
+            st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
 
             if st.session_state["kiseki_flag"]:
                 # 線のジオJSONを追加
                 folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
                                style_function=lambda x: {"weight": 2, "opacity": 1}).add_to(st.session_state['map'])
-                st.session_state.map.location = change_list
 
     # 地図に新たな図形が描画されていないなら何もしない
     else:
@@ -929,7 +949,13 @@ with st.sidebar:
         if len(st.session_state['df']) != 0:
             st.multiselect("選択してください", st.session_state['df'].iloc[:, 0].unique(), key="select_data_id",
                            on_change=select_data)
+            # データフレームをCSVファイルに保存
+            csv_file = st.session_state['sorted_df'].to_csv(index=False)
 
+            if len(st.session_state['select_data_id']) != 0:
+                # ダウンロードボタンを追加
+                st.download_button(label="Download CSV", data=csv_file, file_name='sorted.csv')
+            
     # 図形の情報の選択と削除
     with tab3:
         if len(st.session_state['draw_data']) != 0:
@@ -943,6 +969,7 @@ with st.sidebar:
                          key="delete_shape_id",
                          on_change=delete_shape)
 
+            st.write("ゲートと通過時刻")
             st.write(st.session_state['tuuka_list'])
             st.write(st.session_state["selected_shape_type"])
             st.write(st.session_state["selected_shape"])
@@ -951,3 +978,4 @@ with st.sidebar:
     with tab4:
         if len(st.session_state['df']) != 0:
             st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
+        st.write(st.session_state["data"])
