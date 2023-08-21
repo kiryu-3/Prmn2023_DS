@@ -149,12 +149,12 @@ def features_maker():
 
 # # 描画する軌跡データの作成
 def line_features_maker(kiseki):
-    line_features = []
+    # line_features = []
 
-    index_map = {value: index for index, value in enumerate(list2)}
+    # index_map = {value: index for index, value in enumerate(list2)}
 
     # データをIDでグループ化する
-    grouped_data = st.session_state['sorted_df'].groupby(st.session_state['sorted_df'].columns[0])
+    # grouped_data = st.session_state['sorted_df'].groupby(st.session_state['sorted_df'].columns[0])
 
     # for itr in st.session_state['sorted_df']['uid'].unique():
     for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):
