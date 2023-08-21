@@ -135,7 +135,7 @@ def features_maker(list2):
                     "weight": 10,
                     "radius": 3
                 },
-                "time": row[1],
+                "time": str(row[1]),
                 "popup": f"{indexNum + 1} - {row[0]}",
                 "ID": row[0]
             }
@@ -169,7 +169,7 @@ def line_features_maker(list2, kiseki):
                         'coordinates': [coords[i], coords[i + 1]]
                     },
                     'properties': {
-                        'time': times[i],
+                        'time': str(times[i]),
                         "popup": f"{indexNum + 1} - {itr}"
                     }
                 }
