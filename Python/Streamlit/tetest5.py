@@ -117,13 +117,13 @@ if "graph_data" not in st.session_state:  # 初期化
 def features_maker():
     # TrajDataFrameをTimestampedGeoJsonとして追加
     features = []
+
+    # ユニークなIDの最大文字数を取得
+    max_id_length = max(len(str(user_id)) for user_id in st.session_state['sorted_df']["uid"].unique())  
+    # 文字数に基づいて最適なポップアップの幅を計算
+    popup_width = max_id_length * 13  # 1文字あたりの幅を13pxと仮定
     
     for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):
-        # ユニークなIDの最大文字数を取得
-        max_id_length = max(len(str(user_id)) for user_id in unique_ids)  
-        # 文字数に基づいて最適なポップアップの幅を計算
-        popup_width = max_id_length * 13  # 1文字あたりの幅を12pxと仮定
-        
         popup_html = '<div style="font-size: 14px; font-weight: bold; width: f"{popup_width}"px; height: 15px;  color: black;">UserID：{}</div>'.format(user_id)
         feature = {
             "type": "Feature",
@@ -185,12 +185,12 @@ def features_maker():
 #     return line_features
 
 def polylines_maker():
-    for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):
-        # ユニークなIDの最大文字数を取得
-        max_id_length = max(len(str(user_id)) for user_id in unique_ids)  
-        # 文字数に基づいて最適なポップアップの幅を計算
-        popup_width = max_id_length * 13  # 1文字あたりの幅を12pxと仮定
-        
+    # ユニークなIDの最大文字数を取得
+    max_id_length = max(len(str(user_id)) for user_id in st.session_state['sorted_df']["uid"].unique())  
+    # 文字数に基づいて最適なポップアップの幅を計算
+    popup_width = max_id_length * 13  # 1文字あたりの幅を13pxと仮定
+    
+    for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):    
         popup_html = '<div style="font-size: 14px; font-weight: bold; width: f"{popup_width}"px; height: 15px;  color: black;">UserID：{}</div>'.format(user_id)
         folium.PolyLine(locations=user_data[['lat', 'lng']].values.tolist(), color='#01bfff', weight=3, opacity=0.9,
                         popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
