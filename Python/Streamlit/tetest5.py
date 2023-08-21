@@ -856,13 +856,13 @@ try:
             change_mapinfo()
 
             if st.session_state["kiseki_flag"]:
-                # 線のPolyLineを削除する
-                line_layers_to_remove = []
-                for key, value in st.session_state['map']._children.items():
-                    if isinstance(value, folium.vector_layers.PolyLine):
-                        line_layers_to_remove.append(key)
-                for key in line_layers_to_remove:
-                    del st.session_state['map']._children[key]
+                # # 線のPolyLineを削除する
+                # line_layers_to_remove = []
+                # for key, value in st.session_state['map']._children.items():
+                #     if isinstance(value, folium.vector_layers.PolyLine):
+                #         line_layers_to_remove.append(key)
+                # for key in line_layers_to_remove:
+                #     del st.session_state['map']._children[key]
                 polylines_maker()
                 # 線のジオJSONを追加
                 # folium.GeoJson(st.session_state["line_geojson"], name='線の表示/非表示',
