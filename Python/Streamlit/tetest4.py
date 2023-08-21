@@ -8,7 +8,7 @@ import plotly
 import matplotlib.pyplot as plt
 import japanize_matplotlib
 import pandas as pd
-import folium
+import folium 
 from folium import plugins
 from folium.plugins import Draw, TimestampedGeoJson
 from turfpy.measurement import boolean_point_in_polygon
