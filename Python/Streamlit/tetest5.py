@@ -121,7 +121,7 @@ def features_maker():
     # ユニークなIDの最大文字数を取得
     max_id_length = max(len(str(user_id)) for user_id in st.session_state['sorted_df']["uid"].unique())  
     # 文字数に基づいて最適なポップアップの幅を計算
-    popup_width = max_id_length * 13  # 1文字あたりの幅を13pxと仮定
+    popup_width = max_id_length * 14  # 1文字あたりの幅を14pxと仮定
     
     for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):
         popup_html = f'<div style="font-size: 14px; font-weight: bold; width: {int(popup_width)}px; height: 15px; color: black;">UserID：{user_id}</div>'
@@ -188,7 +188,7 @@ def polylines_maker():
     # ユニークなIDの最大文字数を取得
     max_id_length = max(len(str(user_id)) for user_id in st.session_state['sorted_df']["uid"].unique())  
     # 文字数に基づいて最適なポップアップの幅を計算
-    popup_width = max_id_length * 13  # 1文字あたりの幅を13pxと仮定
+    popup_width = max_id_length * 14  # 1文字あたりの幅を14pxと仮定
     
     for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):
         popup_html = f'<div style="font-size: 14px; font-weight: bold; width: {int(popup_width)}px; height: 15px; color: black;">UserID：{user_id}</div>'
