@@ -199,6 +199,7 @@ def upload_csv():
         file_data = st.session_state["upload_csvfile"].read()
         # バイナリデータからPandas DataFrameを作成
         df = pd.read_csv(io.BytesIO(file_data), names=['userid', 'datetime', 'latitude', 'longitude'])
+        df['datetime'] = pd.to_datetime(df['datetime'])
         # 通過時間でソート
         df.sort_values(by=[df.columns[1]], inplace=True)
 
