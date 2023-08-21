@@ -118,7 +118,7 @@ def features_maker():
     # TrajDataFrameをTimestampedGeoJsonとして追加
     features = []
     for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):
-        popup_html = '<div style="font-size: 12px; font-weight: bold; width: 200px; height: 20px;  color: black;">UserID：{}</div>'.format(user_id)
+        popup_html = '<div style="font-size: 12px; font-weight: bold; width: 130px; height: 20px;  color: black;">UserID：{}</div>'.format(user_id)
         feature = {
             "type": "Feature",
             "geometry": {
@@ -180,7 +180,7 @@ def features_maker():
 
 def polylines_maker():
     for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):
-        popup_html = '<div style="font-size: 12px; font-weight: bold; width: 200px; height: 20px;  color: black;">UserID：{}</div>'.format(user_id)
+        popup_html = '<div style="font-size: 12px; font-weight: bold; width: 130px; height: 20px;  color: black;">UserID：{}</div>'.format(user_id)
         folium.PolyLine(locations=user_data[['lng', 'lat']].values.tolist(), color='#01bfff', weight=3, opacity=0.9,
                         popup=folium.Popup(popup_html)).add_to(m)
 
