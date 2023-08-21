@@ -147,48 +147,42 @@ def features_maker():
     return features
 
 
-# # 描画する軌跡データの作成
-def line_features_maker(kiseki):
-    # line_features = []
+# 描画する軌跡データの作成
+def line_features_maker(list2, kiseki):
+    line_features = []
 
     # index_map = {value: index for index, value in enumerate(list2)}
 
     # データをIDでグループ化する
-    # grouped_data = st.session_state['sorted_df'].groupby(st.session_state['sorted_df'].columns[0])
+    grouped_data = st.session_state['sorted_df'].groupby(st.session_state['sorted_df'].columns[0])
 
-    # for itr in st.session_state['sorted_df']['uid'].unique():
-    for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):
-        if kiseki:
-            st.session_state['kiseki_data'][str(user_id)].append(
-                {'座標': [user_data['lng'], user_data['lat']], '日時': user_data['datetime']})
-        else:
-            pass
-        # if itr in grouped_data.groups:
-        #     indexNum = index_map[itr]
-        #     group_df = grouped_data.get_group(itr)
-        #     coords = group_df[[group_df.columns[3], group_df.columns[2]]].values.tolist()
-        #     times = group_df[group_df.columns[1]].values.tolist()
+    for itr in list2:
+        if itr in grouped_data.groups:
+            indexNum = index_map[itr]
+            group_df = grouped_data.get_group(itr)
+            coords = group_df[[group_df.columns[3], group_df.columns[2]]].values.tolist()
+            times = group_df[group_df.columns[1]].values.tolist()
 
-        #     # 各行の座標データから軌跡データを作成
-        #     for i in range(len(coords) - 1):
-        #         line_feature = {
-        #             'type': 'Feature',
-        #             'geometry': {
-        #                 'type': 'LineString',
-        #                 'coordinates': [coords[i], coords[i + 1]]
-        #             },
-        #             'properties': {
-        #                 'time': str(times[i]),
-        #                 "popup": f"{indexNum + 1} - {itr}"
-        #             }
-        #         }
-        #         line_features.append(line_feature)
+            # 各行の座標データから軌跡データを作成
+            # for i in range(len(coords) - 1):
+            #     line_feature = {
+            #         'type': 'Feature',
+            #         'geometry': {
+            #             'type': 'LineString',
+            #             'coordinates': [coords[i], coords[i + 1]]
+            #         },
+            #         'properties': {
+            #             'time': times[i],
+            #             "popup": f"{indexNum + 1} - {itr}"
+            #         }
+            #     }
+            #     line_features.append(line_feature)
 
-                # if kiseki:
-                #     # 軌跡データをセッションの状態に保存
-                #     st.session_state['kiseki_data'][str(itr)].append({'座標': [coords[i], coords[i + 1]],
-                #                                                       '日時': times[i]})
-    # return line_features
+                if kiseki:
+                    # 軌跡データをセッションの状態に保存
+                    st.session_state['kiseki_data'][str(itr)].append({'座標': [coords[i], coords[i + 1]],
+                                                                      '日時': times[i]})
+    return line_features
 
 def polylines_maker():
     # ユニークなIDの最大文字数を取得
