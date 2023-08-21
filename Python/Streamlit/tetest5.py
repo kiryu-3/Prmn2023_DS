@@ -152,7 +152,7 @@ def line_features_maker(kiseki):
     for itr, group in st.session_state['sorted_df'].groupby(st.session_state['sorted_df'].columns[0]):
         for zahyou in group.iterrows():
             if kiseki:
-                st.session_state['kiseki_data'][str(itr)].append({'座標': [zahyou["lng"], zahyou["lat"]], '日時': str(zahyou["datetime"])})
+                st.session_state['kiseki_data'][str(itr)].append({'座標': [list(zahyou)[1]["lng"], [list(zahyou)[1]["lat"]], '日時': str([list(zahyou)[1]["datetime"])})
             else:
                 pass
     # line_features = []
