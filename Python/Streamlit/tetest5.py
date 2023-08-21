@@ -150,7 +150,7 @@ def features_maker():
 # 描画する軌跡データの作成
 def line_features_maker(kiseki):
     for itr, group in st.session_state['sorted_df'].groupby(st.session_state['sorted_df'].columns[0]):
-        for zahyou in group:
+        for zahyou in group.iterrows():
             if kiseki:
                 st.session_state['kiseki_data'][str(itr)].append({'座標': [zahyou["lng"], zahyou["lat"]], '日時': str(zahyou["datetime"])})
             else:
