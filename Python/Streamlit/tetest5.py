@@ -151,7 +151,7 @@ def features_maker():
 def line_features_maker(kiseki):
     line_features = []
 
-    # index_map = {value: index for index, value in enumerate(list2)}
+    index_map = {value: index for index, value in enumerate(st.session_state['sorted_df']["uid"].unique())}
 
     # データをIDでグループ化する
     grouped_data = st.session_state['sorted_df'].groupby(st.session_state['sorted_df'].columns[0])
