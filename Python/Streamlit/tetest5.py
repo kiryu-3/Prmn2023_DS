@@ -219,7 +219,7 @@ def upload_csv():
 
         st.session_state['kiseki_data'] = {str(itr): [] for itr in unique_values}
 
-        features = features_maker(unique_values)
+        features = features_maker()
         # line_features = line_features_maker(unique_values, True)
 
         # プロットデータをまとめる
