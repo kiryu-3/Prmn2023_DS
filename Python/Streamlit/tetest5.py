@@ -381,6 +381,15 @@ def upload_csv():
                     # 図形IDを表示するツールチップを設定
                     tooltip_html = '<div style="font-size: 16px;">gateid：{}</div>'.format(idx + 1)
                     folium.GeoJson(sdata, tooltip=tooltip_html).add_to(st.session_state['map'])
+
+        # 線のPolyLineを削除する
+        line_layers_to_remove = []
+        for key, value in st.session_state['map']._children.items():
+            if isinstance(value, folium.vector_layers.PolyLine):
+                line_layers_to_remove.append(key)
+        for key in line_layers_to_remove:
+            del st.session_state['map']._children[key]
+            
     change_mapinfo()
 
 def select_data():
