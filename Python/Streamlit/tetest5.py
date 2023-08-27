@@ -111,6 +111,12 @@ if "selected_shape_type" not in st.session_state:  # 初期化
 # グラフデータを管理する
 if "graph_data" not in st.session_state:  # 初期化
     st.session_state["graph_data"] = dict()
+if "select_shape_id" not in st.session_state:  # 初期化
+    st.session_state["graph_data"] = list()
+if "delete_shape_id" not in st.session_state:  # 初期化
+    st.session_state["graph_data"] = list()
+if "select_data_id" not in st.session_state:  # 初期化
+    st.session_state["select_data_id"] = list()
 
 
 # 描画するプロットデータの作成
