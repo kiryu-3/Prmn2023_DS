@@ -271,7 +271,7 @@ def upload_csv():
         timestamped_geojson = TimestampedGeoJson(
             geojson,
             period="PT1M",
-            duration="PT10M",
+            duration='P1D',
             auto_play=False,
             loop=False
         )
@@ -453,7 +453,7 @@ def select_data():
     timestamped_geojson = TimestampedGeoJson(
         geojson,
         period="PT1M",
-        duration="PT10M",
+        duration="P10D",
         auto_play=False,
         loop=False
     )
