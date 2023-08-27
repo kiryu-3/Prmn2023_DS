@@ -215,10 +215,13 @@ def polylines_maker():
 
 def change_mapinfo():
     change_dict = dict()
-    change_dict["lat"] = st.session_state["data"]["center"]["lat"]
-    change_dict["lng"] = st.session_state["data"]["center"]["lng"]
-    st.session_state['center'] = change_dict
-    st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
+    try:
+        change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+        change_dict["lng"] = st.session_state["data"]["center"]["lng"]
+        st.session_state['center'] = change_dict
+        st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
+    except:
+        pass
 
 # csvのuploaderの状態が変化したときに呼ばれるcallback関数
 def upload_csv():
