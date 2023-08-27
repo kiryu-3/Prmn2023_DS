@@ -112,9 +112,9 @@ if "selected_shape_type" not in st.session_state:  # 初期化
 if "graph_data" not in st.session_state:  # 初期化
     st.session_state["graph_data"] = dict()
 if "select_shape_id" not in st.session_state:  # 初期化
-    st.session_state["graph_data"] = list()
+    st.session_state["select_shape_id"] = list()
 if "delete_shape_id" not in st.session_state:  # 初期化
-    st.session_state["graph_data"] = list()
+    st.session_state["delete_shape_id"] = list()
 if "select_data_id" not in st.session_state:  # 初期化
     st.session_state["select_data_id"] = list()
 
