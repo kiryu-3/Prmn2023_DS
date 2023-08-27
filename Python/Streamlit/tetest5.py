@@ -245,6 +245,7 @@ def upload_csv():
         st.session_state['df'] = TrajDataFrame(df, datetime='datetime', latitude='latitude', longitude='longitude', user_id='userid')
         st.session_state['df_new'] = df_new
         st.session_state['sorted_df'] = TrajDataFrame(df, datetime='datetime', latitude='latitude', longitude='longitude', user_id='userid')
+        st.session_state['sorted_df'].sort_values(by=[st.session_state['sorted_df'].columns[1]], inplace=True)
 
         st.session_state['kiseki_data'] = {str(itr): [] for itr in unique_values}
 
@@ -412,6 +413,7 @@ def select_data():
     else:
         st.session_state['sorted_df'] = st.session_state['df'][st.session_state['df'].iloc[:, 0].isin(selected_values)]
         st.session_state['sorted_df'] = st.session_state['sorted_df'].reset_index(drop=True)
+        st.session_state['sorted_df'].sort_values(by=[st.session_state['sorted_df'].columns[1]], inplace=True)
 
         # 図形のジオJSONを削除する
         line_layers_to_remove = []
