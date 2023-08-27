@@ -271,9 +271,10 @@ def upload_csv():
         timestamped_geojson = TimestampedGeoJson(
             geojson,
             period="PT1M",
-            duration='P1D',
+            duration='PT1M',
             auto_play=False,
-            loop=False
+            loop=False,
+            transition_time=1000
         )
 
         # TimestampedGeoJsonをマップに追加
@@ -453,9 +454,10 @@ def select_data():
     timestamped_geojson = TimestampedGeoJson(
         geojson,
         period="PT1M",
-        duration="P10D",
+        duration='PT1M',
         auto_play=False,
-        loop=False
+        loop=False,
+        transition_time=1000
     )
 
     # TimestampedGeoJsonレイヤーを削除
