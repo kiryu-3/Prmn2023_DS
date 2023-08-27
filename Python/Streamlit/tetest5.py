@@ -1012,7 +1012,7 @@ with st.sidebar:
             st.session_state['sorted_df'].sort_values(by=[st.session_state['sorted_df'].columns[1]], inplace=True)
             csv_file = st.session_state['sorted_df'].to_csv(index=False)
 
-            if len(st.session_state['select_data_id']) != 0:
+            if len(st.session_state["select_data_id"]) != 0:
                 # ダウンロードボタンを追加
                 st.download_button(label="Download CSV", data=csv_file, file_name='sorted.csv')
             
