@@ -1011,7 +1011,8 @@ with st.sidebar:
             st.multiselect("選択してください", st.session_state['df'].iloc[:, 0].unique(), key="select_data_id",
                            on_change=select_data)
             # データフレームをCSVファイルに保存
-            st.session_state['sorted_df'].sort_values(by=st.session_state['sorted_df'].columns[1])
+            st.session_state['sorted_df'] = st.session_state['sorted_df'].sort_values(by=[st.session_state['sorted_df'].columns[1]])
+            # st.session_state['sorted_df'].sort_values(by=st.session_state['sorted_df'].columns[1])
             csv_file = st.session_state['sorted_df'].to_csv(index=False)
 
             if len(st.session_state["select_data_id"]) != 0:
