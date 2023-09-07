@@ -256,7 +256,7 @@ def upload_csv():
         # line_features_maker(True)
 
         # プロットデータをまとめる
-        geojson = {"type": "FeatureCollection", "features": features}
+        # geojson = {"type": "FeatureCollection", "features": features}
         # 軌跡データをまとめる
         # line_geojson = {'type': 'FeatureCollection', 'features': line_features}
         # st.session_state["line_geojson"] = line_geojson
@@ -271,17 +271,17 @@ def upload_csv():
                 del st.session_state['map']._children[key]
 
         # TimestampedGeoJsonの作成
-        timestamped_geojson = TimestampedGeoJson(
-            geojson,
-            period="PT1M",
-            duration='PT1M',
-            auto_play=False,
-            loop=False,
-            transition_time=500
-        )
+        # timestamped_geojson = TimestampedGeoJson(
+        #     geojson,
+        #     period="PT1M",
+        #     duration='PT1M',
+        #     auto_play=False,
+        #     loop=False,
+        #     transition_time=500
+        # )
 
         # TimestampedGeoJsonをマップに追加
-        timestamped_geojson.add_to(st.session_state['map'])
+        # timestamped_geojson.add_to(st.session_state['map'])
 
         # 軌跡のGeoJSONを削除する
         line_layers_to_remove = []
