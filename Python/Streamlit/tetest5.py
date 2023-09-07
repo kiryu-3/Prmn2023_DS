@@ -1040,5 +1040,5 @@ with st.sidebar:
     with tab4:
         if len(st.session_state['df']) != 0:
             st.checkbox(label='軌跡の表示', key='kiseki_flag', on_change=kiseki_draw)
-        st.write(st.session_state['df'].head())    
-        st.write(st.session_state['sorted_df'].head())
+        st.write("test")    
+        st.write(st.session_state['sorted_df'])
