@@ -248,7 +248,7 @@ def upload_csv():
         st.session_state['df'] = TrajDataFrame(df, datetime='datetime', latitude='latitude', longitude='longitude', user_id='userid')
         st.session_state['df_new'] = df_new
         st.session_state['sorted_df'] = TrajDataFrame(df, datetime='datetime', latitude='latitude', longitude='longitude', user_id='userid')
-        st.session_state['sorted_df'].sort_values(by=[st.session_state['sorted_df'].columns[1]], inplace=True)
+        # st.session_state['sorted_df'].sort_values(by=[st.session_state['sorted_df'].columns[1]], inplace=True)
 
         st.session_state['kiseki_data'] = {str(itr): [] for itr in unique_values}
 
