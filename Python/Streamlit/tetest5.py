@@ -23,7 +23,7 @@ from PIL import Image
 import io
 from io import BytesIO
 import itertools
-import copy
+# import copy
 
 # 画像URLを指定
 image_url = "https://imgur.com/okIhGTb.jpg"
@@ -817,7 +817,8 @@ def ingate(plot_point, gate_polygon):
 st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.session_state['zoom_level'], center=st.session_state['center'])
 
 # 地図のデータをコピー
-st.session_state["data"] = copy.deepcopy(dict(st_data))
+st.session_state["data"] = st_data
+# st.session_state["data"] = copy.deepcopy(dict(st_data))
 
 
 st.write(st.session_state['zoom_level'])
@@ -1011,7 +1012,7 @@ with st.sidebar:
             st.multiselect("選択してください", st.session_state['df'].iloc[:, 0].unique(), key="select_data_id",
                            on_change=select_data)
             # データフレームをCSVファイルに保存
-            st.session_state['sorted_df'] = st.session_state['sorted_df'].sort_values(by=[st.session_state['sorted_df'].columns[1]])
+            st.session_state['sorted_df'] = st.session_state['sorted_df'].sort_values(by=st.session_state['sorted_df'].columns[1])
             # st.session_state['sorted_df'].sort_values(by=st.session_state['sorted_df'].columns[1])
             csv_file = st.session_state['sorted_df'].to_csv(index=False)
 
