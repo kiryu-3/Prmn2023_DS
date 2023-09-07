@@ -135,7 +135,7 @@ def features_maker():
             "type": "Feature",
             "geometry": {
                 "type": "MultiPoint",
-                "coordinates": user_data[['lng', 'lat']].values.tolist()
+                "coordinates": user_data[['longitude', 'latitude']].values.tolist()
             },
             "properties": {
                 "times": user_data["datetime"].dt.strftime("%Y-%m-%dT%H:%M:%S").tolist(),  # タイムスタンプを文字列に変換
@@ -162,7 +162,7 @@ def line_features_maker(kiseki):
                 next_index, next_zahyou = rows[i + 1]
                 if kiseki:
                     st.session_state['kiseki_data'][str(itr)].append(
-                        {'座標': [[zahyou["lng"], zahyou["lat"]], [next_zahyou["lng"], next_zahyou["lat"]]], '日時': datetime.strptime(str(zahyou["datetime"]), '%Y-%m-%d %H:%M:%S').strftime('%Y/%m/%d %H:%M')})
+                        {'座標': [[zahyou["longitude"], zahyou["latitude"]], [next_zahyou["longitude"], next_zahyou["latitude"]]], '日時': datetime.strptime(str(zahyou["datetime"]), '%Y-%m-%d %H:%M:%S').strftime('%Y/%m/%d %H:%M')})
                 else:
                     pass
                 
@@ -204,13 +204,13 @@ def line_features_maker(kiseki):
 
 def polylines_maker():
     # ユニークなIDの最大文字数を取得
-    max_id_length = max(len(str(user_id)) for user_id in st.session_state['sorted_df']["uid"].unique())  
+    max_id_length = max(len(str(user_id)) for user_id in st.session_state['sorted_df']["userid"].unique())  
     # 文字数に基づいて最適なポップアップの幅を計算
     popup_width = max_id_length * 14  # 1文字あたりの幅を14pxと仮定
     
-    for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):
+    for user_id, user_data in st.session_state['sorted_df'].groupby("userid"):
         popup_html = f'<div style="font-size: 14px; font-weight: bold; width: {int(popup_width)}px; height: 15px; color: black;">UserID：{user_id}</div>'
-        folium.PolyLine(locations=user_data[['lat', 'lng']].values.tolist(), color='#01bfff', weight=3, opacity=0.9,
+        folium.PolyLine(locations=user_data[['latitude', 'longitude']].values.tolist(), color='#01bfff', weight=3, opacity=0.9,
                         popup=folium.Popup(popup_html)).add_to(st.session_state['map'])
 
 def change_mapinfo():
