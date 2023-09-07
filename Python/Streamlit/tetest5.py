@@ -125,11 +125,11 @@ def features_maker():
     features = []
 
     # ユニークなIDの最大文字数を取得
-    max_id_length = max(len(str(user_id)) for user_id in st.session_state['sorted_df']["uid"].unique())  
+    max_id_length = max(len(str(user_id)) for user_id in st.session_state['sorted_df']["userid"].unique())  
     # 文字数に基づいて最適なポップアップの幅を計算
     popup_width = max_id_length * 14  # 1文字あたりの幅を14pxと仮定
     
-    for user_id, user_data in st.session_state['sorted_df'].groupby("uid"):
+    for user_id, user_data in st.session_state['sorted_df'].groupby("userid"):
         popup_html = f'<div style="font-size: 14px; font-weight: bold; width: {int(popup_width)}px; height: 15px; color: black;">UserID：{user_id}</div>'
         feature = {
             "type": "Feature",
@@ -245,20 +245,20 @@ def upload_csv():
         df_new.index = range(1, len(df_new) + 1)
 
         # データフレームをセッションの状態に保存
-        df_normal = df.copy()
-        df_sorted = df.copy()
-        st.session_state['df'] = TrajDataFrame(df_normal, datetime='datetime', latitude='latitude', longitude='longitude', user_id='userid')
+        st.session_state['df'] = df.copy()
+        # st.session_state['df'] = TrajDataFrame(df_normal, datetime='datetime', latitude='latitude', longitude='longitude', user_id='userid')
         st.session_state['df_new'] = df_new.copy()
-        st.session_state['sorted_df'] = TrajDataFrame(df_sorted, datetime='datetime', latitude='latitude', longitude='longitude', user_id='userid')
+        st.session_state['sorted_df'] = df.copy()
+        # st.session_state['sorted_df'] = TrajDataFrame(df_sorted, datetime='datetime', latitude='latitude', longitude='longitude', user_id='userid')
         # st.session_state['sorted_df'].sort_values(by=[st.session_state['sorted_df'].columns[1]], inplace=True)
 
         st.session_state['kiseki_data'] = {str(itr): [] for itr in unique_values}
 
-        # features = features_maker()
-        # line_features_maker(True)
+        features = features_maker()
+        line_features_maker(True)
 
         # プロットデータをまとめる
-        # geojson = {"type": "FeatureCollection", "features": features}
+        geojson = {"type": "FeatureCollection", "features": features}
         # 軌跡データをまとめる
         # line_geojson = {'type': 'FeatureCollection', 'features': line_features}
         # st.session_state["line_geojson"] = line_geojson
@@ -273,17 +273,17 @@ def upload_csv():
                 del st.session_state['map']._children[key]
 
         # TimestampedGeoJsonの作成
-        # timestamped_geojson = TimestampedGeoJson(
-        #     geojson,
-        #     period="PT1M",
-        #     duration='PT1M',
-        #     auto_play=False,
-        #     loop=False,
-        #     transition_time=500
-        # )
+        timestamped_geojson = TimestampedGeoJson(
+            geojson,
+            period="PT1M",
+            duration='PT1M',
+            auto_play=False,
+            loop=False,
+            transition_time=500
+        )
 
         # TimestampedGeoJsonをマップに追加
-        # timestamped_geojson.add_to(st.session_state['map'])
+        timestamped_geojson.add_to(st.session_state['map'])
 
         # 軌跡のGeoJSONを削除する
         line_layers_to_remove = []
