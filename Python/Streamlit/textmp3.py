@@ -38,5 +38,3 @@ def tomp3():
     
     # 一時ファイルを削除
     os.remove(tmp_filename)
-else:
-    st.warning("テキストを入力してください。")
