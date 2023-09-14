@@ -4,10 +4,10 @@ import os
 import base64
 import langdetect
 
+
 text_area = st.empty()
 button_area = st.empty()
-saisei_area = st.empty()
-download_area = st.empty()
+
 
 def tomp3():
     # 言語を自動検出して言語コードを取得
@@ -21,6 +21,9 @@ def tomp3():
     
     # MP3ファイルを保存
     text2speech.save(tmp_filename)
+
+    saisei_area = st.empty()
+    download_area = st.empty()
     
     # MP3ファイルを再生
     saisei_area.audio(tmp_filename, format="audio/mp3")
