@@ -9,3 +9,4 @@ japanize-matplotlib
 plotly
 scikit-mobility
 gTTS
+langdetect
