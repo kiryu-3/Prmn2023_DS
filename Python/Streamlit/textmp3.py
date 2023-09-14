@@ -6,6 +6,8 @@ import langdetect
 
 text_area = st.empty()
 button_area = st.empty()
+saisei_area = st.empty()
+download_area = st.empty()
 
 def tomp3():
     # 言語を自動検出して言語コードを取得
@@ -21,11 +23,11 @@ def tomp3():
     text2speech.save(tmp_filename)
     
     # MP3ファイルを再生
-    st.audio(tmp_filename, format="audio/mp3")
+    saisei_area.audio(tmp_filename, format="audio/mp3")
     
     # MP3ファイルをダウンロードボタンとして表示
     with open(tmp_filename, "rb") as f:
-        st.download_button(
+        download_area.download_button(
             label="MP3ファイルをダウンロード",
             data=f.read(),
             file_name="output.mp3",
