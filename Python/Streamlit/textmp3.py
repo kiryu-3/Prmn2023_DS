@@ -7,10 +7,6 @@ import langdetect
 text_area = st.empty()
 button_area = st.empty()
 
-# テキストエリア
-input_text = text_area.text_area(label="翻訳する文を入力してください", key="input_text", height=200)
-button_area.button(label="Go!", on_click=tomp3)
-
 def tomp3():
     # 言語を自動検出して言語コードを取得
     detected_language = langdetect.detect(st.session_state["input_text"])
@@ -38,3 +34,9 @@ def tomp3():
     
     # 一時ファイルを削除
     os.remove(tmp_filename)
+
+# テキストエリア
+input_text = text_area.text_area(label="翻訳する文を入力してください", key="input_text", height=200)
+button_area.button(label="Go!", on_click=tomp3)
+
+
