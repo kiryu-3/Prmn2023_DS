@@ -8,6 +8,10 @@ import langdetect
 text_area = st.empty()
 button_area = st.empty()
 
+if len(st.session_state["input_text"]) == 0:
+    button_area = st.empty()
+    saisei_area = st.empty()
+    download_area = st.empty()
 
 def tomp3():
     # 言語を自動検出して言語コードを取得
@@ -22,8 +26,7 @@ def tomp3():
     # MP3ファイルを保存
     text2speech.save(tmp_filename)
 
-    saisei_area = st.empty()
-    download_area = st.empty()
+    
     
     # MP3ファイルを再生
     saisei_area.audio(tmp_filename, format="audio/mp3")
@@ -42,6 +45,8 @@ def tomp3():
 
 # テキストエリア
 input_text = text_area.text_area(label="翻訳する文を入力してください", key="input_text", height=200)
-button_area.button(label="Go!", on_click=tomp3)
+if len(st.session_state["input_text"]) != 0:
+    button_area.button(label="Go!", on_click=tomp3)
+
 
 
