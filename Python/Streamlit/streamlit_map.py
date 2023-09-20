@@ -63,6 +63,14 @@ if 'map' not in st.session_state:  # 初期化
 
     st.session_state['map'] = m
 
+if 'data' not in st.session_state:  # 初期化
+    st.session_state["data"] = dict()
+    change_dict = dict()
+    change_dict["lat"] = 42.79355312
+    change_dict["lng"] = 141.695872412
+    st.session_state["data"]['center'] = change_dict
+    st.session_state["data"]["zoom"] = 16
+
 def change_mapinfo():
     change_dict = dict()
     try:
