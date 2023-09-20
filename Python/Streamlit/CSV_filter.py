@@ -28,19 +28,6 @@ if 'unique_values' not in st.session_state:  # 初期化
 if 'select_loc_columns' not in st.session_state:  # 初期化
     st.session_state['select_loc_columns'] = list()
 
-# csvのuploaderの状態が変化したときに呼ばれるcallback関数
-def upload_csv():
-    # csvがアップロードされたとき
-    if st.session_state["upload_csvfile"] is not None:
-        # アップロードされたファイルデータを読み込む
-        file_data = st.session_state["upload_csvfile"].read()
-        # バイナリデータからPandas DataFrameを作成
-        st.session_state["df"] = pd.read_csv(io.BytesIO(file_data))
-
-        st.session_state['new_df'] = st.session_state["df"].copy()
-
-        st.session_state['download_df'] = st.session_state["df"].copy()
-
 st.header("CIST-CSV-Filtered-System")
 st.write(st.session_state['new_df'])
 # st.write(st.session_state["select_loc_columns"])
@@ -50,6 +37,19 @@ st.write(st.session_state['new_df'])
 with st.sidebar:
     # タブ
     tab1, tab2, tab3, tab4 = st.tabs(["Uploader", "Select_columns", "Select_Values", "Downloader"])
+
+    # csvのuploaderの状態が変化したときに呼ばれるcallback関数
+    def upload_csv():
+        # csvがアップロードされたとき
+        if st.session_state["upload_csvfile"] is not None:
+            # アップロードされたファイルデータを読み込む
+            file_data = st.session_state["upload_csvfile"].read()
+            # バイナリデータからPandas DataFrameを作成
+            st.session_state["df"] = pd.read_csv(io.BytesIO(file_data))
+    
+            st.session_state['new_df'] = st.session_state["df"].copy()
+    
+            st.session_state['download_df'] = st.session_state["df"].copy()
 
     # csvのuploader
     with tab1:
@@ -80,7 +80,7 @@ with st.sidebar:
         if st.session_state["upload_csvfile"] is not None:
             # st.multiselectを呼び出し
             st.multiselect(
-                "グラフを表示したい図形のIDを選択してください",
+                "フィルタリングしたいカラムの値を選択してください",
                 st.session_state["df"].columns,  # 上記で生成したリストを使用
                 key="select_loc_columns",
                 on_change=select_loc_column
