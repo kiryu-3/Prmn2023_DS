@@ -49,7 +49,7 @@ st.write(st.session_state['new_df'])
 
 with st.sidebar:
     # タブ
-    tab1, tab2, tab3, tab4 = st.tabs(["Uploader", "Data_info", "Gate_info", "Downloader"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Uploader", "Select_columns", "Select_Values", "Downloader"])
 
     # csvのuploader
     with tab1:
