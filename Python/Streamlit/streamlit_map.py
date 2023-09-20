@@ -92,7 +92,7 @@ st.session_state["data"] = st_data
 st.subheader("全体データ")
 st.write(st.session_state["data"])
 st.subheader("最後にクリックした座標")
-st.write(st.session_state["zoom"])
+st.write(st.session_state["data"]["last_clicked"])
 st.subheader("地図のズームレベル")
 st.write(st.session_state["zoom"])
 st.subheader("地図の中心座標")
