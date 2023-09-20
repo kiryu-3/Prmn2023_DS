@@ -80,6 +80,8 @@ st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.sess
 st.session_state["data"] = st_data
 # st.session_state["data"] = copy.deepcopy(dict(st_data))
 
+st.subheader("全体データ")
+st.write(st.session_state["data"])
 st.subheader("最後にクリックした座標")
 st.write(st.session_state["data"]['zoom_level'])
 st.subheader("地図のズームレベル")
