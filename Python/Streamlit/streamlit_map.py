@@ -61,14 +61,16 @@ if 'map' not in st.session_state:  # 初期化
     draw = folium.plugins.Draw(export=False, position='topleft', draw_options=draw_options)
     draw.add_to(m)
 
+    st.session_state['map'] = m
+
+if 'center' not in st.session_state:  # 初期化
     change_dict = dict()
     change_dict["lat"] = 42.79355312
     change_dict["lng"] = 141.695872412
     st.session_state["center"] = change_dict
-    st.session_state["zoom"] = 16
 
-    st.session_state['map'] = m
-    
+if 'zoom' not in st.session_state:  # 初期化
+    st.session_state["zoom"] = 16
 
 # def change_mapinfo():
 #     change_dict = dict()
