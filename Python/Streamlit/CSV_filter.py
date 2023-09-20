@@ -21,10 +21,6 @@ if 'unique_values' not in st.session_state:  # 初期化
     st.session_state['unique_values'] = dict()
 
 # 読み込んだデータフレームを管理する
-if 'unique_values' not in st.session_state:  # 初期化
-    st.session_state['unique_values'] = dict()
-
-# 読み込んだデータフレームを管理する
 if 'select_loc_columns' not in st.session_state:  # 初期化
     st.session_state['select_loc_columns'] = list()
 
@@ -50,6 +46,13 @@ with st.sidebar:
             st.session_state['new_df'] = st.session_state["df"].copy()
     
             st.session_state['download_df'] = st.session_state["df"].copy()
+        else:
+            df = pd.DataFrame()
+            st.session_state['df'] = df
+            st.session_state['new_df'] = df
+            st.session_state["download_df"] = df
+            st.session_state['unique_values'] = dict()
+            st.session_state['data'] = dict()
 
     # csvのuploader
     with tab1:
