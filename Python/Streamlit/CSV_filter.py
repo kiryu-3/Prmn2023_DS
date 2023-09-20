@@ -24,8 +24,16 @@ if 'unique_values' not in st.session_state:  # 初期化
 if 'select_loc_columns' not in st.session_state:  # 初期化
     st.session_state['select_loc_columns'] = list()
 
+# 読み込んだデータフレームを管理する
+if 'select_show_columns' not in st.session_state:  # 初期化
+    st.session_state['select_show_columns'] = list()
+
+
 st.header("CIST-CSV-Filtered-System")
-st.write(st.session_state['new_df'])
+if len(st.session_state['select_show_columns']) == 0:
+    st.write(st.session_state['new_df'])
+else:
+    st.write(st.session_state['new_df'][st.session_state['select_show_columns']])
 # st.write(st.session_state["select_loc_columns"])
 # st.write(st.session_state['unique_values'])
 # st.write(st.session_state['data'])
@@ -88,6 +96,14 @@ with st.sidebar:
                 key="select_loc_columns",
                 on_change=select_loc_column
             )
+
+            # st.multiselectを呼び出し
+            st.multiselect(
+                "表示したいカラムの値を選択してください",
+                st.session_state["df"].columns,  # 上記で生成したリストを使用
+                key="select_show_columns",
+            )
+            
 
     with tab3:
         def select_values(selected_column):
