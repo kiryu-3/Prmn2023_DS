@@ -82,7 +82,7 @@ if 'data' not in st.session_state:  # 初期化
 #         pass
 
 # 表示する地図
-st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.session_state["data"]["zoom"], center=st.session_state["data"]["center"])
+st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.session_state["data"]["zoom"])
 
 # 地図のデータをコピー
 st.session_state["data"] = st_data
