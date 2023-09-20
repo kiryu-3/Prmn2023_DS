@@ -68,21 +68,21 @@ if 'data' not in st.session_state:  # 初期化
     change_dict = dict()
     change_dict["lat"] = 42.79355312
     change_dict["lng"] = 141.695872412
-    st.session_state["data"]['center'] = change_dict
+    st.session_state["data"]["center"] = change_dict
     st.session_state["data"]["zoom"] = 16
 
-def change_mapinfo():
-    change_dict = dict()
-    try:
-        change_dict["lat"] = st.session_state["data"]["center"]["lat"]
-        change_dict["lng"] = st.session_state["data"]["center"]["lng"]
-        st.session_state['center'] = change_dict
-        st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
-    except:
-        pass
+# def change_mapinfo():
+#     change_dict = dict()
+#     try:
+#         change_dict["lat"] = st.session_state["data"]["center"]["lat"]
+#         change_dict["lng"] = st.session_state["data"]["center"]["lng"]
+#         st.session_state["center"] = change_dict
+#         st.session_state['zoom_level'] = st.session_state["data"]["zoom"]
+#     except:
+#         pass
 
 # 表示する地図
-st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.session_state["data"]["zoom"], center=st.session_state["data"]['center'])
+st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.session_state["data"]["zoom"], center=st.session_state["data"]["center"])
 
 # 地図のデータをコピー
 st.session_state["data"] = st_data
