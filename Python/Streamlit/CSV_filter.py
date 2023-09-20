@@ -73,6 +73,7 @@ with st.sidebar:
             if len(st.session_state["select_loc_columns"]) == 0:
                 st.session_state['new_df'] = st.session_state["df"].copy()
                 if len(st.session_state["data"].items()) != 0:
+                    st.session_state['unique_values'] = dict()
                     st.session_state['data'] = dict()
             else:
                 # st.session_state['data'] = {
