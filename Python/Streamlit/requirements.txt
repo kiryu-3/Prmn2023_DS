@@ -5,6 +5,7 @@ boto3
 awscli
 pylatex
 matplotlib
+seaborn
 japanize-matplotlib
 plotly
 scikit-mobility
