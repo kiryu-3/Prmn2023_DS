@@ -11,3 +11,4 @@ scikit-mobility
 gTTS
 langdetect
 streamlit-pandas
+streamlit-aggrid
