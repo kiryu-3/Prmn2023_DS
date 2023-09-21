@@ -45,7 +45,7 @@ if 'main_df' not in st.session_state:  # 初期化
 #     st.session_state["upload_csvfile"] = None
 
 def numeric_column(df):
-    numeric_names = list()
+    numeric_names = list() 
     for column_name in df.columns:
         # カラム内のすべての値が欠損値もしくは数値、または数値に変換可能な場合
         if df[column_name].dropna().apply(lambda x: isinstance(x, (int, float)) or (str(x).replace(".", "", 1).isdigit())).all():
