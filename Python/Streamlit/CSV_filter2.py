@@ -1,6 +1,3 @@
-# sample3.pyというファイルに記述する
-
-%%writefile sample3.py
 import pandas as pd
 import streamlit as st
 import streamlit_pandas as sp
