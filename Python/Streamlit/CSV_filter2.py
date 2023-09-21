@@ -169,12 +169,12 @@ if st.session_state["upload_csvfile"] is not None:
     
 
 # if st.session_state["upload_csvfile"] is not None:
-    df = st.session_state["all_df"].copy()
+    df = st.session_state["all_df"][st.session_state["filtered_columns"]].copy()
     create_data = st.session_state["column_data"]
     all_widgets = sp.create_widgets(df, create_data)
     try:
         show_df = sp.filter_df(df, all_widgets)
-        st.write(show_df[st.session_state["filtered_columns"]])
+        st.write(show_df)
         
         # ダウンロードボタンを追加
         download_df = show_df.loc[:, ~show_df.columns.str.endswith("_numeric")]
