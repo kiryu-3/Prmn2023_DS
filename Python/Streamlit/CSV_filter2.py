@@ -70,22 +70,23 @@ def upload_csv():
             df = pd.read_csv(io.BytesIO(file_data), encoding="shift-jis", engine="python")
         # カラムの型を自動で適切に変換
         df = df.infer_objects()
+        df = df.astype('object')
 
-        for column in df.columns:
-            if np.issubdtype(df[column].dtype, np.number):
-                # 数値型の列は変換しない
-                pass
-            else:
-                try:
-                    df[column] = pd.to_datetime(df[column])
-                except:
-                    pass
+        # for column in df.columns:
+        #     if np.issubdtype(df[column].dtype, np.number):
+        #         # 数値型の列は変換しない
+        #         pass
+        #     else:
+        #         try:
+        #             df[column] = pd.to_datetime(df[column])
+        #         except:
+        #             pass
 
        
-        # 各カラムのデータ型をチェックして日付型以外のカラムをオブジェクト型に変換
-        for column_name, dtype in df.dtypes.items():
-            if dtype != 'datetime64[ns]':
-                df[column_name] = df[column_name].astype('object')
+        # # 各カラムのデータ型をチェックして日付型以外のカラムをオブジェクト型に変換
+        # for column_name, dtype in df.dtypes.items():
+        #     if dtype != 'datetime64[ns]':
+        #         df[column_name] = df[column_name].astype('object')
 
         # 空の辞書を作成
         create_data = {}
