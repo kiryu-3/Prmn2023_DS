@@ -143,8 +143,9 @@ if st.session_state["upload_csvfile"] is not None:
 
     upload_name = st.session_state['upload_csvfile'].name
     download_name = upload_name.split(".")[0]
+    col[1].write("ファイル名を入力してください")
     col[1].text_input(
-        label="ファイル名を入力してください",
+        label="Press Enter to Apply",
         value=f"{download_name}_filtered",
         key="download_name"
     )
