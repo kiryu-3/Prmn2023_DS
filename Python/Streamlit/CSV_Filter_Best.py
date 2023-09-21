@@ -2,11 +2,12 @@ import pandas as pd
 import streamlit as st
 from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
+import seaborn as sns
 
-st.set_page_config(page_title="Netflix Shows", layout="wide") 
-st.title("Netlix shows analysis")
+st.set_page_config(page_title="Titanic Shows", layout="wide") 
+st.title("Titanic shows analysis")
 
-st.session_state["csv"] = pd.read_csv("netflix_titles.csv")
+st.session_state["csv"] = sns.load_dataset('titanic')
 gb = GridOptionsBuilder.from_dataframe(st.session_state["csv"])
 
 # ---
