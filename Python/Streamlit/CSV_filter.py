@@ -135,15 +135,17 @@ with st.sidebar:
                 )
 
     with tab4:
-        def select_downloaded_value():
+        def select_download_value():
             if len(st.session_state['selected_download_values']) != 0:
                 st.session_state['download_df'] = st.session_state['new_df'][st.session_state['selected_download_values']]
+            else:
+                st.session_state['download_df'] = st.session_state['new_df'].copy()
 
         st.multiselect(
             f"ダウンロードしたいカラムを選択してください",
             st.session_state['new_df'].columns,
             key=f"selected_download_values",
-            on_change=select_downloaded_value,
+            on_change=select_download_value,
         )
 
         csv_file = st.session_state['download_df'].to_csv(index=False)
