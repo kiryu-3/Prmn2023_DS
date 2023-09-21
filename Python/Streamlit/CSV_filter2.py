@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 import streamlit as st
 import streamlit_pandas as sp
