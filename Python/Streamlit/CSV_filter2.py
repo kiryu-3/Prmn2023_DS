@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
 import streamlit_pandas as sp
-import seaborn as sns
 
 import re
 import requests
