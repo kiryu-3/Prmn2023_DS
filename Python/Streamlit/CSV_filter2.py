@@ -172,16 +172,19 @@ if st.session_state["upload_csvfile"] is not None:
     df = st.session_state["all_df"].copy()
     create_data = st.session_state["column_data"]
     all_widgets = sp.create_widgets(df, create_data)
-    show_df = sp.filter_df(df, all_widgets)
-    st.write(show_df[st.session_state["filtered_columns"]])
-    
-    # ダウンロードボタンを追加
-    show_df = show_df.loc[:, ~show_df.columns.str.endswith("_numeric")]
-    csv_file = show_df.to_csv(index=False)
-    # col[1].write(csv_file)
-    col[1].download_button(
-        label="Download CSV",
-        data=csv_file,
-        file_name=f'{st.session_state["download_name"]}.csv'
-    )
+    try:
+        show_df = sp.filter_df(df, all_widgets)
+        st.write(show_df[st.session_state["filtered_columns"]])
+        
+        # ダウンロードボタンを追加
+        show_df = show_df.loc[:, ~show_df.columns.str.endswith("_numeric")]
+        csv_file = show_df.to_csv(index=False)
+        # col[1].write(csv_file)
+        col[1].download_button(
+            label="Download CSV",
+            data=csv_file,
+            file_name=f'{st.session_state["download_name"]}.csv'
+        )
+    except:
+        st.error("Please Reload")
         
