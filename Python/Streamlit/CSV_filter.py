@@ -142,7 +142,7 @@ with st.sidebar:
         st.multiselect(
             f"ダウンロードしたいカラムを選択してください",
             st.session_state['new_df'].columns,
-            key=f"selected_downloaded_values",
+            key=f"selected_download_values",
             on_change=select_downloaded_value,
         )
 
