@@ -70,6 +70,16 @@ def upload_csv():
         # カラムの型を自動で適切に変換
         df = df.infer_objects()
 
+        for column in df.columns:
+            if np.issubdtype(df[column].dtype, np.number):
+                # 数値型の列は変換しない
+                pass
+            else:
+                try:
+                    df[column] = pd.to_datetime(df[column])
+                except:
+                    pass
+
        
         # 各カラムのデータ型をチェックして日付型以外のカラムをオブジェクト型に変換
         for column_name, dtype in df.dtypes.items():
