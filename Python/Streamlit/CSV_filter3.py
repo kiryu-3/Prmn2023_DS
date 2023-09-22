@@ -107,7 +107,7 @@ def datetime_widget(df, column, ss_name):
 
     if format_time_interval(min_date_diff) == "year":
       temp_input = tab2.slider(
-          "日付範囲を選択してください",
+          f"{column.title()}",
           min_value=start_date,
           max_value=end_date,
           value=(start_date, end_date),
@@ -116,7 +116,7 @@ def datetime_widget(df, column, ss_name):
           )
     elif format_time_interval(min_date_diff) == "month":
       temp_input = tab2.slider(
-        "日付範囲を選択してください",
+        f"{column.title()}",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
@@ -125,7 +125,7 @@ def datetime_widget(df, column, ss_name):
         )
     elif format_time_interval(min_date_diff) == "day":
       temp_input = tab2.slider(
-        "日付範囲を選択してください",
+        f"{column.title()}",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
@@ -134,7 +134,7 @@ def datetime_widget(df, column, ss_name):
         )
     elif format_time_interval(min_date_diff) == "hour":
       temp_input = tab2.slider(
-        "日付範囲を選択してください",
+        f"{column.title()}",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
@@ -143,7 +143,7 @@ def datetime_widget(df, column, ss_name):
         )    
     elif format_time_interval(min_date_diff) == "minute":
       temp_input = tab2.slider(
-        "日付範囲を選択してください",
+        f"{column.title()}",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
