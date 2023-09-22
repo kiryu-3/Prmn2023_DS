@@ -284,9 +284,11 @@ def upload_csv():
         # カラムの型を自動で適切に変換
         df = df.infer_objects()
         df = df.astype('object')
+        st.session_state["uploaded_df"] = df.copy()
+        st.session_state["all_df"] = df.copy()
 
         create_data = decide_dtypes(df)
-        df = df.astype('object')
+        # df = df.astype('object')
 
         # for column in df.columns:
         #     if np.issubdtype(df[column].dtype, np.number):
@@ -314,10 +316,9 @@ def upload_csv():
         # for column_name, dtype in df.dtypes.items():
         #     create_data[column_name] = "multiselect"
 
-        st.session_state["uploaded_df"] = df.copy()
+        
         # st.session_state["download_df"] = df.copy()
         # st.session_state["notnum_df"] = df.copy()
-        st.session_state["all_df"] = df.copy()
         st.session_state["column_data"] = decide_dtypes(df)
         st.session_state["filtered_columns"] = df.columns
         # numeric_column(st.session_state["uploaded_df"])
