@@ -260,7 +260,7 @@ def filter_df(df, all_widgets):
                     res = res.loc[(res[column] >= min) & (res[column] <= max)]
                 elif ctype == "object":
                     res = filter_string(res, column, data)
-        except as e:
+        except Exception as e:
             st.error(e)
             st.error(all_widgets)
     return res
