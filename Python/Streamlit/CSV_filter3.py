@@ -274,9 +274,11 @@ def upload_csv():
         # バイナリデータからPandas DataFrameを作成
         try:
             df = pd.read_csv(io.BytesIO(file_data), encoding="utf-8", engine="python")
+            st.session_state["ja"] = False
         except UnicodeDecodeError:
             # UTF-8で読み取れない場合はShift-JISエンコーディングで再試行
             df = pd.read_csv(io.BytesIO(file_data), encoding="shift-jis", engine="python")
+            st.session_state["ja"] = True
         # カラムの型を自動で適切に変換
         df = df.infer_objects()
         df = df.astype('object')
@@ -384,7 +386,10 @@ if st.session_state["upload_csvfile"] is not None:
     
     # ダウンロードボタンを追加
     download_df = show_df.loc[:, ~show_df.columns.str.endswith("_numeric")]
-    csv_file = download_df.to_csv(index=False)
+    if st.session_state["ja"]:
+        csv_file = download_df.to_csv(index=False, encoding="shift-jis")
+    else:
+        csv_file = download_df.to_csv(index=False, encoding="utf-8")
     tab3.download_button(
         label="Download CSV",
         data=csv_file,
