@@ -65,7 +65,7 @@ def number_widget(df, column, ss_name):
     # カラムを数値型に変換
     num_df = pd.DataFrame()
     # カラムをfloat型に変換
-    df[f'{column_name}_number'] = pd.to_numeric(df[column_name], errors='coerce', downcast='float')
+    df[f'{column}_number'] = pd.to_numeric(df[column], errors='coerce', downcast='float')
     max = float(num_df[column].max())
     min = float(num_df[column].min())
     temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{ss_name}_number")
