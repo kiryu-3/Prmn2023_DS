@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
-import streamlit_pandas as sp
+# import streamlit_pandas as sp
 
 import re
 import requests
@@ -356,8 +356,8 @@ if st.session_state["upload_csvfile"] is not None:
     
     df = st.session_state["all_df"][st.session_state["filtered_columns"]].copy()
     create_data = st.session_state["column_data"]
-    df, all_widgets = sp.create_widgets(df, create_data)
-    show_df = sp.filter_df(df, all_widgets)
+    df, all_widgets = create_widgets(df, create_data)
+    show_df = filter_df(df, all_widgets)
     st.write(show_df)
     
     # ダウンロードボタンを追加
