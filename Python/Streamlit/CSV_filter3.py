@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 # import streamlit_pandas as sp
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 import re
 import requests
@@ -76,8 +76,10 @@ def datetime_widget(df, column, ss_name):
     df = df[df[column].notna()]
     # カラムを日付型に変換
     df[f'{column}_datetime'] = pd.to_datetime(df[column], errors='coerce')
-    start_date = df[f'{column}_datetime'].min().to_pydatetime()
-    end_date = df[f'{column}_datetime'].max().to_pydatetime()
+    start_date = df[f'{column}_datetime'].min()
+    end_date = df[f'{column}_datetime'].max()
+    start_date = start_date.to_pydatetime()
+    end_date = end_date.to_pydatetime()
 
     # ユニークな日付を取り出す
     unique_dates = df[f'{column}_datetime'].unique()
