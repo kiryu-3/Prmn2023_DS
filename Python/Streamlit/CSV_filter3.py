@@ -246,16 +246,18 @@ def filter_df(df, all_widgets):
     for widget in all_widgets:
         ss_name, ctype, column = widget
         data = st.session_state[ss_name]
-        if data:
-            if ctype == "number":
-                min, max = data
-                res = res.loc[(res[column] >= min) & (res[column] <= max)]
-            elif ctype == "datetime":
-                min, max = data
-                res = res.loc[(res[column] >= min) & (res[column] <= max)]
-            elif ctype == "object":
-                res = filter_string(res, column, data)
-               
+        try:
+            if data:
+                if ctype == "number":
+                    min, max = data
+                    res = res.loc[(res[column] >= min) & (res[column] <= max)]
+                elif ctype == "datetime":
+                    min, max = data
+                    res = res.loc[(res[column] >= min) & (res[column] <= max)]
+                elif ctype == "object":
+                    res = filter_string(res, column, data)
+        except:
+            st.error(data)
     return res
 
 def upload_csv():
