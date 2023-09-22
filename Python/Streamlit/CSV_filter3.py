@@ -68,7 +68,8 @@ def number_widget(df, column, ss_name):
     df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce', downcast='float')
     max = float(df[f'{column}_numeric'].max())
     min = float(df[f'{column}_numeric'].min())
-    temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{ss_name}_numeric")
+    if max==min:
+        temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{ss_name}_numeric")
     all_widgets.append((f"{ss_name}_numeric", "number", f"{column}_numeric"))
     return df
 
@@ -105,7 +106,7 @@ def datetime_widget(df, column, ss_name):
                 interval = round(interval)
                 return unit if interval > 1 else unit  # 単位名の調整
 
-    if format_time_interval(min_date_diff) == "year":
+    if format_time_interval(min_date_diff) == "year" and end_date==start_date:
       temp_input = tab2.slider(
           f"{column.title()}",
           min_value=start_date,
@@ -114,7 +115,7 @@ def datetime_widget(df, column, ss_name):
           step=timedelta(days=365),
           key=f"{ss_name}_datetime"
           )
-    elif format_time_interval(min_date_diff) == "month":
+    elif format_time_interval(min_date_diff) == "month" and end_date==start_date:
       temp_input = tab2.slider(
         f"{column.title()}",
         min_value=start_date,
@@ -123,7 +124,7 @@ def datetime_widget(df, column, ss_name):
         step=timedelta(days=30),
         key=f"{ss_name}_datetime"
         )
-    elif format_time_interval(min_date_diff) == "day":
+    elif format_time_interval(min_date_diff) == "day" and end_date==start_date:
       temp_input = tab2.slider(
         f"{column.title()}",
         min_value=start_date,
@@ -132,7 +133,7 @@ def datetime_widget(df, column, ss_name):
         step=timedelta(days=1),
         key=f"{ss_name}_datetime"
         )
-    elif format_time_interval(min_date_diff) == "hour":
+    elif format_time_interval(min_date_diff) == "hour" and end_date==start_date:
       temp_input = tab2.slider(
         f"{column.title()}",
         min_value=start_date,
@@ -141,7 +142,7 @@ def datetime_widget(df, column, ss_name):
         step=timedelta(hours=1),
         key=f"{ss_name}_datetime"
         )    
-    elif format_time_interval(min_date_diff) == "minute":
+    elif format_time_interval(min_date_diff) == "minute" and end_date==start_date:
       temp_input = tab2.slider(
         f"{column.title()}",
         min_value=start_date,
@@ -150,7 +151,7 @@ def datetime_widget(df, column, ss_name):
         step=timedelta(minutes=1),
         key=f"{ss_name}_datetime"
         )
-    elif format_time_interval(min_date_diff) == "second":
+    elif format_time_interval(min_date_diff) == "second" and end_date==start_date:
       temp_input = tab2.slider(
         f"{column.title()}",
         min_value=start_date,
