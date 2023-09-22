@@ -75,17 +75,20 @@ def datetime_widget(df, column, ss_name):
     df = df[df[column].notna()]
     # カラムを日付型に変換
     df[f'{column}_datetime'] = pd.to_datetime(df[column], errors='coerce')
-    start_date = df[f'{column}_datetime'].max()
-    end_date = df[f'{column}_datetime'].min()
+    start_date = df[f'{column}_datetime'].min()
+    end_date = df[f'{column}_datetime'].max()
+
+    # ユニークな日付を取り出す
+    unique_dates = df[f'{column}_datetime'].unique()
     
-    # 日付データをソート
-    df.sort_values(by=f'{column}_datetime', inplace=True)
+    # ユニークな日付をソート
+    unique_dates = sorted(unique_dates)
     
-    # 隣接する日付の差を計算し、最小の差を取得
-    date_diffs = df[f'{column}_datetime'].diff()
+    # 隣接する日付の差を計算（秒単位）
+    date_diffs_seconds = [(unique_dates[i + 1] - unique_dates[i]) / np.timedelta64(1, 's') for i in range(len(unique_dates) - 1)]
     
-    # 最小間隔を計算
-    min_date_diff = date_diffs.min()
+    # 最小間隔を計算（秒単位）
+    min_date_diff = min(date_diffs_seconds)
 
     # 関数を定義
     def format_time_interval(seconds):
