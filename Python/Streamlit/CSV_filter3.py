@@ -158,7 +158,7 @@ def text_widget(df, column, ss_name):
     df = df[df[column].notna()]
     options = df[column].unique()
     options.sort()
-    temp_input = tab2.sidebar.multiselect(f"{column.title()}", options, key=ss_name)
+    temp_input = tab3.multiselect(f"{column.title()}", options, key=ss_name)
     all_widgets.append((ss_name, "text", column))
   
 
