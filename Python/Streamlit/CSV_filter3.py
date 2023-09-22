@@ -171,11 +171,11 @@ def create_widgets(df, create_data={}):
   for ctype, column in zip(df.dtypes, df.columns):
       if column in create_data:
           if create_data[column] == "number":
+              text_widget(df, column, column.lower())
               df = number_widget(df, column, column.lower())
-              text_widget(df, column, column.lower())
           elif create_data[column] == "datetime":
-              df = datetime_widget(df, column, column.lower())
               text_widget(df, column, column.lower())
+              df = datetime_widget(df, column, column.lower())              
           elif create_data[column] == "object":
               text_widget(df, column, column.lower())
   return df, all_widgets
