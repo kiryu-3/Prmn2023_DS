@@ -76,8 +76,8 @@ def datetime_widget(df, column, ss_name):
     df = df[df[column].notna()]
     # カラムを日付型に変換
     df[f'{column}_datetime'] = pd.to_datetime(df[column], errors='coerce')
-    start_date = df[f'{column}_datetime'].min()
-    end_date = df[f'{column}_datetime'].max()
+    start_date = df[f'{column}_datetime'].min().to_pydatetime()
+    end_date = df[f'{column}_datetime'].max().to_pydatetime()
 
     # ユニークな日付を取り出す
     unique_dates = df[f'{column}_datetime'].unique()
