@@ -49,7 +49,7 @@ if 'main_df' not in st.session_state:  # 初期化
 st.title("CSV Filters")
 
 # タブ
-tab1, tab2, tab3, tab4 = st.sidebar.tabs(["Uploader", "Select_columns", "Select_Values", "Downloader"])
+tab1, tab2, tab3 = st.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
 
 def filter_string(df, column, selected_list):
     final = []
@@ -106,7 +106,7 @@ def datetime_widget(df, column, ss_name):
                 return unit if interval > 1 else unit  # 単位名の調整
 
     if format_time_interval(min_date_diff) == "year":
-      temp_input = tab3.slider(
+      temp_input = tab2.slider(
           "日付範囲を選択してください",
           min_value=start_date,
           max_value=end_date,
@@ -115,7 +115,7 @@ def datetime_widget(df, column, ss_name):
           key=f"{ss_name}_datetime"
           )
     elif format_time_interval(min_date_diff) == "month":
-      temp_input = tab3.slider(
+      temp_input = tab2.slider(
         "日付範囲を選択してください",
         min_value=start_date,
         max_value=end_date,
@@ -124,7 +124,7 @@ def datetime_widget(df, column, ss_name):
         key=f"{ss_name}_datetime"
         )
     elif format_time_interval(min_date_diff) == "day":
-      temp_input = tab3.slider(
+      temp_input = tab2.slider(
         "日付範囲を選択してください",
         min_value=start_date,
         max_value=end_date,
@@ -133,7 +133,7 @@ def datetime_widget(df, column, ss_name):
         key=f"{ss_name}_datetime"
         )
     elif format_time_interval(min_date_diff) == "hour":
-      temp_input = tab3.slider(
+      temp_input = tab2.slider(
         "日付範囲を選択してください",
         min_value=start_date,
         max_value=end_date,
@@ -142,7 +142,7 @@ def datetime_widget(df, column, ss_name):
         key=f"{ss_name}_datetime"
         )    
     elif format_time_interval(min_date_diff) == "minute":
-      temp_input = tab3.slider(
+      temp_input = tab2.slider(
         "日付範囲を選択してください",
         min_value=start_date,
         max_value=end_date,
@@ -151,7 +151,7 @@ def datetime_widget(df, column, ss_name):
         key=f"{ss_name}_datetime"
         )
     elif format_time_interval(min_date_diff) == "second":
-      temp_input = tab3.slider(
+      temp_input = tab2.slider(
         f"{column.title()}",
         min_value=start_date,
         max_value=end_date,
@@ -167,7 +167,7 @@ def text_widget(df, column, ss_name):
     df = df[df[column].notna()]
     options = df[column].unique()
     options.sort()
-    temp_input = tab3.multiselect(f"{column.title()}", options, key=ss_name)
+    temp_input = tab2.multiselect(f"{column.title()}", options, key=ss_name)
     all_widgets.append((ss_name, "text", column))
   
 
@@ -365,11 +365,12 @@ if st.session_state["upload_csvfile"] is not None:
                      options=st.session_state["uploaded_df"].columns, 
                      key="selected_columns", 
                      on_change=select_column)
+    tab2.header("")
     
     upload_name = st.session_state['upload_csvfile'].name
     download_name = upload_name.split(".")[0]
-    tab4.write("ファイル名を入力してください")
-    tab4.text_input(
+    tab3.write("ファイル名を入力してください")
+    tab3.text_input(
         label="Press Enter to Apply",
         value=f"{download_name}_filtered",
         key="download_name"
@@ -384,7 +385,7 @@ if st.session_state["upload_csvfile"] is not None:
     # ダウンロードボタンを追加
     download_df = show_df.loc[:, ~show_df.columns.str.endswith("_numeric")]
     csv_file = download_df.to_csv(index=False)
-    tab4.download_button(
+    tab3.download_button(
         label="Download CSV",
         data=csv_file,
         file_name=f'{st.session_state["download_name"]}.csv'
