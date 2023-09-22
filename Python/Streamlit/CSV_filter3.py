@@ -69,7 +69,7 @@ def number_widget(df, column, ss_name):
     max = float(num_df[column].max())
     min = float(num_df[column].min())
     temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{ss_name}_number")
-    all_widgets.append((ss_name, "number", column))
+    all_widgets.append((ss_name, "numeric", column))
     return df
 
 def datetime_widget(df, column, ss_name):
@@ -249,7 +249,7 @@ def filter_df(df, create_data, all_widgets):
     columns_list = df.columns
     for column in columns_list:
         if create_data[column] == "number":
-            columns_list.append(f"{column}_number")
+            columns_list.append(f"{column}_numeric")
         elif create_data[column] == "datetime":
             columns_list.append(f"{column}_datetime")
     res = df[columns_list]
