@@ -172,7 +172,7 @@ def create_widgets(df, create_data={}):
               text_widget(df, column, column.lower())
           elif create_data[column] == "object":
               text_widget(df, column, column.lower())
-    return df, all_widgets
+  return df, all_widgets
 
 # def numeric_column(df):
     # numeric_names = list() 
