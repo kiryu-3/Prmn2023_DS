@@ -64,8 +64,12 @@ def number_widget(df, column, ss_name):
     df = df[df[column].notna()]
     # カラムを数値型に変換
     num_df = pd.DataFrame()
-    # カラムをfloat型に変換
-    df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce', downcast='float')
+    try:
+        # 整数型に変換できる場合は整数型に変換
+        result = pd.to_numeric(value, errors='coerce', downcast='integer')
+    except:
+        # 整数型に変換できない場合はfloat型に変換
+        result = pd.to_numeric(value, errors='coerce', downcast='float')
     max = float(df[f'{column}_numeric'].max())
     min = float(df[f'{column}_numeric'].min())
     if max!=min:
