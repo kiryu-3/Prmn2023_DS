@@ -176,14 +176,17 @@ def create_widgets(df, create_data={}):
   all_widgets = []
   for ctype, column in zip(df.dtypes, df.columns):
       if column in create_data:
-          if create_data[column] == "number":
-              text_widget(df, column, column.lower())
-              df = number_widget(df, column, column.lower())
-          elif create_data[column] == "datetime":
-              text_widget(df, column, column.lower())
-              df = datetime_widget(df, column, column.lower())              
-          elif create_data[column] == "object":
-              text_widget(df, column, column.lower())
+          try:
+              if create_data[column] == "number":
+                  text_widget(df, column, column.lower())
+                  df = number_widget(df, column, column.lower())
+              elif create_data[column] == "datetime":
+                  text_widget(df, column, column.lower())
+                  df = datetime_widget(df, column, column.lower())              
+              elif create_data[column] == "object":
+                  text_widget(df, column, column.lower())
+            except:
+                st
   return df, all_widgets
 
 # def numeric_column(df):
@@ -237,7 +240,7 @@ def decide_dtypes(df):
             create_data[column_name] = "object"
     return create_data
 
-def filter_df(df, create_data, all_widgets):
+def filter_df(df, all_widgets):
     """
     This function will take the input dataframe and all the widgets generated from
     Streamlit Pandas. It will then return a filtered DataFrame based on the changes
@@ -246,19 +249,7 @@ def filter_df(df, create_data, all_widgets):
     df => the original Pandas DataFrame
     all_widgets => the widgets created by the function create_widgets().
     """
-    columns_list = list(df.columns)
-    for column in columns_list:
-        if create_data[column] == "number":
-            try:
-                columns_list.append(f"{column}_numeric")
-            except:
-                st.write(columns_list)
-        elif create_data[column] == "datetime":
-            try:
-                columns_list.append(f"{column}_datetime")
-            except:
-                st.write(columns_list)
-    res = df[columns_list]
+    res = df
     for widget in all_widgets:
         ss_name, ctype, column = widget
         data = st.session_state[ss_name]
@@ -388,7 +379,7 @@ if st.session_state["upload_csvfile"] is not None:
     df = st.session_state["all_df"][st.session_state["filtered_columns"]].copy()
     create_data = st.session_state["column_data"]
     df, all_widgets = create_widgets(df, create_data)
-    show_df = filter_df(df, create_data, all_widgets)
+    show_df = filter_df(df, all_widgets)
     st.write(show_df)
     
     # ダウンロードボタンを追加
