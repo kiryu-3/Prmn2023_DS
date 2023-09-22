@@ -176,17 +176,14 @@ def create_widgets(df, create_data={}):
   all_widgets = []
   for ctype, column in zip(df.dtypes, df.columns):
       if column in create_data:
-          try:
-              if create_data[column] == "number":
-                  text_widget(df, column, column.lower())
-                  df = number_widget(df, column, column.lower())
-              elif create_data[column] == "datetime":
-                  text_widget(df, column, column.lower())
-                  df = datetime_widget(df, column, column.lower())              
-              elif create_data[column] == "object":
-                  text_widget(df, column, column.lower())
-            except:
-                st
+          if create_data[column] == "number":
+              text_widget(df, column, column.lower())
+              df = number_widget(df, column, column.lower())
+          elif create_data[column] == "datetime":
+              text_widget(df, column, column.lower())
+              df = datetime_widget(df, column, column.lower())              
+          elif create_data[column] == "object":
+              text_widget(df, column, column.lower())
   return df, all_widgets
 
 # def numeric_column(df):
