@@ -262,6 +262,7 @@ def filter_df(df, all_widgets):
                     res = filter_string(res, column, data)
         except Exception as e:
             st.error(e)
+            st.error(res.columns)
             st.error(all_widgets)
     return res
 
