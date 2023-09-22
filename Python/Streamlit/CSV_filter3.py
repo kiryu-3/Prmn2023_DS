@@ -67,7 +67,7 @@ def number_widget(df, column, ss_name):
     df[f'{column_name}_number'] = pd.to_numeric(df[column_name], errors='coerce', downcast='float')
     max = float(num_df[column].max())
     min = float(num_df[column].min())
-    temp_input = tab2.sidebar.slider(f"{column.title()}", min, max, (min, max), key=ss_name)
+    temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=ss_name)
     all_widgets.append((ss_name, "number", column))
     return df
 
