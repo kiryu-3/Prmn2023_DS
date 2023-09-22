@@ -262,7 +262,7 @@ def filter_df(df, all_widgets):
                     res = filter_string(res, column, data)
         except:
             st.error(data)
-            st.error(ctype)
+            st.error(all_widgets)
     return res
 
 def upload_csv():
