@@ -1,3 +1,6 @@
 [server]
 maxUploadSize = 2000
 
+[theme]
+primaryColor="#228B22" # 緑
+secondaryBackgroundColor="#696969" # ダークグレー
