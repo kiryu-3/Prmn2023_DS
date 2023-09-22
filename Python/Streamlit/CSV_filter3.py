@@ -45,26 +45,47 @@ if 'main_df' not in st.session_state:  # 初期化
 # if 'upload_csvfile' not in st.session_state:  # 初期化
 #     st.session_state["upload_csvfile"] = None
 
-def filter_df()
+st.title("CSV Filters")
+
+# タブ
+tab1, tab2, tab3, tab4 = st.sidebar.tabs(["Uploader", "Select_columns", "Select_Values", "Downloader"])
+
+def filter_string(df, column, selected_list):
+    final = []
+    df = df[df[column].notna()]
+    for idx, row in df.iterrows():
+        if row[column] in selected_list:
+            final.append(row)
+    res = pd.DataFrame(final)
+    return res
 
 def number_widget(df, column, ss_name):
     df = df[df[column].notna()]
     # カラムを数値型に変換
     num_df = pd.DataFrame()
-    # カラムを数値型に変換
-    num_df[column_name] = pd.to_numeric(num_df[column_name], errors='coerce')
+    # カラムをfloat型に変換
+    df[f'{column_name}_number'] = pd.to_numeric(df[column_name], errors='coerce', downcast='float')
     max = float(num_df[column].max())
     min = float(num_df[column].min())
-    temp_input = st.sidebar.slider(f"{column.title()}", min, max, (min, max), key=ss_name)
+    temp_input = tab2.sidebar.slider(f"{column.title()}", min, max, (min, max), key=ss_name)
     all_widgets.append((ss_name, "number", column))
+    return df
 
 def datetime_widget(df, column, ss_name):
     df = df[df[column].notna()]
     # カラムを日付型に変換
-    date_df = pd.DataFrame()
-    date_df[column] = pd.to_datetime(df[column], errors='coerce')
-    start_date = df[column].max()
-    end_date = df[column].min()
+    df[f'{column}_datetime'] = pd.to_datetime(df[column], errors='coerce')
+    start_date = df[f'{column}_datetime'].max()
+    end_date = df[f'{column}_datetime'].min()
+    
+    # 日付データをソート
+    df.sort_values(by=f'{column}_datetime', inplace=True)
+    
+    # 隣接する日付の差を計算し、最小の差を取得
+    date_diffs = df[f'{column}_datetime'].diff()
+    
+    # 最小間隔を計算
+    min_date_diff = date_diffs.min()
 
     # 関数を定義
     def format_time_interval(seconds):
@@ -78,60 +99,63 @@ def datetime_widget(df, column, ss_name):
                 interval = round(interval)
                 return unit if interval > 1 else unit  # 単位名の調整
 
-        # 日付のカラムをDateTime型に変換
-        df['column] = pd.to_datetime(df[column])
-        
-        # 日付データをソート
-        df.sort_values(by=column, inplace=True)
-        
-        # ユニークな日付を抽出
-        unique_dates = df[column].unique()
-        
-        # ユニークな日付の間隔を計算し、最小の差を取得（秒単位）
-        timedeltas = [unique_dates[i + 1] - unique_dates[i] for i in range(len(unique_dates) - 1)]
-        min_date_diff_seconds = min(td.astype(np.timedelta64).item() / 1e9 for td in timedeltas)
-        return min_date_diff_seconds
-
-    if format_time_interval() == "year":
-      temp_input = st.slider(
+    if format_time_interval(min_date_diff) == "year":
+      temp_input = tab3.slider(
           "日付範囲を選択してください",
           min_value=start_date,
           max_value=end_date,
           value=(start_date, end_date),
           step=timedelta(days=365),
-      )
-    elif format_time_interval() == "month":
-      temp_input = st.slider(
+          )
+    elif format_time_interval(min_date_diff) == "month":
+      temp_input = tab3.slider(
         "日付範囲を選択してください",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(days=30),
-    )
-    elif format_time_interval() == "day":
-      temp_input = st.slider(
+        )
+    elif format_time_interval(min_date_diff) == "day":
+      temp_input = tab3.slider(
         "日付範囲を選択してください",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(days=1),
-    )
-    elif format_time_interval() == "hour":
-      temp_input = st.slider(
+        )
+    elif format_time_interval(min_date_diff) == "hour":
+      temp_input = tab3.slider(
         "日付範囲を選択してください",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
-        step=timedelta(hours=11),
-    )
+        step=timedelta(hours=1),
+        )    
+    elif format_time_interval(min_date_diff) == "minute":
+      temp_input = tab3.slider(
+        "日付範囲を選択してください",
+        min_value=start_date,
+        max_value=end_date,
+        value=(start_date, end_date),
+        step=timedelta(minutes=1),
+        )
+    elif format_time_interval(min_date_diff) == "second":
+      temp_input = tab3.slider(
+        f"{column.title()}",
+        min_value=start_date,
+        max_value=end_date,
+        value=(start_date, end_date),
+        step=timedelta(seconds=1),
+        )
         
     all_widgets.append((ss_name, "datetime", column))
+    return df    
 
 def text_widget(df, column, ss_name):
     df = df[df[column].notna()]
     options = df[column].unique()
     options.sort()
-    temp_input = st.sidebar.multiselect(f"{column.title()}", options, key=ss_name)
+    temp_input = tab2.sidebar.multiselect(f"{column.title()}", options, key=ss_name)
     all_widgets.append((ss_name, "text", column))
   
 
@@ -141,13 +165,14 @@ def create_widgets(df, create_data={}):
   for ctype, column in zip(df.dtypes, df.columns):
       if column in create_data:
           if create_data[column] == "number":
-              number_widget(df, column, column.lower())
-              create_select(df, column, column.lower())
+              df = number_widget(df, column, column.lower())
+              text_widget(df, column, column.lower())
           elif create_data[column] == "datetime":
-              datetime_widget(df, column, column.lower())
-              create_select(df, column, column.lower())
+              df = datetime_widget(df, column, column.lower())
+              text_widget(df, column, column.lower())
           elif create_data[column] == "object":
-              create_select(df, column, column.lower())
+              text_widget(df, column, column.lower())
+    return df, all_widgets
 
 # def numeric_column(df):
     # numeric_names = list() 
@@ -176,10 +201,12 @@ def datetime_column(df, column_name):
         except (ValueError, TypeError):
             return False
 
-    if df[column_name].dropna().apply(is_date).all():
-        return True
-    else:
-        return False
+    return df[column_name].dropna().apply(is_date).all()
+
+    # if df[column_name].dropna().apply(is_date).all():
+    #     return True
+    # else:
+    #     return False
 
 def decide_dtypes(df):
     # 空の辞書を作成
@@ -234,7 +261,8 @@ def upload_csv():
         df = df.infer_objects()
         df = df.astype('object')
 
-      create_data = decide_dtypes(df)
+        create_data = decide_dtypes(df)
+        df = df.astype('object')
 
         # for column in df.columns:
         #     if np.issubdtype(df[column].dtype, np.number):
@@ -252,23 +280,23 @@ def upload_csv():
         #     if dtype != 'datetime64[ns]':
         #         df[column_name] = df[column_name].astype('object')
 
-        for column_name, dtype in df.dtypes.items():
-            if dtype != 'datetime64[ns]':
-                df[column_name] = df[column_name].astype('object')
+        # for column_name, dtype in df.dtypes.items():
+        #     if dtype != 'datetime64[ns]':
+        #         df[column_name] = df[column_name].astype('object')
 
-        # 空の辞書を作成
-        create_data = {}
-        # データフレームの各列に対してデータ型をチェック
-        for column_name, dtype in df.dtypes.items():
-            create_data[column_name] = "multiselect"
+        # # 空の辞書を作成
+        # create_data = {}
+        # # データフレームの各列に対してデータ型をチェック
+        # for column_name, dtype in df.dtypes.items():
+        #     create_data[column_name] = "multiselect"
 
         st.session_state["uploaded_df"] = df.copy()
         # st.session_state["download_df"] = df.copy()
         # st.session_state["notnum_df"] = df.copy()
         st.session_state["all_df"] = df.copy()
-        st.session_state["column_data"] = create_data
+        st.session_state["column_data"] = decide_dtypes(df)
         st.session_state["filtered_columns"] = df.columns
-        numeric_column(st.session_state["uploaded_df"])
+        # numeric_column(st.session_state["uploaded_df"])
 
     else:
         st.session_state["uploaded_df"] = pd.DataFrame()
@@ -286,73 +314,87 @@ def select_column():
     else:
         st.session_state["filtered_columns"] = st.session_state["selected_columns"]
 
-
-    # 空の辞書を作成
-    create_data = {}
-    # データフレームの各列に対してデータ型をチェック
-    for column_name, dtype in st.session_state["uploaded_df"][st.session_state["filtered_columns"]].dtypes.items():
-        create_data[column_name] = "multiselect"
+    # # 空の辞書を作成
+    # create_data = {}
+    # # データフレームの各列に対してデータ型をチェック
+    # for column_name, dtype in st.session_state["uploaded_df"][st.session_state["filtered_columns"]].dtypes.items():
+    #     create_data[column_name] = "multiselect"
+    create_data = decide_dtypes(df[st.session_state["filtered_columns"]])
 
     st.session_state["column_data"] = create_data
-    numeric_column(st.session_state["uploaded_df"][st.session_state["filtered_columns"]])
+    # numeric_column(st.session_state["uploaded_df"][st.session_state["filtered_columns"]])
 
-def select_numeric_column():
-    # カラム名が"_numeric"で終わるカラムを取り除く
-    st.session_state["all_df"] = st.session_state["all_df"].loc[:, ~st.session_state["all_df"].columns.str.endswith("_numeric")]
-    if len(st.session_state["selected_numeric_columns"]) != 0:
-        for column_name in st.session_state["selected_numeric_columns"]:
-            new_column_name_numeric = f"{column_name}_numeric"
-            st.session_state["all_df"][new_column_name_numeric] = pd.to_numeric(st.session_state["all_df"][column_name], errors="coerce")
-
-
-st.title("CSV Filters")
+# def select_numeric_column():
+#     # カラム名が"_numeric"で終わるカラムを取り除く
+#     st.session_state["all_df"] = st.session_state["all_df"].loc[:, ~st.session_state["all_df"].columns.str.endswith("_numeric")]
+#     if len(st.session_state["selected_numeric_columns"]) != 0:
+#         for column_name in st.session_state["selected_numeric_columns"]:
+#             new_column_name_numeric = f"{column_name}_numeric"
+#             st.session_state["all_df"][new_column_name_numeric] = pd.to_numeric(st.session_state["all_df"][column_name], errors="coerce")
+    
 # CSVファイルのアップロード
-st.file_uploader("CSVファイルをアップロード", 
+tab1.file_uploader("CSVファイルをアップロード", 
                   type=["csv"], 
                   key="upload_csvfile", 
                   on_change=upload_csv
                 )
+
 if st.session_state["upload_csvfile"] is not None:
-    col = st.columns(2)
-    col[0].multiselect(label="表示したいカラムを選択してください", 
-                  options=st.session_state["uploaded_df"].columns, 
-                  key="selected_columns", 
-                  on_change=select_column)
-
-    col[0].multiselect(label="数値型にしたいカラムを選択してください", 
-                  options=st.session_state["numeric_columns"], 
-                  key="selected_numeric_columns", 
-                  on_change=select_numeric_column)
-
-
+    tab2.multiselect(label="表示したいカラムを選択してください", 
+                     options=st.session_state["uploaded_df"].columns, 
+                     key="selected_columns", 
+                     on_change=select_column)
+    
     upload_name = st.session_state['upload_csvfile'].name
     download_name = upload_name.split(".")[0]
-    col[1].write("ファイル名を入力してください")
-    col[1].text_input(
+    tab4.write("ファイル名を入力してください")
+    tab4.text_input(
         label="Press Enter to Apply",
         value=f"{download_name}_filtered",
         key="download_name"
     )
+    
+    df = st.session_state["all_df"][st.session_state["filtered_columns"]].copy()
+    create_data = st.session_state["column_data"]
+    df, all_widgets = sp.create_widgets(df, create_data)
+    show_df = sp.filter_df(df, all_widgets)
+    st.write(show_df)
+    
+    # ダウンロードボタンを追加
+    download_df = show_df.loc[:, ~show_df.columns.str.endswith("_numeric")]
+    csv_file = download_df.to_csv(index=False)
+    tab4.download_button(
+        label="Download CSV",
+        data=csv_file,
+        file_name=f'{st.session_state["download_name"]}.csv'
+    )    
+        
+
+
+# if st.session_state["upload_csvfile"] is not None:
+    # col = st.columns(2)
+    # col[0].multiselect(label="表示したいカラムを選択してください", 
+    #               options=st.session_state["uploaded_df"].columns, 
+    #               key="selected_columns", 
+    #               on_change=select_column)
+
+    # col[0].multiselect(label="数値型にしたいカラムを選択してください", 
+    #               options=st.session_state["numeric_columns"], 
+    #               key="selected_numeric_columns", 
+    #               on_change=select_numeric_column)
+
+
+    # upload_name = st.session_state['upload_csvfile'].name
+    # download_name = upload_name.split(".")[0]
+    # col[1].write("ファイル名を入力してください")
+    # col[1].text_input(
+    #     label="Press Enter to Apply",
+    #     value=f"{download_name}_filtered",
+    #     key="download_name"
+    # )
 
     
 
 # if st.session_state["upload_csvfile"] is not None:
-    df = st.session_state["all_df"][st.session_state["filtered_columns"]].copy()
-    create_data = st.session_state["column_data"]
-    all_widgets = sp.create_widgets(df, create_data)
-    try:
-        show_df = sp.filter_df(df, all_widgets)
-        st.write(show_df)
-        
-        # ダウンロードボタンを追加
-        download_df = show_df.loc[:, ~show_df.columns.str.endswith("_numeric")]
-        csv_file = download_df.to_csv(index=False)
-        # col[1].write(csv_file)
-        col[1].download_button(
-            label="Download CSV",
-            data=csv_file,
-            file_name=f'{st.session_state["download_name"]}.csv'
-        )
-    except:
-        st.error("Please Reload")
+
         
