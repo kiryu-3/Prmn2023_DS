@@ -384,7 +384,7 @@ if st.session_state["upload_csvfile"] is not None:
     st.write(show_df[st.session_state["filtered_columns"]])
     
     # ダウンロードボタンを追加
-    download_df = show_df.loc[:, ~show_df.columns.str.endswith("_numeric")]
+    download_df = show_df.copy()
     if st.session_state["ja"]:
         csv_file = download_df.to_csv(index=False, encoding="shift-jis")
     else:
