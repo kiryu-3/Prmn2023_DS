@@ -246,7 +246,7 @@ def filter_df(df, create_data, all_widgets):
     df => the original Pandas DataFrame
     all_widgets => the widgets created by the function create_widgets().
     """
-    columns_list = df.columns
+    columns_list = list(df.column)
     for column in columns_list:
         if create_data[column] == "number":
             try:
