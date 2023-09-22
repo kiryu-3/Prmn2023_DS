@@ -249,9 +249,15 @@ def filter_df(df, create_data, all_widgets):
     columns_list = df.columns
     for column in columns_list:
         if create_data[column] == "number":
-            columns_list.append(f"{column}_numeric")
+            try:
+                columns_list.append(f"{column}_numeric")
+            except:
+                st.write(columns_list)
         elif create_data[column] == "datetime":
-            columns_list.append(f"{column}_datetime")
+            try:
+                columns_list.append(f"{column}_datetime")
+            except:
+                st.write(columns_list)
     res = df[columns_list]
     for widget in all_widgets:
         ss_name, ctype, column = widget
