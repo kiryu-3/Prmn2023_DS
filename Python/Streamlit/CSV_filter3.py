@@ -227,13 +227,17 @@ def decide_dtypes(df):
     for column_name in df.columns:
         if numeric_column(df, column_name):
             create_data[column_name] = "number"
+            new_column_name_numeric = f"{column_name}_numeric"
+            st.session_state["all_df"][new_column_name_numeric] = pd.to_numeric(st.session_state["all_df"][column_name], errors="coerce")
         if datetime_column(df, column_name):
             create_data[column_name] = "datetime"
+            new_column_name_datetime = f"{column_name}_datetime"
+            st.session_state["all_df"][new_column_name_datetime] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
         else:
             create_data[column_name] = "object"
     return create_data
 
-def filter_df(df, all_widgets):
+def filter_df(df, create_data, all_widgets):
     """
     This function will take the input dataframe and all the widgets generated from
     Streamlit Pandas. It will then return a filtered DataFrame based on the changes
@@ -242,7 +246,13 @@ def filter_df(df, all_widgets):
     df => the original Pandas DataFrame
     all_widgets => the widgets created by the function create_widgets().
     """
-    res = df
+    columns_list = df.columns
+    for column in columns_list:
+        if create_data[column] == "number":
+            columns_list.append(f"{column}_number")
+        elif create_data[column] == "datetime":
+            columns_list.append(f"{column}_datetime")
+    res = df[columns_list]
     for widget in all_widgets:
         ss_name, ctype, column = widget
         data = st.session_state[ss_name]
@@ -257,7 +267,7 @@ def filter_df(df, all_widgets):
                 elif ctype == "object":
                     res = filter_string(res, column, data)
         except:
-            st.error(data)
+            st.write(data)
     return res
 
 def upload_csv():
@@ -371,7 +381,7 @@ if st.session_state["upload_csvfile"] is not None:
     df = st.session_state["all_df"][st.session_state["filtered_columns"]].copy()
     create_data = st.session_state["column_data"]
     df, all_widgets = create_widgets(df, create_data)
-    show_df = filter_df(df, all_widgets)
+    show_df = filter_df(df, create_data, all_widgets)
     st.write(show_df)
     
     # ダウンロードボタンを追加
