@@ -340,7 +340,7 @@ def select_column():
     # # データフレームの各列に対してデータ型をチェック
     # for column_name, dtype in st.session_state["uploaded_df"][st.session_state["filtered_columns"]].dtypes.items():
     #     create_data[column_name] = "multiselect"
-    create_data = decide_dtypes(df[st.session_state["filtered_columns"]])
+    create_data = decide_dtypes(st.session_state["uploaded_df"][st.session_state["filtered_columns"]])
 
     st.session_state["column_data"] = create_data
     # numeric_column(st.session_state["uploaded_df"][st.session_state["filtered_columns"]])
