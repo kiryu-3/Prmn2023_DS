@@ -112,6 +112,7 @@ def datetime_widget(df, column, ss_name):
           max_value=end_date,
           value=(start_date, end_date),
           step=timedelta(days=365),
+          key=ss_name
           )
     elif format_time_interval(min_date_diff) == "month":
       temp_input = tab3.slider(
@@ -120,6 +121,7 @@ def datetime_widget(df, column, ss_name):
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(days=30),
+        key=ss_name
         )
     elif format_time_interval(min_date_diff) == "day":
       temp_input = tab3.slider(
@@ -128,6 +130,7 @@ def datetime_widget(df, column, ss_name):
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(days=1),
+        key=ss_name
         )
     elif format_time_interval(min_date_diff) == "hour":
       temp_input = tab3.slider(
@@ -136,6 +139,7 @@ def datetime_widget(df, column, ss_name):
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(hours=1),
+        key=ss_name
         )    
     elif format_time_interval(min_date_diff) == "minute":
       temp_input = tab3.slider(
@@ -144,6 +148,7 @@ def datetime_widget(df, column, ss_name):
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(minutes=1),
+        key=ss_name
         )
     elif format_time_interval(min_date_diff) == "second":
       temp_input = tab3.slider(
@@ -152,6 +157,7 @@ def datetime_widget(df, column, ss_name):
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(seconds=1),
+        key=ss_name
         )
         
     all_widgets.append((ss_name, "datetime", column))
