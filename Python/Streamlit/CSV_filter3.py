@@ -69,8 +69,8 @@ def is_integer(n):
           return float(n).is_integer()
 
 def number_widget(df, column, ss_name):
+    replacement_value = "-9999999999999999999999999999"
     if df[column].isna().any():
-        replacement_value = "-9999999999999999999999999999"
         df[column] = df[column].fillna(replacement_value)
 
     if df[column].apply(is_integer).sum() == len(df[column]):
