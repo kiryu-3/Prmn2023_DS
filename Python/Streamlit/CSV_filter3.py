@@ -70,6 +70,8 @@ def number_widget(df, column, ss_name):
         notna_df = notna_df[notna_df[f'{column}_numeric'].notna()]
         
         if (notna_df[f'{column}_numeric'] == notna_df[f'{column}_numeric'].astype(int)).all():
+            st.session_state["uploaded_df"][column].astype(int)
+            st.session_state["uploaded_df"][column].astype("object")
             return (df, 'int')  # すべての値が整数に変換可能な場合は整数型と判定
         else:
             return (df, 'float') # それ以外の場合は小数型と判定
@@ -339,14 +341,7 @@ def upload_csv():
             df = pd.read_csv(io.BytesIO(file_data), encoding="shift-jis", engine="python")
             st.session_state["ja"] = True
         # カラムの型を自動で適切に変換
-        df = df.infer_objects()
-        for column in df.columns:
-            try:
-                # カラムをint型に変換（数値以外のデータが含まれる場合も処理する）
-                df[column] = pd.to_numeric(df[column], errors='coerce').astype(pd.Int32Dtype())
-            except:
-                pass
-                
+        df = df.infer_objects()              
         df = df.astype('object')
         st.session_state["uploaded_df"] = df.copy()
         st.session_state["all_df"] = df.copy()
