@@ -73,7 +73,7 @@ def number_widget(df, column, ss_name):
             else:
                 df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce') 
         except:
-            st.error(column)
+            st.error(df.dropna()[column].dtype)
         return df
     
     df = detect_data_type(df, column)
