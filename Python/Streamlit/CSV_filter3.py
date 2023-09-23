@@ -250,10 +250,14 @@ def datetime_widget(df, column, ss_name):
     return df    
 
 def text_widget(df, column, ss_name):
-    temp_df = df[df[column].notna()]
+    replacement_value = "-9999999999999999999999999999"
+    if df[column].isna().any():
+        df[column] = df[column].fillna(replacement_value)
+    temp_df = pd.DataFrame()
     if df[column].apply(is_integer).sum() == len(df[column]):
-        temp_df[column] = temp_df[column].astype(int)
-    temp_df[column] = temp_df[column].astype("object")
+        temp_df[f'{column}_numeric'] = df[column].astype(int) 
+    df.replace(replacement_value, np.nan, inplace=True) 
+    temp_df = temp_df[temp_df[f'{column}_numeric'] != replacement_value]  # 指定した値を除外
     options = temp_df[column].unique()
     options.sort()
     temp_input = tab2.multiselect(f"{column.title()}", options, key=ss_name)
