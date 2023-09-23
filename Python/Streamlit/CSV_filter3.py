@@ -98,7 +98,7 @@ def datetime_widget(df, column, ss_name):
     date_diffs_seconds = [(unique_dates[i + 1] - unique_dates[i]) / np.timedelta64(1, 's') for i in range(len(unique_dates) - 1)]
     
     # 最小間隔を計算（秒単位）
-    min_date_diff = max(date_diffs_seconds)
+    min_date_diff = min(date_diffs_seconds)
 
     # 関数を定義
     def format_time_interval(seconds):
@@ -112,9 +112,23 @@ def datetime_widget(df, column, ss_name):
                 interval = round(interval)
                 return unit if interval > 1 else unit  # 単位名の調整
 
+    # 日付表示方法を定義する関数
+    def format_time_show(date, max_diff):
+        # 秒、分、時間、日、年の表示方法を定義
+        shows = [('year', ""), ('month', f" - {start_date.year}年"), ('day', f" - {start_date.year}年{start_date.month}月"), 
+                 ('hour', f" - {start_date.year}年{start_date.month}月{start_date.day}日"), ('minute', f" - {start_date.year}年{start_date.month}月{start_date.day}日"), ('second', f" - {start_date.year}年{start_date.month}月{start_date.day}日")]
+
+        # 最小間隔とそれに対応する単位を計算
+        for unit, show_unit in shows:
+            if format_time_interval(max_diff) == unit:
+                return show_unit
+                
+    max_date_diff = end_date - start_date
+    # 日付情報を表示するための変数を用意
+    show_date = format_time_show(start_date, max_date_diff)    
     if format_time_interval(min_date_diff) == "year" and end_date!=start_date:
       temp_input = tab2.slider(
-          f"{column.title()}",
+          f"{column.title()}{show_date}",
           min_value=start_date,
           max_value=end_date,
           value=(start_date, end_date),
@@ -123,10 +137,8 @@ def datetime_widget(df, column, ss_name):
           format="YYYY"
           )
     elif format_time_interval(min_date_diff) == "month" and end_date!=start_date:
-      # 日付情報を表示するための変数を用意
-      show_date = f"{start_date.year}年"
       temp_input = tab2.slider(
-        f"{column.title()}-{show_date}",
+        f"{column.title()}{show_date}",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
@@ -135,10 +147,8 @@ def datetime_widget(df, column, ss_name):
         format="MM"
         )
     elif format_time_interval(min_date_diff) == "day" and end_date!=start_date:
-      # 日付情報を表示するための変数を用意
-      show_date = f"{start_date.year}年{start_date.month}月"
       temp_input = tab2.slider(
-        f"{column.title()}-{show_date}",
+        f"{column.title()}{show_date}",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
@@ -147,10 +157,8 @@ def datetime_widget(df, column, ss_name):
         format="DD"
         )
     elif format_time_interval(min_date_diff) == "hour" and end_date!=start_date:
-      # 日付情報を表示するための変数を用意
-      show_date = f"{start_date.year}年{start_date.month}月{start_date.day}日"
       temp_input = tab2.slider(
-        f"{column.title()}-{show_date}",
+        f"{column.title()}{show_date}",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
@@ -159,10 +167,8 @@ def datetime_widget(df, column, ss_name):
         format="hh"
         )    
     elif format_time_interval(min_date_diff) == "minute" and end_date!=start_date:
-      # 日付情報を表示するための変数を用意
-      show_date = f"{start_date.year}年{start_date.month}月{start_date.day}日"
       temp_input = tab2.slider(
-        f"{column.title()}-{show_date}",
+        f"{column.title()}{show_date}",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
@@ -171,10 +177,8 @@ def datetime_widget(df, column, ss_name):
         format="hh:mm" 
         )
     elif format_time_interval(min_date_diff) == "second" and end_date!=start_date:
-      # 日付情報を表示するための変数を用意
-      show_date = f"{start_date.year}年{start_date.month}月{start_date.day}日"
       temp_input = tab2.slider(
-        f"{column.title()}-{show_date}",
+        f"{column.title()}{show_date}",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
