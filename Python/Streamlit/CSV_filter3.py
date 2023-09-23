@@ -62,7 +62,18 @@ def filter_string(df, column, selected_list):
 
 def number_widget(df, column, ss_name):
     df = df[df[column].notna()]
-    df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce')
+
+    def detect_data_type(df, column):
+        # 文字列型を数値型に変換し、変換できない場合はNaNにする
+        df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce')
+        
+        if (converted == converted.astype(int)).all():
+            return (df, 'int')  # すべての値が整数に変換可能な場合は整数型と判定
+        else:
+            return (df, 'float') # それ以外の場合は小数型と判定
+    
+    df, type = detect_data_type(df, column)
+    df[f'{column}_numeric'] = df[f'{column}_numeric'].astype(type)
     
     # 整数型に変換できる場合は整数型に変換
     if df[f'{column}_numeric'].dtype=="int64":
