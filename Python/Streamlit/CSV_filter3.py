@@ -70,8 +70,8 @@ def number_widget(df, column, ss_name):
         notna_df = notna_df[notna_df[f'{column}_numeric'].notna()]
         
         if (notna_df[f'{column}_numeric'] == notna_df[f'{column}_numeric'].astype(int)).all():
-            st.session_state["uploaded_df"][column].astype(int)
-            st.session_state["uploaded_df"][column].astype("object")
+            st.session_state["uploaded_df"] = st.session_state["uploaded_df"][column].astype(int)
+            st.session_state["uploaded_df"] = st.session_state["uploaded_df"][column].astype("object")
             return (df, 'int')  # すべての値が整数に変換可能な場合は整数型と判定
         else:
             return (df, 'float') # それ以外の場合は小数型と判定
