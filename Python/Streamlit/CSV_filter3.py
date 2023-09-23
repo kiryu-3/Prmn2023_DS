@@ -182,8 +182,6 @@ def datetime_widget(df, column, ss_name):
         format="hh:mm:ss"
         )
 
-    tab2.write("Start time:", str(start_date))
-    tab2.write("End time:", str(end_date))
     all_widgets.append((f"{ss_name}_datetime", "datetime", f"{column}_datetime"))
     return df    
 
