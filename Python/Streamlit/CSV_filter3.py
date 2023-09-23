@@ -124,8 +124,8 @@ def datetime_widget(df, column, ss_name):
 
     # 関数を定義
     def format_time_range(max_diff, min_diff):
-        max_unit = format_time_interval(seconds)
-        min_unit = format_time_interval(seconds)
+        max_unit = format_time_interval(max_diff)
+        min_unit = format_time_interval(min_diff)
         # 秒、分、時間、日、年の単位を定義
         units = [('year', 'year', 'YYYY'), ('year', 'month', 'YYYY-MM'), ('year', 'day', 'YYYY-MM-DD'), ('year', 'hour', 'YYYY-MM-DD hh'), ('year', 'minute', 'YYYY-MM-DD hh:mm'), ('year', 'second', 'YYYY-MM-DD hh:mm:ss'),
                      ('month', 'month', 'MM'), ('month', 'day', 'MM-DD'), ('month', 'hour', 'MM-DD hh'), ('month', 'minute', 'MM-DD hh:mm'), ('month', 'second', 'YYYY-MM-DD hh:mm:ss'),
