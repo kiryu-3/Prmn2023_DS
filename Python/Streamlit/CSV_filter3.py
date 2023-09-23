@@ -118,7 +118,8 @@ def datetime_widget(df, column, ss_name):
           max_value=end_date,
           value=(start_date, end_date),
           step=timedelta(days=365),
-          key=f"{ss_name}_datetime"
+          key=f"{ss_name}_datetime",
+          format="YYYY"
           )
     elif format_time_interval(min_date_diff) == "month" and end_date!=start_date:
       temp_input = tab2.slider(
@@ -127,7 +128,8 @@ def datetime_widget(df, column, ss_name):
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(days=30),
-        key=f"{ss_name}_datetime"
+        key=f"{ss_name}_datetime",
+        format="YYYY-MM"
         )
     elif format_time_interval(min_date_diff) == "day" and end_date!=start_date:
       temp_input = tab2.slider(
@@ -136,7 +138,8 @@ def datetime_widget(df, column, ss_name):
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(days=1),
-        key=f"{ss_name}_datetime"
+        key=f"{ss_name}_datetime",
+        format="YYYY-MM-DD"
         )
     elif format_time_interval(min_date_diff) == "hour" and end_date!=start_date:
       temp_input = tab2.slider(
@@ -145,7 +148,8 @@ def datetime_widget(df, column, ss_name):
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(hours=1),
-        key=f"{ss_name}_datetime"
+        key=f"{ss_name}_datetime",
+        format="YYYY-MM-DD - hh"
         )    
     elif format_time_interval(min_date_diff) == "minute" and end_date!=start_date:
       temp_input = tab2.slider(
@@ -154,7 +158,8 @@ def datetime_widget(df, column, ss_name):
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(minutes=1),
-        key=f"{ss_name}_datetime"
+        key=f"{ss_name}_datetime",
+        format="YYYY-MM-DD - hh:mm" 
         )
     elif format_time_interval(min_date_diff) == "second" and end_date!=start_date:
       temp_input = tab2.slider(
@@ -163,9 +168,12 @@ def datetime_widget(df, column, ss_name):
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(seconds=1),
-        key=f"{ss_name}_datetime"
+        key=f"{ss_name}_datetime",
+        format="YYYY-MM-DD - hh:mm:ss"
         )
-        
+
+    st.write("Start time:", start_date)
+    st.write("End time:", end_date)
     all_widgets.append((f"{ss_name}_datetime", "datetime", f"{column}_datetime"))
     return df    
 
