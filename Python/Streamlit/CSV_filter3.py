@@ -61,25 +61,27 @@ def filter_string(df, column, selected_list):
     return res
 
 def number_widget(df, column, ss_name):
-    df = df[df[column].notna()]
+    # df = df[df[column].notna()]
 
     def detect_data_type(df, column):
         # 文字列型を数値型に変換し、変換できない場合はNaNにする
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce')
+        notna_df = df.copy()
+        notna_df = notna_df[notna_df[f'{column}_numeric'].notna()]
         
-        if (df[f'{column}_numeric'] == df[f'{column}_numeric'].astype(int)).all():
+        if (notna_df[f'{column}_numeric'] == notna_df[f'{column}_numeric'].astype(int)).all():
             return (df, 'int')  # すべての値が整数に変換可能な場合は整数型と判定
         else:
             return (df, 'float') # それ以外の場合は小数型と判定
     
     df, type = detect_data_type(df, column)
-    df[f'{column}_numeric'] = df[f'{column}_numeric'].astype(type)
+    # df[f'{column}_numeric'] = df[f'{column}_numeric'].astype(type)
     
     # 整数型に変換できる場合は整数型に変換
     if df[f'{column}_numeric'].dtype=="int64":
-        df = df[df[f'{column}_numeric'].notna()]
-        max = int(df[f'{column}_numeric'].max())
-        min = int(df[f'{column}_numeric'].min())
+        notdf_df = df[df[f'{column}_numeric'].notna()]
+        max = int(notdf_[f'{column}_numeric'].max())
+        min = int(notdf_[f'{column}_numeric'].min())
         
     # 整数型に変換できない場合はfloat型に変換
     else:     
