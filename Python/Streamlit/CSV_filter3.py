@@ -60,35 +60,58 @@ def filter_string(df, column, selected_list):
     res = pd.DataFrame(final)
     return res
 
-def number_widget(df, column, ss_name):
-    # df = df[df[column].notna()]
+def is_integer(n):
+      try:
+          float(n)
+      except ValueError:
+          return False
+      else:
+          return float(n).is_integer()
 
-    def detect_data_type(df, column):
-        # 文字列型を数値型に変換し、変換できない場合はNaNにする
-        # カラムがfloat型で、欠損値以外の値がすべて整数であるかを確認
-        try:
-            if df.dropna()[column].str.isnumeric().all():
-                # カラム内の値を整数に変換し、エラーが発生した場合にはNaNに変換
-                df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce', downcast='integer') 
-            else:
-                df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce') 
-        except:
-            st.error(df.dropna()[column].dtype)
-        return df
+def number_widget(df, column, ss_name):
+    if df[column].isna().any():
+        replacement_value = "-9999999999999999999999999999"
+        df[column] = df[column_name].fillna(replacement_value)
+
+    if df[column_name].apply(is_integer).sum() == len(df[column_name]):
+        temp_df = df[column_name != replacement_value]  # 指定した値を除外
+        df[f'{column}_numeric'] = df[column_name].astype(int) 
+        max = int(temp_df[f'{column}_numeric'].max())
+        min = int(temp_df[f'{column}_numeric'].min())
+    else:
+        temp_df = df[column_name != replacement_value]  # 指定した値を除外
+        df[f'{column}_numeric'] = df[column_name].astype(float) 
+        max = float(temp_df[f'{column}_numeric'].max())
+        min = float(temp_df[f'{column}_numeric'].min())
+
+    df.replace(replacement_value, np.nan, inplace=True) 
+
+    # def detect_data_type(df, column):
+    #     # 文字列型を数値型に変換し、変換できない場合はNaNにする
+    #     # カラムがfloat型で、欠損値以外の値がすべて整数であるかを確認
+    #     try:
+    #         if df.dropna()[column].str.isnumeric().all():
+    #             # カラム内の値を整数に変換し、エラーが発生した場合にはNaNに変換
+    #             df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce', downcast='integer') 
+    #         else:
+    #             df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce') 
+    #     except:
+    #         st.error(df.dropna()[column].dtype)
+    #     return df
     
-    df = detect_data_type(df, column)
+    # df = detect_data_type(df, column)
     # df[f'{column}_numeric'] = df[f'{column}_numeric'].astype(type)
     
     # 整数型に変換できる場合は整数型に変換
-    if df[f'{column}_numeric'].dtype=="int64":
-        notna_df = df[df[f'{column}_numeric'].notna()]
-        max = int(notna_df[f'{column}_numeric'].max())
-        min = int(notna_df[f'{column}_numeric'].min())
+    # if df[f'{column}_numeric'].dtype=="int64":
+    #     notna_df = df[df[f'{column}_numeric'].notna()]
+    #     max = int(notna_df[f'{column}_numeric'].max())
+    #     min = int(notna_df[f'{column}_numeric'].min())
         
     # 整数型に変換できない場合はfloat型に変換
-    else:     
-        max = float(df[f'{column}_numeric'].max())
-        min = float(df[f'{column}_numeric'].min())
+    # else:     
+    #     max = float(df[f'{column}_numeric'].max())
+    #     min = float(df[f'{column}_numeric'].min())
     
     if max!=min:
         temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{ss_name}_numeric")
@@ -227,8 +250,11 @@ def datetime_widget(df, column, ss_name):
     return df    
 
 def text_widget(df, column, ss_name):
-    df = df[df[column].notna()]
-    options = df[column].unique()
+    temp_df = df[df[column].notna()]
+    if df[column_name].apply(is_integer).sum() == len(df[column_name]):
+        temp_df[column] = temp_df[column].astype(int)
+    temp_df[column] = temp_df[column].astype("object")
+    options = temp_df[column].unique()
     options.sort()
     temp_input = tab2.multiselect(f"{column.title()}", options, key=ss_name)
     all_widgets.append((ss_name, "text", column))
@@ -342,15 +368,22 @@ def upload_csv():
             st.session_state["ja"] = True
         # カラムの型を自動で適切に変換
         df = df.infer_objects()  
-        for column in df.columns:
-            # カラムがfloat型で、欠損値以外の値がすべて整数であるかを確認
-            if df[column].dtype in [int, float] and df[column].apply(lambda x: x.is_integer() if not pd.isna(x) else True).all():
-                try:
-                    # カラム内の値を整数に変換し、エラーが発生した場合にはNaNに変換
-                    st.write(column)
-                    df[column] = pd.to_numeric(df[column], errors='coerce', downcast='integer') 
-                except:
-                    st.error(column)
+        # for column_name in df.columns:
+        #     # カラムがfloat型で、欠損値以外の値がすべて整数であるかを確認
+        #     if df[column_name].dtype in [int, float] and df[column_name].isna().any():
+        #         replacement_value = -334334
+        #         df[column_name] = df[column_name].fillna(replacement_value)
+
+        #     def is_integer(n):
+        #       try:
+        #           float(n)
+        #       except ValueError:
+        #           return False
+        #       else:
+        #           return float(n).is_integer()
+
+        #     if df[column_name].apply(is_integer).sum() == len(df[column_name])
+        
         df = df.astype('object')
         st.session_state["uploaded_df"] = df.copy()
         st.session_state["all_df"] = df.copy()
