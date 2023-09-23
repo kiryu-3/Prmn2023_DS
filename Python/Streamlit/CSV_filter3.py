@@ -77,6 +77,7 @@ def number_widget(df, column, ss_name):
     
     # 整数型に変換できる場合は整数型に変換
     if df[f'{column}_numeric'].dtype=="int64":
+        df = df[df[f'{column}_numeric'].notna()]
         max = int(df[f'{column}_numeric'].max())
         min = int(df[f'{column}_numeric'].min())
         
