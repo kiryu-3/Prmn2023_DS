@@ -122,54 +122,64 @@ def datetime_widget(df, column, ss_name):
           format="YYYY"
           )
     elif format_time_interval(min_date_diff) == "month" and end_date!=start_date:
+      # 日付情報を表示するための変数を用意
+      YYYY = f"{start_date.year}年"
       temp_input = tab2.slider(
-        f"{column.title()}",
+        f"{column.title()}-{YYYY}",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(days=30),
         key=f"{ss_name}_datetime",
-        format="YYYY-MM"
+        format="MM"
         )
     elif format_time_interval(min_date_diff) == "day" and end_date!=start_date:
+      # 日付情報を表示するための変数を用意
+      YYYY_MM = f"{start_date.year}年{start_date.month}月"
       temp_input = tab2.slider(
-        f"{column.title()}",
+        f"{column.title()}-{YYYY_MM}",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(days=1),
         key=f"{ss_name}_datetime",
-        format="YYYY-MM-DD"
+        format="DD"
         )
     elif format_time_interval(min_date_diff) == "hour" and end_date!=start_date:
+      # 日付情報を表示するための変数を用意
+      YYYY_MM_DD = f"{start_date.year}年{start_date.month}月{start_date.day}日"
       temp_input = tab2.slider(
-        f"{column.title()}",
+        f"{column.title()}-{YYYY-MM-DD}",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(hours=1),
         key=f"{ss_name}_datetime",
-        format="YYYY-MM-DD - hh"
+        format="hh"
         )    
     elif format_time_interval(min_date_diff) == "minute" and end_date!=start_date:
+      # 日付情報を表示するための変数を用意
+      YYYY_MM_DD = f"{start_date.year}年{start_date.month}月{start_date.day}日"
       temp_input = tab2.slider(
-        f"{column.title()}",
+        f"{column.title()}-{YYYY-MM-DD}",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(minutes=1),
         key=f"{ss_name}_datetime",
-        format="YYYY-MM-DD - hh:mm" 
+        format="hh:mm" 
         )
     elif format_time_interval(min_date_diff) == "second" and end_date!=start_date:
+      # 日付情報を表示するための変数を用意
+      YYYY_MM_DD = f"{start_date.year}年{start_date.month}月{start_date.day}日"
       temp_input = tab2.slider(
-        f"{column.title()}",
+        f"{column.title()}-{YYYY-MM-DD}",
         min_value=start_date,
         max_value=end_date,
         value=(start_date, end_date),
         step=timedelta(seconds=1),
         key=f"{ss_name}_datetime",
-        format="YYYY-MM-DD - hh:mm:ss"
+        format="hh:mm:ss"
         )
 
     st.write("Start time:", start_date)
