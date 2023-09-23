@@ -73,7 +73,7 @@ def number_widget(df, column, ss_name):
         replacement_value = "-9999999999999999999999999999"
         df[column] = df[column].fillna(replacement_value)
 
-    if df[column_name].apply(is_integer).sum() == len(df[column_name]):
+    if df[column].apply(is_integer).sum() == len(df[column]):
         temp_df = df[df[column] != replacement_value]  # 指定した値を除外
         df[f'{column}_numeric'] = df[column].astype(int) 
         max = int(temp_df[f'{column}_numeric'].max())
