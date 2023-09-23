@@ -71,16 +71,16 @@ def is_integer(n):
 def number_widget(df, column, ss_name):
     if df[column].isna().any():
         replacement_value = "-9999999999999999999999999999"
-        df[column] = df[column_name].fillna(replacement_value)
+        df[column] = df[column].fillna(replacement_value)
 
     if df[column_name].apply(is_integer).sum() == len(df[column_name]):
-        temp_df = df[column_name != replacement_value]  # 指定した値を除外
-        df[f'{column}_numeric'] = df[column_name].astype(int) 
+        temp_df = df[df[column] != replacement_value]  # 指定した値を除外
+        df[f'{column}_numeric'] = df[column].astype(int) 
         max = int(temp_df[f'{column}_numeric'].max())
         min = int(temp_df[f'{column}_numeric'].min())
     else:
-        temp_df = df[column_name != replacement_value]  # 指定した値を除外
-        df[f'{column}_numeric'] = df[column_name].astype(float) 
+        temp_df = df[df[column] != replacement_value]  # 指定した値を除外
+        df[f'{column}_numeric'] = df[column].astype(float) 
         max = float(temp_df[f'{column}_numeric'].max())
         min = float(temp_df[f'{column}_numeric'].min())
 
