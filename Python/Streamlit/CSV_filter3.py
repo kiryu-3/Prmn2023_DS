@@ -251,7 +251,7 @@ def datetime_widget(df, column, ss_name):
 
 def text_widget(df, column, ss_name):
     temp_df = df[df[column].notna()]
-    if df[column_name].apply(is_integer).sum() == len(df[column_name]):
+    if df[column].apply(is_integer).sum() == len(df[column_name]):
         temp_df[column] = temp_df[column].astype(int)
     temp_df[column] = temp_df[column].astype("object")
     options = temp_df[column].unique()
