@@ -493,9 +493,6 @@ if st.session_state["upload_csvfile"] is not None:
     #     value=f"{download_name}_filtered",
     #     key="download_name"
     # )
-
-    
-st.write(st.session_state["uploaded_df"])
 # if st.session_state["upload_csvfile"] is not None:
 
         
