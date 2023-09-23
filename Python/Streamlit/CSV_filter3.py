@@ -155,11 +155,11 @@ def datetime_widget(df, column, ss_name):
         max_unit = format_time_interval(max_diff)
         min_unit = format_time_interval(min_diff)
         # 秒、分、時間、日、年の単位を定義
-        units = [('year', 'year', 'YYYY'), ('year', 'month', 'YYYY-MM'), ('year', 'day', 'YYYY-MM-DD'), ('year', 'hour', 'YYYY-MM-DD hh'), ('year', 'minute', 'YYYY-MM-DD hh:mm'), ('year', 'second', 'YYYY-MM-DD hh:mm:ss'),
-                     ('month', 'month', 'MM'), ('month', 'day', 'MM-DD'), ('month', 'hour', 'MM-DD hh'), ('month', 'minute', 'MM-DD hh:mm'), ('month', 'second', 'YYYY-MM-DD hh:mm:ss'),
-                     ('day', 'day', 'DD'), ('day', 'hour', 'DD hh'), ('day', 'minute', 'DD hh:mm'), ('day', 'second', 'DD hh:mm:ss'),
-                     ('hour', 'hour', 'hh'), ('hour', 'minute', 'hh:mm'), ('hour', 'second', 'hh:mm:ss'),
-                     ('minute', 'minute', 'hh:mm'), ('minute', 'second', 'hh:mm:ss'), ('second', 'second', 'hh:mm:ss')]
+        units = [('year', 'year', 'YYYY'), ('year', 'month', 'YYYY-MM'), ('year', 'day', 'YYYY-MM-DD'), ('year', 'hour', 'YYYY-MM-DD HH'), ('year', 'minute', 'YYYY-MM-DD HH:mm'), ('year', 'second', 'YYYY-MM-DD HH:mm:ss'),
+                     ('month', 'month', 'MM'), ('month', 'day', 'MM-DD'), ('month', 'hour', 'MM-DD HH'), ('month', 'minute', 'MM-DD HH:mm'), ('month', 'second', 'YYYY-MM-DD HH:mm:ss'),
+                     ('day', 'day', 'DD'), ('day', 'hour', 'DD HH'), ('day', 'minute', 'DD HH:mm'), ('day', 'second', 'DD HH:mm:ss'),
+                     ('hour', 'hour', 'HH'), ('hour', 'minute', 'HH:mm'), ('hour', 'second', 'HH:mm:ss'),
+                     ('minute', 'minute', 'HH:mm'), ('minute', 'second', 'HH:mm:ss'), ('second', 'second', 'HH:mm:ss')]
     
         # 最小間隔とそれに対応する単位を計算
         for unit1, unit2, unit in units:
