@@ -157,7 +157,7 @@ def datetime_widget(df, column, ss_name):
         value=(first_date, last_date),
         step=timedelta(days=1),
         key=f"{ss_name}_datetime",
-        format="DD"
+        format="MM-DD"
         )
     elif format_time_interval(min_date_diff) == "hour" and end_date!=start_date:
       temp_input = tab2.slider(
