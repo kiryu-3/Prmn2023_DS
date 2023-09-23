@@ -62,14 +62,15 @@ def filter_string(df, column, selected_list):
 
 def number_widget(df, column, ss_name):
     df = df[df[column].notna()]
-    try:
-        # 整数型に変換できる場合は整数型に変換
-        df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce', downcast='integer')
+    df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce')
+    
+    # 整数型に変換できる場合は整数型に変換
+    if df[f'{column}_numeric'].dtype=="int64":
         max = int(df[f'{column}_numeric'].max())
         min = int(df[f'{column}_numeric'].min())
-    except:
-        # 整数型に変換できない場合はfloat型に変換
-        df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce', downcast='float')
+        
+    # 整数型に変換できない場合はfloat型に変換
+    else:     
         max = float(df[f'{column}_numeric'].max())
         min = float(df[f'{column}_numeric'].min())
     
