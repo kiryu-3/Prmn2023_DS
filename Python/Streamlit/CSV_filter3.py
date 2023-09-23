@@ -351,6 +351,7 @@ def upload_csv():
             if df[column].dtype in [int, float] and df[column].apply(lambda x: x.is_integer() if not pd.isna(x) else True).all():
                 try:
                     # カラム内の値を整数に変換し、エラーが発生した場合にはNaNに変換
+                    st.write(column)
                     df[column] = pd.to_numeric(df[column], errors='coerce', downcast='integer') 
                 except:
                     st.error(column)
