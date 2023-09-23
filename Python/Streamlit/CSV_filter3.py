@@ -66,7 +66,7 @@ def number_widget(df, column, ss_name):
     def detect_data_type(df, column):
         # 文字列型を数値型に変換し、変換できない場合はNaNにする
         # カラムがfloat型で、欠損値以外の値がすべて整数であるかを確認
-        if df.dropna()['number'].str.isnumeric().all():
+        if df.dropna()[column].str.isnumeric().all():
             # カラム内の値を整数に変換し、エラーが発生した場合にはNaNに変換
             df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce', downcast='integer') 
         else:
