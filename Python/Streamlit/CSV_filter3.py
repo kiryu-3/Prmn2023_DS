@@ -343,7 +343,10 @@ def upload_csv():
         for column in df.columns:
             # カラムがfloat型で、欠損値以外の値がすべて整数であるかを確認
             if df[column].dtype in [int, float] and df[column].apply(lambda x: x.is_integer() if not pd.isna(x) else True).all():
-                df[column] = df[column].astype(int)  
+                try:
+                    df[column] = df[column].astype(int)  
+                except:
+                    st.error(column)
         df = df.astype('object')
         st.session_state["uploaded_df"] = df.copy()
         st.session_state["all_df"] = df.copy()
