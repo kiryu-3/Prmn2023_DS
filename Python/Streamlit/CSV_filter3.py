@@ -255,10 +255,13 @@ def text_widget(df, column, ss_name):
         df[column] = df[column].fillna(replacement_value)
     temp_df = pd.DataFrame()
     if df[column].apply(is_integer).sum() == len(df[column]):
-        temp_df[f'{column}_numeric'] = df[column].astype(int) 
+        temp_df[column] = df[column].astype(int) 
+        temp_df = temp_df[temp_df[column] != int(replacement_value)]  # 指定した値を除外
+    else:
+        temp_df[column] = df[column]
     df.replace(replacement_value, np.nan, inplace=True) 
-    temp_df = temp_df[temp_df[f'{column}_numeric'] != int(replacement_value)]  # 指定した値を除外
-    options = temp_df[f'{column}_numeric'].unique()
+    
+    options = temp_df[column].unique()
     options.sort()
     temp_input = tab2.multiselect(f"{column.title()}", options, key=ss_name)
     all_widgets.append((ss_name, "text", column))
