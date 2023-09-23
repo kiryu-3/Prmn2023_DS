@@ -123,9 +123,12 @@ def datetime_widget(df, column, ss_name):
             if format_time_interval(max_diff) == unit:
                 return show_unit
                 
-    max_date_diff = end_date - start_date
+    # 最初と最後の日付の差を計算（秒単位）            
+    max_date_diff = (end_date - start_date) / np.timedelta64(1, 's')
+    
     # 日付情報を表示するための変数を用意
-    show_date = format_time_show(start_date, max_date_diff)    
+    show_date = format_time_show(start_date, max_date_diff) 
+    
     if format_time_interval(min_date_diff) == "year" and end_date!=start_date:
       temp_input = tab2.slider(
           f"{column.title()}{show_date}",
