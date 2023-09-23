@@ -98,7 +98,7 @@ def datetime_widget(df, column, ss_name):
     date_diffs_seconds = [(unique_dates[i + 1] - unique_dates[i]) / np.timedelta64(1, 's') for i in range(len(unique_dates) - 1)]
     
     # 最小間隔を計算（秒単位）
-    min_date_diff = min(date_diffs_seconds)
+    min_date_diff = max(date_diffs_seconds)
 
     # 関数を定義
     def format_time_interval(seconds):
