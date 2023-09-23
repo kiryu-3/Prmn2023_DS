@@ -66,21 +66,14 @@ def number_widget(df, column, ss_name):
     def detect_data_type(df, column):
         # 文字列型を数値型に変換し、変換できない場合はNaNにする
         # カラムがfloat型で、欠損値以外の値がすべて整数であるかを確認
-        if df.dropna()[column].isnumeric().all():
+        if df.dropna()[column].str.isnumeric().all():
             # カラム内の値を整数に変換し、エラーが発生した場合にはNaNに変換
             df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce', downcast='integer') 
         else:
             df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce') 
-        df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce')
-        notna_df = df.copy()
-        notna_df = notna_df[notna_df[f'{column}_numeric'].notna()]
-        
-        if (notna_df[f'{column}_numeric'] == notna_df[f'{column}_numeric'].astype(int)).all():
-            return (df, 'int')  # すべての値が整数に変換可能な場合は整数型と判定
-        else:
-            return (df, 'float') # それ以外の場合は小数型と判定
+        return df
     
-    df, type = detect_data_type(df, column)
+    df = detect_data_type(df, column)
     # df[f'{column}_numeric'] = df[f'{column}_numeric'].astype(type)
     
     # 整数型に変換できる場合は整数型に変換
@@ -351,6 +344,7 @@ def upload_csv():
             if df[column].dtype in [int, float] and df[column].apply(lambda x: x.is_integer() if not pd.isna(x) else True).all():
                 try:
                     # カラム内の値を整数に変換し、エラーが発生した場合にはNaNに変換
+                    st.write(column)
                     df[column] = pd.to_numeric(df[column], errors='coerce', downcast='integer') 
                 except:
                     st.error(column)
