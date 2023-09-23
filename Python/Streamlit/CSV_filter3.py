@@ -99,18 +99,6 @@ def datetime_widget(df, column, ss_name):
     first_date = start_date.to_pydatetime()
     last_date = end_date.to_pydatetime()
 
-    # ユニークな日付を取り出す
-    unique_dates = df[f'{column}_datetime'].unique()
-    
-    # ユニークな日付をソート
-    unique_dates = sorted(unique_dates)
-    
-    # 隣接する日付の差を計算（秒単位）
-    date_diffs_seconds = [(unique_dates[i + 1] - unique_dates[i]) / np.timedelta64(1, 's') for i in range(len(unique_dates) - 1)]
-    
-    # 最小間隔を計算（秒単位）
-    min_date_diff = min(date_diffs_seconds)
-
     # 関数を定義
     def format_time_interval(seconds):
         # 秒、分、時間、日、年の単位を定義
@@ -133,13 +121,41 @@ def datetime_widget(df, column, ss_name):
         for unit, show_unit in shows:
             if format_time_interval(max_diff) == unit:
                 return show_unit
-                
+
+    # 関数を定義
+    def format_time_range(max_diff, min_diff):
+        max_unit = format_time_interval(seconds)
+        min_unit = format_time_interval(seconds)
+        # 秒、分、時間、日、年の単位を定義
+        units = [('year', 'year', 'YYYY'), ('year', 'month', 'YYYY-MM'), ('year', 'day', 'YYYY-MM-DD'), ('year', 'hour', 'YYYY-MM-DD hh'), ('year', 'minute', 'YYYY-MM-DD hh:mm'), ('year', 'second', 'YYYY-MM-DD hh:mm:ss'),
+                     ('month', 'month', 'MM'), ('month', 'day', 'MM-DD'), ('month', 'hour', 'MM-DD hh'), ('month', 'minute', 'MM-DD hh:mm'), ('month', 'second', 'YYYY-MM-DD hh:mm:ss'),
+                     ('day', 'day', 'DD'), ('day', 'hour', 'DD hh'), ('day', 'minute', 'DD hh:mm'), ('day', 'second', 'DD hh:mm:ss'),
+                     ('hour', 'hour', 'hh'), ('hour', 'minute', 'hh:mm'), ('hour', 'second', 'hh:mm:ss'),
+                     ('minute', 'minute', 'hh:mm'), ('minute', 'second', 'hh:mm:ss'), ('second', 'second', 'hh:mm:ss')]
+    
+        # 最小間隔とそれに対応する単位を計算
+        for unit1, unit2, unit in units:
+            if unit1 == max_unit and unit2 == min_unit:
+                return unit  # 単位名の調整
+
+    # ユニークな日付を取り出す
+    unique_dates = df[f'{column}_datetime'].unique()
+    
+    # ユニークな日付をソート
+    unique_dates = sorted(unique_dates)
+    
+    # 隣接する日付の差を計算（秒単位）
+    date_diffs_seconds = [(unique_dates[i + 1] - unique_dates[i]) / np.timedelta64(1, 's') for i in range(len(unique_dates) - 1)]
+    
+    # 最小間隔を計算（秒単位）
+    min_date_diff = min(date_diffs_seconds)
+    
     # 最初と最後の日付の差を計算（秒単位）            
     max_date_diff = (end_date - start_date) / np.timedelta64(1, 's')
     
     # 日付情報を表示するための変数を用意
     show_date = format_time_show(start_date, max_date_diff) 
-    tab2.write(format_time_interval(min_date_diff))
+    range_unit = format_time_interval(max_date_diff, min_date_diff)
     
     if format_time_interval(min_date_diff) == "year" and end_date!=start_date:
       temp_input = tab2.slider(
@@ -149,7 +165,7 @@ def datetime_widget(df, column, ss_name):
           value=(first_date, last_date),
           step=timedelta(days=365),
           key=f"{ss_name}_datetime",
-          format="YYYY"
+          format=range_unit
           )
     elif format_time_interval(min_date_diff) == "month" and end_date!=start_date:
       temp_input = tab2.slider(
@@ -159,7 +175,7 @@ def datetime_widget(df, column, ss_name):
         value=(first_date, last_date),
         step=timedelta(days=30),
         key=f"{ss_name}_datetime",
-        format="MM"
+        format=range_unit
         )
     elif format_time_interval(min_date_diff) == "day" and end_date!=start_date:
       temp_input = tab2.slider(
@@ -169,7 +185,7 @@ def datetime_widget(df, column, ss_name):
         value=(first_date, last_date),
         step=timedelta(days=1),
         key=f"{ss_name}_datetime",
-        format="MM/DD"
+        format=range_unit
         )
     elif format_time_interval(min_date_diff) == "hour" and end_date!=start_date:
       temp_input = tab2.slider(
@@ -179,7 +195,7 @@ def datetime_widget(df, column, ss_name):
         value=(first_date, last_date),
         step=timedelta(hours=1),
         key=f"{ss_name}_datetime",
-        format="hh"
+        format=range_unit
         )    
     elif format_time_interval(min_date_diff) == "minute" and end_date!=start_date:
       temp_input = tab2.slider(
@@ -189,7 +205,7 @@ def datetime_widget(df, column, ss_name):
         value=(first_date, last_date),
         step=timedelta(minutes=1),
         key=f"{ss_name}_datetime",
-        format="hh:mm" 
+        format=range_unit
         )
     elif format_time_interval(min_date_diff) == "second" and end_date!=start_date:
       temp_input = tab2.slider(
@@ -199,7 +215,7 @@ def datetime_widget(df, column, ss_name):
         value=(first_date, last_date),
         step=timedelta(seconds=1),
         key=f"{ss_name}_datetime",
-        format="hh:mm:ss"
+        format=range_unit
         )
 
     all_widgets.append((f"{ss_name}_datetime", "datetime", f"{column}_datetime"))
