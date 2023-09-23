@@ -155,7 +155,7 @@ def datetime_widget(df, column, ss_name):
     
     # 日付情報を表示するための変数を用意
     show_date = format_time_show(start_date, max_date_diff) 
-    range_unit = format_time_interval(max_date_diff, min_date_diff)
+    range_unit = format_time_range(max_date_diff, min_date_diff)
     
     if format_time_interval(min_date_diff) == "year" and end_date!=start_date:
       temp_input = tab2.slider(
