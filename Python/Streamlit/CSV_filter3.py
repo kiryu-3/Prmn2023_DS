@@ -257,7 +257,7 @@ def text_widget(df, column, ss_name):
     if df[column].apply(is_integer).sum() == len(df[column]):
         temp_df[f'{column}_numeric'] = df[column].astype(int) 
     df.replace(replacement_value, np.nan, inplace=True) 
-    temp_df = temp_df[temp_df[f'{column}_numeric'] != replacement_value]  # 指定した値を除外
+    temp_df = temp_df[temp_df[f'{column}_numeric'] != int(replacement_value)]  # 指定した値を除外
     options = temp_df[f'{column}_numeric'].unique()
     options.sort()
     temp_input = tab2.multiselect(f"{column.title()}", options, key=ss_name)
