@@ -65,6 +65,12 @@ def number_widget(df, column, ss_name):
 
     def detect_data_type(df, column):
         # 文字列型を数値型に変換し、変換できない場合はNaNにする
+        # カラムがfloat型で、欠損値以外の値がすべて整数であるかを確認
+            if df[column].apply(lambda x: x.is_integer() if not pd.isna(x) else True).all():
+                # カラム内の値を整数に変換し、エラーが発生した場合にはNaNに変換
+                df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce', downcast='integer') 
+            else:
+                df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce') 
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce')
         notna_df = df.copy()
         notna_df = notna_df[notna_df[f'{column}_numeric'].notna()]
