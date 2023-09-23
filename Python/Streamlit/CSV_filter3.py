@@ -488,7 +488,7 @@ if st.session_state["upload_csvfile"] is not None:
     # )
 
     
-
+st.write(st.session_state["uploaded_df"])
 # if st.session_state["upload_csvfile"] is not None:
 
         
