@@ -344,7 +344,8 @@ def upload_csv():
             # カラムがfloat型で、欠損値以外の値がすべて整数であるかを確認
             if df[column].dtype in [int, float] and df[column].apply(lambda x: x.is_integer() if not pd.isna(x) else True).all():
                 try:
-                    df[column] = df[column].astype(int)  
+                    # カラム内の値を整数に変換し、エラーが発生した場合にはNaNに変換
+                    df[column] = pd.to_numeric(df[column], errors='coerce', downcast='integer') 
                 except:
                     st.error(column)
         df = df.astype('object')
