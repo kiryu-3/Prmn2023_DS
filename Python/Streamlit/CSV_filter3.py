@@ -134,7 +134,7 @@ def datetime_widget(df, column, ss_name):
           f"{column.title()}{show_date}",
           min_value=first_date,
           max_value=last_date,
-          value=(start_date, end_date),
+          value=(first_date, last_date),
           step=timedelta(days=365),
           key=f"{ss_name}_datetime",
           format="YYYY"
@@ -144,7 +144,7 @@ def datetime_widget(df, column, ss_name):
         f"{column.title()}{show_date}",
         min_value=first_date,
         max_value=last_date,
-        value=(start_date, end_date),
+        value=(first_date, last_date),
         step=timedelta(days=30),
         key=f"{ss_name}_datetime",
         format="MM"
@@ -154,7 +154,7 @@ def datetime_widget(df, column, ss_name):
         f"{column.title()}{show_date}",
         min_value=first_date,
         max_value=last_date,
-        value=(start_date, end_date),
+        value=(first_date, last_date),
         step=timedelta(days=1),
         key=f"{ss_name}_datetime",
         format="DD"
@@ -164,7 +164,7 @@ def datetime_widget(df, column, ss_name):
         f"{column.title()}{show_date}",
         min_value=first_date,
         max_value=last_date,
-        value=(start_date, end_date),
+        value=(first_date, last_date),
         step=timedelta(hours=1),
         key=f"{ss_name}_datetime",
         format="hh"
@@ -174,7 +174,7 @@ def datetime_widget(df, column, ss_name):
         f"{column.title()}{show_date}",
         min_value=first_date,
         max_value=last_date,
-        value=(start_date, end_date),
+        value=(first_date, last_date),
         step=timedelta(minutes=1),
         key=f"{ss_name}_datetime",
         format="hh:mm" 
@@ -184,7 +184,7 @@ def datetime_widget(df, column, ss_name):
         f"{column.title()}{show_date}",
         min_value=first_date,
         max_value=last_date,
-        value=(start_date, end_date),
+        value=(first_date, last_date),
         step=timedelta(seconds=1),
         key=f"{ss_name}_datetime",
         format="hh:mm:ss"
