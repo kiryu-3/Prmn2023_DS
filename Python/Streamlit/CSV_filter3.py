@@ -67,7 +67,7 @@ def number_widget(df, column, ss_name):
         # 文字列型を数値型に変換し、変換できない場合はNaNにする
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce')
         
-        if (converted == converted.astype(int)).all():
+        if (df[f'{column}_numeric'] == df[f'{column}_numeric'].astype(int)).all():
             return (df, 'int')  # すべての値が整数に変換可能な場合は整数型と判定
         else:
             return (df, 'float') # それ以外の場合は小数型と判定
