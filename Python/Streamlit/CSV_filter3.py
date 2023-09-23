@@ -258,7 +258,7 @@ def text_widget(df, column, ss_name):
         temp_df[column] = df[column].astype(int) 
         temp_df = temp_df[temp_df[column] != int(replacement_value)]  # 指定した値を除外
     else:
-        temp_df[column] = df[df[column] != replacement_value]
+        temp_df = df[df[column] != replacement_value]
     df.replace(replacement_value, np.nan, inplace=True) 
     
     options = temp_df[column].unique()
