@@ -337,6 +337,13 @@ def upload_csv():
             st.session_state["ja"] = True
         # カラムの型を自動で適切に変換
         df = df.infer_objects()
+        for column in df.columns:
+            try:
+                # カラムをint型に変換（数値以外のデータが含まれる場合も処理する）
+                df[column] = pd.to_numeric(df[column], errors='coerce').astype(pd.Int32Dtype())
+            except:
+                pass
+                
         df = df.astype('object')
         st.session_state["uploaded_df"] = df.copy()
         st.session_state["all_df"] = df.copy()
