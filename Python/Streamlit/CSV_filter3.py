@@ -87,7 +87,7 @@ def number_widget(df, column, ss_name):
     
     if max!=min:
         temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{ss_name}_numeric")
-    all_widgets.append((f"{ss_name}_numeric", "number", "{ss_name}_numeric"))
+    all_widgets.append((f"{ss_name}_numeric", "number", f"{ss_name}_numeric"))
     return df
 
 def datetime_widget(df, column, ss_name):
@@ -222,7 +222,7 @@ def datetime_widget(df, column, ss_name):
         format=range_unit
         )
 
-    all_widgets.append((f"{ss_name}_datetime", "datetime", "{ss_name}_datetime"))
+    all_widgets.append((f"{ss_name}_datetime", "datetime", f"{ss_name}_datetime"))
     return df    
 
 def text_widget(df, column, ss_name):
