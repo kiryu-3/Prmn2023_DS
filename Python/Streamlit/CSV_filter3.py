@@ -312,12 +312,12 @@ def decide_dtypes(df):
     for column_name in df.columns:
         if numeric_column(df, column_name):
             create_data[column_name] = "number"
-            new_column_name_numeric = f"{column_name}_numeric"
-            st.session_state["all_df"][new_column_name_numeric] = pd.to_numeric(st.session_state["all_df"][column_name], errors="coerce")
+            # new_column_name_numeric = f"{column_name}_numeric"
+            # st.session_state["all_df"][new_column_name_numeric] = pd.to_numeric(st.session_state["all_df"][column_name], errors="coerce")
         elif datetime_column(df, column_name):
             create_data[column_name] = "datetime"
-            new_column_name_datetime = f"{column_name}_datetime"
-            st.session_state["all_df"][new_column_name_datetime] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
+            # new_column_name_datetime = f"{column_name}_datetime"
+            # st.session_state["all_df"][new_column_name_datetime] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
         else:
             create_data[column_name] = "object"
     return create_data
@@ -383,7 +383,6 @@ def upload_csv():
         #     if df[column_name].apply(is_integer).sum() == len(df[column_name])
         
         df = df.astype('object')
-        st.write(type(df["release_year"].unique()[0]))
         st.session_state["uploaded_df"] = df.copy()
         st.session_state["all_df"] = df.copy()
 
