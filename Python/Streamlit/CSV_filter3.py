@@ -232,7 +232,7 @@ def text_widget(df, column, ss_name):
     else:
         temp_df[column] = temp_df[column].astype("object") 
     
-    options = temp_df[column].unique()
+    options = list(temp_df[column].unique())
     if nan:
         options.append("NaN")
     options.sort()
