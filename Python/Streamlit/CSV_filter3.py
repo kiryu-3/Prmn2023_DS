@@ -235,7 +235,7 @@ def text_widget(df, column, ss_name):
     # st.write(options[:10])
     try:
         if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
-            options = [int(value) for value in options]
+            options = [int(float(value)) for value in options]
             st.write(options)
             options = [str(value) for value in options]
             st.write(options)
