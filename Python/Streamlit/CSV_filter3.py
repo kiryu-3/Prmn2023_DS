@@ -383,6 +383,7 @@ def upload_csv():
         #     if df[column_name].apply(is_integer).sum() == len(df[column_name])
         
         df = df.astype('object')
+        st.write(type(df["release_year"].unique()[0]))
         st.session_state["uploaded_df"] = df.copy()
         st.session_state["all_df"] = df.copy()
 
@@ -464,7 +465,7 @@ tab1.file_uploader("CSVファイルをアップロード",
                 )
 
 if st.session_state["upload_csvfile"] is not None:
-    st.write(type(st.session_state["uploaded_df"]["release_year"].unique()[0]))
+    
     tab2.multiselect(label="表示したいカラムを選択してください", 
                      options=st.session_state["uploaded_df"].columns, 
                      key="selected_columns", 
