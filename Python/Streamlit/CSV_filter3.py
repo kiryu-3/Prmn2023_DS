@@ -230,6 +230,7 @@ def datetime_widget(df, column, ss_name):
 def text_widget(df, column, ss_name):
     temp_df = df.dropna(subset=[column])
     options = temp_df[column].unique().tolist()
+    st.write(options[:10])
     try:
         if all(value.isdigit() for value in options):
             options = [int(value) for value in options]
