@@ -88,7 +88,6 @@ def number_widget(df, column, ss_name):
         min = float(temp_df[f'{column}_numeric'].min())
     
     if max!=min:
-        tab2.write(temp_df[column].apply(is_integer).sum() == len(temp_df[column]))
         temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{ss_name}_numeric")
     all_widgets.append((f"{ss_name}_numeric", "number", f"{ss_name}_numeric"))
     return df
@@ -235,7 +234,7 @@ def text_widget(df, column, ss_name):
     options = temp_df[column].unique().tolist()
     # st.write(options[:10])
     try:
-        if all(value.isdigit() for value in options):
+        if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
             options = [int(value) for value in options]
             st.write(options)
             options = [str(value) for value in options]
