@@ -69,15 +69,16 @@ def is_integer(n):
           return float(n).is_integer()
 
 def number_widget(df, column, ss_name):
-    
+
+    temp_df = pd.DataFrame()
     if df[column].isna().any():
         temp_df = df.dropna(subset=[column])
     else:
         temp_df = df.copy()
 
     if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
-        df.loc[:, f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
-        temp_df.loc[:, f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
+        df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
+        temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
         max = int(temp_df[f'{column}_numeric'].max())
         min = int(temp_df[f'{column}_numeric'].min())
     else:
@@ -92,14 +93,15 @@ def number_widget(df, column, ss_name):
     return df
 
 def datetime_widget(df, column, ss_name):
+    temp_df = pd.DataFrame()
     if df[column].isna().any():
         temp_df = df.dropna(subset=[column])
     else:
         temp_df = df.copy()
     # カラムを日付型に変換
     
-    df.loc[:, f'{column}_datetime'] = pd.to_datetime(df[column], errors='coerce')
-    temp_df.loc[:, f'{column}_datetime'] = pd.to_datetime(temp_df[column], errors="coerce")
+    df[f'{column}_datetime'] = pd.to_datetime(df[column], errors='coerce')
+    temp_df[f'{column}_datetime'] = pd.to_datetime(temp_df[column], errors="coerce")
     start_date = df[f'{column}_datetime'].min()
     end_date = df[f'{column}_datetime'].max()
     first_date = start_date.to_pydatetime()
