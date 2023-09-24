@@ -228,15 +228,15 @@ def datetime_widget(df, column, ss_name):
 def text_widget(df, column, ss_name):
     temp_df = df.dropna(subset=[column])
     options = list(temp_df[column].unique())
-    # try:
-    #     if all(value.isdigit() for value in options):
-    #         options = [int(value) for value in options]
-    #         options = [str(value) for value in options]
-    # except:
-    #     st.write(column)
-    if all(value.isdigit() for value in options):
-        options = [int(value) for value in options]
-        options = [str(value) for value in options]
+    try:
+        if all(value.isdigit() for value in options):
+            options = [int(value) for value in options]
+            options = [str(value) for value in options]
+    except:
+        st.write(column)
+    # if all(value.isdigit() for value in options):
+    #     options = [int(value) for value in options]
+    #     options = [str(value) for value in options]
     # if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
     #     temp_df[column] = temp_df[column].astype(int) 
     #     temp_df[column] = temp_df[column].astype("object") 
