@@ -74,26 +74,31 @@ def number_widget(df, column, ss_name):
     else:
         temp_df = df.copy()
 
-    if df[column].apply(is_integer).sum() == len(df[column]):
-        temp_df[f'{column}_numeric'] = temp_df[column].astype(int) 
+    if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
+        df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
+        temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
         max = int(temp_df[f'{column}_numeric'].max())
         min = int(temp_df[f'{column}_numeric'].min())
     else:
-        temp_df[f'{column}_numeric'] = temp_df[column].astype(float) 
+        df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
         max = float(temp_df[f'{column}_numeric'].max())
         min = float(temp_df[f'{column}_numeric'].min())
     
     if max!=min:
         temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{ss_name}_numeric")
-    all_widgets.append((f"{ss_name}_numeric", "number", column))
+    all_widgets.append((f"{ss_name}_numeric", "number", "{ss_name}_numeric"))
     return df
 
 def datetime_widget(df, column, ss_name):
-    temp_df = df[df[column].notna()]
+    if df[column].isna().any():
+        temp_df = df.dropna(subset=[column])
+    else:
+        temp_df = df.copy()
     # カラムを日付型に変換
-    temp_df[f'{column}_datetime'] = pd.to_datetime(temp_df[column], errors='coerce')
-    start_date = temp_df[f'{column}_datetime'].min()
-    end_date = temp_df[f'{column}_datetime'].max()
+    df[f'{column}_datetime'] = pd.to_datetime(df[column], errors='coerce')
+    temp_df[f'{column}_datetime'] = pd.to_datetime(temp_df[column], errors="coerce")
+    start_date = df[f'{column}_datetime'].min()
+    end_date = df[f'{column}_datetime'].max()
     first_date = start_date.to_pydatetime()
     last_date = end_date.to_pydatetime()
 
@@ -216,25 +221,24 @@ def datetime_widget(df, column, ss_name):
         format=range_unit
         )
 
-    all_widgets.append((f"{ss_name}_datetime", "datetime", column))
+    all_widgets.append((f"{ss_name}_datetime", "datetime", "{ss_name}_datetime"))
     return df    
 
 def text_widget(df, column, ss_name):
-    if df[column].isna().any():
-        temp_df = df.dropna(subset=[column])
-        nan = True
-    else:
-        temp_df = df.copy()
-        nan = False
-    if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
-        temp_df[column] = temp_df[column].astype(int) 
-        temp_df[column] = temp_df[column].astype("object") 
-    else:
-        temp_df[column] = temp_df[column].astype("object") 
-    
+    temp_df = df.dropna(subset=[column])
     options = list(temp_df[column].unique())
-    if nan:
-        options.append("NaN")
+    if all(value.isdigit() for value in column_values):
+        options = [int(value) for value in options]
+        options = [str(value) for value in options]
+    # if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
+    #     temp_df[column] = temp_df[column].astype(int) 
+    #     temp_df[column] = temp_df[column].astype("object") 
+    # else:
+    #     temp_df[column] = temp_df[column].astype("object") 
+    
+    # options = list(temp_df[column].unique())
+    # if nan:
+    #     options.append("NaN")
     options.sort()
     temp_input = tab2.multiselect(f"{column.title()}", options, key=ss_name)
     all_widgets.append((ss_name, "text", column))
@@ -325,12 +329,10 @@ def filter_df(df, all_widgets):
         if data:
             if ctype == "number":
                 min, max = data
-                res[column] = pd.to_numeric(res[column], errors="coerce")
                 res = res.loc[(res[column] >= min) & (res[column] <= max)]
                 res[column] = res[column].astype('object')
             elif ctype == "datetime":
                 min, max = data
-                res[column] = pd.to_datetime(res[column], errors="coerce")
                 res = res.loc[(res[column] >= min) & (res[column] <= max)]
                 res[column] = res[column].astype('object')
             elif ctype == "object":
