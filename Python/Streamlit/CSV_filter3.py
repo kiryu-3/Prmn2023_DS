@@ -397,7 +397,7 @@ def upload_csv():
 
         #     if df[column_name].apply(is_integer).sum() == len(df[column_name])
         
-        # df = df.applymap(str)
+        df = df.applymap(lambda x: str(x) if not pd.isnull(x) else x)
         st.session_state["uploaded_df"] = df.copy()
         st.session_state["all_df"] = df.copy()
 
