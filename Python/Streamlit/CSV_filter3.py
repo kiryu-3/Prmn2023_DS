@@ -89,11 +89,11 @@ def number_widget(df, column, ss_name):
     return df
 
 def datetime_widget(df, column, ss_name):
-    df = df[df[column].notna()]
+    temp_df = df[df[column].notna()]
     # カラムを日付型に変換
-    df[f'{column}_datetime'] = pd.to_datetime(df[column], errors='coerce')
-    start_date = df[f'{column}_datetime'].min()
-    end_date = df[f'{column}_datetime'].max()
+    temp_df[f'{column}_datetime'] = pd.to_datetime(temp_df[column], errors='coerce')
+    start_date = temp_df[f'{column}_datetime'].min()
+    end_date = temp_df[f'{column}_datetime'].max()
     first_date = start_date.to_pydatetime()
     last_date = end_date.to_pydatetime()
 
@@ -137,7 +137,7 @@ def datetime_widget(df, column, ss_name):
                 return unit  # 単位名の調整
 
     # ユニークな日付を取り出す
-    unique_dates = df[f'{column}_datetime'].unique()
+    unique_dates = temp_df[f'{column}_datetime'].unique()
     
     # ユニークな日付をソート
     unique_dates = sorted(unique_dates)
