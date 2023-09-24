@@ -230,7 +230,7 @@ def datetime_widget(df, column, ss_name):
 def text_widget(df, column, ss_name):
     temp_df = df.dropna(subset=[column])
     options = temp_df[column].unique().tolist()
-    st.write(options[:10])
+    # st.write(options[:10])
     try:
         if all(value.isdigit() for value in options):
             options = [int(value) for value in options]
@@ -261,6 +261,7 @@ def create_widgets(df, create_data={}):
   for ctype, column in zip(df.dtypes, df.columns):
       if column in create_data:
           if create_data[column] == "number":
+              st.write(df[column].dtype)
               text_widget(df, column, column.lower())
               df = number_widget(df, column, column.lower())
           elif create_data[column] == "datetime":
@@ -341,11 +342,11 @@ def filter_df(df, all_widgets):
             if ctype == "number":
                 min, max = data
                 res = res.loc[(res[column] >= min) & (res[column] <= max)]
-                res[column] = res[column].astype('object')
+                # res[column] = res[column].astype('object')
             elif ctype == "datetime":
                 min, max = data
                 res = res.loc[(res[column] >= min) & (res[column] <= max)]
-                res[column] = res[column].astype('object')
+                # res[column] = res[column].astype('object')
             elif ctype == "object":
                 res = filter_string(res, column, data)
     return res
