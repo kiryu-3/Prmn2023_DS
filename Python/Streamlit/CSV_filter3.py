@@ -288,40 +288,49 @@ def create_widgets(df, create_data={}):
             # df[new_column_name_numeric] = pd.to_numeric(df[column_name], errors="coerce")
 
 def numeric_column(df, column_name):
-    if df[column_name].dropna().apply(lambda x: isinstance(x, (int, float)) or (str(x).replace(".", "", 1).isdigit())).all():
-        return True
-    else:
-        return False
+    for value in df[column_name]:
+        try:
+            # 文字列を数値型に変換を試みる
+            float_value = float(value)
+        except ValueError:
+            # ValueErrorが発生した場合は変換できない
+            return False
+    return True
+
+# def (df, column_name):
+#     # カラム内のすべての値が日付型に変換可能な場合
+#     def is_date(x):
+#         try:
+#             pd.to_datetime(x)
+#             return True
+#         except (ValueError, TypeError):
+#             return False
+
+#     return df[column_name].dropna().apply(is_date).all()
 
 def datetime_column(df, column_name):
-    # カラム内のすべての値が日付型に変換可能な場合
-    def is_date(x):
+    for value in df[column_name]:
         try:
-            pd.to_datetime(x)
-            return True
-        except (ValueError, TypeError):
+            # 文字列を日付型に変換を試みる
+            pd.to_datetime(value)
+        except (ValueError, pd.errors.OutOfBoundsDatetime):
+            # ValueErrorやOutOfBoundsDatetimeが発生した場合は変換できない
             return False
-
-    return df[column_name].dropna().apply(is_date).all()
-
-    # if df[column_name].dropna().apply(is_date).all():
-    #     return True
-    # else:
-    #     return False
+    return True
 
 def decide_dtypes(df):
     # 空の辞書を作成
     create_data = {}
     # データフレームの各列に対してデータ型をチェック
     for column_name in df.columns:
-        if numeric_column(df, column_name):
-            create_data[column_name] = "number"
-            new_column_name_numeric = f"{column_name}_numeric"
-            st.session_state["all_df"][new_column_name_numeric] = pd.to_numeric(st.session_state["all_df"][column_name], errors="coerce")
-        elif datetime_column(df, column_name):
+        if datetime_column(df, column_name):
             create_data[column_name] = "datetime"
             new_column_name_datetime = f"{column_name}_datetime"
             st.session_state["all_df"][new_column_name_datetime] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
+        elif numeric_column(df, column_name):
+            create_data[column_name] = "number"
+            new_column_name_numeric = f"{column_name}_numeric"
+            st.session_state["all_df"][new_column_name_numeric] = pd.to_numeric(st.session_state["all_df"][column_name], errors="coerce")
         else:
             create_data[column_name] = "object"
     return create_data
