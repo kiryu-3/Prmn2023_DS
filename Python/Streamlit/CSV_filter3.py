@@ -233,15 +233,9 @@ def text_widget(df, column, ss_name):
     temp_df = df.dropna(subset=[column])
     options = temp_df[column].unique().tolist()
     # st.write(options[:10])
-    try:
-        if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
-            options = [int(float(value)) for value in options]
-            st.write(options)
-            options = [str(value) for value in options]
-            st.write(options)
-    except Exception as e:
-        st.error(column)
-        st.error(e)
+    if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
+        options = [int(float(value)) for value in options]
+        options = [str(value) for value in options]
     # if all(value.isdigit() for value in options):
     #     options = [int(value) for value in options]
     #     options = [str(value) for value in options]
