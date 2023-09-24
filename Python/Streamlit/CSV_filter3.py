@@ -77,7 +77,7 @@ def number_widget(df, column, ss_name):
 
     if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
-        temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
+        temp_df.loc[:, f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
         max = int(temp_df[f'{column}_numeric'].max())
         min = int(temp_df[f'{column}_numeric'].min())
     else:
@@ -99,7 +99,7 @@ def datetime_widget(df, column, ss_name):
     # カラムを日付型に変換
     
     df[f'{column}_datetime'] = pd.to_datetime(df[column], errors='coerce')
-    temp_df[f'{column}_datetime'] = pd.to_datetime(temp_df[column], errors="coerce")
+    temp_df.loc[:, f'{column}_datetime'] = pd.to_datetime(temp_df[column], errors="coerce")
     start_date = df[f'{column}_datetime'].min()
     end_date = df[f'{column}_datetime'].max()
     first_date = start_date.to_pydatetime()
