@@ -69,6 +69,7 @@ def is_integer(n):
           return float(n).is_integer()
 
 def number_widget(df, column, ss_name):
+    st.write(df[column].dtype)
     if df[column].isna().any():
         temp_df = df.dropna(subset=[column])
     else:
@@ -96,7 +97,7 @@ def datetime_widget(df, column, ss_name):
     else:
         temp_df = df.copy()
     # カラムを日付型に変換
-    st.write(df[column].dtype)
+    
     df[f'{column}_datetime'] = pd.to_datetime(df[column], errors='coerce')
     temp_df[f'{column}_datetime'] = pd.to_datetime(temp_df[column], errors="coerce")
     start_date = df[f'{column}_datetime'].min()
