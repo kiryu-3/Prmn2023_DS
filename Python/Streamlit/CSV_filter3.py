@@ -233,7 +233,7 @@ def text_widget(df, column, ss_name):
             options = [int(value) for value in options]
             options = [str(value) for value in options]
     except:
-        st.write(column)
+        pass
     # if all(value.isdigit() for value in options):
     #     options = [int(value) for value in options]
     #     options = [str(value) for value in options]
