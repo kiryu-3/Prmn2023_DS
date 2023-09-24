@@ -85,7 +85,7 @@ def number_widget(df, column, ss_name):
     
     if max!=min:
         temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{ss_name}_numeric")
-    all_widgets.append((f"{ss_name}_numeric", "number", f"{column}_numeric"))
+    all_widgets.append((f"{ss_name}_numeric", "number", column))
     return df
 
 def datetime_widget(df, column, ss_name):
@@ -216,7 +216,7 @@ def datetime_widget(df, column, ss_name):
         format=range_unit
         )
 
-    all_widgets.append((f"{ss_name}_datetime", "datetime", f"{column}_datetime"))
+    all_widgets.append((f"{ss_name}_datetime", "datetime", column))
     return df    
 
 def text_widget(df, column, ss_name):
@@ -325,10 +325,14 @@ def filter_df(df, all_widgets):
         if data:
             if ctype == "number":
                 min, max = data
+                res[column] = pd.to_numeric(res[column], errors="coerce")
                 res = res.loc[(res[column] >= min) & (res[column] <= max)]
+                res[column] = res[column].astype('object')
             elif ctype == "datetime":
                 min, max = data
+                res[column] = pd.to_datetime(res[column], errors="coerce")
                 res = res.loc[(res[column] >= min) & (res[column] <= max)]
+                res[column] = res[column].astype('object')
             elif ctype == "object":
                 res = filter_string(res, column, data)
     return res
