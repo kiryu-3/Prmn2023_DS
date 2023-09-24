@@ -464,6 +464,7 @@ tab1.file_uploader("CSVファイルをアップロード",
                 )
 
 if st.session_state["upload_csvfile"] is not None:
+    st.write(type(df["release_year"].unique()[0]))
     tab2.multiselect(label="表示したいカラムを選択してください", 
                      options=st.session_state["uploaded_df"].columns, 
                      key="selected_columns", 
@@ -480,7 +481,7 @@ if st.session_state["upload_csvfile"] is not None:
     )
     
     df = st.session_state["all_df"][st.session_state["filtered_columns"]].copy()
-    st.write(type(df["release_year"].unique()[0]))
+    
     create_data = st.session_state["column_data"]
     df, all_widgets = create_widgets(df, create_data)
     show_df = filter_df(df, all_widgets)
