@@ -69,7 +69,7 @@ def is_integer(n):
           return float(n).is_integer()
 
 def number_widget(df, column, ss_name):
-    st.write(df[column].dtype)
+    
     if df[column].isna().any():
         temp_df = df.dropna(subset=[column])
     else:
@@ -230,6 +230,7 @@ def datetime_widget(df, column, ss_name):
 def text_widget(df, column, ss_name):
     temp_df = df.dropna(subset=[column])
     options = list(temp_df[column].unique())
+    st.write(df[column].dtype)
     try:
         if all(value.isdigit() for value in options):
             options = [int(value) for value in options]
