@@ -69,49 +69,19 @@ def is_integer(n):
           return float(n).is_integer()
 
 def number_widget(df, column, ss_name):
-    replacement_value = "-9999999999999999999999999999"
     if df[column].isna().any():
-        df[column] = df[column].fillna(replacement_value)
+        temp_df = df.dropna(subset=[column])
+    else:
+        temp_df = df.copy()
 
     if df[column].apply(is_integer).sum() == len(df[column]):
-        df[f'{column}_numeric'] = df[column].astype(int) 
-        temp_df = df[df[column] != replacement_value]  # 指定した値を除外
+        temp_df[f'{column}_numeric'] = temp_df[column].astype(int) 
         max = int(temp_df[f'{column}_numeric'].max())
         min = int(temp_df[f'{column}_numeric'].min())
     else:
-        df[f'{column}_numeric'] = df[column].astype(float) 
-        temp_df = df[df[column] != replacement_value]  # 指定した値を除外 
+        temp_df[f'{column}_numeric'] = temp_df[column].astype(float) 
         max = float(temp_df[f'{column}_numeric'].max())
         min = float(temp_df[f'{column}_numeric'].min())
-
-    df.replace(replacement_value, np.nan, inplace=True) 
-
-    # def detect_data_type(df, column):
-    #     # 文字列型を数値型に変換し、変換できない場合はNaNにする
-    #     # カラムがfloat型で、欠損値以外の値がすべて整数であるかを確認
-    #     try:
-    #         if df.dropna()[column].str.isnumeric().all():
-    #             # カラム内の値を整数に変換し、エラーが発生した場合にはNaNに変換
-    #             df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce', downcast='integer') 
-    #         else:
-    #             df[f'{column}_numeric'] = pd.to_numeric(df[column], errors='coerce') 
-    #     except:
-    #         st.error(df.dropna()[column].dtype)
-    #     return df
-    
-    # df = detect_data_type(df, column)
-    # df[f'{column}_numeric'] = df[f'{column}_numeric'].astype(type)
-    
-    # 整数型に変換できる場合は整数型に変換
-    # if df[f'{column}_numeric'].dtype=="int64":
-    #     notna_df = df[df[f'{column}_numeric'].notna()]
-    #     max = int(notna_df[f'{column}_numeric'].max())
-    #     min = int(notna_df[f'{column}_numeric'].min())
-        
-    # 整数型に変換できない場合はfloat型に変換
-    # else:     
-    #     max = float(df[f'{column}_numeric'].max())
-    #     min = float(df[f'{column}_numeric'].min())
     
     if max!=min:
         temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{ss_name}_numeric")
@@ -250,18 +220,21 @@ def datetime_widget(df, column, ss_name):
     return df    
 
 def text_widget(df, column, ss_name):
-    replacement_value = "-9999999999999999999999999999"
     if df[column].isna().any():
-        df[column] = df[column].fillna(replacement_value)
-    temp_df = pd.DataFrame()
-    if df[column].apply(is_integer).sum() == len(df[column]):
-        temp_df[column] = df[column].astype(int) 
-        temp_df = temp_df[temp_df[column] != int(replacement_value)]  # 指定した値を除外
+        temp_df = df.dropna(subset=[column])
+        nan = True
     else:
-        temp_df = df[df[column] != replacement_value]
-    df.replace(replacement_value, np.nan, inplace=True) 
+        temp_df = df.copy()
+        nan = False
+    if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
+        temp_df[column] = temp_df[column].astype(int) 
+        temp_df[column] = temp_df[column].astype("object") 
+    else:
+        temp_df[column] = temp_df[column].astype("object") 
     
     options = temp_df[column].unique()
+    if nan:
+        options.append("NaN")
     options.sort()
     temp_input = tab2.multiselect(f"{column.title()}", options, key=ss_name)
     all_widgets.append((ss_name, "text", column))
