@@ -261,7 +261,7 @@ def create_widgets(df, create_data={}):
   for ctype, column in zip(df.dtypes, df.columns):
       if column in create_data:
           if create_data[column] == "number":
-              st.write(type(df[column].unique[0]))
+              st.write(type(df[column].unique()[0]))
               text_widget(df, column, column.lower())
               df = number_widget(df, column, column.lower())
           elif create_data[column] == "datetime":
