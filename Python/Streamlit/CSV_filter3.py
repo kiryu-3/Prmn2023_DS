@@ -470,7 +470,7 @@ tab1.file_uploader("CSVファイルをアップロード",
                 )
 
 if st.session_state["upload_csvfile"] is not None:
-    st.write(st.session_state['temp_df']["release_year"].unique()[0])
+    st.write(type(st.session_state['temp_df']["release_year"].unique()[0]))
     st.write(type(st.session_state["uploaded_df"]["release_year"].unique()[0]))
     
     tab2.multiselect(label="表示したいカラムを選択してください", 
