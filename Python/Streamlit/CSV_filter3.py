@@ -79,13 +79,13 @@ def number_widget(df, column, ss_name):
     if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
         temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
-        max = int(max(temp_df[f'{column}_numeric']))
-        min = int(min(temp_df[f'{column}_numeric']))
+        max = int(temp_df[f'{column}_numeric'].max())
+        min = int(temp_df[f'{column}_numeric'].min())
     else:
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
         temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
-        max = float(max(temp_df[f'{column}_numeric']))
-        min = float(min(temp_df[f'{column}_numeric']))
+        max = float(temp_df[f'{column}_numeric'].max())
+        min = float(temp_df[f'{column}_numeric'].min())
     
     if max!=min:
         temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{ss_name}_numeric")
