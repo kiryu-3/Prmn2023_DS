@@ -236,7 +236,9 @@ def text_widget(df, column, ss_name):
     try:
         if all(value.isdigit() for value in options):
             options = [int(value) for value in options]
+            st.write(options)
             options = [str(value) for value in options]
+            st.write(options)
     except Exception as e:
         st.error(column)
         st.error(e)
