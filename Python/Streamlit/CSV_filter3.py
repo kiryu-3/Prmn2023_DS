@@ -423,8 +423,8 @@ def upload_csv():
         
         # 
         df = df.applymap(lambda x: str(x) if not pd.isnull(x) else x)
-        st.session_state["uploaded_df"] = df
-        st.session_state["all_df"] = df
+        st.session_state["uploaded_df"] = df.copy()
+        st.session_state["all_df"] = df.copy()
         create_data = decide_dtypes(df)
         
         
