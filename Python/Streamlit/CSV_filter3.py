@@ -353,7 +353,6 @@ def decide_dtypes(df):
     # データフレームの各列に対してデータ型をチェック
     for column_name in df.columns:
         if numeric_column(df, column_name):
-            st.session_state["all_df"][column_name] = st.session_state["all_df"][column_name].astype(pd.Int64Dtype(), errors='ignore')
             create_data[column_name] = "number"
             new_column_name_number = f"{column_name}_number"
             st.session_state["all_df"][new_column_name_number] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
@@ -407,7 +406,12 @@ def upload_csv():
             st.session_state["ja"] = True
             
         # カラムの型を自動で適切に変換
-        df = df.infer_objects()  
+        df = df.infer_objects() 
+        try:
+            for column in df.columns:
+                df[column] = df[column].astype(pd.Int64Dtype(), errors='ignore')
+        except:
+            pass
         
         # for column_name in df.columns:
         #     # カラムがfloat型で、欠損値以外の値がすべて整数であるかを確認
@@ -426,12 +430,12 @@ def upload_csv():
         #     if df[column_name].apply(is_integer).sum() == len(df[column_name])
         
         # 
-        
-
-        create_data = decide_dtypes(df)
         df = df.applymap(lambda x: str(x) if not pd.isnull(x) else x)
         st.session_state["uploaded_df"] = df
         st.session_state["all_df"] = df
+        create_data = decide_dtypes(df)
+        
+        
         st.session_state["filtered_columns"] = st.session_state["uploaded_df"].columns
         # df = df.astype('object')
 
