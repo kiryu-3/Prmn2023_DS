@@ -533,7 +533,9 @@ if st.session_state["upload_csvfile"] is not None:
             label="Download CSV",
             data=csv_file,
             file_name=f'{st.session_state["download_name"]}.csv'
-        )    
+        ) 
+    except:
+        pass
         
 
 
