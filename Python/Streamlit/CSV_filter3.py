@@ -284,13 +284,13 @@ def create_widgets(df, create_data={}):
           if create_data[column] == "number":
               
               text_widget(df, column, column.lower())
-              df = number_widget(df, column, column.lower())
+              number_widget(df, column, column.lower())
           elif create_data[column] == "datetime":
               text_widget(df, column, column.lower())
-              df = datetime_widget(df, column, column.lower())              
+              datetime_widget(df, column, column.lower())              
           elif create_data[column] == "text":
               text_widget(df, column, column.lower())
-  return df, all_widgets
+  return all_widgets
 
 # def numeric_column(df):
     # numeric_names = list() 
@@ -512,7 +512,7 @@ if st.session_state["upload_csvfile"] is not None:
         df = st.session_state["all_df"].copy()
         
         create_data = st.session_state["column_data"]
-        df, all_widgets = create_widgets(df, create_data)
+        all_widgets = create_widgets(df, create_data)
         
         show_df = filter_df(df, all_widgets)
         try:
