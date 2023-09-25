@@ -443,7 +443,10 @@ def upload_csv():
         
         # st.session_state["download_df"] = df.copy()
         # st.session_state["notnum_df"] = df.copy()
-        st.session_state["column_data"] = decide_dtypes(df)
+        try:
+            st.session_state["column_data"] = decide_dtypes(df)
+        except:
+            pass
         st.session_state["filtered_columns"] = df.columns
         # numeric_column(st.session_state["uploaded_df"])
 
