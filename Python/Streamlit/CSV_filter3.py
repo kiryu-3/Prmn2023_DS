@@ -529,7 +529,7 @@ if st.session_state["upload_csvfile"] is not None:
         key="download_name"
     )
     
-    df = st.session_state["all_df"][st.session_state["filtered_columns"]]
+    df = st.session_state["all_df"]
     
     create_data = st.session_state["column_data"]
     all_widgets = create_widgets(df, create_data)
