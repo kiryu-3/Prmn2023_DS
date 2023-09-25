@@ -523,6 +523,7 @@ if st.session_state["upload_csvfile"] is not None:
     st.write(show_df[st.session_state["filtered_columns"]])
     st.write(aa)
     st.write(st.session_state["column"])
+    st.write(st.session_state["column_data"])
     
     # ダウンロードボタンを追加
     download_df = show_df[st.session_state["filtered_columns"]].copy()
