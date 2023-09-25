@@ -78,11 +78,7 @@ def is_integer(n):
       except ValueError:
           return False
       else:
-          try:
-              return float(n).is_integer()
-          except:
-              st.write(n)
-              return False
+          return float(n).is_integer()
 
 def number_widget(df, column, ss_name):
 
@@ -342,7 +338,6 @@ def decide_dtypes(df):
         if datetime_column(df, column_name):
             create_data[column_name] = "datetime"
             new_column_name_datetime = f"{column_name}_datetime"
-            st.session_state["all_df"][column_name] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
             st.session_state["all_df"][new_column_name_datetime] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
         elif numeric_column(df, column_name):
             create_data[column_name] = "number"
@@ -509,28 +504,28 @@ if st.session_state["upload_csvfile"] is not None:
         key="download_name"
     )
     
-    df = st.session_state["all_df"].copy()
+    df = st.session_state["all_df"][st.session_state["filtered_columns"]].copy()
     
     create_data = st.session_state["column_data"]
     all_widgets = create_widgets(df, create_data)
     # st.write(df)
     show_df = filter_df(df, all_widgets)
+    for column in show_df.columns:
+        if create_data[column] == "datetime":
+            st.session_state["all_df"][column] = pd.to_datetime(st.session_state["all_df"][column], errors="coerce")
     st.write(show_df[st.session_state["filtered_columns"]])
     
     # ダウンロードボタンを追加
-    try:
-        download_df = show_df[st.session_state["filtered_columns"]].copy()
-        if st.session_state["ja"]:
-            csv_file = download_df.to_csv(index=False, encoding="shift-jis")
-        else:
-            csv_file = download_df.to_csv(index=False, encoding="utf-8")
-        tab3.download_button(
-            label="Download CSV",
-            data=csv_file,
-            file_name=f'{st.session_state["download_name"]}.csv'
-        ) 
-    except:
-        pass
+    download_df = show_df[st.session_state["filtered_columns"]].copy()
+    if st.session_state["ja"]:
+        csv_file = download_df.to_csv(index=False, encoding="shift-jis")
+    else:
+        csv_file = download_df.to_csv(index=False, encoding="utf-8")
+    tab3.download_button(
+        label="Download CSV",
+        data=csv_file,
+        file_name=f'{st.session_state["download_name"]}.csv'
+    ) 
         
 
 
