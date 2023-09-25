@@ -433,6 +433,7 @@ def upload_csv():
         st.session_state["uploaded_df"] = df.copy()
         st.session_state["all_df"] = df.copy()
         create_data = decide_dtypes(df)
+        st.session_state["all_df"] = st.session_state["all_df"].applymap(lambda x: str(x) if not pd.isnull(x) else x)
         
         
         st.session_state["filtered_columns"] = st.session_state["uploaded_df"].columns
