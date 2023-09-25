@@ -68,6 +68,8 @@ tab1, tab2, tab3 = st.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
 def filter_string(df, column, selected_list):
     # 'hello'列の値がmy_list内の値に含まれている行を選択
     res = df[df[column].isin(selected_list)]
+    if len(res) == 0:
+        res = df.copy()
     return res
 
 def is_integer(n):
