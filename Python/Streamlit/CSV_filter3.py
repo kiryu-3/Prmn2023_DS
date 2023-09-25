@@ -354,10 +354,8 @@ def filter_df(df, all_widgets):
     res = df
     for widget in all_widgets:
         ss_name, ctype, column = widget
-        try:
-            data = st.session_state[ss_name]
-        except:
-            continue
+        data = st.session_state[ss_name]
+        tab3.write(data)
         if data:
             if ctype == "number":
                 min, max = data
