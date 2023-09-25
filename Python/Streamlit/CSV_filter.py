@@ -270,7 +270,7 @@ def text_widget(df, column):
     #     options.append("NaN")
     options.sort()
     temp_input = tab2.multiselect(f"{column.title()}", options, key=column)
-    all_widgets.append(("text", column))
+    all_widgets.append(("object", column))
   
 
 def create_widgets(df, create_data={}):
@@ -376,7 +376,7 @@ def filter_df(df, all_widgets):
                 min, max = data
                 res = res.loc[(res[column] >= min) & (res[column] <= max)]
                 # res[column] = res[column].astype('object')
-            elif ctype == "text":
+            elif ctype == "object":
                 res = filter_string(res, column, data)
                 aa += 1
     return res, aa
