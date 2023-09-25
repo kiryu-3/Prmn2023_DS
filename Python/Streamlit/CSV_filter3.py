@@ -340,6 +340,7 @@ def datetime_column(df, column_name):
     return True
 
 def decide_dtypes(df):
+    df = df.dropna()
     # 空の辞書を作成
     create_data = {}
     # データフレームの各列に対してデータ型をチェック
