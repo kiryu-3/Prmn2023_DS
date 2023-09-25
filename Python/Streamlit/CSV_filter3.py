@@ -361,8 +361,6 @@ def filter_df(df, all_widgets):
     for widget in all_widgets:
         ss_name, ctype, column = widget
         data = st.session_state[ss_name]
-        st.write(res)
-        st.write(data)
         if ctype == "number":
             min, max = data
             res = res.loc[(res[column] >= min) & (res[column] <= max)]
