@@ -358,7 +358,7 @@ def filter_df(df, all_widgets):
     df => the original Pandas DataFrame
     all_widgets => the widgets created by the function create_widgets().
     """
-    res = df
+    res = df.copy()
     for widget in all_widgets:
         ss_name, ctype, column = widget
         data = st.session_state[ss_name]
