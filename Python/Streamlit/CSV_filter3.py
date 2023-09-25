@@ -105,7 +105,6 @@ def number_widget(df, column, ss_name):
         temp_df = df.copy()
 
     if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
-        df[column] = df[column].astype(pd.Int64Dtype(), errors='ignore')
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
         # temp_df[f'{column}_numeric'] = temp_df[column].copy()
         # temp_df = temp_df.astype({f'{column}_numeric': float})
@@ -354,6 +353,7 @@ def decide_dtypes(df):
     # データフレームの各列に対してデータ型をチェック
     for column_name in df.columns:
         if numeric_column(df, column_name):
+            st.session_state["all_df"][column_name] = st.session_state["all_df"][column_name].astype(pd.Int64Dtype(), errors='ignore')
             create_data[column_name] = "number"
             new_column_name_number = f"{column_name}_number"
             st.session_state["all_df"][new_column_name_number] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
