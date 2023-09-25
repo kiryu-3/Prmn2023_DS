@@ -435,7 +435,6 @@ def upload_csv():
         st.session_state["uploaded_df"] = df
         st.session_state["all_df"] = df
         create_data = decide_dtypes(df)
-        st.write(st.session_state["all_df"])
         
         
         st.session_state["filtered_columns"] = st.session_state["uploaded_df"].columns
@@ -540,8 +539,6 @@ if st.session_state["upload_csvfile"] is not None:
     for column in show_df[st.session_state["filtered_columns"]].columns:
         if create_data[column] == "datetime":
             st.session_state["all_df"][column] = pd.to_datetime(st.session_state["all_df"][column], errors="coerce")
-    st.write(show_df[st.session_state["filtered_columns"]])
-    st.write(show_df["release_year"].dtype)
     
     # ダウンロードボタンを追加
     download_df = show_df[st.session_state["filtered_columns"]].copy()
