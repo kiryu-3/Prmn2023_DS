@@ -363,11 +363,12 @@ def filter_df(df, all_widgets):
     st.session_state["column"] = list()
     for widget in all_widgets:
         ctype, column = widget
-        st.session_state["column"].append((ctype, column))
+        
         data = st.session_state[column]
         
         if data:
-            
+            aa += 1
+            st.session_state["column"].append((data))
             if ctype == "number":
                 min, max = data
                 res = res.loc[(res[column] >= min) & (res[column] <= max)]
@@ -378,7 +379,7 @@ def filter_df(df, all_widgets):
                 # res[column] = res[column].astype('object')
             elif ctype == "object":
                 res = filter_string(res, column, data)
-                aa += 1
+                
     return res, aa
 
 def upload_csv():
