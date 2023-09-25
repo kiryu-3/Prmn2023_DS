@@ -55,7 +55,7 @@ def filter_string(df, column, selected_list):
     final = []
     try:
         selected_list = [float(item) for item in selected_list]
-        tab3.write(type(df[column].unique()[0]))
+        selected_list = [str(item) for item in selected_list]
     except:
         pass
     df = df[df[column].notna()]
