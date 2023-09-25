@@ -67,7 +67,7 @@ tab1, tab2, tab3 = st.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
 #     return res
 def filter_string(df, column, selected_list):
     final = []
-    temp_df = temp_df[temp_df[column].notna()]
+    temp_df = df[df[column].notna()]
     for idx, row in temp_df.iterrows():
         if row[column] in selected_list:
             final.append(row)
