@@ -78,7 +78,11 @@ def is_integer(n):
       except ValueError:
           return False
       else:
-          return float(n).is_integer()
+          try:
+              return float(n).is_integer()
+          except:
+              st.write(n)
+              return False
 
 def number_widget(df, column, ss_name):
 
