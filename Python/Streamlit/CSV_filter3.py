@@ -100,7 +100,7 @@ def number_widget(df, column, ss_name):
 
     temp_df = pd.DataFrame()
     temp_df = df.dropna(subset=[column])
-    tab3.write(temp_df[column].unique())
+    tab3.write(df[column].unique())
     
 
     if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
