@@ -281,12 +281,12 @@ def create_widgets(df, create_data={}):
           if create_data[column] == "number":
               
               text_widget(df, column)
-              df = number_widget(df, column, column.lower())
+              df = number_widget(df, column)
           elif create_data[column] == "datetime":
               text_widget(df, column)
               df = datetime_widget(df, column)              
           elif create_data[column] == "object":
-              text_widget(df, column, column.lower())
+              text_widget(df, column)
   return df, all_widgets
 
 # def numeric_column(df):
