@@ -505,7 +505,7 @@ if st.session_state["upload_csvfile"] is not None:
     )
     
     df = st.session_state["all_df"][st.session_state["filtered_columns"]].copy()
-    st.write(df)
+    st.write(st.session_state["all_df"])
     
     create_data = st.session_state["column_data"]
     all_widgets = create_widgets(df, create_data)
