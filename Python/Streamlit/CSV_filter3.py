@@ -66,19 +66,20 @@ tab1, tab2, tab3 = st.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
     
 #     return res
 def filter_string(df, column, selected_list):
-    # リスト内の各要素をfloat型に変換する関数
-    def convert_to_float(value):
-        try:
-            return str(float(value))
-        except (ValueError, TypeError):
-            return value
+    # # リスト内の各要素をfloat型に変換する関数
+    # def convert_to_float(value):
+    #     try:
+    #         return str(float(value))
+    #     except (ValueError, TypeError):
+    #         return value
             
-    # map関数を使用してリスト内のすべての要素をfloat型に変換する
-    selected_list = list(map(convert_to_float, selected_list))
+    # # map関数を使用してリスト内のすべての要素をfloat型に変換する
+    # selected_list = list(map(convert_to_float, selected_list))
     try:
         tab3.write(column)
         tab3.write(type(selected_list[0]))
         tab3.write(type(df[column].unique()[0]))
+        tab3.write(df[column].unique()[0] == selected_list[0])
     except:
         tab3.write(column)
         
