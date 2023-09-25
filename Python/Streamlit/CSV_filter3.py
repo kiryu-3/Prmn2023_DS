@@ -409,8 +409,8 @@ def upload_csv():
         #     if df[column_name].apply(is_integer).sum() == len(df[column_name])
         
         df = df.applymap(lambda x: str(x) if not pd.isnull(x) else x)
-        st.session_state["uploaded_df"] = df.copy()
-        st.session_state["all_df"] = df.copy()
+        st.session_state["uploaded_df"] = df
+        st.session_state["all_df"] = df
 
         create_data = decide_dtypes(df)
         # df = df.astype('object')
@@ -442,8 +442,8 @@ def upload_csv():
         #     create_data[column_name] = "multiselect"
 
         
-        # st.session_state["download_df"] = df.copy()
-        # st.session_state["notnum_df"] = df.copy()
+        # st.session_state["download_df"] = df
+        # st.session_state["notnum_df"] = df
         st.session_state["column_data"] = decide_dtypes(df)
         # numeric_column(st.session_state["uploaded_df"])
 
