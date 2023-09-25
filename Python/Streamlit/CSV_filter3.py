@@ -109,8 +109,8 @@ def number_widget(df, column, ss_name):
         # temp_df[f'{column}_numeric'] = temp_df[column].copy()
         # temp_df = temp_df.astype({f'{column}_numeric': float})
         temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
-        max = int(temp_df[f'{column}_numeric'].max())
-        min = int(temp_df[f'{column}_numeric'].min())
+        max = int(max(temp_df[f'{column}_numeric'].unique()))
+        min = int(max(temp_df[f'{column}_numeric'].unique()))
     else:
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
         # temp_df[f'{column}_numeric'] = temp_df[column].copy()
