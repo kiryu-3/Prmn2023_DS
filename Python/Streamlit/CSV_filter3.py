@@ -109,18 +109,18 @@ def number_widget(df, column, ss_name):
         # temp_df[f'{column}_numeric'] = temp_df[column].copy()
         # temp_df = temp_df.astype({f'{column}_numeric': float})
         temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
-        max = int(max(temp_df[f'{column}_numeric'].unique()))
-        min = int(max(temp_df[f'{column}_numeric'].unique()))
+        max_value = int(max(temp_df[f'{column}_numeric'].unique()))
+        min_value = int(max(temp_df[f'{column}_numeric'].unique()))
     else:
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
         # temp_df[f'{column}_numeric'] = temp_df[column].copy()
         # temp_df = temp_df.astype({f'{column}_numeric': float})
         temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
-        max = float(temp_df[f'{column}_numeric'].max())
-        min = float(temp_df[f'{column}_numeric'].min())
+        max_value = float(temp_df[f'{column}_numeric'].max())
+        min_value = float(temp_df[f'{column}_numeric'].min())
     
     if max!=min:
-        temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{ss_name}_numeric")
+        temp_input = tab2.slider(f"{column.title()}", min_value, max_value, (min, max), key=f"{ss_name}_numeric")
     all_widgets.append((f"{ss_name}_numeric", "number", f"{column}_numeric"))
     return df
 
