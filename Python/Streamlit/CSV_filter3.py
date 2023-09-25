@@ -67,11 +67,14 @@ tab1, tab2, tab3 = st.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
 #     return res
 def filter_string(df, column, selected_list):
     final = []
-    df = df[df[column].notna()]
-    for idx, row in df.iterrows():
+    temp_df = temp_df[temp_df[column].notna()]
+    for idx, row in temp_df.iterrows():
         if row[column] in selected_list:
             final.append(row)
-    res = pd.DataFrame(final)
+    if len(temp_df) != 0:
+        res = pd.DataFrame(final)
+    else:
+        res = df.copy()
     return res
 
 def is_integer(n):
@@ -362,17 +365,16 @@ def filter_df(df, all_widgets):
     for widget in all_widgets:
         ss_name, ctype, column = widget
         data = st.session_state[ss_name]
-        if len(data) != 0:
-            if ctype == "number":
-                min, max = data
-                res = res.loc[(res[column] >= min) & (res[column] <= max)]
-                # res[column] = res[column].astype('object')
-            elif ctype == "datetime":
-                min, max = data
-                res = res.loc[(res[column] >= min) & (res[column] <= max)]
-                # res[column] = res[column].astype('object')
-            elif ctype == "text":
-                res = filter_string(res, column, data)
+        if ctype == "number":
+            min, max = data
+            res = res.loc[(res[column] >= min) & (res[column] <= max)]
+            # res[column] = res[column].astype('object')
+        elif ctype == "datetime":
+            min, max = data
+            res = res.loc[(res[column] >= min) & (res[column] <= max)]
+            # res[column] = res[column].astype('object')
+        elif ctype == "text":
+            res = filter_string(res, column, data)
 
     return res
 
