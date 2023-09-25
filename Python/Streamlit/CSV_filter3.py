@@ -76,7 +76,7 @@ def filter_string(df, column, selected_list):
     # map関数を使用してリスト内のすべての要素をfloat型に変換する
     selected_list = list(map(convert_to_float, selected_list))
     st.tab3(column)
-    st.tab3(type(selected_list[0)))
+    st.tab3(type(selected_list[0]))
     st.tab3(type(df[column].unique()[0]))
         
     # 'hello'列の値がselected_list内の値に含まれている行を選択
