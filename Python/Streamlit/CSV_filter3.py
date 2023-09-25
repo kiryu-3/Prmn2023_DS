@@ -263,6 +263,7 @@ def text_widget(df, column, ss_name):
     options.sort()
     temp_input = tab2.multiselect(f"{column.title()}", options, key=ss_name)
     all_widgets.append((ss_name, "text", column))
+    return df
   
 
 def create_widgets(df, create_data={}):
@@ -272,13 +273,13 @@ def create_widgets(df, create_data={}):
       if column in create_data:
           if create_data[column] == "number":
               
-              text_widget(df, column, column.lower())
+              df = text_widget(df, column, column.lower())
               df = number_widget(df, column, column.lower())
           elif create_data[column] == "datetime":
-              text_widget(df, column, column.lower())
+              df = text_widget(df, column, column.lower())
               df = datetime_widget(df, column, column.lower())              
           elif create_data[column] == "object":
-              text_widget(df, column, column.lower())
+              df = text_widget(df, column, column.lower())
   return df, all_widgets
 
 # def numeric_column(df):
