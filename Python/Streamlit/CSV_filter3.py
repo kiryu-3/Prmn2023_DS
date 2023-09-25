@@ -107,7 +107,7 @@ def number_widget(df, column):
     
     if max!=min:
         temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{column}_numeric")
-    all_widgets.append(("number", f"{ss_name}_numeric"))
+    all_widgets.append(("number", f"{column}_numeric"))
     return df
 
 def datetime_widget(df, column):
@@ -269,7 +269,7 @@ def text_widget(df, column):
     # if nan:
     #     options.append("NaN")
     options.sort()
-    temp_input = tab2.multiselect(f"{column.title()}", options, key=ss_name)
+    temp_input = tab2.multiselect(f"{column.title()}", options, key=column)
     all_widgets.append(("text", column))
   
 
@@ -360,8 +360,8 @@ def filter_df(df, all_widgets):
     """
     res = df
     for widget in all_widgets:
-        ss_name, ctype, column = widget
-        data = st.session_state[ss_name]
+        ctype, column = widget
+        data = st.session_state[column]
         
         if data:
             if ctype == "number":
