@@ -100,12 +100,14 @@ def number_widget(df, column, ss_name):
 
     temp_df = pd.DataFrame()
     temp_df = df.dropna(subset=[column])
+    
 
     if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
         # temp_df[f'{column}_numeric'] = temp_df[column].copy()
         # temp_df = temp_df.astype({f'{column}_numeric': float})
         temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
+        tab3.write(temp_df[column].unique())
         max_value = int(max(temp_df[f'{column}_numeric'].unique()))
         min_value = int(max(temp_df[f'{column}_numeric'].unique()))
     else:
