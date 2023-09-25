@@ -362,21 +362,17 @@ def filter_df(df, all_widgets):
     for widget in all_widgets:
         ss_name, ctype, column = widget
         data = st.session_state[ss_name]
-        st.session_state["ss_name"] = 0
-        if data:
-            try:
-                if ctype == "number":
-                    min, max = data
-                    res = res.loc[(res[column] >= min) & (res[column] <= max)]
-                    # res[column] = res[column].astype('object')
-                elif ctype == "datetime":
-                    min, max = data
-                    res = res.loc[(res[column] >= min) & (res[column] <= max)]
-                    # res[column] = res[column].astype('object')
-                elif ctype == "text":
-                    res = filter_string(res, column, data)
-            except:
-                st.session_state["ss_name"] += 1
+        if len(data) != 0:
+            if ctype == "number":
+                min, max = data
+                res = res.loc[(res[column] >= min) & (res[column] <= max)]
+                # res[column] = res[column].astype('object')
+            elif ctype == "datetime":
+                min, max = data
+                res = res.loc[(res[column] >= min) & (res[column] <= max)]
+                # res[column] = res[column].astype('object')
+            elif ctype == "text":
+                res = filter_string(res, column, data)
 
     return res
 
