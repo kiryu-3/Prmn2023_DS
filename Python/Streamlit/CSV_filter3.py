@@ -305,7 +305,7 @@ def numeric_column(df, column_name):
         try:
             # 文字列を数値型に変換を試みる
             float_value = float(value)
-        except ValueError:
+        except :
             # ValueErrorが発生した場合は変換できない
             return False
     return True
