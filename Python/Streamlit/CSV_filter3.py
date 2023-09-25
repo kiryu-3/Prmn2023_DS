@@ -425,12 +425,14 @@ def upload_csv():
 
         #     if df[column_name].apply(is_integer).sum() == len(df[column_name])
         
+        # 
+        
+
+        create_data = decide_dtypes(df)
         df = df.applymap(lambda x: str(x) if not pd.isnull(x) else x)
         st.session_state["uploaded_df"] = df
         st.session_state["all_df"] = df
         st.session_state["filtered_columns"] = st.session_state["uploaded_df"].columns
-
-        create_data = decide_dtypes(df)
         # df = df.astype('object')
 
         # for column in df.columns:
