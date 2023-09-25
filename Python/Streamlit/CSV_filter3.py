@@ -75,13 +75,12 @@ def filter_string(df, column, selected_list):
             
     # # map関数を使用してリスト内のすべての要素をfloat型に変換する
     # selected_list = list(map(convert_to_float, selected_list))
-    try:
-        tab3.write(column)
-        tab3.write(type(selected_list[0]))
-        tab3.write(type(df[column].unique()[0]))
-        tab3.write(df[column].unique()[0] == selected_list[0])
-    except:
-        tab3.write(column)
+    # try:
+    #     tab3.write(column)
+    #     tab3.write(type(selected_list[0]))
+    #     tab3.write(type(df[column].unique()[0]))
+    # except:
+    #     tab3.write(column)
         
     # 'hello'列の値がselected_list内の値に含まれている行を選択
     res = df[df[column].isin(selected_list)]
