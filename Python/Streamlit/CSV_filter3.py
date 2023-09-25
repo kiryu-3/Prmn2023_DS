@@ -493,50 +493,47 @@ tab1.file_uploader("CSVファイルをアップロード",
                 )
 
 if st.session_state["upload_csvfile"] is not None:
-    try:
-        tab2.multiselect(label="表示したいカラムを選択してください", 
+    tab2.multiselect(label="表示したいカラムを選択してください", 
                          options=st.session_state["uploaded_df"].columns, 
                          key="selected_columns", 
                          on_change=select_column)
-        tab2.header("")
-        
-        upload_name = st.session_state['upload_csvfile'].name
-        download_name = upload_name.split(".")[0]
-        tab3.write("ファイル名を入力してください")
-        tab3.text_input(
-            label="Press Enter to Apply",
-            value=f"{download_name}_filtered",
-            key="download_name"
-        )
-        
-        df = st.session_state["all_df"].copy()
-        
-        create_data = st.session_state["column_data"]
-        all_widgets = create_widgets(df, create_data)
-        
-        show_df = filter_df(df, all_widgets)
-        try:
-            st.write(show_df[st.session_state["filtered_columns"]])
-        except:
-            st.write(show_df)
-        st.write(st.session_state["ss_name"])
-        
-        # ダウンロードボタンを追加
-        try:
-            download_df = show_df[st.session_state["filtered_columns"]].copy()
-            if st.session_state["ja"]:
-                csv_file = download_df.to_csv(index=False, encoding="shift-jis")
-            else:
-                csv_file = download_df.to_csv(index=False, encoding="utf-8")
-            tab3.download_button(
-                label="Download CSV",
-                data=csv_file,
-                file_name=f'{st.session_state["download_name"]}.csv'
-            ) 
-        except:
-            pass
+    tab2.header("")
+    
+    upload_name = st.session_state['upload_csvfile'].name
+    download_name = upload_name.split(".")[0]
+    tab3.write("ファイル名を入力してください")
+    tab3.text_input(
+        label="Press Enter to Apply",
+        value=f"{download_name}_filtered",
+        key="download_name"
+    )
+    
+    df = st.session_state["all_df"].copy()
+    
+    create_data = st.session_state["column_data"]
+    all_widgets = create_widgets(df, create_data)
+    
+    show_df = filter_df(df, all_widgets)
+    try:
+        st.write(show_df[st.session_state["filtered_columns"]])
     except:
-        st.write(st.session_state["all_df"])
+        st.write(show_df)
+    st.write(st.session_state["ss_name"])
+    
+    # ダウンロードボタンを追加
+    try:
+        download_df = show_df[st.session_state["filtered_columns"]].copy()
+        if st.session_state["ja"]:
+            csv_file = download_df.to_csv(index=False, encoding="shift-jis")
+        else:
+            csv_file = download_df.to_csv(index=False, encoding="utf-8")
+        tab3.download_button(
+            label="Download CSV",
+            data=csv_file,
+            file_name=f'{st.session_state["download_name"]}.csv'
+        ) 
+    except:
+        pass
         
 
 
