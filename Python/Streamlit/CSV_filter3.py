@@ -59,6 +59,9 @@ def filter_string(df, column, selected_list):
         if str(row[column]) in selected_list:
             final.append(row)
     res = pd.DataFrame(final)
+    if column == "Release_Year":
+        tab3.write(selected_list)
+        # tab3.write(selected_list)      
     return res
 
 def is_integer(n):
