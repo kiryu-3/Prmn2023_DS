@@ -510,11 +510,7 @@ if st.session_state["upload_csvfile"] is not None:
     all_widgets = create_widgets(df, create_data)
     # st.write(df)
     show_df = filter_df(df, all_widgets)
-    try:
-        st.write(show_df[st.session_state["filtered_columns"]])
-    except:
-        st.write(show_df)
-    st.write(st.session_state["ss_name"])
+    st.write(show_df[st.session_state["filtered_columns"]])
     
     # ダウンロードボタンを追加
     try:
