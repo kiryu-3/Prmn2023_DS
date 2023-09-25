@@ -435,6 +435,7 @@ def upload_csv():
         st.session_state["uploaded_df"] = df
         st.session_state["all_df"] = df
         create_data = decide_dtypes(df)
+        st.write(st.session_state["all_df"])
         
         
         st.session_state["filtered_columns"] = st.session_state["uploaded_df"].columns
