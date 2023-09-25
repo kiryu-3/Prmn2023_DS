@@ -361,7 +361,7 @@ def filter_df(df, all_widgets):
     res = df
     for widget in all_widgets:
         ctype, column = widget
-        if data:
+        if column in st.session_state:
             data = st.session_state[column]
             
             if ctype == "number":
