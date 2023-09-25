@@ -339,7 +339,6 @@ def decide_dtypes(df):
     for column_name in df.columns:
         if datetime_column(df, column_name):
             create_data[column_name] = "datetime"
-            new_column_name_datetime = f"{column_name}_datetime"
             st.session_state["all_df"][new_column_name_datetime] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
         elif numeric_column(df, column_name):
             create_data[column_name] = "number"
@@ -363,16 +362,19 @@ def filter_df(df, all_widgets):
         ss_name, ctype, column = widget
         data = st.session_state[ss_name]
         if data:
-            if ctype == "number":
-                min, max = data
-                res = res.loc[(res[column] >= min) & (res[column] <= max)]
-                # res[column] = res[column].astype('object')
-            elif ctype == "datetime":
-                min, max = data
-                res = res.loc[(res[column] >= min) & (res[column] <= max)]
-                # res[column] = res[column].astype('object')
-            elif ctype == "text":
-                res = filter_string(res, column, data)
+            try:
+                if ctype == "number":
+                    min, max = data
+                    res = res.loc[(res[column] >= min) & (res[column] <= max)]
+                    # res[column] = res[column].astype('object')
+                elif ctype == "datetime":
+                    min, max = data
+                    res = res.loc[(res[column] >= min) & (res[column] <= max)]
+                    # res[column] = res[column].astype('object')
+                elif ctype == "text":
+                    res = filter_string(res, column, data)
+            except:
+                st.write(res)
 
     return res
 
