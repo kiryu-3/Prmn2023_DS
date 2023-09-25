@@ -362,6 +362,7 @@ def filter_df(df, all_widgets):
     for widget in all_widgets:
         ss_name, ctype, column = widget
         data = st.session_state[ss_name]
+        st.session_state["waywayway"] = list()
         if data:
             try:
                 if ctype == "number":
@@ -375,7 +376,7 @@ def filter_df(df, all_widgets):
                 elif ctype == "text":
                     res = filter_string(res, column, data)
             except:
-                pass
+                st.session_state["waywayway"].append(data)
 
     return res
 
@@ -513,8 +514,9 @@ if st.session_state["upload_csvfile"] is not None:
     
     create_data = st.session_state["column_data"]
     df, all_widgets = create_widgets(df, create_data)
-    st.write(df.columns)
+    
     show_df = filter_df(df, all_widgets)
+    st.write(st.session_state["waywayway"])
     try:
         st.write(show_df[st.session_state["filtered_columns"]])
     except:
