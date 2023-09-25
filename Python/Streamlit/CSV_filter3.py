@@ -99,10 +99,7 @@ def is_integer(n):
 def number_widget(df, column, ss_name):
 
     temp_df = pd.DataFrame()
-    if df[column].isna().any():
-        temp_df = df.dropna(subset=[column])
-    else:
-        temp_df = df.copy()
+    temp_df = df.dropna(subset=[column])
 
     if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
