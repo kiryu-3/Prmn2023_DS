@@ -506,7 +506,7 @@ if st.session_state["upload_csvfile"] is not None:
         key="download_name"
     )
     
-    df = st.session_state["all_df"][st.session_state["filtered_columns"]].copy()
+    df = st.session_state["all_df"].copy()
     
     create_data = st.session_state["column_data"]
     df, all_widgets = create_widgets(df, create_data)
