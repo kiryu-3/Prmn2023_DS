@@ -362,6 +362,7 @@ def filter_df(df, all_widgets):
     all_widgets => the widgets created by the function create_widgets().
     """
     res = df.copy()
+    st.write(df)
     for widget in all_widgets:
         ss_name, ctype, column = widget
         data = st.session_state[ss_name]
@@ -512,7 +513,7 @@ if st.session_state["upload_csvfile"] is not None:
     
     create_data = st.session_state["column_data"]
     all_widgets = create_widgets(df, create_data)
-    st.write(df)
+    # st.write(df)
     show_df = filter_df(df, all_widgets)
     try:
         st.write(show_df[st.session_state["filtered_columns"]])
