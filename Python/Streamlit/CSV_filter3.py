@@ -75,12 +75,6 @@ def filter_string(df, column, selected_list):
             
     # map関数を使用してリスト内のすべての要素をfloat型に変換する
     selected_list = list(map(convert_to_float, selected_list))
-    try:
-        tab3.write(column)
-        tab3.write(selected_list[0])
-        tab3.write(df[column].unique()[0])
-    except:
-        tab3.write(column)
         
     # 'hello'列の値がselected_list内の値に含まれている行を選択
     res = df[df[column].isin(selected_list)]
@@ -97,11 +91,9 @@ def is_integer(n):
           return float(n).is_integer()
 
 def number_widget(df, column, ss_name):
-    tab3.write(df[column])
     temp_df = pd.DataFrame()
     temp_df = df.dropna(subset=[column])
-    tab3.write(column)
-    tab3.write(df)
+
     
 
     if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
@@ -109,7 +101,6 @@ def number_widget(df, column, ss_name):
         # temp_df[f'{column}_numeric'] = temp_df[column].copy()
         # temp_df = temp_df.astype({f'{column}_numeric': float})
         temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
-        tab3.write(temp_df[column].unique())
         max_value = int(max(temp_df[f'{column}_numeric'].unique()))
         min_value = int(max(temp_df[f'{column}_numeric'].unique()))
     else:
