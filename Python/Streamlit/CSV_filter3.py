@@ -82,7 +82,7 @@ def is_integer(n):
       else:
           return float(n).is_integer()
 
-def number_widget(df, column, ss_name):
+def number_widget(df, column):
 
     temp_df = pd.DataFrame()
     if df[column].isna().any():
@@ -106,11 +106,11 @@ def number_widget(df, column, ss_name):
         min = float(temp_df[f'{column}_numeric'].min())
     
     if max!=min:
-        temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{ss_name}_numeric")
-    all_widgets.append((f"{ss_name}_numeric", "number", f"{ss_name}_numeric"))
+        temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{column}_numeric")
+    all_widgets.append(("number", f"{ss_name}_numeric"))
     return df
 
-def datetime_widget(df, column, ss_name):
+def datetime_widget(df, column):
     temp_df = pd.DataFrame()
     if df[column].isna().any():
         temp_df = df.dropna(subset=[column])
@@ -192,7 +192,7 @@ def datetime_widget(df, column, ss_name):
           max_value=last_date,
           value=(first_date, last_date),
           step=timedelta(days=365),
-          key=f"{ss_name}_datetime",
+          key=f"{column}_datetime",
           format=range_unit
           )
     elif format_time_interval(min_date_diff) == "month" and end_date!=start_date:
@@ -202,7 +202,7 @@ def datetime_widget(df, column, ss_name):
         max_value=last_date,
         value=(first_date, last_date),
         step=timedelta(days=30),
-        key=f"{ss_name}_datetime",
+        key=f"{column}_datetime",
         format=range_unit
         )
     elif format_time_interval(min_date_diff) == "day" and end_date!=start_date:
@@ -212,7 +212,7 @@ def datetime_widget(df, column, ss_name):
         max_value=last_date,
         value=(first_date, last_date),
         step=timedelta(days=1),
-        key=f"{ss_name}_datetime",
+        key=f"{column}_datetime",
         format=range_unit
         )
     elif format_time_interval(min_date_diff) == "hour" and end_date!=start_date:
@@ -222,7 +222,7 @@ def datetime_widget(df, column, ss_name):
         max_value=last_date,
         value=(first_date, last_date),
         step=timedelta(hours=1),
-        key=f"{ss_name}_datetime",
+        key=f"{column}_datetime",
         format=range_unit
         )    
     elif format_time_interval(min_date_diff) == "minute" and end_date!=start_date:
@@ -232,7 +232,7 @@ def datetime_widget(df, column, ss_name):
         max_value=last_date,
         value=(first_date, last_date),
         step=timedelta(minutes=1),
-        key=f"{ss_name}_datetime",
+        key=f"{column}_datetime",
         format=range_unit
         )
     elif format_time_interval(min_date_diff) == "second" and end_date!=start_date:
@@ -242,14 +242,14 @@ def datetime_widget(df, column, ss_name):
         max_value=last_date,
         value=(first_date, last_date),
         step=timedelta(seconds=1),
-        key=f"{ss_name}_datetime",
+        key=f"{column}_datetime",
         format=range_unit
         )
 
-    all_widgets.append((f"{ss_name}_datetime", "datetime", f"{ss_name}_datetime"))
+    all_widgets.append(("datetime", f"{column}_datetime"))
     return df    
 
-def text_widget(df, column, ss_name):
+def text_widget(df, column):
     temp_df = df.dropna(subset=[column])
     options = temp_df[column].unique().tolist()
     # st.write(options[:10])
@@ -270,7 +270,7 @@ def text_widget(df, column, ss_name):
     #     options.append("NaN")
     options.sort()
     temp_input = tab2.multiselect(f"{column.title()}", options, key=ss_name)
-    all_widgets.append((ss_name, "text", column))
+    all_widgets.append(("text", column))
   
 
 def create_widgets(df, create_data={}):
@@ -281,12 +281,12 @@ def create_widgets(df, create_data={}):
           if create_data[column] == "number":
               
               text_widget(df, column, column.lower())
-              df = number_widget(df, column, column.lower())
+              df = number_widget(df, column)
           elif create_data[column] == "datetime":
               text_widget(df, column, column.lower())
-              df = datetime_widget(df, column, column.lower())              
-          elif create_data[column] == "object":
-              text_widget(df, column, column.lower())
+              df = datetime_widget(df, column)              
+          elif create_data[column] == "text":
+              text_widget(df, column)
   return df, all_widgets
 
 # def numeric_column(df):
@@ -346,7 +346,7 @@ def decide_dtypes(df):
             new_column_name_numeric = f"{column_name}_numeric"
             st.session_state["all_df"][new_column_name_numeric] = pd.to_numeric(st.session_state["all_df"][column_name], errors="coerce")
         else:
-            create_data[column_name] = "object"
+            create_data[column_name] = "text"
     return create_data
 
 def filter_df(df, all_widgets):
@@ -372,7 +372,7 @@ def filter_df(df, all_widgets):
                 min, max = data
                 res = res.loc[(res[column] >= min) & (res[column] <= max)]
                 # res[column] = res[column].astype('object')
-            elif ctype == "object":
+            elif ctype == "text":
                 res = filter_string(res, column, data)
                 tab3.write(data)
     return res
