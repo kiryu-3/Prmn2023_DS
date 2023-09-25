@@ -100,6 +100,7 @@ def number_widget(df, column, ss_name):
 
     temp_df = pd.DataFrame()
     temp_df = df.dropna(subset=[column])
+    tab3.write(column)
     tab3.write(df[column].unique())
     
 
