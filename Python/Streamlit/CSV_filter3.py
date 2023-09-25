@@ -69,9 +69,10 @@ def filter_string(df, column, selected_list):
     # リスト内の各要素をfloat型に変換する関数
     def convert_to_float(value):
         try:
-            return str(float(value)))
+            return str(float(value))
         except (ValueError, TypeError):
             return value
+            
     # map関数を使用してリスト内のすべての要素をfloat型に変換する
     selected_list = list(map(convert_to_float, selected_list))
         
