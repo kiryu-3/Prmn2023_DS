@@ -355,7 +355,7 @@ def filter_df(df, all_widgets):
     for widget in all_widgets:
         ss_name, ctype, column = widget
         data = st.session_state[ss_name]
-        tab3.write(data)
+        
         if data:
             if ctype == "number":
                 min, max = data
@@ -367,6 +367,7 @@ def filter_df(df, all_widgets):
                 # res[column] = res[column].astype('object')
             elif ctype == "object":
                 res = filter_string(res, column, data)
+                tab3.write(data)
     return res
 
 def upload_csv():
