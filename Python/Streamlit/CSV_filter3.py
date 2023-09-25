@@ -524,7 +524,7 @@ if st.session_state["upload_csvfile"] is not None:
     
     create_data = st.session_state["column_data"]
     all_widgets = create_widgets(df, create_data)
-    # st.write(df)
+    st.write(create_data)
     show_df = filter_df(df, all_widgets)
     
     for column in show_df[st.session_state["filtered_columns"]].columns:
