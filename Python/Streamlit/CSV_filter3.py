@@ -51,19 +51,27 @@ st.title("CSV Filters")
 # タブ
 tab1, tab2, tab3 = st.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
 
+# def filter_string(df, column, selected_list):
+#     final = []
+#     try:
+#         selected_list = [float(item) for item in selected_list]
+#         selected_list = [str(item) for item in selected_list]
+#     except:
+#         pass
+#     df = df[df[column].notna()]
+#     for idx, row in df.iterrows():
+#         if row[column] in selected_list:
+#             final.append(row)
+#     res = pd.DataFrame(final)
+    
+#     return res
 def filter_string(df, column, selected_list):
     final = []
-    try:
-        selected_list = [float(item) for item in selected_list]
-        selected_list = [str(item) for item in selected_list]
-    except:
-        pass
     df = df[df[column].notna()]
     for idx, row in df.iterrows():
         if row[column] in selected_list:
             final.append(row)
     res = pd.DataFrame(final)
-    
     return res
 
 def is_integer(n):
