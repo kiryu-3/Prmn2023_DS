@@ -112,7 +112,7 @@ def number_widget(df, column, ss_name):
         min_value = float(temp_df[f'{column}_numeric'].min())
     
     if max!=min:
-        temp_input = tab2.slider(f"{column.title()}", min_value, max_value, (min, max), key=f"{ss_name}_numeric")
+        temp_input = tab2.slider(f"{column.title()}", min_value, max_value, (min_value, max_value), key=f"{ss_name}_numeric")
     all_widgets.append((f"{ss_name}_numeric", "number", f"{column}_numeric"))
     return df
 
