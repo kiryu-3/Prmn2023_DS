@@ -379,6 +379,8 @@ def filter_df(df, all_widgets):
                 # res[column] = res[column].astype('object')
             elif ctype == "object":
                 res = filter_string(res, column, data)
+        else:
+            st.session_state["column"].append((data))
                 
     return res, aa
 
