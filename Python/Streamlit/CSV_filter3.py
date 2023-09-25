@@ -523,16 +523,17 @@ if st.session_state["upload_csvfile"] is not None:
         st.write(show_df)
     
     # ダウンロードボタンを追加
-    download_df = show_df[st.session_state["filtered_columns"]].copy()
-    if st.session_state["ja"]:
-        csv_file = download_df.to_csv(index=False, encoding="shift-jis")
-    else:
-        csv_file = download_df.to_csv(index=False, encoding="utf-8")
-    tab3.download_button(
-        label="Download CSV",
-        data=csv_file,
-        file_name=f'{st.session_state["download_name"]}.csv'
-    )    
+    try:
+        download_df = show_df[st.session_state["filtered_columns"]].copy()
+        if st.session_state["ja"]:
+            csv_file = download_df.to_csv(index=False, encoding="shift-jis")
+        else:
+            csv_file = download_df.to_csv(index=False, encoding="utf-8")
+        tab3.download_button(
+            label="Download CSV",
+            data=csv_file,
+            file_name=f'{st.session_state["download_name"]}.csv'
+        )    
         
 
 
