@@ -360,8 +360,10 @@ def filter_df(df, all_widgets):
     """
     res = df
     aa = 0
+    st.session_state["column"] = list()
     for widget in all_widgets:
         ctype, column = widget
+        st.session_state["column"].append(column)
         data = st.session_state[column]
         
         if data:
@@ -376,7 +378,6 @@ def filter_df(df, all_widgets):
                 # res[column] = res[column].astype('object')
             elif ctype == "object":
                 res = filter_string(res, column, data)
-                aa += 1
     return res, aa
 
 def upload_csv():
@@ -517,6 +518,7 @@ if st.session_state["upload_csvfile"] is not None:
     show_df, aa = filter_df(df, all_widgets)
     st.write(show_df[st.session_state["filtered_columns"]])
     st.write(aa)
+    st.write(st.session_state["column"])
     
     # ダウンロードボタンを追加
     download_df = show_df[st.session_state["filtered_columns"]].copy()
