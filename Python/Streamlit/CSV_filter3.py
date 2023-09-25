@@ -216,7 +216,7 @@ def datetime_widget(df, column, ss_name):
         max_value=last_date,
         value=(first_date, last_date),
         step=timedelta(days=30),
-        key=f"{column}_datetime",
+        key=f"{ss_name}_datetime",
         format=range_unit
         )
     elif format_time_interval(min_date_diff) == "day" and end_date!=start_date:
@@ -354,11 +354,11 @@ def decide_dtypes(df):
     for column_name in df.columns:
         if numeric_column(df, column_name):
             create_data[column_name] = "number"
-            new_column_name_number = f"{column_name}_number"
+            new_column_name_number = f"{column_name}_number2"
             st.session_state["all_df"][new_column_name_number] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
         elif datetime_column(df, column_name):
             create_data[column_name] = "datetime"
-            new_column_name_datetime = f"{column_name}_datetime"
+            new_column_name_datetime = f"{column_name}_datetime2"
             st.session_state["all_df"][new_column_name_datetime] = pd.to_numeric(st.session_state["all_df"][column_name], errors="coerce")
         else:
             create_data[column_name] = "text"
