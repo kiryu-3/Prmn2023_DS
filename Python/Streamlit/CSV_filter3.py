@@ -78,14 +78,14 @@ def number_widget(df, column, ss_name):
 
     if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
-        temp_df[f'{column}_datetime'] = temp_df[column].copy()
+        temp_df[f'{column}_numeric'] = temp_df[column].copy()
         temp_df = temp_df.astype({f'{column}_numeric': float})
         # temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
         max = int(temp_df[f'{column}_numeric'].max())
         min = int(temp_df[f'{column}_numeric'].min())
     else:
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
-        temp_df[f'{column}_datetime'] = temp_df[column].copy()
+        temp_df[f'{column}_numeric'] = temp_df[column].copy()
         temp_df = temp_df.astype({f'{column}_numeric': float})
         # temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
         max = float(temp_df[f'{column}_numeric'].max())
