@@ -356,11 +356,11 @@ def decide_dtypes(df):
         if numeric_column(df, column_name):
             create_data[column_name] = "number"
             new_column_name_number = f"{column_name}_number2"
-            st.session_state["all_df"][new_column_name_number] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
+            st.session_state["all_df"][new_column_name_number] = pd.to_numeric(st.session_state["all_df"][column_name], errors="coerce")
         elif datetime_column(df, column_name):
             create_data[column_name] = "datetime"
             new_column_name_datetime = f"{column_name}_datetime2"
-            st.session_state["all_df"][new_column_name_datetime] = pd.to_numeric(st.session_state["all_df"][column_name], errors="coerce")
+            st.session_state["all_df"][new_column_name_datetime] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
         else:
             create_data[column_name] = "text"
     return create_data
