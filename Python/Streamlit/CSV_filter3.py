@@ -338,6 +338,7 @@ def decide_dtypes(df):
         if datetime_column(df, column_name):
             create_data[column_name] = "datetime"
             new_column_name_datetime = f"{column_name}_datetime"
+            st.session_state["all_df"][column_name] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
             st.session_state["all_df"][new_column_name_datetime] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
         elif numeric_column(df, column_name):
             create_data[column_name] = "number"
@@ -407,7 +408,7 @@ def upload_csv():
 
         #     if df[column_name].apply(is_integer).sum() == len(df[column_name])
         
-        df = df.applymap(lambda x: str(x) if not pd.isnull(x) else x)
+        $ df = df.applymap(lambda x: str(x) if not pd.isnull(x) else x)
         st.session_state["uploaded_df"] = df.copy()
         st.session_state["all_df"] = df.copy()
 
