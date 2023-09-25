@@ -363,7 +363,7 @@ def filter_df(df, all_widgets):
     st.session_state["column"] = list()
     for widget in all_widgets:
         ctype, column = widget
-        st.session_state["column"].append(column)
+        st.session_state["column"].append((ctype, column))
         data = st.session_state[column]
         
         if data:
