@@ -249,6 +249,7 @@ def datetime_widget(df, column, ss_name):
 
 def text_widget(df, column, ss_name):
     temp_df = df.dropna(subset=[column])
+    temp_df = temp_df.astype(str)
     options = temp_df[column].unique().tolist()
     # st.write(options[:10])
     if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
@@ -443,11 +444,7 @@ def upload_csv():
         
         # st.session_state["download_df"] = df.copy()
         # st.session_state["notnum_df"] = df.copy()
-        try:
-            st.session_state["column_data"] = decide_dtypes(df)
-        except:
-            pass
-        st.session_state["filtered_columns"] = df.columns
+        st.session_state["column_data"] = decide_dtypes(df)
         # numeric_column(st.session_state["uploaded_df"])
 
     else:
