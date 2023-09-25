@@ -97,7 +97,7 @@ def is_integer(n):
           return float(n).is_integer()
 
 def number_widget(df, column, ss_name):
-
+    tab3.write(df[column])
     temp_df = pd.DataFrame()
     temp_df = df.dropna(subset=[column])
     tab3.write(column)
