@@ -361,7 +361,7 @@ def filter_df(df, all_widgets):
     res = df
     for widget in all_widgets:
         ctype, column = widget
-        if column in st.session_state:
+        if len(st.session_state[column]) != 0 :
             data = st.session_state[column]
             
             if ctype == "number":
@@ -374,6 +374,7 @@ def filter_df(df, all_widgets):
                 # res[column] = res[column].astype('object')
             elif ctype == "text":
                 res = filter_string(res, column, data)
+
     return res
 
 def upload_csv():
