@@ -361,6 +361,7 @@ def filter_df(df, all_widgets):
     for widget in all_widgets:
         ss_name, ctype, column = widget
         data = st.session_state[ss_name]
+        st.session_state["ss_name"] = 0
         if data:
             try:
                 if ctype == "number":
@@ -374,7 +375,7 @@ def filter_df(df, all_widgets):
                 elif ctype == "text":
                     res = filter_string(res, column, data)
             except:
-                st.write(res)
+                st.session_state["ss_name"] += 1
 
     return res
 
@@ -515,6 +516,7 @@ if st.session_state["upload_csvfile"] is not None:
     
     show_df = filter_df(df, all_widgets)
     st.write(show_df[st.session_state["filtered_columns"]])
+    st.write(st.session_state["ss_name"])
     
     # ダウンロードボタンを追加
     try:
