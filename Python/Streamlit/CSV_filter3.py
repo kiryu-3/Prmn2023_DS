@@ -376,7 +376,7 @@ def filter_df(df, all_widgets):
                 elif ctype == "text":
                     res = filter_string(res, column, data)
             except:
-                st.session_state["waywayway"].append((data, ss_name))
+                st.session_state["waywayway"].append((ss_name))
 
     return res
 
