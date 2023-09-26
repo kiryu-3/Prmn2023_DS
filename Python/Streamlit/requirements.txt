@@ -13,3 +13,4 @@ gTTS
 langdetect
 streamlit-pandas
 streamlit-aggrid
+opencv-python
