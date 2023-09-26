@@ -256,17 +256,21 @@ def filter_df(df, all_widgets):
         data = st.session_state[ss_name]
         if ctype == "number":
             min_value, max_value = data
-            if len(st.session_state[column.replace("_numeric", "")]) != 0:
-                res = res.loc[(res[column] >= min_value) & (res[column] <= max_value)]
-            else:
+            temp_df = df.dropna(subset=[column])
+            if (float(max(temp_df[column].unique())) == max_value) & (float(min(temp_df[column].unique())) == min_value):
                 pass
+            else:
+                res = res.loc[(res[column] >= min_value) & (res[column] <= max_value)]
             # res[column] = res[column].astype('object')
         elif ctype == "datetime":
             min_value, max_value = data
-            if len(st.session_state[column.replace("_datetime", "")]) != 0:
-                res = res.loc[(res[column] >= min_value) & (res[column] <= max_value)]
-            else:
+            temp_df = df.dropna(subset=[column])
+            first_date = temp_df[column].min().to_pydatetime()
+            last_date = temp_df[column].max().to_pydatetime()
+            if (last_date == max_value) & (first_date == min_value):
                 pass
+            else:
+                res = res.loc[(res[column] >= min_value) & (res[column] <= max_value)]
             # res[column] = res[column].astype('object')
         elif ctype == "text":
             res = filter_string(res, column, data)
