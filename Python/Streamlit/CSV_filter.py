@@ -33,9 +33,27 @@ hide_menu_style = """
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
 # タブ
-# tab1, tab2, tab3 = spk.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
+tab1, tab2, tab3 = spk.sidebar.tabs(["Uploader", "DataFrame", "Downloader"])
 
 st.title("CSV Filters")
+
+def decide_dtypes(df):
+    df = df.dropna()
+    # 空の辞書を作成
+    create_data = {}
+    # データフレームの各列に対してデータ型をチェック
+    for column_name in df.columns:
+        if numeric_column(df, column_name):
+            create_data[column_name] = "number"
+            new_column_name_number = f"{column_name}_number2"
+            st.session_state["all_df"][new_column_name_number] = pd.to_numeric(st.session_state["all_df"][column_name], errors="coerce")
+        elif datetime_column(df, column_name):
+            create_data[column_name] = "datetime"
+            new_column_name_datetime = f"{column_name}_datetime2"
+            st.session_state["all_df"][new_column_name_datetime] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
+        else:
+            create_data[column_name] = "text"
+    return create_data
 
 def upload_csv():
   # csvがアップロードされたとき
@@ -77,12 +95,52 @@ def upload_csv():
       st.session_state["filtered_columns"] = list()
 
 # タブ
-spk.tab1.file_uploader("CSVファイルをアップロード", 
+tab1.file_uploader("CSVファイルをアップロード", 
                   type=["csv"], 
                   key="upload_csvfile", 
                   on_change=upload_csv
                 )
 
-# st.write(show_df[st.session_state["filtered_columns"]])
+if st.session_state["upload_csvfile"] is not None:
+    tab1.multiselect(label="表示したいカラムを選択してください", 
+                         options=st.session_state["uploaded_df"].columns, 
+                         key="selected_columns", 
+                         on_change=select_column)
+    # tab2.header("")
+    
+    upload_name = st.session_state['upload_csvfile'].name
+    download_name = upload_name.split(".")[0]
+    tab3.write("ファイル名を入力してください")
+    tab3.text_input(
+        label="Press Enter to Apply",
+        value=f"{download_name}_filtered",
+        key="download_name"
+    )
+    
+    df = st.session_state["all_df"][st.session_state["filtered_columns"]].copy()
+    
+    create_data = st.session_state["column_data"]
+    all_widgets = spk.create_widgets(df, create_data)
+    # st.write(create_data)
+    show_df = spk.filter_df(df, all_widgets)
+    
+    for column in show_df[st.session_state["filtered_columns"]].columns:
+        if create_data[column] == "datetime":
+            st.session_state["all_df"][column] = pd.to_datetime(st.session_state["all_df"][column], errors="coerce")
+            
+    tab2.write(show_df[st.session_state["filtered_columns"]])
+    
+    # ダウンロードボタンを追加
+    download_df = show_df[st.session_state["filtered_columns"]].copy()
+    if st.session_state["ja"]:
+        csv_file = download_df.to_csv(index=False, encoding="shift-jis")
+    else:
+        csv_file = download_df.to_csv(index=False, encoding="utf-8")
+    tab3.download_button(
+        label="Download CSV",
+        data=csv_file,
+        file_name=f'{st.session_state["download_name"]}.csv'
+    ) 
+
         
 
