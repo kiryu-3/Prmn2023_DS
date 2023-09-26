@@ -308,7 +308,7 @@ def upload_csv():
       df = df.applymap(lambda x: str(x) if not pd.isnull(x) else x)
       st.session_state["uploaded_df"] = df.copy()
       st.session_state["all_df"] = df.copy()
-      create_data = spk.decide_dtypes(df)
+      create_data = decide_dtypes(df)
       st.session_state["all_df"] = st.session_state["all_df"].applymap(lambda x: str(x) if not pd.isnull(x) else x)
       
       
@@ -330,7 +330,7 @@ def select_column():
     else:
         st.session_state["filtered_columns"] = st.session_state["selected_columns"]
 
-    create_data = spk.decide_dtypes(st.session_state["uploaded_df"][st.session_state["filtered_columns"]])
+    create_data = decide_dtypes(st.session_state["uploaded_df"][st.session_state["filtered_columns"]])
 
     st.session_state["column_data"] = create_data
     
@@ -360,9 +360,9 @@ if st.session_state["upload_csvfile"] is not None:
     df = st.session_state["all_df"][st.session_state["filtered_columns"]].copy()
     
     create_data = st.session_state["column_data"]
-    all_widgets = spk.create_widgets(df, create_data)
+    all_widgets = create_widgets(df, create_data)
     # st.write(create_data)
-    show_df = spk.filter_df(df, all_widgets)
+    show_df = filter_df(df, all_widgets)
     
     for column in show_df[st.session_state["filtered_columns"]].columns:
         if create_data[column] == "datetime":
