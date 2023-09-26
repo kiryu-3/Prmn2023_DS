@@ -15,7 +15,7 @@ if 'main_df' not in st.session_state:  # 初期化
     st.session_state['main_df'] = df
 
 # タブ
-tab1, tab2, tab3 = st.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
+# tab1, tab2, tab3 = st.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
 
 def filter_string(df, column, selected_list):
   if len(selected_list) != 0:
@@ -54,7 +54,7 @@ def number_widget(df, column, ss_name):
         min_value = float(temp_df[f'{column}_numeric'].min())
     
     if max!=min:
-        temp_input = tab2.slider(f"{column.title()}", min_value, max_value, (min_value, max_value), key=f"{ss_name}_numeric")
+        temp_input = st.sidebar.slider(f"{column.title()}", min_value, max_value, (min_value, max_value), key=f"{ss_name}_numeric")
     all_widgets.append((f"{ss_name}_numeric", "number", f"{column}_numeric"))
     return df
 
@@ -132,7 +132,7 @@ def datetime_widget(df, column, ss_name):
     range_unit = format_time_range(max_date_diff, min_date_diff)
     
     if format_time_interval(min_date_diff) == "year" and end_date!=start_date:
-      temp_input = tab2.slider(
+      temp_input = st.sidebar.slider(
           f"{column.title()}{show_date}",
           min_value=first_date,
           max_value=last_date,
@@ -142,7 +142,7 @@ def datetime_widget(df, column, ss_name):
           format=range_unit
           )
     elif format_time_interval(min_date_diff) == "month" and end_date!=start_date:
-      temp_input = tab2.slider(
+      temp_input = st.sidebar.slider(
         f"{column.title()}{show_date}",
         min_value=first_date,
         max_value=last_date,
@@ -152,7 +152,7 @@ def datetime_widget(df, column, ss_name):
         format=range_unit
         )
     elif format_time_interval(min_date_diff) == "day" and end_date!=start_date:
-      temp_input = tab2.slider(
+      temp_input = st.sidebar.slider(
         f"{column.title()}{show_date}",
         min_value=first_date,
         max_value=last_date,
@@ -162,7 +162,7 @@ def datetime_widget(df, column, ss_name):
         format=range_unit
         )
     elif format_time_interval(min_date_diff) == "hour" and end_date!=start_date:
-      temp_input = tab2.slider(
+      temp_input = st.sidebar.slider(
         f"{column.title()}{show_date}",
         min_value=first_date,
         max_value=last_date,
@@ -172,7 +172,7 @@ def datetime_widget(df, column, ss_name):
         format=range_unit
         )    
     elif format_time_interval(min_date_diff) == "minute" and end_date!=start_date:
-      temp_input = tab2.slider(
+      temp_input = st.sidebar.slider(
         f"{column.title()}{show_date}",
         min_value=first_date,
         max_value=last_date,
@@ -182,7 +182,7 @@ def datetime_widget(df, column, ss_name):
         format=range_unit
         )
     elif format_time_interval(min_date_diff) == "second" and end_date!=start_date:
-      temp_input = tab2.slider(
+      temp_input = st.sidebar.slider(
         f"{column.title()}{show_date}",
         min_value=first_date,
         max_value=last_date,
@@ -205,7 +205,7 @@ def text_widget(df, column, ss_name):
         options = [str(value) for value in options]
 
     options.sort()
-    temp_input = tab2.multiselect(f"{column.title()}", options, key=ss_name)
+    temp_input = st.sidebar.multiselect(f"{column.title()}", options, key=ss_name)
     all_widgets.append((ss_name, "text", column))
 
 def create_widgets(df, create_data={}):
@@ -244,24 +244,6 @@ def datetime_column(df, column_name):
             return False
     return True
 
-def decide_dtypes(df):
-    df = df.dropna()
-    # 空の辞書を作成
-    create_data = {}
-    # データフレームの各列に対してデータ型をチェック
-    for column_name in df.columns:
-        if numeric_column(df, column_name):
-            create_data[column_name] = "number"
-            new_column_name_number = f"{column_name}_number2"
-            st.session_state["all_df"][new_column_name_number] = pd.to_numeric(st.session_state["all_df"][column_name], errors="coerce")
-        elif datetime_column(df, column_name):
-            create_data[column_name] = "datetime"
-            new_column_name_datetime = f"{column_name}_datetime2"
-            st.session_state["all_df"][new_column_name_datetime] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
-        else:
-            create_data[column_name] = "text"
-    return create_data
-
 def filter_df(df, all_widgets):
     """
     This function will take the input dataframe and all the widgets generated from
@@ -288,101 +270,3 @@ def filter_df(df, all_widgets):
             res = filter_string(res, column, data)
     return res
 
-# def upload_csv():
-#   # csvがアップロードされたとき
-#   if st.session_state['upload_csvfile'] is not None:
-#       # アップロードされたファイルデータを読み込む
-#       file_data = st.session_state['upload_csvfile'].read()
-#       # バイナリデータからPandas DataFrameを作成
-#       try:
-#           df = pd.read_csv(io.BytesIO(file_data), encoding="utf-8", engine="python")
-#           st.session_state["ja"] = False
-#       except UnicodeDecodeError:
-#           # UTF-8で読み取れない場合はShift-JISエンコーディングで再試行
-#           df = pd.read_csv(io.BytesIO(file_data), encoding="shift-jis", engine="python")
-#           st.session_state["ja"] = True
-          
-#       # カラムの型を自動で適切に変換
-#       df = df.infer_objects() 
-#       try:
-#           for column in df.columns:
-#               df[column] = df[column].astype(pd.Int64Dtype(), errors='ignore')
-#       except:
-#           pass
-
-#       df = df.applymap(lambda x: str(x) if not pd.isnull(x) else x)
-#       st.session_state["uploaded_df"] = df.copy()
-#       st.session_state["all_df"] = df.copy()
-#       create_data = decide_dtypes(df)
-#       st.session_state["all_df"] = st.session_state["all_df"].applymap(lambda x: str(x) if not pd.isnull(x) else x)
-      
-      
-#       st.session_state["filtered_columns"] = st.session_state["uploaded_df"].columns
-
-#       st.session_state["column_data"] = decide_dtypes(df)
-
-#   else:
-#       st.session_state["uploaded_df"] = pd.DataFrame()
-#       st.session_state["all_df"] = pd.DataFrame()
-#       st.session_state["column_data"] = dict()
-#       st.session_state["filtered_columns"] = list()
-        
-
-# def select_column():
-#     # 数値型のカラム以外の、指定したリストの管理
-#     if len(st.session_state["selected_columns"]) == 0:
-#         st.session_state["filtered_columns"] = st.session_state["uploaded_df"].columns
-#     else:
-#         st.session_state["filtered_columns"] = st.session_state["selected_columns"]
-
-#     create_data = decide_dtypes(st.session_state["uploaded_df"][st.session_state["filtered_columns"]])
-
-#     st.session_state["column_data"] = create_data
-    
-# # CSVファイルのアップロード
-# tab1.file_uploader("CSVファイルをアップロード", 
-#                   type=["csv"], 
-#                   key="upload_csvfile", 
-#                   on_change=upload_csv
-#                 )
-
-if st.session_state["upload_csvfile"] is not None:
-    tab2.multiselect(label="表示したいカラムを選択してください", 
-                         options=st.session_state["uploaded_df"].columns, 
-                         key="selected_columns", 
-                         on_change=select_column)
-    tab2.header("")
-    
-    upload_name = st.session_state['upload_csvfile'].name
-    download_name = upload_name.split(".")[0]
-    tab3.write("ファイル名を入力してください")
-    tab3.text_input(
-        label="Press Enter to Apply",
-        value=f"{download_name}_filtered",
-        key="download_name"
-    )
-    
-    df = st.session_state["all_df"][st.session_state["filtered_columns"]].copy()
-    
-    create_data = st.session_state["column_data"]
-    all_widgets = create_widgets(df, create_data)
-    # st.write(create_data)
-    show_df = filter_df(df, all_widgets)
-    
-    for column in show_df[st.session_state["filtered_columns"]].columns:
-        if create_data[column] == "datetime":
-            st.session_state["all_df"][column] = pd.to_datetime(st.session_state["all_df"][column], errors="coerce")
-            
-    st.write(show_df[st.session_state["filtered_columns"]])
-    
-    # ダウンロードボタンを追加
-    download_df = show_df[st.session_state["filtered_columns"]].copy()
-    if st.session_state["ja"]:
-        csv_file = download_df.to_csv(index=False, encoding="shift-jis")
-    else:
-        csv_file = download_df.to_csv(index=False, encoding="utf-8")
-    tab3.download_button(
-        label="Download CSV",
-        data=csv_file,
-        file_name=f'{st.session_state["download_name"]}.csv'
-    ) 
