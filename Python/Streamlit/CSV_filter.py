@@ -73,7 +73,7 @@ def upload_csv():
         
         st.session_state["filtered_columns"] = st.session_state["uploaded_df"].columns
 
-        st.session_state["column_data"] = decide_dtypes(df)
+        st.session_state["column_data"] = spk.decide_dtypes(df)
 
     else:
         st.session_state["uploaded_df"] = pd.DataFrame()
