@@ -273,6 +273,7 @@ def filter_df(df, all_widgets):
             # res[column] = res[column].astype('object')
         elif ctype == "text":
             res = filter_string(res, column, data)
+    return res
 
 def upload_csv():
   # csvがアップロードされたとき
@@ -372,5 +373,3 @@ if st.session_state["upload_csvfile"] is not None:
         data=csv_file,
         file_name=f'{st.session_state["download_name"]}.csv'
     ) 
-
-    return res
