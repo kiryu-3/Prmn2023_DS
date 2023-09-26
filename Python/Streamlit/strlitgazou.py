@@ -88,7 +88,7 @@ if files is not None:
         label = "R",
         min_value = 0,
         max_value = 255,
-        value=(0,orig_color[0])
+        value=(0,int(orig_color[0]))
     )
     st.write(f'選択された値: {min_R}-{max_R}')
 
@@ -96,7 +96,7 @@ if files is not None:
         label = "G",
         min_value = 0,
         max_value = 255,
-        value=(0,orig_color[1])
+        value=(0,int(orig_color[1]))
     )
     st.write(f'選択された値: {min_G}-{max_G}')
 
@@ -104,7 +104,7 @@ if files is not None:
         label = "B",
         min_value = 0,
         max_value = 255,
-        value=(0,orig_color[2])
+        value=(0,int(orig_color[2]))
     )
     st.write(f'選択された値: {min_B}-{max_B}')
 
