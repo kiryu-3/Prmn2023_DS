@@ -368,7 +368,7 @@ if st.session_state["upload_csvfile"] is not None:
         if create_data[column] == "datetime":
             st.session_state["all_df"][column] = pd.to_datetime(st.session_state["all_df"][column], errors="coerce")
             
-    # st.write(show_df[st.session_state["filtered_columns"]])
+    st.write(show_df[st.session_state["filtered_columns"]])
     
     # ダウンロードボタンを追加
     download_df = show_df[st.session_state["filtered_columns"]].copy()
