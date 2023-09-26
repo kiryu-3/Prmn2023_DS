@@ -38,7 +38,11 @@ tab1, tab2, tab3 = spk.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
 st.title("CSV Filters")
 
 # タブ
-tab1, tab2, tab3 = st.tabs(["Uploader", "Select_Values", "Downloader"])
+spk.tab1.file_uploader("CSVファイルをアップロード", 
+                  type=["csv"], 
+                  key="upload_csvfile", 
+                  on_change=upload_csv
+                )
 
 # st.write(show_df[st.session_state["filtered_columns"]])
         
