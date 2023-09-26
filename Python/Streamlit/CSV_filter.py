@@ -39,6 +39,6 @@ if 'main_df' not in st.session_state:  # 初期化
 
 st.title("CSV Filters")
 
-st.write(show_df[st.session_state["filtered_columns"]])
+# st.write(show_df[st.session_state["filtered_columns"]])
         
 
