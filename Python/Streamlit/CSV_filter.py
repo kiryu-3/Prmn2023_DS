@@ -43,6 +43,27 @@ def decide_dtypes(df):
     df = df.dropna()
     # 空の辞書を作成
     create_data = {}
+
+    def numeric_column(df, column_name):
+        for value in df[column_name]:
+            try:
+                # 文字列を数値型に変換を試みる
+                float_value = float(value)
+            except :
+                # ValueErrorが発生した場合は変換できない
+                return False
+        return True
+
+    def datetime_column(df, column_name):
+        for value in df[column_name]:
+            try:
+                # 文字列を日付型に変換を試みる
+                pd.to_datetime(value)
+            except (ValueError, pd.errors.OutOfBoundsDatetime):
+                # ValueErrorやOutOfBoundsDatetimeが発生した場合は変換できない
+                return False
+        return True
+    
     # データフレームの各列に対してデータ型をチェック
     for column_name in df.columns:
         if numeric_column(df, column_name):
