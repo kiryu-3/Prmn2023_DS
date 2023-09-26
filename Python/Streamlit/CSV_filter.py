@@ -84,8 +84,8 @@ def filter_string(df, column, selected_list):
         
     # 'hello'列の値がselected_list内の値に含まれている行を選択
     res = df[df[column].isin(selected_list)]
-    if len(res) == 0:
-        res = df.copy()
+    # if len(res) == 0:
+    #     res = df.copy()
     return res
 
 def is_integer(n):
