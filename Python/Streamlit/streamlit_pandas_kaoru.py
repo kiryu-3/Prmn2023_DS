@@ -288,63 +288,63 @@ def filter_df(df, all_widgets):
             res = filter_string(res, column, data)
     return res
 
-def upload_csv():
-  # csvがアップロードされたとき
-  if st.session_state['upload_csvfile'] is not None:
-      # アップロードされたファイルデータを読み込む
-      file_data = st.session_state['upload_csvfile'].read()
-      # バイナリデータからPandas DataFrameを作成
-      try:
-          df = pd.read_csv(io.BytesIO(file_data), encoding="utf-8", engine="python")
-          st.session_state["ja"] = False
-      except UnicodeDecodeError:
-          # UTF-8で読み取れない場合はShift-JISエンコーディングで再試行
-          df = pd.read_csv(io.BytesIO(file_data), encoding="shift-jis", engine="python")
-          st.session_state["ja"] = True
+# def upload_csv():
+#   # csvがアップロードされたとき
+#   if st.session_state['upload_csvfile'] is not None:
+#       # アップロードされたファイルデータを読み込む
+#       file_data = st.session_state['upload_csvfile'].read()
+#       # バイナリデータからPandas DataFrameを作成
+#       try:
+#           df = pd.read_csv(io.BytesIO(file_data), encoding="utf-8", engine="python")
+#           st.session_state["ja"] = False
+#       except UnicodeDecodeError:
+#           # UTF-8で読み取れない場合はShift-JISエンコーディングで再試行
+#           df = pd.read_csv(io.BytesIO(file_data), encoding="shift-jis", engine="python")
+#           st.session_state["ja"] = True
           
-      # カラムの型を自動で適切に変換
-      df = df.infer_objects() 
-      try:
-          for column in df.columns:
-              df[column] = df[column].astype(pd.Int64Dtype(), errors='ignore')
-      except:
-          pass
+#       # カラムの型を自動で適切に変換
+#       df = df.infer_objects() 
+#       try:
+#           for column in df.columns:
+#               df[column] = df[column].astype(pd.Int64Dtype(), errors='ignore')
+#       except:
+#           pass
 
-      df = df.applymap(lambda x: str(x) if not pd.isnull(x) else x)
-      st.session_state["uploaded_df"] = df.copy()
-      st.session_state["all_df"] = df.copy()
-      create_data = decide_dtypes(df)
-      st.session_state["all_df"] = st.session_state["all_df"].applymap(lambda x: str(x) if not pd.isnull(x) else x)
+#       df = df.applymap(lambda x: str(x) if not pd.isnull(x) else x)
+#       st.session_state["uploaded_df"] = df.copy()
+#       st.session_state["all_df"] = df.copy()
+#       create_data = decide_dtypes(df)
+#       st.session_state["all_df"] = st.session_state["all_df"].applymap(lambda x: str(x) if not pd.isnull(x) else x)
       
       
-      st.session_state["filtered_columns"] = st.session_state["uploaded_df"].columns
+#       st.session_state["filtered_columns"] = st.session_state["uploaded_df"].columns
 
-      st.session_state["column_data"] = decide_dtypes(df)
+#       st.session_state["column_data"] = decide_dtypes(df)
 
-  else:
-      st.session_state["uploaded_df"] = pd.DataFrame()
-      st.session_state["all_df"] = pd.DataFrame()
-      st.session_state["column_data"] = dict()
-      st.session_state["filtered_columns"] = list()
+#   else:
+#       st.session_state["uploaded_df"] = pd.DataFrame()
+#       st.session_state["all_df"] = pd.DataFrame()
+#       st.session_state["column_data"] = dict()
+#       st.session_state["filtered_columns"] = list()
         
 
-def select_column():
-    # 数値型のカラム以外の、指定したリストの管理
-    if len(st.session_state["selected_columns"]) == 0:
-        st.session_state["filtered_columns"] = st.session_state["uploaded_df"].columns
-    else:
-        st.session_state["filtered_columns"] = st.session_state["selected_columns"]
+# def select_column():
+#     # 数値型のカラム以外の、指定したリストの管理
+#     if len(st.session_state["selected_columns"]) == 0:
+#         st.session_state["filtered_columns"] = st.session_state["uploaded_df"].columns
+#     else:
+#         st.session_state["filtered_columns"] = st.session_state["selected_columns"]
 
-    create_data = decide_dtypes(st.session_state["uploaded_df"][st.session_state["filtered_columns"]])
+#     create_data = decide_dtypes(st.session_state["uploaded_df"][st.session_state["filtered_columns"]])
 
-    st.session_state["column_data"] = create_data
+#     st.session_state["column_data"] = create_data
     
-# CSVファイルのアップロード
-tab1.file_uploader("CSVファイルをアップロード", 
-                  type=["csv"], 
-                  key="upload_csvfile", 
-                  on_change=upload_csv
-                )
+# # CSVファイルのアップロード
+# tab1.file_uploader("CSVファイルをアップロード", 
+#                   type=["csv"], 
+#                   key="upload_csvfile", 
+#                   on_change=upload_csv
+#                 )
 
 if st.session_state["upload_csvfile"] is not None:
     tab2.multiselect(label="表示したいカラムを選択してください", 
