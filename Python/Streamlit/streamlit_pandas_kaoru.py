@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 
+# タブ
+tab1, tab2, tab3 = st.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
+
 def filter_string(df, column, selected_list):
   if len(selected_list) != 0:
         res = df[df[column].isin(selected_list)]
