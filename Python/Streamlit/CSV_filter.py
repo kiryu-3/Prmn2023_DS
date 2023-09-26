@@ -117,6 +117,17 @@ def upload_csv():
       st.session_state["column_data"] = dict()
       st.session_state["filtered_columns"] = list()
 
+def select_column():
+    # 数値型のカラム以外の、指定したリストの管理
+    if len(st.session_state["selected_columns"]) == 0:
+        st.session_state["filtered_columns"] = st.session_state["uploaded_df"].columns
+    else:
+        st.session_state["filtered_columns"] = st.session_state["selected_columns"]
+
+    create_data = decide_dtypes(st.session_state["uploaded_df"][st.session_state["filtered_columns"]])
+
+    st.session_state["column_data"] = create_data
+
 # タブ
 tab1.file_uploader("CSVファイルをアップロード", 
                   type=["csv"], 
