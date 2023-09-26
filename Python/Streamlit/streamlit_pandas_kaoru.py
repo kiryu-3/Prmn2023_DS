@@ -9,6 +9,11 @@ from PIL import Image
 import io
 from io import BytesIO
 
+# 表示するデータフレーム
+if 'main_df' not in st.session_state:  # 初期化
+    df = pd.DataFrame()
+    st.session_state['main_df'] = df
+
 # タブ
 tab1, tab2, tab3 = st.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
 
