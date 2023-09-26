@@ -32,7 +32,8 @@ hide_menu_style = """
 """
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
-
+# タブ
+tab1, tab2, tab3 = spk.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
 
 st.title("CSV Filters")
 
