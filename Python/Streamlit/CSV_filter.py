@@ -32,12 +32,12 @@ hide_menu_style = """
 """
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
-# 表示するデータフレーム
-if 'main_df' not in st.session_state:  # 初期化
-    df = pd.DataFrame()
-    st.session_state['main_df'] = df
+
 
 st.title("CSV Filters")
+
+# タブ
+tab1, tab2, tab3 = st.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
 
 # st.write(show_df[st.session_state["filtered_columns"]])
         
