@@ -37,7 +37,7 @@ st.markdown(hide_menu_style, unsafe_allow_html=True)
 st.title("CSV Filters")
 
 # タブ
-tab1, tab2, tab3 = st.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
+tab1, tab2, tab3 = st.tabs(["Uploader", "Select_Values", "Downloader"])
 
 # st.write(show_df[st.session_state["filtered_columns"]])
         
