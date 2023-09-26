@@ -224,26 +224,6 @@ def create_widgets(df, create_data={}):
               text_widget(df, column, column.lower())
   return all_widgets
 
-def numeric_column(df, column_name):
-    for value in df[column_name]:
-        try:
-            # 文字列を数値型に変換を試みる
-            float_value = float(value)
-        except :
-            # ValueErrorが発生した場合は変換できない
-            return False
-    return True
-
-def datetime_column(df, column_name):
-    for value in df[column_name]:
-        try:
-            # 文字列を日付型に変換を試みる
-            pd.to_datetime(value)
-        except (ValueError, pd.errors.OutOfBoundsDatetime):
-            # ValueErrorやOutOfBoundsDatetimeが発生した場合は変換できない
-            return False
-    return True
-
 def filter_df(df, all_widgets):
     """
     This function will take the input dataframe and all the widgets generated from
