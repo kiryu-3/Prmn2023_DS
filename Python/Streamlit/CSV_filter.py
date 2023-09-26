@@ -32,10 +32,12 @@ hide_menu_style = """
 """
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
+st.title("CSV Filters")
+
 # タブ
 tab1, tab2, tab3 = st.tabs(["Uploader", "DataFrame", "Downloader"])
 
-st.title("CSV Filters")
+
 
 def decide_dtypes(df):
     df = df.dropna()
