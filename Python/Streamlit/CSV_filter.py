@@ -40,21 +40,22 @@ tab1, tab2, tab3 = st.tabs(["Uploader", "DataFrame", "Downloader"])
 
 
 def decide_dtypes(df):
-    df = df.dropna()
     # 空の辞書を作成
     create_data = {}
 
     def numeric_column(df, column_name):
+        df = df.dropna(subset=[column_name])
         for value in df[column_name]:
             try:
                 # 文字列を数値型に変換を試みる
                 float_value = float(value)
-            except :
+            except:
                 # ValueErrorが発生した場合は変換できない
                 return False
         return True
 
     def datetime_column(df, column_name):
+        df = df.dropna(subset=[column_name])
         for value in df[column_name]:
             try:
                 # 文字列を日付型に変換を試みる
