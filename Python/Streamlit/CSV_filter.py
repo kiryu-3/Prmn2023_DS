@@ -66,12 +66,26 @@ tab1, tab2, tab3 = st.sidebar.tabs(["Uploader", "Select_Values", "Downloader"])
     
 #     return res
 def filter_string(df, column, selected_list):
-    final = []
-    df = df[df[column].notna()]
-    for idx, row in df.iterrows():
-        if row[column] in selected_list:
-            final.append(row)
-    res = pd.DataFrame(final)
+    # # リスト内の各要素をfloat型に変換する関数
+    # def convert_to_float(value):
+    #     try:
+    #         return str(float(value))
+    #     except (ValueError, TypeError):
+    #         return value
+            
+    # # map関数を使用してリスト内のすべての要素をfloat型に変換する
+    # selected_list = list(map(convert_to_float, selected_list))
+    # try:
+    #     tab3.write(column)
+    #     tab3.write(type(selected_list[0]))
+    #     tab3.write(type(df[column].unique()[0]))
+    # except:
+    #     tab3.write(column)
+        
+    # 'hello'列の値がselected_list内の値に含まれている行を選択
+    res = df[df[column].isin(selected_list)]
+    if len(res) == 0:
+        res = df.copy()
     return res
 
 def is_integer(n):
@@ -82,35 +96,33 @@ def is_integer(n):
       else:
           return float(n).is_integer()
 
-def number_widget(df, column):
-
+def number_widget(df, column, ss_name):
     temp_df = pd.DataFrame()
-    if df[column].isna().any():
-        temp_df = df.dropna(subset=[column])
-    else:
-        temp_df = df.copy()
+    temp_df = df.dropna(subset=[column])
+
+    
 
     if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
         # temp_df[f'{column}_numeric'] = temp_df[column].copy()
         # temp_df = temp_df.astype({f'{column}_numeric': float})
         temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
-        max = int(temp_df[f'{column}_numeric'].max())
-        min = int(temp_df[f'{column}_numeric'].min())
+        max_value = int(max(temp_df[f'{column}_numeric'].unique()))
+        min_value = int(min(temp_df[f'{column}_numeric'].unique()))
     else:
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
         # temp_df[f'{column}_numeric'] = temp_df[column].copy()
         # temp_df = temp_df.astype({f'{column}_numeric': float})
         temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
-        max = float(temp_df[f'{column}_numeric'].max())
-        min = float(temp_df[f'{column}_numeric'].min())
+        max_value = float(temp_df[f'{column}_numeric'].max())
+        min_value = float(temp_df[f'{column}_numeric'].min())
     
     if max!=min:
-        temp_input = tab2.slider(f"{column.title()}", min, max, (min, max), key=f"{column}_numeric")
-    all_widgets.append(("number", f"{column}_numeric"))
+        temp_input = tab2.slider(f"{column.title()}", min_value, max_value, (min_value, max_value), key=f"{ss_name}_numeric")
+    all_widgets.append((f"{ss_name}_numeric", "number", f"{column}_numeric"))
     return df
 
-def datetime_widget(df, column):
+def datetime_widget(df, column, ss_name):
     temp_df = pd.DataFrame()
     if df[column].isna().any():
         temp_df = df.dropna(subset=[column])
@@ -192,7 +204,7 @@ def datetime_widget(df, column):
           max_value=last_date,
           value=(first_date, last_date),
           step=timedelta(days=365),
-          key=f"{column}_datetime",
+          key=f"{ss_name}_datetime",
           format=range_unit
           )
     elif format_time_interval(min_date_diff) == "month" and end_date!=start_date:
@@ -202,7 +214,7 @@ def datetime_widget(df, column):
         max_value=last_date,
         value=(first_date, last_date),
         step=timedelta(days=30),
-        key=f"{column}_datetime",
+        key=f"{ss_name}_datetime",
         format=range_unit
         )
     elif format_time_interval(min_date_diff) == "day" and end_date!=start_date:
@@ -212,7 +224,7 @@ def datetime_widget(df, column):
         max_value=last_date,
         value=(first_date, last_date),
         step=timedelta(days=1),
-        key=f"{column}_datetime",
+        key=f"{ss_name}_datetime",
         format=range_unit
         )
     elif format_time_interval(min_date_diff) == "hour" and end_date!=start_date:
@@ -222,7 +234,7 @@ def datetime_widget(df, column):
         max_value=last_date,
         value=(first_date, last_date),
         step=timedelta(hours=1),
-        key=f"{column}_datetime",
+        key=f"{ss_name}_datetime",
         format=range_unit
         )    
     elif format_time_interval(min_date_diff) == "minute" and end_date!=start_date:
@@ -232,7 +244,7 @@ def datetime_widget(df, column):
         max_value=last_date,
         value=(first_date, last_date),
         step=timedelta(minutes=1),
-        key=f"{column}_datetime",
+        key=f"{ss_name}_datetime",
         format=range_unit
         )
     elif format_time_interval(min_date_diff) == "second" and end_date!=start_date:
@@ -242,15 +254,16 @@ def datetime_widget(df, column):
         max_value=last_date,
         value=(first_date, last_date),
         step=timedelta(seconds=1),
-        key=f"{column}_datetime",
+        key=f"{ss_name}_datetime",
         format=range_unit
         )
 
-    all_widgets.append(("datetime", f"{column}_datetime"))
+    all_widgets.append((f"{ss_name}_datetime", "datetime", f"{column}_datetime"))
     return df    
 
-def text_widget(df, column):
+def text_widget(df, column, ss_name):
     temp_df = df.dropna(subset=[column])
+    temp_df = temp_df.astype(str)
     options = temp_df[column].unique().tolist()
     # st.write(options[:10])
     if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
@@ -269,8 +282,8 @@ def text_widget(df, column):
     # if nan:
     #     options.append("NaN")
     options.sort()
-    temp_input = tab2.multiselect(f"{column.title()}", options, key=column)
-    all_widgets.append(("object", column))
+    temp_input = tab2.multiselect(f"{column.title()}", options, key=ss_name)
+    all_widgets.append((ss_name, "text", column))
   
 
 def create_widgets(df, create_data={}):
@@ -280,14 +293,14 @@ def create_widgets(df, create_data={}):
       if column in create_data:
           if create_data[column] == "number":
               
-              text_widget(df, column)
-              df = number_widget(df, column)
+              text_widget(df, column, column.lower())
+              number_widget(df, column, column.lower())
           elif create_data[column] == "datetime":
-              text_widget(df, column)
-              df = datetime_widget(df, column)              
-          elif create_data[column] == "object":
-              text_widget(df, column)
-  return df, all_widgets
+              text_widget(df, column, column.lower())
+              datetime_widget(df, column, column.lower())              
+          elif create_data[column] == "text":
+              text_widget(df, column, column.lower())
+  return all_widgets
 
 # def numeric_column(df):
     # numeric_names = list() 
@@ -306,7 +319,7 @@ def numeric_column(df, column_name):
         try:
             # 文字列を数値型に変換を試みる
             float_value = float(value)
-        except ValueError:
+        except :
             # ValueErrorが発生した場合は変換できない
             return False
     return True
@@ -333,20 +346,21 @@ def datetime_column(df, column_name):
     return True
 
 def decide_dtypes(df):
+    df = df.dropna()
     # 空の辞書を作成
     create_data = {}
     # データフレームの各列に対してデータ型をチェック
     for column_name in df.columns:
-        if datetime_column(df, column_name):
-            create_data[column_name] = "datetime"
-            new_column_name_datetime = f"{column_name}_datetime"
-            st.session_state["all_df"][new_column_name_datetime] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
-        elif numeric_column(df, column_name):
+        if numeric_column(df, column_name):
             create_data[column_name] = "number"
-            new_column_name_numeric = f"{column_name}_numeric"
-            st.session_state["all_df"][new_column_name_numeric] = pd.to_numeric(st.session_state["all_df"][column_name], errors="coerce")
+            new_column_name_number = f"{column_name}_number2"
+            st.session_state["all_df"][new_column_name_number] = pd.to_numeric(st.session_state["all_df"][column_name], errors="coerce")
+        elif datetime_column(df, column_name):
+            create_data[column_name] = "datetime"
+            new_column_name_datetime = f"{column_name}_datetime2"
+            st.session_state["all_df"][new_column_name_datetime] = pd.to_datetime(st.session_state["all_df"][column_name], errors="coerce")
         else:
-            create_data[column_name] = "object"
+            create_data[column_name] = "text"
     return create_data
 
 def filter_df(df, all_widgets):
@@ -358,31 +372,24 @@ def filter_df(df, all_widgets):
     df => the original Pandas DataFrame
     all_widgets => the widgets created by the function create_widgets().
     """
-    res = df
-    aa = 0
-    st.session_state["column"] = list()
+    res = df.copy()
+    
     for widget in all_widgets:
-        ctype, column = widget
-        
-        data = st.session_state[column]
-        
-        if data:
-            aa += 1
-            st.session_state["column"].append((data))
-            if ctype == "number":
-                min, max = data
-                res = res.loc[(res[column] >= min) & (res[column] <= max)]
-                # res[column] = res[column].astype('object')
-            elif ctype == "datetime":
-                min, max = data
-                res = res.loc[(res[column] >= min) & (res[column] <= max)]
-                # res[column] = res[column].astype('object')
-            elif ctype == "object":
-                res = filter_string(res, column, data)
-        else:
-            st.session_state["column"].append((data))
-                
-    return res, aa
+        ss_name, ctype, column = widget
+        tab3.write(st.session_state[ss_name])
+        data = st.session_state[ss_name]
+        if ctype == "number":
+            min, max = data
+            res = res.loc[(res[column] >= min) & (res[column] <= max)]
+            # res[column] = res[column].astype('object')
+        elif ctype == "datetime":
+            min, max = data
+            res = res.loc[(res[column] >= min) & (res[column] <= max)]
+            # res[column] = res[column].astype('object')
+        elif ctype == "text":
+            res = filter_string(res, column, data)
+
+    return res
 
 def upload_csv():
     # csvがアップロードされたとき
@@ -399,7 +406,12 @@ def upload_csv():
             st.session_state["ja"] = True
             
         # カラムの型を自動で適切に変換
-        df = df.infer_objects()  
+        df = df.infer_objects() 
+        try:
+            for column in df.columns:
+                df[column] = df[column].astype(pd.Int64Dtype(), errors='ignore')
+        except:
+            pass
         
         # for column_name in df.columns:
         #     # カラムがfloat型で、欠損値以外の値がすべて整数であるかを確認
@@ -417,11 +429,15 @@ def upload_csv():
 
         #     if df[column_name].apply(is_integer).sum() == len(df[column_name])
         
+        # 
         df = df.applymap(lambda x: str(x) if not pd.isnull(x) else x)
         st.session_state["uploaded_df"] = df.copy()
         st.session_state["all_df"] = df.copy()
-
         create_data = decide_dtypes(df)
+        st.session_state["all_df"] = st.session_state["all_df"].applymap(lambda x: str(x) if not pd.isnull(x) else x)
+        
+        
+        st.session_state["filtered_columns"] = st.session_state["uploaded_df"].columns
         # df = df.astype('object')
 
         # for column in df.columns:
@@ -451,10 +467,9 @@ def upload_csv():
         #     create_data[column_name] = "multiselect"
 
         
-        # st.session_state["download_df"] = df.copy()
-        # st.session_state["notnum_df"] = df.copy()
+        # st.session_state["download_df"] = df
+        # st.session_state["notnum_df"] = df
         st.session_state["column_data"] = decide_dtypes(df)
-        st.session_state["filtered_columns"] = df.columns
         # numeric_column(st.session_state["uploaded_df"])
 
     else:
@@ -500,9 +515,9 @@ tab1.file_uploader("CSVファイルをアップロード",
 
 if st.session_state["upload_csvfile"] is not None:
     tab2.multiselect(label="表示したいカラムを選択してください", 
-                     options=st.session_state["uploaded_df"].columns, 
-                     key="selected_columns", 
-                     on_change=select_column)
+                         options=st.session_state["uploaded_df"].columns, 
+                         key="selected_columns", 
+                         on_change=select_column)
     tab2.header("")
     
     upload_name = st.session_state['upload_csvfile'].name
@@ -517,13 +532,15 @@ if st.session_state["upload_csvfile"] is not None:
     df = st.session_state["all_df"][st.session_state["filtered_columns"]].copy()
     
     create_data = st.session_state["column_data"]
-    df, all_widgets = create_widgets(df, create_data)
+    all_widgets = create_widgets(df, create_data)
+    # st.write(create_data)
+    show_df = filter_df(df, all_widgets)
     
-    show_df, aa = filter_df(df, all_widgets)
+    for column in show_df[st.session_state["filtered_columns"]].columns:
+        if create_data[column] == "datetime":
+            st.session_state["all_df"][column] = pd.to_datetime(st.session_state["all_df"][column], errors="coerce")
+            
     st.write(show_df[st.session_state["filtered_columns"]])
-    st.write(all_widgets)
-    st.write(st.session_state["column"])
-    st.write(st.session_state["column_data"])
     
     # ダウンロードボタンを追加
     download_df = show_df[st.session_state["filtered_columns"]].copy()
@@ -535,7 +552,7 @@ if st.session_state["upload_csvfile"] is not None:
         label="Download CSV",
         data=csv_file,
         file_name=f'{st.session_state["download_name"]}.csv'
-    )    
+    ) 
         
 
 
