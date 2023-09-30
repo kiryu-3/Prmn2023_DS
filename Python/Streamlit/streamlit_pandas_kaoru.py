@@ -222,7 +222,7 @@ def text_widget(df, column, ss_name):
     try:
         temp_input = st.sidebar.multiselect(f"{column.title()}", options, key=ss_name)
     except:
-        pass
+        st.write(st.session_state["ja"])
     all_widgets.append((ss_name, "text", column))
 
 
