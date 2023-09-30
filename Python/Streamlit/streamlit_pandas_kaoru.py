@@ -219,7 +219,10 @@ def text_widget(df, column, ss_name):
         options = [str(value) for value in options]
 
     options.sort()
-    temp_input = st.sidebar.multiselect(f"{column.title()}", options, key=ss_name)
+    try:
+        temp_input = st.sidebar.multiselect(f"{column.title()}", options, key=ss_name)
+    except:
+        temp_input = st.sidebar.multiselect(f"{column}", options, key=ss_name)
     all_widgets.append((ss_name, "text", column))
 
 
