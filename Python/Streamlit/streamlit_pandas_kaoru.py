@@ -55,7 +55,7 @@ def number_widget(df, column, ss_name):
         min_value = float(min(temp_df[f'{column}_numeric'].unique()))
 
     if max_value!=min_value:
-        temp_input = st.sidebar.slider(f"{column}", min_value, max_value, (min_value, max_value),
+        temp_input = st.sidebar.slider(f"{column.title()}", min_value, max_value, (min_value, max_value),
                                        key=f"{ss_name}_numeric")
         all_widgets.append((f"{ss_name}_numeric", "number", f"{column}_numeric"))
 
@@ -219,7 +219,7 @@ def text_widget(df, column, ss_name):
         options = [str(value) for value in options]
 
     options.sort()
-    temp_input = st.sidebar.multiselect(f"{column}", options, key=ss_name)
+    temp_input = st.sidebar.multiselect(f"{column.title()}", options, key=ss_name)
     all_widgets.append((ss_name, "text", column))
 
 
