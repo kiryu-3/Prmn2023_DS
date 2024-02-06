@@ -758,7 +758,8 @@ def ingate(plot_point, gate_polygon):
 
 
 # 表示する地図
-st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.session_state['zoom_level'], center=st.session_state['center'])
+# st_data = st_folium(st.session_state['map'], width=800, height=800, zoom=st.session_state['zoom_level'], center=st.session_state['center'])
+st_folium(st.session_state['map'], width=800, height=800, zoom=st.session_state['zoom_level'], center=st.session_state['center'])
 
 # 地図のデータをコピー
 st.session_state["data"] = copy.deepcopy(dict(st_data))
