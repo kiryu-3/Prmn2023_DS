@@ -44,20 +44,29 @@ def number_widget(df, column, ss_name):
         # temp_df[f'{column}_numeric'] = temp_df[column].copy()
         # temp_df = temp_df.astype({f'{column}_numeric': float})
         temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
-        max_value = int(max(temp_df[f'{column}_numeric'].unique()))
-        min_value = int(min(temp_df[f'{column}_numeric'].unique()))
+        try:
+            max_value = int(max(temp_df[f'{column}_numeric'].unique()))
+            min_value = int(min(temp_df[f'{column}_numeric'].unique()))
+        except:
+            pass
     else:
         df[f'{column}_numeric'] = pd.to_numeric(df[column], errors="coerce")
         # temp_df[f'{column}_numeric'] = temp_df[column].copy()
         # temp_df = temp_df.astype({f'{column}_numeric': float})
         temp_df[f'{column}_numeric'] = pd.to_numeric(temp_df[column], errors="coerce")
-        max_value = float(max(temp_df[f'{column}_numeric'].unique()))
-        min_value = float(min(temp_df[f'{column}_numeric'].unique()))
+        try:
+            max_value = float(max(temp_df[f'{column}_numeric'].unique()))
+            min_value = float(min(temp_df[f'{column}_numeric'].unique()))
+        except:
+            pass
 
-    if max_value!=min_value:
-        temp_input = st.sidebar.slider(f"{column.title()}", min_value, max_value, (min_value, max_value),
-                                       key=f"{ss_name}_numeric")
-        all_widgets.append((f"{ss_name}_numeric", "number", f"{column}_numeric"))
+    try:
+        if max_value!=min_value:
+            temp_input = st.sidebar.slider(f"{column.title()}", min_value, max_value, (min_value, max_value),
+                                           key=f"{ss_name}_numeric")
+            all_widgets.append((f"{ss_name}_numeric", "number", f"{column}_numeric"))
+    except:
+        pass
 
     return df
 
@@ -212,15 +221,32 @@ def datetime_widget(df, column, ss_name):
 def text_widget(df, column, ss_name):
     temp_df = df.dropna(subset=[column])
     temp_df = temp_df.astype(str)
-    options = temp_df[column].unique().tolist()
-    # st.write(options[:10])
-    if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
-        options = [int(float(value)) for value in options]
-        options = [str(value) for value in options]
+    
+    # 欠損値を除外してソート
+    options = sorted(temp_df[column].unique().tolist())
 
-    options.sort()
-    temp_input = st.sidebar.multiselect(f"{column.title()}", options, key=ss_name)
+    # None（欠損値）をリストの最初に追加
+    if df[column].isna().any():
+        options.insert(0, np.nan)
+
+       
+    temp_input = st.sidebar.multiselect(f"{column.title()}", options=options, default=list(),  key=ss_name)
     all_widgets.append((ss_name, "text", column))
+    # temp_df = df.dropna(subset=[column])
+    # temp_df = temp_df.astype(str)
+    # options = df[column].unique().tolist()
+    # # options = temp_df[column].unique().tolist()
+
+    
+        
+    # # st.write(options[:10])
+    # # if temp_df[column].apply(is_integer).sum() == len(temp_df[column]):
+    # #     options = [int(float(value)) for value in options]
+    # #     options = [str(value) for value in options]
+    
+    # options.sort()
+    # temp_input = st.sidebar.multiselect(f"{column.title()}", options, key=ss_name)
+    # all_widgets.append((ss_name, "text", column))
 
 
 def create_widgets(df, create_data={}):
