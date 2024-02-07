@@ -63,7 +63,7 @@ st.write(st.session_state['count'])
 # 表示する地図
 st_data = st_folium(st.session_state['map2'], width=800, height=800, zoom=st.session_state['zoom_level'],
                     center=st.session_state['center'])
-
+st.write(st_data)
 # lo = [39.949610, -75.150282]  # デフォルトの位置情報
 # zoom_level = 10  # デフォルトのズームレベル
 # st.session_state['center'] = {'lat': lo[0], 'lon': lo[1]}
